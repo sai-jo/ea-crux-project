@@ -1,0 +1,162 @@
+---
+title: Compute Governance
+description: Regulating AI development through computational resource controls
+sidebar:
+  order: 2
+---
+
+import { InfoBox, EntityCard, EntityCards, Tags, Sources, Section } from '../../../components/wiki';
+
+<InfoBox
+  type="policy"
+  title="Compute Governance"
+  jurisdiction="Global (proposed)"
+  status="Emerging"
+  customFields={[
+    { label: "Key Leverage", value: "Hardware chokepoints" },
+    { label: "Primary Researchers", value: "GovAI" },
+  ]}
+/>
+
+## Overview
+
+Compute governance is an emerging approach to AI regulation that focuses on controlling access to the computational resources needed to train powerful AI systems. Because AI capability is closely tied to training compute, governing compute provides a lever for governing AI development.
+
+## Why Compute?
+
+### Measurable
+Unlike "intelligence" or "capability," compute is quantifiable:
+- FLOP (floating point operations)
+- GPU-hours
+- Training cost
+
+### Concentrated
+AI chips are produced by few companies:
+- NVIDIA dominates GPU market
+- TSMC manufactures most advanced chips
+- Limited number of cloud providers
+
+### Upstream
+Controlling compute can affect AI before it's built:
+- Harder to develop dangerous models
+- Earlier intervention than deployment regulation
+- Doesn't require evaluating model capabilities
+
+## Governance Mechanisms
+
+### Export Controls
+Restrict sale of AI chips to certain countries:
+- US export controls on China (October 2022)
+- NVIDIA A100/H100 restrictions
+- Advanced chip manufacturing equipment
+
+### Compute Thresholds
+Trigger regulatory requirements above certain compute levels:
+- EU AI Act: 10^25 FLOP
+- US Executive Order: 10^26 FLOP
+- Reporting, evaluation, and safety requirements
+
+### Know Your Customer
+Require cloud providers to:
+- Verify customer identity
+- Report large-scale training runs
+- Monitor for misuse
+
+### Compute Tracking
+Hardware-level governance:
+- Chip registration
+- Training run monitoring
+- International verification
+
+## Current Implementation
+
+### United States
+- Export controls on advanced chips to China
+- Executive Order requiring compute reporting (10^26 FLOP)
+- Know Your Customer for cloud providers
+
+### European Union
+- AI Act GPAI provisions (10^25 FLOP)
+- Reporting requirements for large models
+
+### International
+- Bletchley Declaration mentions compute
+- Discussions of international compute governance
+
+## Advantages
+
+### Hard to Circumvent
+- Can't easily manufacture your own chips
+- Requires massive infrastructure investment
+- Physical goods are traceable
+
+### Regime-Independent
+- Works regardless of AI architecture
+- Doesn't require understanding model internals
+- Applies across different approaches
+
+### Early Intervention
+- Acts before models are trained
+- Prevents capability development
+- Proactive rather than reactive
+
+## Challenges
+
+### Threshold Selection
+- What compute level triggers requirements?
+- Thresholds become outdated as efficiency improves
+- Gaming through distributed training
+
+### Enforcement
+- Difficult to monitor all compute use
+- Black market possibilities
+- International coordination required
+
+### Innovation Effects
+- May disadvantage legitimate research
+- Could push development elsewhere
+- Open source implications
+
+### Algorithmic Efficiency
+- Same capability with less compute over time
+- Thresholds based on compute may become irrelevant
+- Capabilities may matter more than compute
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Export Controls",
+    "Compute Thresholds",
+    "Hardware Governance",
+    "AI Chips",
+    "Training Runs",
+  ]} />
+</Section>
+
+<Section title="Related Entries">
+  <EntityCards>
+    <EntityCard
+      id="govai"
+      category="lab"
+      title="GovAI"
+      description="Leading research on compute governance"
+    />
+    <EntityCard
+      id="eu-ai-act"
+      category="policy"
+      title="EU AI Act"
+      description="Includes compute thresholds"
+    />
+    <EntityCard
+      id="language-models"
+      category="capability"
+      title="Large Language Models"
+      description="Primary target of compute governance"
+    />
+  </EntityCards>
+</Section>
+
+<Sources sources={[
+  { title: "Computing Power and the Governance of AI", url: "https://governance.ai/compute", author: "GovAI" },
+  { title: "US Export Controls on Semiconductors", url: "https://www.bis.doc.gov/index.php/documents/about-bis/newsroom/press-releases/3158-2022-10-07-bis-press-release-advanced-computing-and-semiconductor-manufacturing-controls-final/file" },
+  { title: "EU AI Act GPAI Provisions", url: "https://artificialintelligenceact.eu/high-level-summary/" },
+]} />

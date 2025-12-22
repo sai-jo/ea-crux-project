@@ -1,0 +1,116 @@
+---
+title: Redwood Research
+description: AI safety lab focused on interpretability and adversarial robustness
+sidebar:
+  order: 12
+---
+
+import { InfoBox, KeyPeople, EntityCard, EntityCards, Tags, Sources, Section } from '../../../components/wiki';
+
+<InfoBox
+  type="lab-research"
+  title="Redwood Research"
+  founded="2021"
+  location="Berkeley, CA"
+  headcount="~20"
+  funding="~$8M/year"
+  website="https://redwoodresearch.org"
+/>
+
+## Overview
+
+Redwood Research is an AI safety lab that has made significant contributions to mechanistic interpretability and adversarial robustness research. The lab is known for pioneering techniques like causal scrubbing and for research on AI control.
+
+## Research Evolution
+
+### Adversarial Robustness Era (2021-2022)
+Early work focused on making language models robustly refuse harmful requests:
+- Trained classifiers to detect harmful completions
+- Found adversarial examples that bypassed safety training
+- Demonstrated difficulty of robust refusal
+
+### Interpretability Era (2022-2023)
+Major contributions to mechanistic interpretability:
+- **Causal Scrubbing**: Method for rigorously testing interpretability hypotheses
+- **Polysemanticity research**: Understanding why neurons respond to multiple concepts
+- **Interpretability in the Wild**: Applying interp to real model behaviors
+
+### AI Control Era (2023-present)
+Current focus on "AI Control" - ensuring AI systems can't cause catastrophic harm even if misaligned:
+- Assumes we may not solve alignment
+- Focuses on monitoring and containment
+- Develops protocols for safe AI deployment
+
+## Key Research
+
+### Causal Scrubbing
+A method for testing whether an interpretability explanation actually accounts for a model's behavior. Involves ablating components and checking if the explanation predicts the behavior change.
+
+### AI Control
+Research agenda assuming alignment may fail. Focuses on:
+- Monitoring AI systems for dangerous behavior
+- Red-teaming deployment protocols
+- Making "control" work even against adversarial AI
+
+<Section title="Key People">
+  <KeyPeople people={[
+    { name: "Buck Shlegeris", role: "CEO" },
+    { name: "Ryan Greenblatt", role: "Research Scientist" },
+    { name: "Neel Nanda", role: "Former (now DeepMind)" },
+    { name: "Bill Zito", role: "Research Scientist" },
+  ]} />
+</Section>
+
+## Key Publications
+
+- **Adversarial Training for High-Stakes Safety** (2022)
+- **Causal Scrubbing** (2022)
+- **Interpretability in the Wild** (2023)
+- **AI Control: Improving Safety Despite Intentional Subversion** (2024)
+
+## Lab Culture
+
+Redwood is known for:
+- Strong focus on finding concrete problems
+- Willingness to pivot based on evidence
+- Emphasis on empirical work over theory
+- Training researchers through Redwood Research Fellowship
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Mechanistic Interpretability",
+    "Causal Scrubbing",
+    "AI Control",
+    "Adversarial Robustness",
+    "Polysemanticity",
+  ]} />
+</Section>
+
+<Section title="Related Entries">
+  <EntityCards>
+    <EntityCard
+      id="interpretability"
+      category="safety-agenda"
+      title="Mechanistic Interpretability"
+      description="Understanding AI systems by reverse-engineering internals"
+    />
+    <EntityCard
+      id="ai-control"
+      category="safety-agenda"
+      title="AI Control"
+      description="Ensuring safety even with potentially misaligned AI"
+    />
+    <EntityCard
+      id="anthropic"
+      category="lab"
+      title="Anthropic"
+      description="Frontier lab with major interpretability team"
+    />
+  </EntityCards>
+</Section>
+
+<Sources sources={[
+  { title: "Redwood Research Website", url: "https://redwoodresearch.org" },
+  { title: "AI Control Paper", url: "https://arxiv.org/abs/2312.06942" },
+  { title: "Causal Scrubbing", url: "https://www.alignmentforum.org/posts/JvZhhzycHu2Yd57RN/causal-scrubbing-a-method-for-rigorously-testing" },
+]} />

@@ -10,10 +10,10 @@ This section profiles major AI safety research agendas—coherent programs of wo
 ## Categories
 
 ### Technical Research Agendas
-- Mechanistic Interpretability
-- Scalable Oversight
-- Constitutional AI / RLHF+
-- Agent Foundations
+- [Anthropic Core Views](/safety-agendas/anthropic-core-views) - Empirical safety at the frontier
+- [Mechanistic Interpretability](/safety-agendas/interpretability) - Understanding AI internals
+- [Scalable Oversight](/safety-agendas/scalable-oversight) - Supervising superhuman AI
+- [AI Control](/safety-agendas/ai-control) - Safety despite misalignment
 
 ### Governance Agendas
 - Compute Governance

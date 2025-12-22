@@ -9,11 +9,14 @@ This section tracks AI policies, regulations, and governance initiatives worldwi
 
 ## Categories
 
-### National Regulations
-- EU AI Act
-- US Executive Orders
-- UK AI Safety Institute
+### National/Regional Regulations
+- [EU AI Act](/policies/eu-ai-act) - Comprehensive risk-based AI regulation
+- [UK AI Safety Institute](/policies/uk-aisi) - Evaluation-focused governance
+- US Executive Order on AI
 - China AI regulations
+
+### Governance Mechanisms
+- [Compute Governance](/policies/compute-governance) - Regulating AI via compute controls
 
 ### Industry Commitments
 - Voluntary commitments (White House)

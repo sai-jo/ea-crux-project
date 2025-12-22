@@ -16,13 +16,16 @@ Companies training and deploying the most capable AI systems:
 - [Google DeepMind](/labs/deepmind) - Gemini, AlphaFold
 
 ### Research Organizations
-- [MIRI](/labs/miri) - Agent foundations research
-- [Redwood Research](/labs/redwood) - Interpretability and adversarial robustness
-- [ARC](/labs/arc) - Alignment Research Center
+- [MIRI](/labs/miri) - Agent foundations, decision theory
+- [ARC](/labs/arc) - Eliciting Latent Knowledge, capability evaluations
+- [Redwood Research](/labs/redwood) - Interpretability, AI control
+- [CAIS](/labs/cais) - Center for AI Safety, field-building
+
+### Policy & Governance
+- [GovAI](/labs/govai) - AI governance research, compute governance
 
 ### Academic Groups
-- [Center for Human-Compatible AI (CHAI)](/labs/chai) - UC Berkeley
-- [Future of Humanity Institute](/labs/fhi) - Oxford (closing 2024)
+- [CHAI](/labs/chai) - UC Berkeley, human-compatible AI
 
 ## Comparison
 
@@ -31,7 +34,12 @@ Companies training and deploying the most capable AI systems:
 | Anthropic | Frontier Lab | Constitutional AI, interpretability | Very High |
 | OpenAI | Frontier Lab | General capabilities, RLHF | High |
 | DeepMind | Frontier Lab | AGI research, scientific AI | High |
-| MIRI | Research | Agent foundations, theory | Core mission |
+| MIRI | Research | Agent foundations, governance | Core mission |
+| ARC | Research | ELK, capability evaluations | Core mission |
+| Redwood | Research | Interpretability, AI control | Core mission |
+| CAIS | Research | Benchmarks, field-building | Core mission |
+| GovAI | Policy | Governance, compute policy | Core mission |
+| CHAI | Academic | Human-compatible AI, value learning | Core mission |
 
 ## How to Read Lab Profiles
 

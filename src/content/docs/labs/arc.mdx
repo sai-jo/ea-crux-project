@@ -1,0 +1,116 @@
+---
+title: ARC (Alignment Research Center)
+description: AI safety research lab focused on alignment evaluations and theoretical research
+sidebar:
+  order: 11
+---
+
+import { InfoBox, KeyPeople, EntityCard, EntityCards, Tags, Sources, Section } from '../../../components/wiki';
+
+<InfoBox
+  type="lab-research"
+  title="ARC"
+  founded="2021"
+  location="Berkeley, CA"
+  headcount="~15"
+  funding="~$10M/year"
+  website="https://alignment.org"
+/>
+
+## Overview
+
+The Alignment Research Center (ARC) was founded by Paul Christiano after leaving OpenAI. ARC focuses on theoretical alignment research and has become influential in developing evaluations for dangerous AI capabilities.
+
+ARC operates two main divisions:
+- **ARC Theory**: Fundamental alignment research (Eliciting Latent Knowledge, etc.)
+- **ARC Evals**: Capability evaluations for frontier models
+
+## Research Focus
+
+### Eliciting Latent Knowledge (ELK)
+
+ARC's signature research problem: How do you get an AI to tell you what it actually knows, rather than what it thinks you want to hear?
+
+The ELK problem is central to alignment because:
+- A model may "know" its actions are harmful but not report this
+- Deceptive models would actively hide their knowledge
+- Current training may incentivize telling humans what they want to hear
+
+### Capability Evaluations
+
+ARC Evals developed influential assessments for dangerous capabilities:
+- **Autonomous replication**: Can the model copy itself to new servers?
+- **Resource acquisition**: Can it acquire money or compute?
+- **Deception**: Does it strategically mislead evaluators?
+
+ARC Evals has evaluated models for OpenAI, Anthropic, and Google DeepMind.
+
+## Key Ideas
+
+### Worst-Case Alignment
+Focus on alignment approaches that work even if the model is actively trying to subvert them. Assumes adversarial rather than cooperative model behavior.
+
+### Scalable Oversight
+Research on how humans can supervise AI systems on tasks too complex for humans to evaluate directly. Includes debate, recursive reward modeling, and market-based approaches.
+
+<Section title="Key People">
+  <KeyPeople people={[
+    { name: "Paul Christiano", role: "Founder, Head of Theory" },
+    { name: "Beth Barnes", role: "Co-lead, ARC Evals" },
+    { name: "Ajeya Cotra", role: "Senior Researcher" },
+    { name: "Mark Xu", role: "Research Scientist" },
+  ]} />
+</Section>
+
+## Key Publications
+
+- **ELK Prize Report** (2022) - $100K prize for ELK solutions
+- **ARC Evals Framework** (2023) - Capability evaluation methodology
+- **Measuring Progress on Scalable Oversight** (2024)
+
+## Influence
+
+ARC has shaped the field through:
+- Popularizing capability evaluations as a safety tool
+- Advocating for "evals before deployment" commitments
+- Theoretical contributions on ELK and scalable oversight
+- Training researchers through ARC Fellowship
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Eliciting Latent Knowledge",
+    "Capability Evaluations",
+    "Scalable Oversight",
+    "AI Evals",
+    "Deceptive Alignment",
+  ]} />
+</Section>
+
+<Section title="Related Entries">
+  <EntityCards>
+    <EntityCard
+      id="scalable-oversight"
+      category="safety-agenda"
+      title="Scalable Oversight"
+      description="Supervising AI on tasks too complex for humans"
+    />
+    <EntityCard
+      id="evals"
+      category="capability"
+      title="AI Evaluations"
+      description="Testing AI systems for dangerous capabilities"
+    />
+    <EntityCard
+      id="deceptive-alignment"
+      category="risk"
+      title="Deceptive Alignment"
+      description="Risk that models hide their true objectives"
+    />
+  </EntityCards>
+</Section>
+
+<Sources sources={[
+  { title: "ARC Website", url: "https://alignment.org" },
+  { title: "ELK Report", url: "https://docs.google.com/document/d/1WwsnJQstPq91_Yh-Ch2XRL8H_EpsnjrC1dwZXR37PC8/" },
+  { title: "ARC Evals", url: "https://evals.alignment.org" },
+]} />

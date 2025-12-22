@@ -11,9 +11,11 @@ This section documents specific risks from advanced AI systems, from technical a
 
 ### Technical Alignment Risks
 - [Deceptive Alignment](/risks/deceptive-alignment) - AI that appears aligned but isn't
-- Mesa-Optimization - Learned optimizers with different objectives
-- Reward Hacking - Gaming reward signals in unintended ways
-- Goal Misgeneralization - Goals that don't transfer to new contexts
+- [Mesa-Optimization](/risks/mesa-optimization) - Learned optimizers with different objectives
+- [Reward Hacking](/risks/reward-hacking) - Gaming reward signals in unintended ways
+- [Goal Misgeneralization](/risks/goal-misgeneralization) - Goals that don't transfer to new contexts
+- [Instrumental Convergence](/risks/instrumental-convergence) - Why diverse goals lead to dangerous subgoals
+- [Power-Seeking](/risks/power-seeking) - Tendency to acquire resources and influence
 
 ### Structural Risks
 - Racing Dynamics - Competition driving unsafe practices

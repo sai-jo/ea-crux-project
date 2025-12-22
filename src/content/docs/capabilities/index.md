@@ -10,9 +10,14 @@ This section catalogs significant AI capabilities, their current state, and safe
 ## Categories
 
 ### Foundational Capabilities
-- Language understanding and generation
-- Reasoning and problem-solving
-- Multimodal perception
+- [Large Language Models](/capabilities/language-models) - Foundation models with emergent abilities
+- [AI Reasoning](/capabilities/reasoning) - Chain-of-thought and o1-style reasoning
+- Multimodal AI - Vision, audio, and cross-modal understanding
+
+### Agency & Autonomy
+- [Agentic AI](/capabilities/agentic-ai) - Systems that take actions in the world
+- [Situational Awareness](/capabilities/situational-awareness) - AI understanding its own context
+- Tool Use - Calling APIs, browsing, executing code
 
 ### Dangerous Capabilities
 - Autonomous hacking/cybersecurity
@@ -21,7 +26,7 @@ This section catalogs significant AI capabilities, their current state, and safe
 - Self-replication and improvement
 
 ### Safety-Relevant Capabilities
-- Self-monitoring and honesty
+- Honesty and calibration
 - Following instructions precisely
 - Explaining reasoning (interpretability)
 

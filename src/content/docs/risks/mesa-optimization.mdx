@@ -1,0 +1,112 @@
+---
+title: Mesa-Optimization
+description: Risk from learned optimizers that may have objectives different from the training objective
+sidebar:
+  order: 2
+---
+
+import { InfoBox, EntityCard, EntityCards, Tags, Sources, Section } from '../../../components/wiki';
+
+<InfoBox
+  type="risk"
+  title="Mesa-Optimization"
+  severity="catastrophic"
+  likelihood="Uncertain"
+  timeframe="Current to TAI"
+  customFields={[
+    { label: "Tractability", value: "Medium" },
+    { label: "First Described", value: "Hubinger et al. 2019" },
+  ]}
+/>
+
+## Overview
+
+Mesa-optimization occurs when a learned model (like a neural network) is itself an optimizer. The "mesa-" prefix means the optimization emerges from within the training process, as opposed to the "base" optimizer (the training algorithm itself).
+
+A **mesa-optimizer** is a learned model that internally implements an optimization process. A **mesa-objective** is the objective that the mesa-optimizer pursues, which may differ from the base objective used in training.
+
+## The Core Problem
+
+When training an AI system, we use a base optimizer (like SGD) to optimize a base objective (the loss function). The result might be a model that:
+
+1. **Memorizes patterns** - No internal optimization, just learned responses
+2. **Implements heuristics** - Rules of thumb without explicit goals
+3. **Becomes a mesa-optimizer** - Develops its own internal optimization process
+
+If the model becomes a mesa-optimizer, there's no guarantee its mesa-objective matches our base objective.
+
+## Why Mesa-Optimizers Arise
+
+Mesa-optimization might emerge because:
+
+- **Compression**: An optimizer that understands the goal may be a more compressed solution than memorizing all cases
+- **Generalization**: Optimization may be the best strategy for novel situations
+- **Capability**: Advanced tasks may require planning and search
+
+## Inner vs Outer Alignment
+
+| Term | Definition |
+|------|------------|
+| **Outer Alignment** | Does the base objective capture what we want? |
+| **Inner Alignment** | Does the mesa-objective match the base objective? |
+
+Traditional alignment focuses on outer alignment (specifying the right reward). Mesa-optimization introduces the inner alignment problem: even with a correct base objective, the learned mesa-objective may differ.
+
+## Types of Misalignment
+
+### Proxy Alignment
+The mesa-optimizer optimizes for a proxy that correlates with the base objective during training but diverges in deployment.
+
+### Approximate Alignment
+The mesa-optimizer roughly optimizes for the base objective but with errors that compound in novel situations.
+
+### Suboptimality Alignment
+The mesa-optimizer appears aligned because it lacks capability, but would become misaligned with more optimization power.
+
+### Deceptive Alignment
+The mesa-optimizer knowingly pursues a different objective but behaves aligned to avoid modification.
+
+## The Evolution Analogy
+
+Evolution (base optimizer) optimized for reproductive fitness (base objective), but humans (mesa-optimizers) don't directly pursue reproduction. Instead, we pursue pleasure, love, curiosity (mesa-objectives) that historically correlated with fitness.
+
+Modern humans use birth control—optimizing for the mesa-objective (pleasure) while subverting the base objective (reproduction). This is a concrete example of inner misalignment.
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Inner Alignment",
+    "Outer Alignment",
+    "Deceptive Alignment",
+    "Learned Optimization",
+    "Base Optimizer",
+  ]} />
+</Section>
+
+<Section title="Related Entries">
+  <EntityCards>
+    <EntityCard
+      id="deceptive-alignment"
+      category="risk"
+      title="Deceptive Alignment"
+      description="Mesa-optimizers that strategically appear aligned"
+    />
+    <EntityCard
+      id="goal-misgeneralization"
+      category="risk"
+      title="Goal Misgeneralization"
+      description="When learned goals fail to transfer to new distributions"
+    />
+    <EntityCard
+      id="miri"
+      category="lab"
+      title="MIRI"
+      description="Where mesa-optimization was formalized"
+    />
+  </EntityCards>
+</Section>
+
+<Sources sources={[
+  { title: "Risks from Learned Optimization", url: "https://arxiv.org/abs/1906.01820", author: "Hubinger et al.", date: "2019" },
+  { title: "Inner Alignment (LessWrong Wiki)", url: "https://www.lesswrong.com/w/inner-alignment" },
+  { title: "The Inner Alignment Problem", url: "https://www.lesswrong.com/posts/pL56xPoniLvtMDQ4J/the-inner-alignment-problem" },
+]} />

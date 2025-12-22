@@ -1,0 +1,142 @@
+---
+title: Mechanistic Interpretability
+description: Understanding AI systems by reverse-engineering their internal computations
+sidebar:
+  order: 2
+---
+
+import { InfoBox, KeyPeople, EntityCard, EntityCards, Tags, Sources, Section } from '../../../components/wiki';
+
+<InfoBox
+  type="safety-agenda"
+  title="Mechanistic Interpretability"
+  organization="Anthropic, DeepMind, Redwood, etc."
+  approach="Technical research"
+  customFields={[
+    { label: "Maturity", value: "Active research" },
+    { label: "Key Advance", value: "Sparse Autoencoders" },
+  ]}
+/>
+
+## Overview
+
+Mechanistic interpretability is a research field focused on reverse-engineering neural networks to understand how they work internally. Rather than treating models as black boxes, researchers aim to identify meaningful circuits, features, and algorithms that explain model behavior.
+
+This is considered safety-critical because it could enable:
+- Detection of deceptive or misaligned cognition
+- Verification that models have learned intended concepts
+- Understanding of unexpected capabilities before deployment
+
+## Core Concepts
+
+### Features
+Meaningful directions in activation space that correspond to human-interpretable concepts. A "Golden Gate Bridge" feature activates when the model processes information about that landmark.
+
+### Circuits
+Computational subgraphs that implement specific behaviors. For example, an "induction circuit" that performs pattern completion.
+
+### Superposition
+Models represent more features than they have dimensions by encoding features in overlapping ways. This makes interpretation harder but is a core phenomenon to understand.
+
+## Key Techniques
+
+### Sparse Autoencoders (SAEs)
+Train auxiliary networks to decompose model activations into interpretable features:
+- Input: model activations
+- Output: sparse combination of learned features
+- Key advance: Anthropic's "Scaling Monosemanticity" (2024)
+
+### Activation Patching
+Test causal importance by replacing activations:
+- Run model normally, save activations
+- Replace specific activations with alternatives
+- Observe behavior change to infer causal role
+
+### Probing
+Train simple classifiers on internal representations:
+- What information is represented?
+- Where in the network?
+- How is it encoded?
+
+### Circuit Analysis
+Trace information flow through specific components:
+- Attention pattern analysis
+- Weight-based path tracing
+- Ablation studies
+
+## Major Results
+
+### Toy Models
+- Complete understanding of simple attention patterns
+- Grokking (sudden generalization) explained mechanistically
+- Modular arithmetic circuits identified
+
+### Language Models
+- Induction heads for in-context learning
+- Name movers for subject identification
+- Sparse autoencoder features at scale
+- Detection of deception-related features
+
+## Open Questions
+
+### Scalability
+- Can techniques scale to frontier models?
+- Is understanding necessarily incomplete?
+- How much interpretation is "enough"?
+
+### Deception Detection
+- Can interpretability find deceptive cognition?
+- Would deception hide from interpretation?
+- Is behavioral interpretability sufficient?
+
+### Automation
+- Can AI assist in interpreting AI?
+- What's the role of automated interpretability?
+
+<Section title="Key People">
+  <KeyPeople people={[
+    { name: "Chris Olah", role: "Pioneer, Anthropic" },
+    { name: "Neel Nanda", role: "DeepMind" },
+    { name: "Tom Lieberum", role: "Apollo Research" },
+  ]} />
+</Section>
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Sparse Autoencoders",
+    "Features",
+    "Circuits",
+    "Superposition",
+    "Probing",
+    "Activation Patching",
+  ]} />
+</Section>
+
+<Section title="Related Entries">
+  <EntityCards>
+    <EntityCard
+      id="anthropic"
+      category="lab"
+      title="Anthropic"
+      description="Leading interpretability research"
+    />
+    <EntityCard
+      id="deceptive-alignment"
+      category="risk"
+      title="Deceptive Alignment"
+      description="Primary threat interpretability aims to detect"
+    />
+    <EntityCard
+      id="redwood"
+      category="lab"
+      title="Redwood Research"
+      description="Causal scrubbing and interpretability evaluation"
+    />
+  </EntityCards>
+</Section>
+
+<Sources sources={[
+  { title: "Scaling Monosemanticity", url: "https://transformer-circuits.pub/2024/scaling-monosemanticity/", author: "Anthropic", date: "2024" },
+  { title: "Zoom In: An Introduction to Circuits", url: "https://distill.pub/2020/circuits/zoom-in/", author: "Olah et al." },
+  { title: "Transformer Circuits Thread", url: "https://transformer-circuits.pub/" },
+]} />

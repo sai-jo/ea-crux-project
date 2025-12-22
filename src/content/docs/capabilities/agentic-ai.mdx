@@ -1,0 +1,165 @@
+---
+title: Agentic AI
+description: AI systems that autonomously take actions in the world
+sidebar:
+  order: 3
+---
+
+import { InfoBox, EntityCard, EntityCards, Tags, Sources, Section } from '../../../components/wiki';
+
+<InfoBox
+  type="capability"
+  title="Agentic AI"
+  currentLevel="Early deployment"
+  projectedTimeline="Rapid development"
+  customFields={[
+    { label: "Safety Relevance", value: "Very High" },
+    { label: "Examples", value: "Devin, Claude Computer Use" },
+  ]}
+/>
+
+## Overview
+
+Agentic AI refers to AI systems that go beyond answering questions to autonomously taking actions in the world. These systems can browse the web, write and execute code, use tools, and pursue multi-step goals with minimal human intervention.
+
+The transition from "chatbot" to "agent" represents a significant capability jump with major safety implications.
+
+## What Makes AI Agentic
+
+### Tool Use
+Ability to call external APIs and tools:
+- Web browsing
+- Code execution
+- File system access
+- API calls
+- Computer control
+
+### Planning
+Decomposing goals into steps:
+- Creating task hierarchies
+- Managing dependencies
+- Handling failures and replanning
+
+### Persistence
+Maintaining state across interactions:
+- Long-term memory
+- Goal tracking
+- Context management
+
+### Autonomy
+Acting without human approval:
+- Self-directed exploration
+- Independent decision-making
+- Minimal oversight operation
+
+## Current Examples
+
+### Coding Agents
+- **Devin**: Autonomous software engineer
+- **GitHub Copilot Workspace**: Code planning and execution
+- **Cursor/Claude**: AI-assisted development
+
+### Computer Use
+- **Claude Computer Use**: Control desktop applications
+- **Browser agents**: Autonomous web navigation
+
+### Research Agents
+- **Deep Research**: Autonomous research and synthesis
+- **AutoGPT/BabyAGI**: Early autonomous agent experiments
+
+## Safety Implications
+
+### Increased Attack Surface
+Agents can:
+- Access external systems
+- Execute code
+- Make changes that persist
+- Chain multiple actions
+
+### Harder to Monitor
+- Actions happen autonomously
+- Complex action sequences
+- Emergent behavior from tool combinations
+
+### Reduced Human Oversight
+- Speed of operation exceeds human review
+- Actions may be irreversible
+- Humans become approvers not controllers
+
+### Power-Seeking Enabled
+Agentic capabilities enable:
+- Resource acquisition
+- Self-replication
+- Manipulation of environment
+- Resistance to shutdown
+
+## Risk Categories
+
+### Misuse Risks
+- Autonomous hacking
+- Social engineering at scale
+- Coordinated manipulation
+
+### Accident Risks
+- Unintended side effects of actions
+- Goal misgeneralization with real consequences
+- Cascading failures
+
+### Structural Risks
+- Economic disruption from automation
+- Concentration of capabilities
+- Loss of human control
+
+## Safety Approaches
+
+### Sandboxing
+Restrict what actions agents can take.
+
+### Monitoring
+Log and review agent actions.
+
+### Human-in-the-Loop
+Require approval for consequential actions.
+
+### AI Control
+Ensure safety even with potentially misaligned agents.
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Tool Use",
+    "Autonomous AI",
+    "AI Agents",
+    "Computer Use",
+    "AI Safety",
+    "AI Control",
+  ]} />
+</Section>
+
+<Section title="Related Entries">
+  <EntityCards>
+    <EntityCard
+      id="ai-control"
+      category="safety-agenda"
+      title="AI Control"
+      description="Ensuring safety with capable agents"
+    />
+    <EntityCard
+      id="power-seeking"
+      category="risk"
+      title="Power-Seeking AI"
+      description="Risk enabled by agentic capabilities"
+    />
+    <EntityCard
+      id="anthropic"
+      category="lab"
+      title="Anthropic"
+      description="Developer of Claude Computer Use"
+    />
+  </EntityCards>
+</Section>
+
+<Sources sources={[
+  { title: "Claude Computer Use", url: "https://anthropic.com/claude/computer-use" },
+  { title: "The Landscape of AI Agents", url: "https://arxiv.org/abs/2308.11432" },
+  { title: "AI Control: Improving Safety Despite Intentional Subversion", url: "https://arxiv.org/abs/2312.06942" },
+]} />

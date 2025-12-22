@@ -1,0 +1,112 @@
+---
+title: MIRI
+description: Machine Intelligence Research Institute - foundational AI alignment research
+sidebar:
+  order: 10
+---
+
+import { InfoBox, KeyPeople, EntityCard, EntityCards, Tags, Sources, Section } from '../../../components/wiki';
+
+<InfoBox
+  type="lab-research"
+  title="MIRI"
+  founded="2000"
+  location="Berkeley, CA"
+  headcount="~20"
+  funding="~$5M/year"
+  website="https://intelligence.org"
+/>
+
+## Overview
+
+The Machine Intelligence Research Institute (MIRI) is one of the oldest AI safety organizations, founded in 2000 as the Singularity Institute for Artificial Intelligence. MIRI pioneered many foundational concepts in AI alignment, including the formalization of the alignment problem, decision theory for AI, and agent foundations research.
+
+In recent years, MIRI shifted away from technical research toward governance work, with leadership expressing pessimism about solving alignment in time.
+
+## Historical Contributions
+
+MIRI's early work established much of the conceptual vocabulary for AI safety:
+
+- **Orthogonality Thesis**: Intelligence and goals are independent
+- **Instrumental Convergence**: Many goals share common subgoals (self-preservation, resource acquisition)
+- **Corrigibility**: The challenge of building systems that allow correction
+- **Embedded Agency**: How agents reason about themselves as part of the world
+
+## Research Evolution
+
+### Agent Foundations Era (2014-2020)
+Focus on fundamental mathematical questions about agency, decision theory, and logical uncertainty. Published the MIRI Research Guide and Agent Foundations sequence.
+
+### Alignment Research (2020-2023)
+Shift toward more empirical work on language models, including:
+- Eliciting Latent Knowledge (ELK)
+- Alignment stress testing
+- Non-disclosed research (MIRI went "closed by default" in 2021)
+
+### Governance Pivot (2023-present)
+MIRI announced that technical research had not succeeded as hoped. Leadership now recommends governance careers and advocates for compute governance and international coordination.
+
+## Key Publications
+
+- **Intelligence Explosion Microeconomics** (Yudkowsky, 2013)
+- **Risks from Learned Optimization** (Hubinger et al., 2019)
+- **Agent Foundations for Aligning Machine Intelligence** (2014)
+- **Embedded Agency** sequence (2018)
+
+<Section title="Key People">
+  <KeyPeople people={[
+    { name: "Eliezer Yudkowsky", role: "Co-founder, Senior Researcher" },
+    { name: "Nate Soares", role: "Executive Director" },
+    { name: "Evan Hubinger", role: "Former Researcher (now Anthropic)" },
+    { name: "Scott Garrabrant", role: "Research Scientist" },
+  ]} />
+</Section>
+
+## Current Position
+
+MIRI's leadership is notably pessimistic about the AI safety landscape:
+
+- **Timeline concerns**: Believe transformative AI is likely soon
+- **Technical pessimism**: Current alignment approaches may be insufficient
+- **Governance focus**: Now emphasize policy interventions
+- **Compute governance**: Advocate for controlling AI development via compute
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Agent Foundations",
+    "Decision Theory",
+    "Corrigibility",
+    "Instrumental Convergence",
+    "Embedded Agency",
+    "AI Governance",
+  ]} />
+</Section>
+
+<Section title="Related Entries">
+  <EntityCards>
+    <EntityCard
+      id="miri-agent-foundations"
+      category="safety-agenda"
+      title="Agent Foundations"
+      description="MIRI's research program on fundamental questions of agency"
+    />
+    <EntityCard
+      id="instrumental-convergence"
+      category="risk"
+      title="Instrumental Convergence"
+      description="Why diverse goals lead to similar dangerous behaviors"
+    />
+    <EntityCard
+      id="compute-governance"
+      category="policy"
+      title="Compute Governance"
+      description="Controlling AI development through compute regulation"
+    />
+  </EntityCards>
+</Section>
+
+<Sources sources={[
+  { title: "MIRI Website", url: "https://intelligence.org" },
+  { title: "MIRI 2023 Strategy Update", url: "https://intelligence.org/2023-strategy/" },
+  { title: "Risks from Learned Optimization", url: "https://arxiv.org/abs/1906.01820" },
+]} />
