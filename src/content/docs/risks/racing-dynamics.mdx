@@ -1,0 +1,176 @@
+---
+title: Racing Dynamics
+description: Competitive pressure driving AI development faster than safety can keep up
+sidebar:
+  order: 12
+---
+
+import { InfoBox, EntityCard, EntityCards, Tags, Sources, Section } from '../../../components/wiki';
+
+<InfoBox
+  type="risk"
+  title="Racing Dynamics"
+  severity="high"
+  likelihood="High (currently occurring)"
+  timeframe="Current"
+  customFields={[
+    { label: "Type", value: "Structural/Systemic" },
+    { label: "Also Called", value: "Arms race dynamics" },
+  ]}
+/>
+
+## Overview
+
+Racing dynamics refers to competitive pressure between AI developers (labs, nations) that incentivizes speed over safety. When multiple actors race to develop powerful AI, each faces pressure to cut corners on safety to avoid falling behind.
+
+This is a structural risk—even well-intentioned actors may be forced to compromise on safety by competitive dynamics.
+
+## The Basic Problem
+
+### Competitive Landscape
+- Multiple labs pursuing frontier AI
+- First-mover advantages for capability
+- Funding, talent, and influence flow to leaders
+
+### Safety as a Cost
+- Safety research takes time and resources
+- Safety measures may slow deployment
+- Competitors who skip safety may advance faster
+
+### Race to the Bottom
+- Lab A invests in safety → Lab A falls behind
+- Lab B cuts corners → Lab B advances
+- Lab A must cut corners or lose
+- Everyone ends up cutting corners
+
+## Where Racing Occurs
+
+### Between Labs
+- OpenAI, Anthropic, Google, Meta competing
+- Pressure to release models quickly
+- Public commitments vs competitive reality
+
+### Between Nations
+- US-China AI competition
+- Fears of falling behind adversaries
+- Security concerns override safety
+
+### Between Researchers
+- Publication pressure
+- Career incentives for capability work
+- Safety work less rewarded
+
+## Evidence of Racing
+
+### Historical Examples
+- ChatGPT → rapid Google response (Bard)
+- GPT-4 → Gemini accelerated timeline
+- Open-source releasing frontier capabilities
+
+### Industry Statements
+- Reports of safety teams being overruled
+- Researchers leaving over safety concerns
+- Public commitments vs internal pressure
+
+### Structural Incentives
+- Investor pressure for returns
+- Market rewards capability over safety
+- "Responsible" labs losing market share
+
+## Why Racing Is Dangerous
+
+### Reduced Safety Investment
+Racing reduces:
+- Time for safety research
+- Resources for alignment work
+- Thoroughness of evaluations
+
+### Deployment Pressure
+Racing encourages:
+- Earlier deployment of powerful systems
+- Less testing before release
+- Less time to respond to problems
+
+### Coordination Failure
+Racing prevents:
+- Industry-wide safety standards
+- Voluntary pauses for safety
+- Sharing of safety information
+
+## Potential Solutions
+
+### Coordination Mechanisms
+- Industry agreements on safety standards
+- Pre-competitive safety research sharing
+- Joint evaluation frameworks
+
+### Regulatory Intervention
+- Mandatory safety requirements
+- Deployment restrictions
+- International agreements
+
+### Changing Incentives
+- Make safety a competitive advantage
+- Reward safety publicly
+- Liability for harm from rushed deployment
+
+### Technical Solutions
+- Make safety research faster
+- Develop "safety-by-default" architectures
+- Reduce safety-capability tradeoff
+
+## Challenges
+
+### Prisoner's Dilemma Structure
+- Individual incentive to defect
+- Collective benefit from cooperation
+- Hard to sustain cooperation
+
+### Verification Difficulties
+- Hard to verify safety investments
+- Easy to claim safety while racing
+- "Safety theater" vs real safety
+
+### International Dimension
+- Agreements within one country insufficient
+- Other countries may not participate
+- Security concerns override safety
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "AI Governance",
+    "Coordination",
+    "Competition",
+    "Structural Risks",
+    "Arms Race",
+  ]} />
+</Section>
+
+<Section title="Related Entries">
+  <EntityCards>
+    <EntityCard
+      id="compute-governance"
+      category="policy"
+      title="Compute Governance"
+      description="One approach to slowing racing"
+    />
+    <EntityCard
+      id="anthropic"
+      category="lab"
+      title="Anthropic"
+      description="Lab arguing for 'race to the top'"
+    />
+    <EntityCard
+      id="govai"
+      category="lab"
+      title="GovAI"
+      description="Research on AI coordination problems"
+    />
+  </EntityCards>
+</Section>
+
+<Sources sources={[
+  { title: "Racing to the Precipice: A Model of AI Development", url: "https://nickbostrom.com/papers/racing.pdf", author: "Armstrong et al." },
+  { title: "AI Governance: A Research Agenda", url: "https://governance.ai/research" },
+  { title: "The AI Triad and What It Means for National Security Strategy", url: "https://cset.georgetown.edu/" },
+]} />
