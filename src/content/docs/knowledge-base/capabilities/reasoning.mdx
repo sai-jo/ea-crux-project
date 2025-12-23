@@ -1,0 +1,264 @@
+---
+title: Reasoning and Planning
+description: Advanced multi-step reasoning and chain-of-thought capabilities
+sidebar:
+  order: 4
+---
+
+import { InfoBox, EntityCard, EntityCards, Tags, Sources, Section } from '../../../../components/wiki';
+
+<InfoBox
+  type="capability"
+  title="Reasoning and Planning"
+  currentLevel="o1-class models"
+  projectedTimeline="Rapid improvement expected"
+  customFields={[
+    { label: "Safety Relevance", value: "Very High" },
+    { label: "Key Models", value: "OpenAI o1, o3" },
+  ]}
+/>
+
+## Overview
+
+Reasoning and planning capabilities refer to AI systems' ability to break down complex problems into steps, maintain coherent chains of logic, and solve problems that require multiple inference steps. Recent advances like OpenAI's o1 and o3 models demonstrate that language models can be trained to "think" through problems systematically before responding.
+
+This represents a shift from pattern matching to something closer to deliberative problem-solving, with major implications for both AI capabilities and safety.
+
+## Chain-of-Thought Reasoning
+
+### What It Is
+Chain-of-thought (CoT) prompting encourages models to show their work:
+- Breaking problems into steps
+- Making reasoning explicit
+- Checking intermediate results
+- Self-correction
+
+### Techniques
+- **Zero-shot CoT**: "Let's think step by step"
+- **Few-shot CoT**: Providing reasoning examples
+- **Self-consistency**: Sampling multiple reasoning paths
+- **Tree of Thoughts**: Exploring reasoning branches
+
+### Current Capabilities
+Modern models can:
+- Solve multi-step math problems
+- Break down complex coding tasks
+- Plan sequences of actions
+- Reason about edge cases
+- Identify errors in their reasoning
+
+## The o1 Paradigm
+
+### Training for Reasoning
+OpenAI's o1 model represents a new approach:
+- Trained specifically to reason before answering
+- Uses "thinking tokens" not shown to users
+- Can spend more compute on harder problems
+- Shows dramatic improvements on reasoning benchmarks
+
+### Performance Improvements
+o1 demonstrates:
+- PhD-level physics problem solving
+- Competitive programming performance
+- Advanced mathematics capabilities
+- Complex coding tasks
+- Strategic game playing
+
+### How It Works (Speculated)
+Likely involves:
+- Reinforcement learning on reasoning processes
+- Reward for correct intermediate steps
+- Extended inference budgets
+- Self-verification loops
+
+## Planning Capabilities
+
+### Short-Horizon Planning
+Models can plan sequences of:
+- API calls to solve tasks
+- Code snippets to build programs
+- Research steps to answer questions
+- Actions to achieve goals
+
+### Long-Horizon Limitations
+Current models struggle with:
+- Multi-day autonomous work
+- Complex dependencies
+- Robust error recovery
+- True strategic planning
+
+### Improving Planning
+Research directions:
+- Better memory and context management
+- Hierarchical task decomposition
+- Learning from planning failures
+- Integration with external tools
+
+## Safety Implications
+
+### Capabilities Unlock Other Capabilities
+Better reasoning enables:
+- Finding novel exploits
+- Circumventing safety measures
+- Planning deceptive strategies
+- Solving complex scientific problems
+
+### Double-Edged Sword
+Reasoning can be:
+- **Good**: More interpretable thought processes
+- **Bad**: Ability to hide true reasoning
+- **Uncertain**: Does "thinking" mean understanding?
+
+### Evaluation Challenges
+Harder to evaluate because:
+- Can reason about being evaluated
+- May show different reasoning during training vs deployment
+- Hidden reasoning tokens aren't fully visible
+- Strategic deception becomes possible
+
+## Current State (2024-2025)
+
+### What Works
+- Math competition problems
+- Coding challenges
+- Scientific reasoning
+- Game strategy
+- Multi-step planning
+
+### What Doesn't Work Yet
+- Truly novel scientific insights
+- Reliable very long-horizon planning
+- Robust handling of uncertainty
+- General strategic reasoning
+- Creative problem-solving at human expert level
+
+### Rapid Progress
+The jump from GPT-4 to o1 to o3 suggests:
+- Fast capability gains are possible
+- Scaling reasoning works
+- Near-term advances likely
+- Potentially discontinuous improvements
+
+## Research Directions
+
+### Improving Reasoning
+- Longer chains of thought
+- More sophisticated verification
+- Better error recovery
+- Integration with tools and memory
+
+### Making Reasoning Safe
+- Interpretable reasoning traces
+- Faithful chain-of-thought
+- Detecting hidden reasoning
+- Aligning reasoning processes
+
+### Understanding Reasoning
+- What kind of reasoning are models doing?
+- How does it differ from human reasoning?
+- Are there fundamentally new reasoning patterns?
+
+## Implications for AI Safety
+
+### Timeline Implications
+Better reasoning accelerates:
+- AI capabilities research
+- Automating AI development
+- Economic disruption
+- Reduced time to prepare safety solutions
+
+### Alignment Difficulty
+Reasoning capabilities make alignment harder by:
+- Enabling deceptive alignment
+- Allowing sophisticated goal pursuit
+- Making oversight more difficult
+- Creating more powerful optimization
+
+### Safety Opportunities
+But also create opportunities:
+- More interpretable systems
+- Better at following complex safety instructions
+- Can assist in AI safety research
+- Potential for self-verification
+
+### The Critical Question
+Will reasoning capabilities:
+- Make AI more controllable (because more understandable)?
+- Or more dangerous (because more capable)?
+- The answer may determine safety outcomes.
+
+## Related Capabilities
+
+### Enables
+- Autonomous coding
+- Scientific research
+- Long-horizon tasks
+- Strategic planning
+- Self-improvement
+
+### Requires
+- Strong language understanding
+- Memory and context
+- Tool use
+- Self-monitoring
+
+## Timeline Projections
+
+### Near-term (1-2 years)
+- Continued o1/o3 improvements
+- Longer reasoning chains
+- Better planning
+- Integration across modalities
+
+### Medium-term (2-5 years)
+- Human expert-level reasoning in many domains
+- Reliable long-horizon planning
+- Novel scientific insights
+- Creative problem-solving
+
+### Long-term (5+ years)
+- Superhuman reasoning capabilities
+- Qualitatively new reasoning patterns
+- Recursive self-improvement via reasoning
+- Transformative scientific discoveries
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Chain-of-Thought",
+    "OpenAI o1",
+    "Problem Solving",
+    "Planning",
+    "Test-Time Compute",
+    "Strategic Reasoning",
+  ]} />
+</Section>
+
+<Section title="Related Entries">
+  <EntityCards>
+    <EntityCard
+      id="language-models"
+      category="capability"
+      title="Language Models"
+      description="Foundation for reasoning capabilities"
+    />
+    <EntityCard
+      id="self-improvement"
+      category="capability"
+      title="Self-Improvement"
+      description="Enabled by reasoning capabilities"
+    />
+    <EntityCard
+      id="openai"
+      category="lab"
+      title="OpenAI"
+      description="Developer of o1 and o3"
+    />
+  </EntityCards>
+</Section>
+
+<Sources sources={[
+  { title: "Learning to Reason with LLMs", url: "https://openai.com/index/learning-to-reason-with-llms/", author: "OpenAI" },
+  { title: "Chain-of-Thought Prompting", url: "https://arxiv.org/abs/2201.11903" },
+  { title: "Tree of Thoughts", url: "https://arxiv.org/abs/2305.10601" },
+  { title: "Let's Verify Step by Step", url: "https://arxiv.org/abs/2305.20050" },
+]} />

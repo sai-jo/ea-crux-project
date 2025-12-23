@@ -1,4 +1,5 @@
 import React from 'react';
+import './wiki.css';
 
 interface Question {
   question: string;
@@ -11,8 +12,12 @@ interface Question {
 }
 
 interface KeyQuestionsProps {
-  questions: Question[];
+  questions: (Question | string)[];
   title?: string;
+}
+
+function normalizeQuestion(q: Question | string): Question {
+  return typeof q === 'string' ? { question: q } : q;
 }
 
 const confidenceColors = {
@@ -34,7 +39,9 @@ export function KeyQuestions({ questions, title = "Key Questions" }: KeyQuestion
       <h3 className="key-questions-title">{title}</h3>
 
       <div className="questions-list">
-        {questions.map((q, i) => (
+        {questions.map((item, i) => {
+          const q = normalizeQuestion(item);
+          return (
           <div key={i} className="question-card">
             <div className="question-header">
               {q.importance && (
@@ -104,7 +111,8 @@ export function KeyQuestions({ questions, title = "Key Questions" }: KeyQuestion
               </div>
             )}
           </div>
-        ))}
+        );
+        })}
       </div>
     </div>
   );

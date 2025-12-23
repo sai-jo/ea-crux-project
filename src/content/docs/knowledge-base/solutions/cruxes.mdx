@@ -1,0 +1,499 @@
+---
+title: Solution Cruxes
+description: Key uncertainties that determine which epistemic and coordination solutions to prioritize
+sidebar:
+  order: 99
+---
+
+import { Crux, CruxList, DisagreementMap, KeyQuestions, Section, Tags } from '../../../../components/wiki';
+
+## What Are Solution Cruxes?
+
+Different views on **key uncertainties** lead to different solution priorities. Your answers to these cruxes should inform what you work on, fund, or advocate for.
+
+These cruxes focus on **solution tractability and effectiveness**—not the underlying problems (covered in [Epistemic Cruxes](/knowledge-base/risks/epistemic/cruxes/)).
+
+---
+
+## Technical Solution Cruxes
+
+<Crux
+  id="ai-verification-scaling"
+  question="Can AI-based verification scale to match AI-based generation?"
+  domain="Technical Solutions"
+  description="Whether AI systems designed for verification (fact-checking, detection, authentication) can keep pace with AI systems designed for generation."
+  importance="critical"
+  resolvability="years"
+  currentState="Generation currently ahead; some verification progress"
+  positions={[
+    {
+      view: "Verification can match generation with investment",
+      probability: "25-40%",
+      holders: ["Some AI researchers", "Verification startups"],
+      implications: "Invest heavily in AI verification R&D; build verification infrastructure"
+    },
+    {
+      view: "Verification will lag but remain useful",
+      probability: "35-45%",
+      implications: "Verification as one tool among many; combine with other approaches"
+    },
+    {
+      view: "Verification is fundamentally disadvantaged",
+      probability: "20-30%",
+      holders: ["Some security researchers"],
+      implications: "Shift focus to provenance, incentives, institutional solutions"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Breakthrough in generalizable detection",
+    "Real-world deployment data on AI verification performance",
+    "Theoretical analysis of offense-defense balance",
+    "Economic analysis of verification costs vs generation costs"
+  ]}
+  relatedCruxes={["provenance-vs-detection"]}
+  relevantResearch={[
+    { title: "DARPA SemaFor", url: "https://www.darpa.mil/program/semantic-forensics" }
+  ]}
+/>
+
+<Crux
+  id="provenance-vs-detection"
+  question="Should we prioritize content provenance or detection?"
+  domain="Technical Solutions"
+  description="Whether resources should go to proving what's authentic (provenance) vs detecting what's fake (detection)."
+  importance="high"
+  resolvability="years"
+  currentState="Both being pursued; provenance gaining momentum"
+  positions={[
+    {
+      view: "Provenance is the right long-term bet",
+      probability: "40-55%",
+      holders: ["C2PA coalition", "Adobe", "Microsoft"],
+      implications: "Focus resources on provenance adoption; detection as stopgap"
+    },
+    {
+      view: "Need both; portfolio approach",
+      probability: "30-40%",
+      implications: "Invest in both; different use cases; don't pick one"
+    },
+    {
+      view: "Detection is more practical near-term",
+      probability: "15-25%",
+      implications: "Focus on detection; provenance too slow to adopt"
+    }
+  ]}
+  wouldUpdateOn={[
+    "C2PA adoption metrics",
+    "Detection accuracy trends",
+    "User behavior research on credential checking",
+    "Cost comparison of approaches"
+  ]}
+  relatedCruxes={["ai-verification-scaling"]}
+  relevantResearch={[
+    { title: "C2PA", url: "https://c2pa.org/" },
+    { title: "Detection research", url: "https://arxiv.org/abs/2004.11138" }
+  ]}
+/>
+
+<Crux
+  id="watermark-robustness"
+  question="Can AI watermarks be made robust against removal?"
+  domain="Technical Solutions"
+  description="Whether watermarks embedded in AI-generated content can resist adversarial removal attempts."
+  importance="high"
+  resolvability="years"
+  currentState="Current watermarks removable with effort; research ongoing"
+  positions={[
+    {
+      view: "Robust watermarks are achievable",
+      probability: "20-35%",
+      holders: ["Google DeepMind (SynthID)"],
+      implications: "Invest in watermark R&D; mandate watermarking"
+    },
+    {
+      view: "Watermarks can deter casual removal but not determined actors",
+      probability: "40-50%",
+      implications: "Watermarks as one signal; don't rely on alone; combine with other methods"
+    },
+    {
+      view: "Watermark removal will always be possible",
+      probability: "20-30%",
+      implications: "Watermarking has limited value; focus on other solutions"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Adversarial testing of production watermarks",
+    "Theoretical bounds on watermark robustness",
+    "Real-world watermark survival data"
+  ]}
+  relatedCruxes={["provenance-vs-detection"]}
+  relevantResearch={[
+    { title: "SynthID", url: "https://deepmind.google/technologies/synthid/" }
+  ]}
+/>
+
+---
+
+## Collective Intelligence Cruxes
+
+<Crux
+  id="forecasting-ai-combo"
+  question="Can AI + human forecasting substantially outperform either alone?"
+  domain="Collective Intelligence"
+  description="Whether combining AI forecasting with human judgment produces significantly better predictions than either approach separately."
+  importance="high"
+  resolvability="soon"
+  currentState="Early experiments promising; limited systematic comparison"
+  positions={[
+    {
+      view: "Combination is significantly better",
+      probability: "35-50%",
+      holders: ["Metaculus (testing)"],
+      implications: "Invest in hybrid forecasting systems; deploy widely"
+    },
+    {
+      view: "Benefits are modest and context-dependent",
+      probability: "35-45%",
+      implications: "Use combination where marginal gain justifies cost; domain-specific"
+    },
+    {
+      view: "One will dominate (AI or human); combination adds noise",
+      probability: "15-25%",
+      implications: "Figure out which is better for which questions; don't force combination"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Systematic comparison studies",
+    "Metaculus AI forecasting results",
+    "Domain-specific performance data"
+  ]}
+  relatedCruxes={["human-ai-complementarity"]}
+  relevantResearch={[
+    { title: "Metaculus AI", url: "https://www.metaculus.com/project/ai-forecasting/" },
+    { title: "Superforecasting", url: "https://goodjudgment.com/" }
+  ]}
+/>
+
+<Crux
+  id="market-manipulation"
+  question="Can prediction markets be made manipulation-resistant?"
+  domain="Collective Intelligence"
+  description="Whether prediction markets can resist well-funded manipulation attempts while remaining useful."
+  importance="medium"
+  resolvability="years"
+  currentState="Some manipulation observed; effects often temporary; design improvements possible"
+  positions={[
+    {
+      view: "Manipulation resistance is achievable",
+      probability: "30-45%",
+      implications: "Invest in market design; use markets for high-stakes questions"
+    },
+    {
+      view: "Can deter casual manipulation; not determined actors",
+      probability: "35-45%",
+      implications: "Use markets but interpret carefully; don't treat as ground truth"
+    },
+    {
+      view: "Markets on important questions will be manipulated",
+      probability: "20-30%",
+      implications: "Limit market use to questions where manipulation incentives are low"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Documented manipulation attempts and outcomes",
+    "Market design research on manipulation resistance",
+    "Comparison of market accuracy in high vs low manipulation contexts"
+  ]}
+  relatedCruxes={["forecasting-ai-combo"]}
+  relevantResearch={[
+    { title: "Prediction market research", url: "https://www.aeaweb.org/articles?id=10.1257/0895330041371321" }
+  ]}
+/>
+
+---
+
+## Coordination Cruxes
+
+<Crux
+  id="lab-coordination"
+  question="Can frontier AI labs meaningfully coordinate on safety?"
+  domain="Coordination"
+  description="Whether labs competing for AI supremacy can coordinate on safety measures without regulatory compulsion."
+  importance="critical"
+  resolvability="years"
+  currentState="Some voluntary commitments (RSPs); no binding enforcement; competitive pressures strong"
+  positions={[
+    {
+      view: "Voluntary coordination can work",
+      probability: "20-35%",
+      holders: ["Some lab leadership"],
+      implications: "Support lab coordination efforts; build trust; industry self-regulation"
+    },
+    {
+      view: "Coordination requires external enforcement",
+      probability: "40-50%",
+      holders: ["Most governance researchers"],
+      implications: "Focus on regulation; auditing; legal liability; government role essential"
+    },
+    {
+      view: "Neither voluntary nor regulatory coordination will work",
+      probability: "15-25%",
+      implications: "Focus on technical solutions; prepare for uncoordinated development"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Labs defecting from voluntary commitments",
+    "Successful regulatory enforcement",
+    "Evidence of coordination changing lab behavior"
+  ]}
+  relatedCruxes={["international-coordination"]}
+  relevantResearch={[
+    { title: "RSP analysis", url: "https://www.anthropic.com/rsp" },
+    { title: "GovAI", url: "https://www.governance.ai/" }
+  ]}
+/>
+
+<Crux
+  id="international-coordination"
+  question="Can US-China coordination on AI governance succeed?"
+  domain="Coordination"
+  description="Whether the major AI powers can coordinate despite geopolitical competition."
+  importance="critical"
+  resolvability="years"
+  currentState="Very limited; competition dominant; some backchannel communication"
+  positions={[
+    {
+      view: "Meaningful coordination is possible",
+      probability: "15-30%",
+      implications: "Invest heavily in Track II diplomacy; find areas of shared interest"
+    },
+    {
+      view: "Narrow coordination on specific risks possible",
+      probability: "35-50%",
+      implications: "Focus on achievable goals (bioweapons, nuclear); don't expect comprehensive regime"
+    },
+    {
+      view: "Great power competition precludes coordination",
+      probability: "25-35%",
+      implications: "Focus on domestic/allied coordination; defensive measures; prepare for competition"
+    }
+  ]}
+  wouldUpdateOn={[
+    "US-China AI discussions outcomes",
+    "Coordination on specific risks (bio, nuclear)",
+    "Changes in geopolitical relationship",
+    "Success/failure of UK/Korea AI summits on coordination"
+  ]}
+  relatedCruxes={["lab-coordination"]}
+  relevantResearch={[
+    { title: "RAND on AI and great power competition", url: "https://www.rand.org/" }
+  ]}
+/>
+
+<Crux
+  id="commitment-credibility"
+  question="Can credible AI governance commitments be designed?"
+  domain="Coordination"
+  description="Whether commitment mechanisms (RSPs, treaties, escrow) can be designed that actors can't easily defect from."
+  importance="high"
+  resolvability="years"
+  currentState="Few tested mechanisms; mostly voluntary; enforcement unclear"
+  positions={[
+    {
+      view: "Credible commitments are designable",
+      probability: "30-45%",
+      implications: "Invest in mechanism design; compute governance; verification technology"
+    },
+    {
+      view: "Partial credibility achievable for some commitments",
+      probability: "35-45%",
+      implications: "Focus on verifiable commitments; accept limits on what can be bound"
+    },
+    {
+      view: "Actors will defect from any commitment when stakes are high enough",
+      probability: "20-30%",
+      implications: "Don't rely on commitments; focus on incentive alignment and technical solutions"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Track record of RSPs and similar commitments",
+    "Progress on compute governance/monitoring",
+    "Examples of commitment enforcement",
+    "Game-theoretic analysis of commitment mechanisms"
+  ]}
+  relatedCruxes={["lab-coordination"]}
+  relevantResearch={[
+    { title: "Compute governance", url: "https://arxiv.org/abs/2402.08797" }
+  ]}
+/>
+
+---
+
+## Infrastructure Cruxes
+
+<Crux
+  id="epistemic-public-good"
+  question="Can epistemic infrastructure be funded as a public good?"
+  domain="Infrastructure"
+  description="Whether verification, fact-checking, and knowledge infrastructure can achieve sustainable funding without commercial incentives."
+  importance="high"
+  resolvability="years"
+  currentState="Underfunded; dependent on philanthropy and some government support"
+  positions={[
+    {
+      view: "Public/philanthropic funding can scale",
+      probability: "25-40%",
+      implications: "Advocate for government funding; build philanthropic case; create public institutions"
+    },
+    {
+      view: "Hybrid models needed (public + private)",
+      probability: "35-45%",
+      implications: "Design business models that align profit with truth; public-private partnerships"
+    },
+    {
+      view: "Will remain underfunded relative to commercial content",
+      probability: "25-35%",
+      implications: "Focus resources on highest-leverage applications; accept limits"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Government investment in epistemic infrastructure",
+    "Successful commercial models for verification",
+    "Philanthropic commitment levels",
+    "Platform willingness to pay for verification"
+  ]}
+  relatedCruxes={["platform-incentives"]}
+/>
+
+<Crux
+  id="platform-incentives"
+  question="Can platform incentives be aligned with epistemic quality?"
+  domain="Infrastructure"
+  description="Whether major platforms can be incentivized (through regulation, competition, or design) to prioritize truth over engagement."
+  importance="high"
+  resolvability="years"
+  currentState="Engagement still dominates; some regulatory pressure; limited success"
+  positions={[
+    {
+      view: "Incentive alignment is achievable",
+      probability: "20-35%",
+      implications: "Focus on regulation; antitrust; liability; user tools"
+    },
+    {
+      view: "Partial alignment possible; engagement will always matter",
+      probability: "40-50%",
+      implications: "Work within constraints; design for harm reduction; build alternatives"
+    },
+    {
+      view: "Business model is incompatible with truth optimization",
+      probability: "25-35%",
+      implications: "Build non-commercial alternatives; accept platform limitations; focus elsewhere"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Platform policy changes and their effects",
+    "Regulatory enforcement outcomes (DSA, etc.)",
+    "User migration to alternative platforms",
+    "Research on engagement vs truth tradeoffs"
+  ]}
+  relatedCruxes={["epistemic-public-good"]}
+  relevantResearch={[
+    { title: "EU Digital Services Act", url: "https://digital-strategy.ec.europa.eu/en/policies/digital-services-act-package" }
+  ]}
+/>
+
+---
+
+## Summary: Solution Prioritization by Crux Answers
+
+| If you believe... | Prioritize... |
+|-------------------|---------------|
+| AI verification can match generation | AI verification R&D |
+| Provenance beats detection | C2PA adoption; provenance infrastructure |
+| Robust watermarks achievable | Watermark research and mandates |
+| AI + human forecasting is superior | Hybrid forecasting platforms |
+| Lab coordination can work | Industry coordination; voluntary standards |
+| International coordination is feasible | Diplomacy; international institutions |
+| Credible commitments designable | Mechanism design; compute governance |
+| Epistemic goods can be funded | Advocacy for public funding |
+| Platform incentives alignable | Regulation; liability; competition |
+
+---
+
+## Summary Table
+
+<CruxList
+  domain="Solutions"
+  cruxes={[
+    {
+      id: "ai-verification-scaling",
+      question: "Can AI verification match AI generation?",
+      importance: "critical",
+      summary: "Determines viability of verification-based approaches"
+    },
+    {
+      id: "lab-coordination",
+      question: "Can AI labs meaningfully coordinate on safety?",
+      importance: "critical",
+      summary: "Determines whether voluntary coordination is worth pursuing"
+    },
+    {
+      id: "international-coordination",
+      question: "Can US-China coordinate on AI governance?",
+      importance: "critical",
+      summary: "Determines scope of possible governance solutions"
+    },
+    {
+      id: "provenance-vs-detection",
+      question: "Provenance or detection?",
+      importance: "high",
+      summary: "Determines resource allocation for authentication"
+    },
+    {
+      id: "watermark-robustness",
+      question: "Can watermarks resist removal?",
+      importance: "high",
+      summary: "Determines value of watermarking investment"
+    },
+    {
+      id: "forecasting-ai-combo",
+      question: "Can AI + human forecasting win?",
+      importance: "high",
+      summary: "Determines investment in hybrid forecasting"
+    },
+    {
+      id: "commitment-credibility",
+      question: "Can credible AI commitments be designed?",
+      importance: "high",
+      summary: "Determines value of mechanism design work"
+    },
+    {
+      id: "epistemic-public-good",
+      question: "Can epistemic infrastructure be funded?",
+      importance: "high",
+      summary: "Determines sustainability of verification systems"
+    },
+    {
+      id: "platform-incentives",
+      question: "Can platform incentives be aligned?",
+      importance: "high",
+      summary: "Determines feasibility of platform-based solutions"
+    },
+    {
+      id: "market-manipulation",
+      question: "Can prediction markets resist manipulation?",
+      importance: "medium",
+      summary: "Determines scope of prediction market applications"
+    }
+  ]}
+/>
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Cruxes",
+    "Key Uncertainties",
+    "Research Priorities",
+    "Solutions",
+    "Coordination",
+  ]} />
+</Section>

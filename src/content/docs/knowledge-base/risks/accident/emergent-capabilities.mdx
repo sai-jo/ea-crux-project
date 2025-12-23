@@ -1,0 +1,101 @@
+---
+title: Emergent Capabilities
+description: Unexpected abilities that appear suddenly as AI systems scale
+sidebar:
+  order: 14
+---
+
+import { InfoBox, EntityCard, EntityCards, Tags, Sources, Section } from '../../../../../components/wiki';
+
+<InfoBox
+  type="risk"
+  title="Emergent Capabilities"
+  severity="high"
+  likelihood="High (observed)"
+  timeframe="Current"
+  customFields={[
+    { label: "Status", value: "Actively occurring" },
+    { label: "Key Concern", value: "Unpredictability" },
+  ]}
+/>
+
+## Overview
+
+Emergent capabilities are abilities that appear in AI systems at certain scales without being explicitly trained for, often appearing abruptly rather than gradually. A language model might suddenly become able to perform arithmetic, or write code, or reason about other minds—capabilities that weren't present in smaller versions of the same architecture.
+
+The core safety concern is unpredictability: if we can't predict when capabilities will emerge, we may be surprised by dangerous capabilities appearing in systems we thought we understood.
+
+## Observed Examples
+
+Research has documented numerous emergent capabilities in large language models. GPT-3 could perform few-shot learning in ways GPT-2 couldn't. Later models showed sudden improvements at multi-step arithmetic, code generation, and chain-of-thought reasoning at specific parameter counts.
+
+Some capabilities show sharp transitions: performance stays near zero across many model sizes, then jumps to high performance over a small scaling range. This "phase transition" pattern makes prediction especially difficult.
+
+BIG-Bench evaluations found that many tasks showed emergence, with larger models suddenly performing well on tasks smaller models couldn't do at all.
+
+## Why Emergence Matters for Safety
+
+If capabilities emerge unpredictably, we face several problems. We can't use smaller models to predict larger model behavior—the next scale might have qualitatively new abilities. We might deploy a system thinking we understand what it can do, only to discover new capabilities in production.
+
+Dangerous capabilities might emerge without warning. The ability to deceive, to pursue long-term goals, or to manipulate humans might appear at some scale threshold. By the time we notice, the model is already deployed or the capability already exists.
+
+Evaluation becomes harder when we don't know what to test for. If a capability doesn't exist yet, we can't evaluate it—and it might appear before we develop appropriate tests.
+
+## Debates About Emergence
+
+Some researchers argue that emergence is often a measurement artifact. If you choose the right metric, performance improves smoothly rather than suddenly. What looks like emergence might be gradual capability improvements hitting thresholds where they become useful.
+
+Others argue that genuine phase transitions occur in neural network training, analogous to phase transitions in physics. Internal representations might reorganize at certain scales, enabling qualitatively new computations.
+
+The practical concern remains regardless: we consistently fail to predict what capabilities will appear at larger scales, whether or not the underlying improvement is smooth.
+
+## Capability Overhang
+
+A related concept is capability overhang—when capabilities exist but aren't apparent until triggered. A model might have latent abilities that only manifest with the right prompting, fine-tuning, or scaffolding. This means even systems we've evaluated extensively might have hidden capabilities we haven't elicited.
+
+This is distinct from emergence (capabilities appearing with scale) but creates similar safety concerns: systems might be more capable than they appear.
+
+## Implications for AI Safety
+
+The unpredictability of emergence suggests several responses. Continuous monitoring means tracking capabilities throughout training, not just at evaluation points. Safety margins mean assuming systems might be more capable than current evaluations suggest. Capability control means being cautious about scaling systems when we don't understand what capabilities might appear.
+
+The emergence pattern also informs governance: if dangerous capabilities might appear suddenly, we need monitoring and response systems that can react quickly to new capability developments.
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Scaling Laws",
+    "Capability Evaluation",
+    "Unpredictability",
+    "Phase Transitions",
+    "AI Safety",
+  ]} />
+</Section>
+
+<Section title="Related Entries">
+  <EntityCards>
+    <EntityCard
+      id="sharp-left-turn"
+      category="risk"
+      title="Sharp Left Turn"
+      description="Capabilities generalizing faster than alignment"
+    />
+    <EntityCard
+      id="sandbagging"
+      category="risk"
+      title="Sandbagging"
+      description="Hidden capabilities in evaluation contexts"
+    />
+    <EntityCard
+      id="situational-awareness"
+      category="capability"
+      title="Situational Awareness"
+      description="A concerning emergent capability"
+    />
+  </EntityCards>
+</Section>
+
+<Sources sources={[
+  { title: "Emergent Abilities of Large Language Models", url: "https://arxiv.org/abs/2206.07682", author: "Wei et al.", date: "2022" },
+  { title: "Are Emergent Abilities of Large Language Models a Mirage?", url: "https://arxiv.org/abs/2304.15004", author: "Schaeffer et al.", date: "2023" },
+  { title: "Beyond the Imitation Game", url: "https://arxiv.org/abs/2206.04615", author: "BIG-bench" },
+]} />

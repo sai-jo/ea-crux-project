@@ -1,0 +1,492 @@
+---
+title: Is Scaling All You Need?
+description: The debate over whether scaling compute and data is sufficient for AGI or if we need new paradigms
+sidebar:
+  order: 2
+---
+
+import { ArgumentMap, InfoBox, KeyQuestions, EntityCard, EntityCards, Section, Tags, Sources, DisagreementMap } from '../../../../components/wiki';
+
+<InfoBox
+  type="crux"
+  title="The Scaling Debate"
+  customFields={[
+    { label: "Question", value: "Can we reach AGI through scaling alone, or do we need new paradigms?" },
+    { label: "Stakes", value: "Determines AI timeline predictions and research priorities" },
+    { label: "Expert Consensus", value: "Strong disagreement between scaling optimists and skeptics" },
+  ]}
+/>
+
+One of the most consequential debates in AI: Can we achieve AGI simply by making current approaches (transformers, neural networks) bigger, or do we need fundamental breakthroughs in architecture and methodology?
+
+## The Question
+
+**Scaling hypothesis**: Current deep learning approaches will reach human-level and superhuman intelligence through:
+- More compute (bigger models, longer training)
+- More data (larger, higher-quality datasets)
+- Better engineering (efficiency improvements)
+
+**New paradigms hypothesis**: We need fundamentally different approaches because current methods hit fundamental limits.
+
+<ArgumentMap
+  client:load
+  title="Is Scaling All You Need?"
+  description="Arguments for whether scaling current approaches is sufficient for AGI"
+  mainClaim="Scaling compute, data, and existing architectures is sufficient to reach AGI"
+  proArguments={[
+    {
+      id: "scaling-laws",
+      claim: "Scaling laws predict continued improvement",
+      type: "pro",
+      strength: "strong",
+      summary: "Performance scales predictably with compute across many orders of magnitude, with no signs of plateauing.",
+      details: "The Kaplan et al. (2020) and Chinchilla (2022) scaling laws show that model performance follows smooth power laws with respect to compute, model size, and data. These laws have held across 6+ orders of magnitude of compute, suggesting they'll continue. GPT-2 to GPT-4 followed these predictions remarkably well.",
+      supporters: ["Ilya Sutskever", "Dario Amodei", "Jared Kaplan", "Sam Altman"],
+      rebuttals: [
+        "Scaling laws measure next-token prediction, not intelligence",
+        "May hit data quality limits",
+        "Diminishing returns may appear at higher scales",
+        "Benchmarks saturate without true understanding"
+      ],
+      sources: [
+        { title: "Scaling Laws for Neural Language Models", url: "https://arxiv.org/abs/2001.08361" },
+        { title: "Training Compute-Optimal LLMs", url: "https://arxiv.org/abs/2203.15556" }
+      ]
+    },
+    {
+      id: "emergent-abilities",
+      claim: "Capabilities emerge unpredictably with scale",
+      type: "pro",
+      strength: "strong",
+      summary: "Abilities like few-shot learning, chain-of-thought reasoning, and instruction following weren't explicitly trained but emerged at scale.",
+      details: "GPT-3 showed few-shot learning that GPT-2 lacked. More recent models show chain-of-thought reasoning, theory of mind, and other capabilities that appear discontinuously. This suggests scaling unlocks qualitatively new abilities we can't predict.",
+      supporters: ["Jason Wei", "OpenAI", "Anthropic"],
+      rebuttals: [
+        "Emergence might be artifact of poor metrics",
+        "These aren't true reasoning, just pattern matching at scale",
+        "Doesn't prove AGI-level capabilities will emerge"
+      ],
+      sources: [
+        { title: "Emergent Abilities of Large Language Models", url: "https://arxiv.org/abs/2206.07682" }
+      ]
+    },
+    {
+      id: "empirical-success",
+      claim: "Scaling has worked empirically for decades",
+      type: "pro",
+      strength: "strong",
+      summary: "Every major AI capability jump has come from scaling, not architectural innovation.",
+      details: "ImageNet (2012) to GPT-4 (2023) represents continuous scaling success. AlexNet, ResNet, BERT, GPT-3, GPT-4—each was primarily about scale. New architectures (attention, transformers) mainly enabled better scaling.",
+      supporters: ["Rich Sutton", "OpenAI", "DeepMind"],
+      rebuttals: [
+        "Transformers were architectural breakthrough",
+        "Past success doesn't guarantee future success",
+        "We're cherry-picking—many scaling attempts failed"
+      ],
+      sources: [
+        { title: "The Bitter Lesson", url: "http://www.incompleteideas.net/IncIdeas/BitterLesson.html" }
+      ]
+    },
+    {
+      id: "gpt4-capabilities",
+      claim: "GPT-4 shows qualitatively different capabilities",
+      type: "pro",
+      strength: "moderate",
+      summary: "GPT-4 can pass the bar exam, write code, reason about images—capabilities that suggest we're on the right path.",
+      details: "GPT-4 scored in the 90th percentile on the bar exam, can solve college-level math problems, and shows multimodal understanding. While not AGI, the trajectory from GPT-2 to GPT-4 suggests continued scaling could reach human-level.",
+      supporters: ["OpenAI"],
+      rebuttals: [
+        "Test performance ≠ understanding",
+        "Benchmarks may be in training data",
+        "Plateau on truly novel tasks",
+        "Still lacks basic reasoning and world models"
+      ]
+    },
+    {
+      id: "no-obvious-limits",
+      claim: "No obvious computational limits in sight",
+      type: "pro",
+      strength: "moderate",
+      summary: "We have enough data, compute is growing exponentially, and efficiency improvements continue.",
+      details: "The internet contains trillions of tokens. Compute doubles every 6 months in ML. Algorithmic improvements give 2-3x gains annually. We're nowhere near physical limits.",
+      supporters: ["Scaling optimists"],
+      rebuttals: [
+        "High-quality data may be limited",
+        "Compute costs become prohibitive",
+        "Efficiency gains may saturate"
+      ]
+    },
+    {
+      id: "brain-analogy",
+      claim: "The human brain suggests scaling works",
+      type: "pro",
+      strength: "weak",
+      summary: "Human intelligence emerged from scaling up neural tissue—more neurons, more connections.",
+      details: "Evolution didn't need algorithmic breakthroughs to go from chimp to human—mostly just more neurons, especially in prefrontal cortex. Suggests scaling simple learning rules is sufficient.",
+      supporters: ["Some neuroscientists"],
+      rebuttals: [
+        "Evolution had billions of years",
+        "Brain has architectural specializations",
+        "We don't understand what made humans special",
+        "Biological neurons ≠ artificial neurons"
+      ]
+    }
+  ]}
+  conArguments={[
+    {
+      id: "no-understanding",
+      claim: "Scaling doesn't create true understanding",
+      type: "con",
+      strength: "strong",
+      summary: "LLMs are sophisticated pattern matchers, not reasoning systems. No amount of scaling fixes this fundamental limitation.",
+      details: "LLMs fail on simple reasoning tasks outside their training distribution, can't plan reliably, hallucinate confidently, and lack grounded world models. These are architectural problems, not scale problems.",
+      supporters: ["Gary Marcus", "Yann LeCun", "François Chollet"],
+      rebuttals: [
+        "Unclear what 'true understanding' means",
+        "Capabilities keep expanding with scale",
+        "May be moving goalposts as AI improves"
+      ]
+    },
+    {
+      id: "data-wall",
+      claim: "We're running out of high-quality training data",
+      type: "con",
+      strength: "strong",
+      summary: "The internet is finite. We'll exhaust quality text data within years, limiting scaling.",
+      details: "Villalobos et al. (2024) estimate we'll run out of high-quality text data by 2026. Synthetic data creates model collapse. Multimodal data helps but has limits. Can't scale what you don't have.",
+      supporters: ["Epoch AI researchers", "Some ML researchers"],
+      rebuttals: [
+        "Can generate synthetic data",
+        "Can use multimodal data",
+        "Data efficiency is improving",
+        "Can retrain on same data with better algorithms"
+      ],
+      sources: [
+        { title: "Will we run out of data?", url: "https://arxiv.org/abs/2211.04325" }
+      ]
+    },
+    {
+      id: "reasoning-failures",
+      claim: "Fundamental reasoning gaps persist despite scaling",
+      type: "con",
+      strength: "strong",
+      summary: "GPT-4 still fails at basic logic, planning, and out-of-distribution reasoning that humans handle easily.",
+      details: "Even the largest models fail at simple arithmetic variations, can't plan multi-step tasks reliably, lack causal reasoning, and struggle with novel combinations. These failures suggest architectural limits.",
+      supporters: ["Gary Marcus", "Melanie Mitchell", "François Chollet"],
+      rebuttals: [
+        "Performance is improving with scale",
+        "Can add tools and scaffolding",
+        "May need only modest architectural changes"
+      ]
+    },
+    {
+      id: "efficiency-gap",
+      claim: "Current approaches are fundamentally inefficient",
+      type: "con",
+      strength: "moderate",
+      summary: "A 3-year-old learns language from ~10M words. GPT-4 needs trillions of tokens. This suggests we're missing key insights.",
+      details: "Human learning is orders of magnitude more sample-efficient. Children learn causal models, abstract concepts, and compositional reasoning with minimal data. Current scaling compensates for inefficiency with brute force.",
+      supporters: ["Yann LeCun", "Josh Tenenbaum", "Cognitive scientists"],
+      rebuttals: [
+        "Evolution pre-trained humans over millions of years",
+        "Humans have embodied learning",
+        "Efficiency isn't necessary for AGI"
+      ]
+    },
+    {
+      id: "missing-components",
+      claim: "Key components are missing from current architectures",
+      type: "con",
+      strength: "moderate",
+      summary: "Persistent memory, causal reasoning, world models, and planning may require architectural innovation.",
+      details: "Yann LeCun argues we need world models and planning. Others point to lack of persistent episodic memory, explicit causal reasoning, or modular composition. These may not emerge from scaling.",
+      supporters: ["Yann LeCun", "Gary Marcus", "Josh Tenenbaum"],
+      rebuttals: [
+        "Unclear these are necessary",
+        "Can add via scaffolding",
+        "May emerge at sufficient scale"
+      ]
+    },
+    {
+      id: "cost-wall",
+      claim: "Economic costs become prohibitive",
+      type: "con",
+      strength: "moderate",
+      summary: "Training runs already cost hundreds of millions. Scaling another 100x may not be economically viable.",
+      details: "GPT-4 reportedly cost >$100M to train. Scaling laws suggest we need 100-1000x more compute for AGI. This may exceed $100B, making it economically infeasible without clear ROI.",
+      supporters: ["Some economists"],
+      rebuttals: [
+        "Costs are dropping",
+        "Economic value of AGI justifies investment",
+        "Efficiency improvements reduce costs"
+      ]
+    },
+    {
+      id: "goalpost-moving",
+      claim: "Scaling advocates keep moving goalposts",
+      type: "con",
+      strength: "weak",
+      summary: "Each capability gap is dismissed as 'just needs more scale,' making the hypothesis unfalsifiable.",
+      details: "Critics argue scaling advocates explain away every failure as insufficient scale, making the hypothesis impossible to disprove. This isn't science.",
+      supporters: ["Gary Marcus"],
+      rebuttals: [
+        "Predictions have been validated",
+        "Specific capability predictions proven correct",
+        "This is how science works—theories make predictions"
+      ]
+    }
+  ]}
+  considerations={[
+    {
+      id: "definition-matters",
+      claim: "Depends on what 'AGI' means",
+      type: "consideration",
+      strength: "strong",
+      summary: "Scaling may produce economically transformative AI without philosophical 'general intelligence.'"
+    },
+    {
+      id: "hybrid-likely",
+      claim: "Reality is probably hybrid",
+      type: "consideration",
+      strength: "strong",
+      summary: "Most likely outcome: scaling plus modest architectural improvements, not pure scaling or complete paradigm shift."
+    },
+    {
+      id: "timelines-crucial",
+      claim: "Timeline predictions differ dramatically",
+      type: "consideration",
+      strength: "moderate",
+      summary: "Scaling optimists predict AGI in years; skeptics predict decades or never with current approaches."
+    }
+  ]}
+  verdict={{
+    position: "Scaling is necessary but probably not sufficient",
+    confidence: "medium-low",
+    reasoning: "Scaling has driven all recent progress and will likely continue to unlock capabilities. However, fundamental gaps in reasoning, planning, and efficiency suggest some architectural innovations will be needed. The question is whether these are minor additions or require completely new paradigms."
+  }}
+/>
+
+## Key Positions
+
+<DisagreementMap
+  client:load
+  title="Positions on Scaling"
+  description="Where different researchers and organizations stand"
+  positions={[
+    {
+      name: "Ilya Sutskever (OpenAI)",
+      stance: "strong-scaling",
+      confidence: "high",
+      reasoning: "Has consistently predicted that scaling will be sufficient. OpenAI's strategy is built on this.",
+      evidence: ["GPT-2/3/4 trajectory", "Scaling law predictions"],
+      quote: "Unsupervised learning + scaling is all you need"
+    },
+    {
+      name: "Dario Amodei (Anthropic)",
+      stance: "scaling-plus",
+      confidence: "high",
+      reasoning: "Believes scaling is primary driver but with important safety additions (Constitutional AI, etc.)",
+      evidence: ["Anthropic's research strategy"],
+      quote: "Scaling works, but we need to scale safely"
+    },
+    {
+      name: "Yann LeCun (Meta)",
+      stance: "new-paradigm",
+      confidence: "high",
+      reasoning: "Argues LLMs are missing crucial components like world models and planning.",
+      evidence: ["JEPA proposal", "Critique of autoregressive models"],
+      quote: "Auto-regressive LLMs are a dead end for AGI"
+    },
+    {
+      name: "Gary Marcus",
+      stance: "strong-skeptic",
+      confidence: "high",
+      reasoning: "Argues deep learning is fundamentally limited, scaling just makes bigger versions of the same limitations.",
+      evidence: ["Persistent reasoning failures", "Lack of compositionality"],
+      quote: "Scaling just gives you more of the same mistakes"
+    },
+    {
+      name: "DeepMind",
+      stance: "scaling-plus",
+      confidence: "medium",
+      reasoning: "Combines scaling with algorithmic innovations (AlphaGo, AlphaFold, Gemini)",
+      evidence: ["Hybrid approaches"],
+      quote: "Scale and innovation together"
+    },
+    {
+      name: "François Chollet",
+      stance: "new-paradigm",
+      confidence: "high",
+      reasoning: "Created ARC benchmark to show LLMs can't generalize. Argues we need fundamentally different approaches.",
+      evidence: ["ARC benchmark results", "On the Measure of Intelligence"],
+      quote: "LLMs memorize, they don't generalize"
+    }
+  ]}
+/>
+
+## Key Cruxes
+
+<KeyQuestions
+  client:load
+  questions={[
+    {
+      question: "Will scaling unlock planning and reasoning?",
+      positions: [
+        {
+          position: "Yes - these are emergent capabilities",
+          confidence: "medium",
+          reasoning: "Many capabilities emerged unpredictably. Planning/reasoning may too at sufficient scale.",
+          implications: "Continue scaling, AGI within years"
+        },
+        {
+          position: "No - these require architectural changes",
+          confidence: "medium",
+          reasoning: "These capabilities require different computational structures than next-token prediction.",
+          implications: "Need new paradigms, AGI more distant"
+        }
+      ]
+    },
+    {
+      question: "Is the data wall real?",
+      positions: [
+        {
+          position: "Yes - we'll run out of quality data soon",
+          confidence: "medium",
+          reasoning: "Finite internet, synthetic data degrades. Fundamental limit on scaling.",
+          implications: "Scaling hits wall by ~2026"
+        },
+        {
+          position: "No - many ways around it",
+          confidence: "medium",
+          reasoning: "Synthetic data, multimodal, data efficiency, curriculum learning all help.",
+          implications: "Scaling can continue for decade+"
+        }
+      ]
+    },
+    {
+      question: "Do reasoning failures indicate fundamental limits?",
+      positions: [
+        {
+          position: "Yes - architectural gap",
+          confidence: "high",
+          reasoning: "Same types of failures persist across scales. Not improving on these dimensions.",
+          implications: "Scaling insufficient"
+        },
+        {
+          position: "No - just need more scale",
+          confidence: "low",
+          reasoning: "Performance is improving. May cross threshold with more scale.",
+          implications: "Keep scaling"
+        }
+      ]
+    },
+    {
+      question: "What would disprove the scaling hypothesis?",
+      positions: [
+        {
+          position: "Scaling 100x with no qualitative improvement",
+          confidence: "medium",
+          reasoning: "If we scale 100x from GPT-4 and see only incremental gains, suggests limits.",
+          implications: "Would validate skeptics"
+        },
+        {
+          position: "Running out of data/compute",
+          confidence: "medium",
+          reasoning: "If practical limits prevent further scaling, question becomes moot.",
+          implications: "Would require new approaches by necessity"
+        }
+      ]
+    }
+  ]}
+/>
+
+## What Would Change Minds?
+
+**For scaling optimists to update toward skepticism:**
+- Scaling 100x with only marginal capability improvements
+- Hitting hard data or compute walls
+- Proof that key capabilities (planning, causality) can't emerge from current architectures
+- Persistent failures on simple reasoning despite increasing scale
+
+**For skeptics to update toward scaling:**
+- GPT-5/6 showing qualitatively new reasoning capabilities
+- Solving ARC or other generalization benchmarks via pure scaling
+- Continued emergent abilities at each scale-up
+- Clear path around data limitations
+
+## Implications for AI Safety
+
+This debate has major implications:
+
+**If scaling works:**
+- Short timelines (AGI within 5-10 years)
+- Predictable capability trajectory
+- Safety research can focus on aligning scaled-up LLMs
+- Winner-take-all dynamics (whoever scales most wins)
+
+**If new paradigms needed:**
+- Longer timelines (10-30+ years)
+- More uncertainty about capability trajectory
+- Safety research needs to consider unknown architectures
+- More opportunity for safety-by-default designs
+
+**Hybrid scenario:**
+- Medium timelines (5-15 years)
+- Some predictability, some surprises
+- Safety research should cover both scaled LLMs and new architectures
+
+## Historical Parallels
+
+**Cases where scaling worked:**
+- ImageNet → Deep learning revolution (2012)
+- GPT-2 → GPT-3 → GPT-4 trajectory
+- AlphaGo scaling to AlphaZero
+- Transformer scaling unlocking new capabilities
+
+**Cases where new paradigms were needed:**
+- Perceptrons → Neural networks (needed backprop + hidden layers)
+- RNNs → Transformers (needed attention mechanism)
+- Expert systems → Statistical learning (needed paradigm shift)
+
+The question: Which pattern are we in now?
+
+<Section title="Related Debates">
+  <EntityCards>
+    <EntityCard
+      id="agi-timeline-debate"
+      category="crux"
+      title="AGI Timeline Debate"
+      description="When will AGI arrive?"
+    />
+    <EntityCard
+      id="is-ai-xrisk-real"
+      category="crux"
+      title="Is AI X-Risk Real?"
+      description="Does AI pose existential risk?"
+    />
+  </EntityCards>
+</Section>
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Scaling Laws",
+    "AGI",
+    "Emergent Abilities",
+    "Transformers",
+    "Deep Learning",
+    "Timelines",
+    "Research Strategy",
+  ]} />
+</Section>
+
+<Sources sources={[
+  { title: "Scaling Laws for Neural Language Models", author: "Kaplan et al.", date: "2020", url: "https://arxiv.org/abs/2001.08361" },
+  { title: "Training Compute-Optimal Large Language Models", author: "Hoffmann et al. (Chinchilla)", date: "2022", url: "https://arxiv.org/abs/2203.15556" },
+  { title: "Emergent Abilities of Large Language Models", author: "Wei et al.", date: "2022", url: "https://arxiv.org/abs/2206.07682" },
+  { title: "The Bitter Lesson", author: "Rich Sutton", date: "2019", url: "http://www.incompleteideas.net/IncIdeas/BitterLesson.html" },
+  { title: "Will we run out of data? Limits of LLM scaling", author: "Villalobos et al.", date: "2024", url: "https://arxiv.org/abs/2211.04325" },
+  { title: "On the Measure of Intelligence", author: "François Chollet", date: "2019", url: "https://arxiv.org/abs/1911.01547" },
+  { title: "A Path Towards Autonomous Machine Intelligence", author: "Yann LeCun", date: "2022", url: "https://openreview.net/pdf?id=BZ5a1r-kVsf" },
+  { title: "The Next Decade in AI: Four Steps Towards Robust Artificial Intelligence", author: "Gary Marcus", date: "2020", url: "https://arxiv.org/abs/2002.06177" },
+  { title: "Sparks of AGI: Early experiments with GPT-4", author: "Microsoft Research", date: "2023", url: "https://arxiv.org/abs/2303.12712" },
+]} />

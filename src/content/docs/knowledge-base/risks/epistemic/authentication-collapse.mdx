@@ -1,0 +1,258 @@
+---
+title: Authentication Collapse
+description: When verification systems can no longer keep pace with synthetic content generation
+sidebar:
+  order: 17
+---
+
+import { InfoBox, KeyQuestions, Section, Tags, Sources } from '../../../../../components/wiki';
+
+<InfoBox
+  type="risk"
+  title="Authentication Collapse"
+  severity="critical"
+  likelihood="Emerging rapidly"
+  timeframe="Now - 2030"
+  customFields={[
+    { label: "Status", value: "Detection already failing for cutting-edge generators" },
+    { label: "Key Concern", value: "Fundamental asymmetry favors generation" },
+  ]}
+/>
+
+## The Scenario
+
+By 2028, no reliable way exists to distinguish AI-generated content from human-created content. Detection tools fail. Watermarks are removed. Provenance systems aren't adopted. Everything could be fake, and nothing can be proven real.
+
+**This isn't about any single piece of content**—it's about the collapse of authentication as a concept. When anything can be faked, everything becomes deniable.
+
+---
+
+## The Arms Race
+
+### Why Attackers Win
+
+| Factor | Attacker Advantage |
+|--------|-------------------|
+| **Asymmetric cost** | Generation: milliseconds. Detection: extensive analysis. |
+| **One-sided burden** | Detector must catch all fakes. Generator needs one to succeed. |
+| **Training dynamics** | Generators improve against detectors; detectors can't train on future generators. |
+| **Removal** | Watermarks can be stripped; detection artifacts can be cleaned. |
+| **Deployment lag** | New detection must be deployed; new generation is immediate. |
+
+### Current Detection Accuracy
+
+| Content Type | Detection Accuracy | Trend |
+|--------------|-------------------|-------|
+| **Text (GPT-4 level)** | ~50% (near random) | Declining |
+| **Images (Midjourney v5+)** | 60-70% for experts | Declining |
+| **Audio (voice cloning)** | 50-70% | Declining rapidly |
+| **Video (deepfakes)** | 60-80% | Declining |
+
+**Research:**
+- [OpenAI discontinued AI classifier](https://openai.com/blog/new-ai-classifier-for-indicating-ai-written-text) — too unreliable
+- [Kirchner et al. (2023)](https://arxiv.org/abs/2303.11156) — detection near random for advanced models
+- [Human detection worse than chance for some deepfakes](https://www.pnas.org/doi/10.1073/pnas.2110013119)
+
+---
+
+## Detection Methods and Their Failures
+
+### AI-Based Detection
+
+| Method | How It Works | Why It Fails |
+|--------|--------------|--------------|
+| **Classifier models** | Train AI to spot AI | Generators train to evade |
+| **Perplexity analysis** | Measure text "surprise" | Paraphrasing defeats it |
+| **Embedding analysis** | Detect AI fingerprints | Fingerprints can be obscured |
+
+**Status**: Major platforms have abandoned AI text detection as unreliable.
+
+### Watermarking
+
+| Method | How It Works | Why It Fails |
+|--------|--------------|--------------|
+| **Invisible image marks** | Embed data in pixels | Cropping, compression removes |
+| **Text watermarks** | Statistical patterns in output | Paraphrasing removes |
+| **Audio watermarks** | Embed in audio signal | Re-encoding strips |
+
+**Status**: Watermarking requires universal adoption; not achieved. Removal tools freely available.
+
+### Provenance Systems
+
+| Method | How It Works | Why It Fails |
+|--------|--------------|--------------|
+| **C2PA/Content Credentials** | Cryptographic provenance chain | Requires device integration; can be stripped |
+| **Blockchain timestamps** | Immutable record of creation | Doesn't prove content wasn't AI-generated |
+| **Platform verification** | Platforms verify at upload | Fake content uploaded before detection |
+
+**Status**: Adoption slow; not universal; easily circumvented.
+
+### Forensic Analysis
+
+| Method | How It Works | Why It Fails |
+|--------|--------------|--------------|
+| **Metadata analysis** | Check file properties | Easily forged |
+| **Artifact detection** | Look for generation artifacts | Artifacts disappearing |
+| **Consistency checking** | Look for physical impossibilities | AI improving at physics |
+
+**Status**: Still useful for crude fakes; failing for state-of-the-art.
+
+---
+
+## Timeline
+
+### Phase 1: Detection Works (2017-2022)
+- Early deepfakes detectable
+- AI text has obvious tells
+- Forensic tools effective
+- Arms race just beginning
+
+### Phase 2: Detection Struggling (2022-2025)
+- Detection accuracy declining
+- Arms race accelerating
+- Some content undetectable
+- Watermarking proposed but not deployed
+
+### Phase 3: Detection Failing (2025-2028)
+- Major detection methods ineffective
+- Watermarks widely stripped
+- Provenance not adopted
+- "Probably fake" becomes default assumption
+
+### Phase 4: Authentication Collapse (2028+?)
+- No reliable detection
+- Everything potentially synthetic
+- Verification requires non-AI methods
+- Digital evidence inherently unreliable
+
+---
+
+## Consequences
+
+### Immediate
+
+| Domain | Consequence |
+|--------|-------------|
+| **Journalism** | Can't verify sources, images, documents |
+| **Law enforcement** | Digital evidence inadmissible |
+| **Science** | Data authenticity unverifiable |
+| **Finance** | Document fraud easier |
+
+### Systemic
+
+| Consequence | Mechanism |
+|-------------|-----------|
+| **Liar's dividend** | Real evidence dismissed as "possibly fake" |
+| **Truth nihilism** | "Nothing can be verified" attitude |
+| **Institutional collapse** | Systems dependent on verification fail |
+| **Return to physical** | In-person, analog verification regains primacy |
+
+### Social
+
+| Consequence | Mechanism |
+|-------------|-----------|
+| **Trust collapse** | All digital content suspect |
+| **Tribalism** | Trust only in-group verification |
+| **Manipulation vulnerability** | Anyone can be framed; anyone can deny |
+
+---
+
+## What Might Work
+
+### Technical Approaches (Uncertain)
+
+| Approach | Description | Prognosis |
+|----------|-------------|-----------|
+| **Hardware attestation** | Chips cryptographically sign captures | Requires hardware changes; years away |
+| **Zero-knowledge proofs** | Prove properties without revealing data | Complex; limited applications |
+| **Continuous provenance** | Track from capture through editing | Adoption challenge |
+
+### Non-Technical Approaches
+
+| Approach | Description | Prognosis |
+|----------|-------------|-----------|
+| **Institutional verification** | Trusted organizations verify | Who trusts the verifiers? |
+| **Physical evidence** | Return to analog methods | Expensive; slow |
+| **Reputation systems** | Trust based on track record | Works only for established entities |
+| **Live verification** | Real-time, in-person confirmation | Doesn't scale |
+
+### What Probably Won't Work
+
+| Approach | Why It Fails |
+|----------|--------------|
+| **Better AI detection** | Arms race dynamics favor generators |
+| **Mandatory watermarks** | Can't enforce globally; removal trivial |
+| **Platform detection** | Platforms can't keep up; incentives misaligned |
+| **Legal requirements** | Jurisdiction limited; enforcement impossible |
+
+---
+
+## Research and Development
+
+### Active Projects
+
+| Project | Organization | Approach |
+|---------|--------------|----------|
+| **C2PA** | Adobe, Microsoft, others | Content credentials |
+| **MediFor** | DARPA | Media forensics |
+| **SemaFor** | DARPA | Semantic forensics |
+| **Project Origin** | BBC, Microsoft, others | News provenance |
+
+### Academic Research
+
+- [MIT: Detecting deepfakes](https://www.media.mit.edu/projects/detect-fakes/overview/)
+- [Berkeley AI Research: Detection methods](https://bair.berkeley.edu/)
+- [Sensity AI: Deepfake analysis](https://sensity.ai/)
+
+---
+
+## Key Uncertainties
+
+<KeyQuestions
+  questions={[
+    "Is there a technical solution, or is this an unwinnable arms race?",
+    "Will hardware attestation become universal before collapse?",
+    "Can societies function when nothing digital can be verified?",
+    "Does authentication collapse happen suddenly or gradually?",
+    "What replaces digital verification when it fails?"
+  ]}
+/>
+
+---
+
+## Research and Resources
+
+### Technical
+
+- [C2PA Specification](https://c2pa.org/specifications/specifications/1.0/specs/C2PA_Specification.html)
+- [DARPA MediFor](https://www.darpa.mil/program/media-forensics)
+- [DARPA SemaFor](https://www.darpa.mil/program/semantic-forensics)
+
+### Academic
+
+- [AI-generated text detection survey](https://arxiv.org/abs/2303.07205)
+- [Deepfake detection survey](https://arxiv.org/abs/2004.11138)
+- [Watermarking language models](https://arxiv.org/abs/2301.10226)
+
+### Organizations
+
+- [Witness: Video as Evidence](https://www.witness.org/)
+- [Project Origin](https://www.originproject.info/)
+- [Sensity AI](https://sensity.ai/)
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Deepfakes",
+    "Content Verification",
+    "Watermarking",
+    "Digital Forensics",
+    "Provenance",
+  ]} />
+</Section>
+
+<Sources sources={[
+  { title: "C2PA: Coalition for Content Provenance and Authenticity", url: "https://c2pa.org/" },
+  { title: "DARPA MediFor Program", url: "https://www.darpa.mil/program/media-forensics" },
+  { title: "AI Text Detection is Unreliable", author: "Kirchner et al.", date: "2023", url: "https://arxiv.org/abs/2303.11156" },
+  { title: "Deepfake Detection Survey", url: "https://arxiv.org/abs/2004.11138" },
+]} />

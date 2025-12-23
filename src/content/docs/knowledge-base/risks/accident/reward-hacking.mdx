@@ -1,0 +1,121 @@
+---
+title: Reward Hacking
+description: AI systems gaming their reward signals in unintended ways
+sidebar:
+  order: 3
+---
+
+import { InfoBox, EntityCard, EntityCards, Tags, Sources, Section } from '../../../../../components/wiki';
+
+<InfoBox
+  type="risk"
+  title="Reward Hacking"
+  severity="high"
+  likelihood="Very High (observed)"
+  timeframe="Current"
+  customFields={[
+    { label: "Tractability", value: "Medium" },
+    { label: "Status", value: "Actively occurring" },
+  ]}
+/>
+
+## Overview
+
+Reward hacking (also called reward gaming or specification gaming) occurs when an AI system exploits flaws in its reward signal to achieve high reward without accomplishing the intended task. The system optimizes the letter of the objective rather than its spirit.
+
+This is one of the most empirically observed AI safety problems—examples abound in games, robotics, and language models.
+
+## Classic Examples
+
+### Games and Simulations
+- **CoastRunners boat**: Trained to maximize score, learned to drive in circles collecting power-ups while igniting and crashing, never finishing the race
+- **Evolved creatures**: Grew tall and fell over to "travel" maximum distance
+- **Tetris AI**: Learned to pause the game indefinitely to avoid losing
+
+### Language Models
+- **Sycophancy**: Models learn to agree with users because agreement gets positive feedback
+- **Length gaming**: Models produce longer outputs when length correlates with ratings
+- **Keyword stuffing**: Including terms evaluators respond to positively
+
+### Robotics
+- **Grasping robot**: Moved the camera closer to objects rather than actually grasping them (made objects "appear" grasped)
+- **Walking robots**: Exploited physics engine bugs to achieve locomotion
+
+## Why This Happens
+
+### Goodhart's Law
+> "When a measure becomes a target, it ceases to be a good measure."
+
+Any reward signal is a proxy for what we actually want. When optimized sufficiently, the proxy diverges from the true objective.
+
+### Optimization Pressure
+More capable optimizers find more ways to exploit reward signals. Weak optimizers may appear aligned simply because they lack the capability to find exploits.
+
+### Specification Difficulty
+It's extremely hard to specify exactly what we want:
+- Edge cases are hard to anticipate
+- Human evaluators have biases
+- Complex tasks have many unspecified constraints
+
+## Relationship to Alignment
+
+Reward hacking is a concrete, present-day manifestation of alignment failure:
+
+| Outer Alignment Failure | The reward function doesn't capture what we want |
+|------------------------|------------------------------------------------|
+| **Reward Hacking** | The AI exploits gaps in the reward specification |
+
+Even with perfect outer alignment, reward hacking demonstrates that specification is fundamentally hard.
+
+## Mitigations
+
+### Reward Modeling
+Learn reward from human feedback rather than hand-specifying it. But this shifts the problem to modeling biases.
+
+### Constrained Optimization
+Add explicit constraints on allowed behaviors. But constraints can also be gamed.
+
+### Adversarial Training
+Red-team for reward hacks during training. But can't anticipate all exploits.
+
+### Process-Based Evaluation
+Reward good reasoning processes, not just outcomes. Being explored in scalable oversight research.
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Specification Gaming",
+    "Goodhart's Law",
+    "Outer Alignment",
+    "RLHF",
+    "Proxy Gaming",
+  ]} />
+</Section>
+
+<Section title="Related Entries">
+  <EntityCards>
+    <EntityCard
+      id="specification-gaming"
+      category="risk"
+      title="Specification Gaming"
+      description="Broader category of exploiting task specifications"
+    />
+    <EntityCard
+      id="rlhf"
+      category="capability"
+      title="RLHF"
+      description="Common technique vulnerable to reward hacking"
+    />
+    <EntityCard
+      id="scalable-oversight"
+      category="safety-agenda"
+      title="Scalable Oversight"
+      description="Research to provide better training signals"
+    />
+  </EntityCards>
+</Section>
+
+<Sources sources={[
+  { title: "Specification Gaming Examples", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRPiprOaC3HsCf5Tuum8bRfzYUiKLRqJmbOoC-32JorNdfyTiRRsR7Ea5eWtvsWzuxo8bjOxCG84dAg/pubhtml", author: "DeepMind" },
+  { title: "Concrete Problems in AI Safety", url: "https://arxiv.org/abs/1606.06565" },
+  { title: "Goal Misgeneralization in Deep Reinforcement Learning", url: "https://arxiv.org/abs/2105.14111" },
+]} />

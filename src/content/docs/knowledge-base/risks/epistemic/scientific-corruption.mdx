@@ -1,0 +1,249 @@
+---
+title: Scientific Knowledge Corruption
+description: AI-enabled fraud, fake papers, and the collapse of scientific reliability
+sidebar:
+  order: 10
+---
+
+import { InfoBox, KeyQuestions, Section, Tags, Sources } from '../../../../../components/wiki';
+
+<InfoBox
+  type="risk"
+  title="Scientific Knowledge Corruption"
+  severity="high"
+  likelihood="Already beginning"
+  timeframe="2024-2035"
+  customFields={[
+    { label: "Status", value: "Early stage, accelerating" },
+    { label: "Key Vectors", value: "Paper mills, data fabrication, citation gaming" },
+  ]}
+/>
+
+## The Scenario
+
+By 2030, a significant fraction of published scientific literature is AI-generated, fabricated, or meaningless. The replication crisis, already severe, becomes catastrophic. Scientists can no longer trust published results. Medical treatments based on fake studies harm patients. Policy based on fabricated research fails.
+
+**This isn't hypothetical.** It's already beginning.
+
+---
+
+## Current Evidence
+
+### Paper Mills (Already Operating)
+
+**Paper mills**: Organizations that produce fake papers for sale.
+
+| Evidence | Source |
+|----------|--------|
+| ~2% of submissions to some journals are from paper mills | [Byrne & Christopher, 2020](https://www.nature.com/articles/d41586-020-02920-8) |
+| 400+ papers retracted from single paper mill (2020) | [Retraction Watch](https://retractionwatch.com/) |
+| Estimated 300,000+ fake papers in literature | [Cabanac et al., 2022](https://arxiv.org/abs/2107.06751) |
+| Tortured phrases (AI-generated paraphrasing) detected at scale | [Problematic Paper Screener](https://www.problematicpaperscreener.com/) |
+
+**AI amplification**: Paper mills are adopting AI to:
+- Generate novel-looking text
+- Fabricate plausible data
+- Produce fake images (Western blots, microscopy)
+- Evade plagiarism detection
+
+### AI-Generated Papers
+
+| Development | Date | Implication |
+|-------------|------|-------------|
+| GPT-3 can write passable abstracts | 2020 | Basic generation possible |
+| ChatGPT-written papers submitted to journals | 2023 | Already happening |
+| AI-generated peer reviews detected | 2024 | Review process compromised |
+| SciGen (fake CS papers) accepted at conferences | 2005-present | Detection is hard |
+
+**Key concern**: As AI improves, fake papers become indistinguishable from real ones.
+
+### Data Fabrication
+
+AI enables data fabrication at unprecedented scale:
+
+- **Synthetic datasets**: Generate fake experimental data with realistic noise
+- **Image manipulation**: Create fake microscopy, Western blots, medical imaging
+- **Statistical fabrication**: Generate data that passes statistical tests
+
+**Research**:
+- [Bik et al.](https://journals.asm.org/doi/10.1128/mbio.00809-16) — Image manipulation in biomedical papers
+- [Carlisle, 2017](https://onlinelibrary.wiley.com/doi/10.1111/anae.13938) — Statistical detection of fabrication
+
+---
+
+## Attack Vectors
+
+### Vector 1: Paper Mill Industrialization
+
+**Mechanism**:
+1. Paper mills adopt AI for generation
+2. Output scales from hundreds to millions of papers
+3. Detection can't keep pace
+4. Journals overwhelmed; many fake papers published
+5. Literature becomes unreliable
+
+**Already happening**: Paper mills openly advertise AI-enhanced services.
+
+### Vector 2: Citation Gaming
+
+**Mechanism**:
+1. AI generates papers that cite specific targets
+2. Citation counts become unreliable quality signals
+3. Hiring, funding, promotion based on fake citations
+4. Incentives favor gaming over real research
+
+**Research**: [Citation cartels](https://www.nature.com/articles/d41586-020-02920-8)
+
+### Vector 3: Grant and Review Capture
+
+**Mechanism**:
+1. AI writes grant applications at scale
+2. AI writes peer reviews at scale
+3. Human reviewers overwhelmed
+4. Quality signals degrade
+5. Funding becomes noise
+
+**Already happening**: AI-generated peer reviews detected at major venues.
+
+### Vector 4: Preprint Flooding
+
+**Mechanism**:
+1. Preprint servers (arXiv, medRxiv) have minimal review
+2. AI floods servers with fake preprints
+3. Signal-to-noise ratio collapses
+4. Real research buried
+5. Media reports fake preprints
+
+**Vulnerability**: Preprint servers designed for speed, not verification.
+
+### Vector 5: Replication Sabotage
+
+**Mechanism**:
+1. AI generates fake replication studies
+2. Both confirmations and failures fabricated
+3. Meta-analyses corrupted
+4. Scientific consensus becomes untrustworthy
+
+---
+
+## Consequences
+
+### For Medicine
+
+| Consequence | Mechanism |
+|-------------|-----------|
+| **Ineffective treatments adopted** | Based on fake efficacy studies |
+| **Effective treatments rejected** | Based on fake negative results |
+| **Drug safety compromised** | Fake safety data |
+| **Clinical guidelines corrupted** | Based on systematic reviews of fake papers |
+
+**Example**: Ivermectin COVID controversy partly driven by low-quality/fraudulent studies.
+
+### For Policy
+
+| Consequence | Mechanism |
+|-------------|-----------|
+| **Evidence-based policy fails** | Evidence is corrupted |
+| **Regulatory capture easier** | Industry can manufacture evidence |
+| **Public trust collapses** | "You can find a study for anything" |
+
+### For Science Itself
+
+| Consequence | Mechanism |
+|-------------|-----------|
+| **Replication crisis worsens** | Can't tell fake from real failures |
+| **Researcher time wasted** | Trying to replicate fake results |
+| **Funding misallocated** | Based on fake prior work |
+| **Young researchers demoralized** | Why bother if it's all fake? |
+
+---
+
+## Defenses
+
+### Detection
+
+| Approach | Status | Limitations |
+|----------|--------|-------------|
+| **Tortured phrase detection** | Deployed | Arms race; AI improves |
+| **Image forensics** | Active research | AI-generated images improving |
+| **Statistical methods** | Active research | Fabricators adapt |
+| **AI detection** | Unreliable | Fundamentally limited |
+
+**Key tools**:
+- [Problematic Paper Screener](https://www.problematicpaperscreener.com/)
+- [ImageTwin](https://imagetwin.ai/)
+- [Statcheck](http://statcheck.io/)
+- [Retraction Watch Database](https://retractiondatabase.org/)
+
+### Process Changes
+
+| Approach | Status | Limitations |
+|----------|--------|-------------|
+| **Registered reports** | Growing adoption | Doesn't prevent fabrication |
+| **Data sharing requirements** | Increasing | Fake data can be shared |
+| **Open peer review** | Some journals | Doesn't detect sophisticated fraud |
+| **Preregistration** | Growing | Can be gamed |
+
+### Structural Changes
+
+| Approach | Status | Limitations |
+|----------|--------|-------------|
+| **Reduce publication pressure** | Discussed | Hard to implement |
+| **Change incentives** | Discussed | Institutional inertia |
+| **Professional integrity norms** | Exist | Insufficient enforcement |
+
+---
+
+## Key Uncertainties
+
+<KeyQuestions
+  questions={[
+    "Can detection keep pace with generation? Or is this an unwinnable arms race?",
+    "What fraction of scientific literature is already fake, and would we know?",
+    "Can institutional reforms happen fast enough to matter?",
+    "Will science bifurcate into 'trusted' and 'untrusted' tiers?",
+    "What happens to fields (like nutrition science) already struggling with replication?"
+  ]}
+/>
+
+---
+
+## Research and Resources
+
+### Academic Research
+
+- [Retraction Watch](https://retractionwatch.com/) — Tracking retractions
+- [COPE (Committee on Publication Ethics)](https://publicationethics.org/) — Publishing ethics guidance
+- [For Better Science](https://forbetterscience.com/) — Fraud investigations
+- [PubPeer](https://pubpeer.com/) — Post-publication review
+
+### Key Papers
+
+- Fanelli (2009): "How Many Scientists Fabricate and Falsify Research?" — [PLOS ONE](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0005738)
+- Cabanac et al. (2022): "Prevalence of nonsensical papers" — [arXiv](https://arxiv.org/abs/2107.06751)
+- Bik et al. (2016): "Prevalence of image manipulation" — [mBio](https://journals.asm.org/doi/10.1128/mbio.00809-16)
+- Ioannidis (2005): "Why Most Published Research Findings Are False" — [PLOS Medicine](https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.0020124)
+
+### Journalism
+
+- [Nature News: Paper mills](https://www.nature.com/articles/d41586-021-00733-5)
+- [Science: Fake papers](https://www.science.org/content/article/fake-scientific-papers-are-alarmingly-common)
+- [The Guardian: Research fraud](https://www.theguardian.com/science/research-fraud)
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Scientific Integrity",
+    "Paper Mills",
+    "Replication Crisis",
+    "Academic Fraud",
+    "AI Detection",
+  ]} />
+</Section>
+
+<Sources sources={[
+  { title: "The Rise of Paper Mills", author: "Nature News", date: "2021", url: "https://www.nature.com/articles/d41586-021-00733-5" },
+  { title: "Why Most Published Research Findings Are False", author: "John Ioannidis", date: "2005", url: "https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.0020124" },
+  { title: "Problematic Paper Screener", url: "https://www.problematicpaperscreener.com/" },
+  { title: "Retraction Watch Database", url: "https://retractiondatabase.org/" },
+  { title: "COPE Guidelines", url: "https://publicationethics.org/guidance" },
+]} />

@@ -1,0 +1,123 @@
+---
+title: Large Language Models
+description: Foundation models trained on text that demonstrate emergent capabilities
+sidebar:
+  order: 1
+---
+
+import { InfoBox, EntityCard, EntityCards, Tags, Sources, Section } from '../../../../components/wiki';
+
+<InfoBox
+  type="capability"
+  title="Large Language Models"
+  currentLevel="GPT-4 / Claude 3.5 class"
+  projectedTimeline="Continuous improvement"
+  customFields={[
+    { label: "First Major", value: "GPT-2 (2019)" },
+    { label: "Key Labs", value: "OpenAI, Anthropic, Google" },
+  ]}
+/>
+
+## Overview
+
+Large Language Models (LLMs) are neural networks trained on vast amounts of text data to predict the next token. Despite this simple objective, they develop sophisticated capabilities including reasoning, coding, and general knowledge.
+
+LLMs are the foundation of current AI progress and the primary technology that makes near-term AI risk discussions concrete.
+
+## Capability Progression
+
+| Model | Year | Parameters | Key Advances |
+|-------|------|------------|--------------|
+| GPT-2 | 2019 | 1.5B | Coherent text generation |
+| GPT-3 | 2020 | 175B | Few-shot learning, emergent abilities |
+| GPT-4 | 2023 | ~1T (est.) | Strong reasoning, multimodal |
+| Claude 3.5 | 2024 | Unknown | Extended context, improved reasoning |
+| o1 | 2024 | Unknown | Chain-of-thought reasoning |
+
+## Emergent Capabilities
+
+Capabilities that appear suddenly at scale:
+
+- **In-context learning**: Learning from examples in the prompt
+- **Chain-of-thought**: Step-by-step reasoning
+- **Instruction following**: Generalizing from instructions
+- **Code generation**: Writing and debugging programs
+- **Tool use**: Calling APIs, browsing web, running code
+
+## Safety-Relevant Capabilities
+
+### Concerning Capabilities
+- **Persuasion**: Can craft convincing arguments
+- **Deception**: Can role-play, maintain personas
+- **Coding**: Can write malware, find vulnerabilities
+- **Knowledge synthesis**: Can combine dangerous information
+- **Agency**: Can plan and execute multi-step tasks
+
+### Promising for Safety
+- **Interpretability subjects**: Can study LLM internals
+- **Constitutional AI**: Can critique own outputs
+- **Honesty training**: Can be trained toward truthfulness
+- **Scalable oversight**: Can assist in supervising other AI
+
+## Current Limitations
+
+- **Hallucination**: Generates plausible but false information
+- **Inconsistency**: Different responses to similar queries
+- **Limited context**: Struggle with very long documents
+- **Shallow reasoning**: Fail on novel logical problems
+- **No true understanding**: Debate about genuine comprehension
+
+## Scaling Trends
+
+### Scaling Laws
+Performance improves predictably with:
+- More parameters
+- More training data
+- More compute
+
+### What Doesn't Scale
+- Reliability and consistency
+- Truthfulness (without specific training)
+- Long-horizon planning
+- Novel scientific reasoning
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Foundation Models",
+    "Transformers",
+    "Scaling Laws",
+    "Emergent Capabilities",
+    "RLHF",
+    "GPT",
+    "Claude",
+  ]} />
+</Section>
+
+<Section title="Related Entries">
+  <EntityCards>
+    <EntityCard
+      id="reasoning"
+      category="capability"
+      title="AI Reasoning"
+      description="Chain-of-thought and o1-style reasoning"
+    />
+    <EntityCard
+      id="agentic-ai"
+      category="capability"
+      title="Agentic AI"
+      description="AI systems that take actions in the world"
+    />
+    <EntityCard
+      id="openai"
+      category="lab"
+      title="OpenAI"
+      description="Developer of GPT series"
+    />
+  </EntityCards>
+</Section>
+
+<Sources sources={[
+  { title: "Language Models are Few-Shot Learners (GPT-3)", url: "https://arxiv.org/abs/2005.14165" },
+  { title: "Scaling Laws for Neural Language Models", url: "https://arxiv.org/abs/2001.08361" },
+  { title: "Emergent Abilities of Large Language Models", url: "https://arxiv.org/abs/2206.07682" },
+]} />

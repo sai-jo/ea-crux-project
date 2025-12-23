@@ -1,0 +1,333 @@
+---
+title: Tool Use and Computer Use
+description: AI systems using external tools, APIs, and controlling computers
+sidebar:
+  order: 5
+---
+
+import { InfoBox, EntityCard, EntityCards, Tags, Sources, Section } from '../../../../components/wiki';
+
+<InfoBox
+  type="capability"
+  title="Tool Use and Computer Use"
+  currentLevel="Production deployment"
+  projectedTimeline="Rapid capability expansion"
+  customFields={[
+    { label: "Safety Relevance", value: "Very High" },
+    { label: "Key Examples", value: "Claude Computer Use, GPT Actions" },
+  ]}
+/>
+
+## Overview
+
+Tool use capabilities allow AI systems to interact with external systems beyond just generating text. This includes calling APIs, executing code, browsing the web, and even controlling computers directly. These capabilities transform language models from passive responders into active agents that can take real-world actions.
+
+The transition from language model to tool-using agent represents one of the most significant capability jumps in AI development, with profound implications for both beneficial applications and risks.
+
+## Types of Tool Use
+
+### API Calling
+Models can invoke external services:
+- Database queries
+- Web searches
+- Calculations
+- External knowledge bases
+- Third-party services
+
+### Code Execution
+Running code in sandboxed environments:
+- Python for calculations
+- Data analysis
+- File manipulation
+- System commands
+
+### Web Browsing
+Navigating and extracting information:
+- Loading web pages
+- Following links
+- Form submission
+- Information extraction
+
+### Computer Control
+Direct desktop interaction:
+- Mouse movements
+- Keyboard input
+- Screen reading
+- Application control
+
+## Current Implementations
+
+### Claude Computer Use
+Anthropic's Computer Use capability:
+- Controls mouse and keyboard
+- Takes screenshots to see results
+- Navigates applications
+- Completes multi-step computer tasks
+- Currently in public beta
+
+### GPT Function Calling
+OpenAI's function/tool calling:
+- Structured API invocation
+- JSON schema definition
+- Parallel tool use
+- Integration with plugins
+
+### Gemini Extensions
+Google's approach:
+- Integration with Google services
+- Gmail, Calendar, Maps access
+- Cross-service workflows
+
+### Open Source
+Community-driven tools:
+- LangChain for tool orchestration
+- AutoGPT for autonomous agents
+- Browser automation frameworks
+
+## How Tool Use Works
+
+### Architecture
+Typical implementation:
+1. Model receives task and available tools
+2. Decides which tool to use
+3. Generates properly formatted tool call
+4. Tool executes in controlled environment
+5. Results fed back to model
+6. Model continues or calls more tools
+
+### Training
+Models learn tool use through:
+- Fine-tuning on tool use examples
+- Reinforcement learning from outcomes
+- Synthetic data generation
+- Human demonstrations
+
+### Challenges
+Technical difficulties:
+- Tool selection errors
+- Incorrect argument formatting
+- Handling tool failures
+- Chaining tools effectively
+- Managing state across calls
+
+## Current Capabilities
+
+### What Works Well
+- Single tool calls for clear tasks
+- Web searching and information retrieval
+- Simple calculations and code execution
+- Structured data queries
+- File reading and writing
+
+### Limitations
+- Complex multi-tool workflows
+- Robust error recovery
+- Understanding tool capabilities
+- Optimal tool sequencing
+- Handling ambiguous situations
+
+### Reliability
+Current systems:
+- Work well for common patterns
+- Struggle with edge cases
+- Require careful prompt engineering
+- Need fallback mechanisms
+- Benefit from human oversight
+
+## Safety Implications
+
+### Autonomous Action
+Tool use enables AI to:
+- Make changes that persist
+- Affect external systems
+- Chain actions into complex behaviors
+- Act without human approval
+
+### Attack Surface Expansion
+New vectors for harm:
+- Executing malicious code
+- Accessing sensitive data
+- Manipulating external systems
+- Social engineering via tools
+- Denial of service attacks
+
+### Harder to Monitor
+Challenges:
+- Actions happen quickly
+- Complex tool chains hard to predict
+- Emergent behaviors from combinations
+- Output space much larger than text
+
+### Sandboxing Challenges
+Difficulty containing tool use:
+- Need real access for usefulness
+- Perfect isolation often impractical
+- Tools may have their own vulnerabilities
+- Jailbreaks via tool manipulation
+
+## Computer Use Specifically
+
+### Why It Matters
+Computer use is particularly significant because:
+- Universal interface (can do anything humans do)
+- No special integration needed
+- Works with any application
+- Enables full autonomy
+
+### Current Limitations
+Present systems struggle with:
+- Complex visual interfaces
+- Long multi-step workflows
+- Novel applications
+- Real-time interactions
+- Ambiguous visual elements
+
+### Trajectory
+Rapidly improving:
+- Better vision models
+- More training data
+- Improved planning
+- Error recovery
+- Speed optimizations
+
+## Use Cases
+
+### Beneficial Applications
+- Research assistance
+- Data analysis automation
+- Testing and QA
+- Accessibility tools
+- Personal productivity
+
+### Concerning Applications
+- Automated hacking
+- Mass social engineering
+- Autonomous malware
+- Surveillance at scale
+- Manipulation campaigns
+
+### Dual-Use Nature
+Most applications are neutral:
+- Depends on intent
+- Same capabilities enable good and bad
+- Difficult to selectively restrict
+
+## Safety Approaches
+
+### Sandboxing
+Restrict what tools can access:
+- Virtual environments
+- Limited permissions
+- Network isolation
+- Resource quotas
+
+### Monitoring and Logging
+Track all tool use:
+- Log every tool call
+- Audit trails
+- Anomaly detection
+- Real-time alerts
+
+### Human Approval
+Require confirmation for:
+- High-stakes actions
+- Irreversible operations
+- External communications
+- Financial transactions
+
+### Capability Limitation
+Restrict available tools:
+- Whitelist approved tools
+- Disable dangerous functions
+- Rate limiting
+- Scoped permissions
+
+### AI Control
+Ensure safety even with scheming agents:
+- Trusted monitoring
+- Untrusted assistants
+- Protocol design
+- Red team evaluation
+
+## Research Directions
+
+### Improving Capabilities
+- Better tool selection
+- More robust execution
+- Sophisticated error handling
+- Learning new tools
+- Tool composition
+
+### Improving Safety
+- Formal verification of tool use
+- Detecting malicious tool use
+- Faithful reasoning about tools
+- Interpretable tool selection
+- Safe exploration
+
+### Evaluation
+- Benchmarks for tool use
+- Safety evaluations
+- Robustness testing
+- Adversarial testing
+
+## Timeline Implications
+
+### Near-term (1-2 years)
+- More reliable computer use
+- Broader tool integration
+- Better error recovery
+- Longer autonomous workflows
+
+### Medium-term (2-5 years)
+- Full desktop automation
+- Complex multi-tool workflows
+- Novel tool learning
+- Robust real-world operation
+
+### Long-term (5+ years)
+- General-purpose computer agents
+- Creative tool composition
+- Self-improving tool use
+- Human-level computer operation
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Computer Use",
+    "Function Calling",
+    "API Integration",
+    "Autonomous Agents",
+    "Code Execution",
+    "Web Browsing",
+  ]} />
+</Section>
+
+<Section title="Related Entries">
+  <EntityCards>
+    <EntityCard
+      id="agentic-ai"
+      category="capability"
+      title="Agentic AI"
+      description="Broader category including tool use"
+    />
+    <EntityCard
+      id="coding"
+      category="capability"
+      title="Autonomous Coding"
+      description="Special case of tool use"
+    />
+    <EntityCard
+      id="anthropic"
+      category="lab"
+      title="Anthropic"
+      description="Developer of Claude Computer Use"
+    />
+  </EntityCards>
+</Section>
+
+<Sources sources={[
+  { title: "Claude Computer Use", url: "https://www.anthropic.com/news/3-5-models-and-computer-use", author: "Anthropic" },
+  { title: "Gorilla: LLM Connected with Massive APIs", url: "https://arxiv.org/abs/2305.15334" },
+  { title: "ToolLLM: Facilitating Large Language Models to Master 16000+ Real-world APIs", url: "https://arxiv.org/abs/2307.16789" },
+  { title: "GPT-4 Function Calling", url: "https://openai.com/index/function-calling-and-other-api-updates/" },
+]} />

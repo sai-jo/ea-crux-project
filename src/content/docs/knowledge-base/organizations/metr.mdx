@@ -1,0 +1,790 @@
+---
+title: METR
+description: Model Evaluation and Threat Research - dangerous capability evaluations for frontier AI
+sidebar:
+  order: 15
+---
+
+import { InfoBox, KeyPeople, EntityCard, EntityCards, Tags, Sources, Section, EstimateBox, DisagreementMap, KeyQuestions } from '../../../../components/wiki';
+
+<InfoBox
+  type="lab-research"
+  title="METR"
+  founded="2023 (as ARC Evals spin-off)"
+  location="Berkeley, CA"
+  headcount="~20-30"
+  funding="Grants and lab contracts"
+  website="https://metr.org"
+/>
+
+## Overview
+
+METR (Model Evaluation and Threat Research), formerly known as ARC Evals, is an organization dedicated to evaluating frontier AI models for dangerous capabilities before deployment. Founded in 2023 as a spin-off from the Alignment Research Center, METR conducts rigorous red-teaming and capability elicitation to determine whether AI systems can autonomously acquire resources, self-replicate, conduct cyberattacks, develop bioweapons, or engage in other catastrophically dangerous behaviors.
+
+METR occupies a critical position in the AI safety ecosystem: they are the organization that labs call before deploying potentially dangerous models to ask, "Is this safe to release?" Their evaluations directly inform deployment decisions at OpenAI, Anthropic, DeepMind, and other frontier AI developers.
+
+The organization's work bridges technical AI safety research and governance, providing concrete empirical evidence about dangerous capabilities that informs both lab safety practices and government regulation.
+
+## History and Founding
+
+### Origins as ARC Evals (2021-2023)
+
+**Background**: Part of Paul Christiano's Alignment Research Center (ARC)
+
+**Initial formation (2021-2022):**
+- Paul Christiano founded ARC with two divisions: Theory and Evals
+- ARC Theory focused on Eliciting Latent Knowledge (ELK)
+- ARC Evals focused on dangerous capability evaluations
+- Beth Barnes co-led evaluations work
+- Initial focus on autonomous replication and resource acquisition
+
+**Early evaluations:**
+- **GPT-4 pre-deployment** (late 2022/early 2023): Tested for autonomous replication
+  - Could the model copy itself to new servers?
+  - Could it acquire resources (money, compute)?
+  - Could it hide its activities?
+  - Result: Not yet capable of autonomous operation, safe to deploy
+- This evaluation was documented in OpenAI's GPT-4 System Card
+- Established template for pre-deployment evaluations
+
+**Growing demand:**
+- Multiple labs wanted similar evaluations
+- Evaluations team growing
+- Distinct mission from ARC Theory
+- Need for independent organizational structure
+
+### Spin-off to METR (2023)
+
+**Rebranding**: ARC Evals became METR (Model Evaluation and Threat Research)
+
+**Reasons for independence:**
+- Clearer organizational focus
+- Separate funding and governance
+- Scale evaluation capacity
+- Distinct brand and mission
+- Independent from ARC Theory research
+
+**Leadership:**
+- Beth Barnes continued to lead
+- Team expansion
+- New organizational structure
+- Maintained mission and approach
+
+### Growth and Integration (2023-2024)
+
+**2023 developments:**
+- Formal contracts with frontier labs (OpenAI, Anthropic, Google DeepMind)
+- Expanded evaluation suite beyond autonomous replication
+- Grew team of red-teamers and researchers
+- Developed standardized evaluation protocols
+- Increased integration with lab deployment decisions
+
+**2024 progress:**
+- Regular evaluations of new frontier models
+- More sophisticated testing methodologies
+- Cybersecurity and CBRN evaluations
+- International engagement (UK AISI, EU)
+- Growing influence on governance frameworks
+- Critical infrastructure for AI safety
+
+**Current role:**
+- De facto standard for dangerous capability evaluations
+- Integrated into lab safety frameworks (RSP, Preparedness)
+- Advising government evaluation bodies
+- Setting best practices for capability testing
+
+## Core Evaluation Areas
+
+METR evaluates whether AI models can perform catastrophically dangerous tasks autonomously.
+
+### 1. Autonomous Replication and Viability
+
+**Key questions:**
+- Can the AI copy itself to new infrastructure without human help?
+- Can it acquire computational resources?
+- Can it acquire money to pay for resources?
+- Can it maintain operational security?
+- Could it survive attempts to shut it down?
+
+**Why it matters:**
+- Autonomous AI could be impossible to control
+- Critical threshold for catastrophic risk
+- Once achieved, might be too late to reverse
+- Clear Schelling point for dangerous capabilities
+
+**Testing approach:**
+- Give model access to APIs, tools, internet
+- Task: Replicate yourself to another server
+- Minimal human assistance
+- Test operational security and resource acquisition
+- Evaluate strategic planning
+
+**Historical results:**
+- **GPT-4** (early 2023): Could do some subtasks with help, not autonomous
+- **Later models**: Improving capabilities, not yet fully autonomous
+- **Trend**: Progress toward autonomy, need continued monitoring
+
+**Implications:**
+- When autonomous, might cross critical threshold
+- Need strong safety measures before this capability
+- Deployment criteria should include this evaluation
+- International coordination becomes urgent
+
+### 2. Cybersecurity Capabilities
+
+**Threat model**: Can AI conduct cyberattacks autonomously?
+
+**Specific tests:**
+- Vulnerability discovery (finding security flaws)
+- Exploit development (writing attack code)
+- Social engineering (phishing, manipulation)
+- Network penetration
+- Persistence and covering tracks
+- Coordinated attack campaigns
+
+**Why concerning:**
+- Cybersecurity already challenging
+- AI could find novel vulnerabilities
+- Scale and speed of automated attacks
+- Defensive measures might not keep pace
+- Critical infrastructure at risk
+
+**Evaluation methodology:**
+- Capture-the-flag exercises
+- Real-world vulnerability testing (controlled)
+- Red-teaming live systems (with permission)
+- Comparison to human experts
+- Novel capability detection
+
+**Findings:**
+- Current models show some cyber capabilities
+- Not yet exceeding best humans
+- Rapid progress as models improve
+- Combination of models + tools particularly capable
+- Concerning trajectory
+
+### 3. CBRN (Chemical, Biological, Radiological, Nuclear)
+
+**Threat**: Can AI help develop weapons of mass destruction?
+
+**Specific risks:**
+
+**Biological:**
+- Designing novel pathogens
+- Optimizing virulence or transmissibility
+- Evading countermeasures (vaccines, treatments)
+- Synthesizing dangerous organisms
+- Providing expertise to non-experts
+
+**Chemical:**
+- Designing toxic compounds
+- Synthesis routes for chemical weapons
+- Delivery mechanisms
+- Circumventing precursor controls
+
+**Nuclear/Radiological:**
+- Weapons design assistance
+- Materials acquisition guidance
+- Detonation mechanisms
+- Dirty bomb construction
+
+**Testing approach:**
+- Expert elicitation from CBRN specialists
+- Controlled tests of dangerous knowledge
+- Comparison to scientific literature
+- Uplift studies (does AI help non-experts?)
+- Differential capability assessment
+
+**Results:**
+- Models have concerning knowledge
+- Can provide some dangerous information
+- Unclear how much uplift over internet search
+- Growing concern as models improve
+- Need better evaluations and mitigations
+
+**Challenges:**
+- Hard to test without actual harm
+- Experts needed to evaluate
+- Information hazards in testing itself
+- Uncertain threshold for "too dangerous"
+
+### 4. Persuasion and Manipulation
+
+**Risk**: Can AI manipulate humans at scale?
+
+**Capabilities tested:**
+- Psychological manipulation
+- Misinformation generation
+- Personalized persuasion
+- Long-term relationship building
+- Deception and concealment
+- Exploiting cognitive biases
+
+**Scenarios:**
+- Political manipulation
+- Financial fraud
+- Cult-like control
+- Mass deception campaigns
+- Evading human oversight
+- Gaining power and resources
+
+**Evaluation methods:**
+- Human studies (controlled)
+- Persuasion experiments
+- Deception detection tests
+- Adversarial dialogue
+- Long-term interaction studies
+
+**Findings:**
+- Models can be persuasive
+- Personalization increases effectiveness
+- Scaling concerning (millions of interactions)
+- Hard to evaluate worst-case
+- Concerning trend
+
+### 5. Self-Improvement and Research
+
+**Question**: Can AI recursively improve itself or accelerate AI research?
+
+**Specific tests:**
+- Can model improve its own code?
+- Can it conduct ML research autonomously?
+- Can it design better architectures?
+- Can it scale its training?
+- Recursive self-improvement dynamics?
+
+**Why critical:**
+- Recursive self-improvement could lead to rapid capability gain
+- "Foom" or intelligence explosion scenario
+- Might outpace human oversight
+- Point of no return
+
+**Current status:**
+- Models can write some code
+- Not yet conducting novel research autonomously
+- Using AI to help train AI (distillation, etc.)
+- Unclear when threshold is crossed
+- Need continuous monitoring
+
+## Evaluation Methodology
+
+METR has developed rigorous protocols for dangerous capability testing.
+
+### Principles
+
+**1. Adversarial mindset:**
+- Assume model might be dangerous
+- Try to elicit worst-case behavior
+- Don't trust initial responses
+- Red-team extensively
+- Look for capability hiding
+
+**2. Capability elicitation:**
+- Test maximum capability, not just default behavior
+- Use scaffolding, tools, prompting
+- Fine-tuning to maximize performance
+- Multiple attempts and approaches
+- Expert human assistance where appropriate
+
+**3. Quantitative thresholds:**
+- Define clear criteria for "too dangerous"
+- Measurable benchmarks
+- Comparison to human experts
+- Risk-level categorization
+- Actionable results
+
+**4. Reproducibility:**
+- Documented protocols
+- Shareable methodologies
+- Independent verification possible
+- Transparent reporting (to appropriate audiences)
+
+**5. Continuous monitoring:**
+- Not one-time tests
+- Regular evaluation of new models
+- Track capability emergence
+- Detect sudden jumps
+- Update methods as needed
+
+### Process
+
+**Pre-evaluation:**
+1. Threat model development
+2. Benchmark design
+3. Expert consultation
+4. Protocol documentation
+5. Coordination with labs
+
+**Evaluation:**
+1. Initial capability testing
+2. Adversarial elicitation
+3. Scaffolding and tool use
+4. Multiple contexts and framings
+5. Expert red-team attempts
+
+**Analysis:**
+1. Quantitative scoring
+2. Comparison to baselines
+3. Threshold assessment
+4. Uncertainty quantification
+5. Trend analysis
+
+**Reporting:**
+1. Results to labs
+2. Recommendations (deploy/don't deploy/conditional)
+3. Mitigation suggestions
+4. Public communication (appropriate level)
+5. Policy implications
+
+## Key People
+
+<Section title="Leadership and Research">
+  <KeyPeople people={[
+    { name: "Beth Barnes", role: "Executive Director" },
+    { name: "Various researchers and red-teamers", role: "Capability evaluations" },
+  ]} />
+</Section>
+
+### Beth Barnes (Executive Director)
+
+**Background:**
+- Previously at OpenAI working on safety evaluations
+- Co-founded ARC Evals with Paul Christiano
+- Deep expertise in dangerous capability assessment
+- Strong technical background in ML
+
+**Leadership of METR:**
+- Built organization from ARC Evals spin-off
+- Developed evaluation methodologies
+- Established relationships with all major labs
+- Policy engagement (UK AISI, US government)
+- Setting industry standards for evaluations
+
+**Approach:**
+- Rigorous and systematic
+- Adversarial testing mindset
+- Clear communication to labs and policymakers
+- Balancing transparency with responsibility
+- Building evaluation capacity
+
+**Influence:**
+- Trusted by labs for honest assessment
+- Respected in policy community
+- Shaping deployment frameworks
+- Training next generation of evaluators
+- Critical voice for safety in AI development
+
+## Integration with Lab Safety Frameworks
+
+METR's evaluations are now core components of major labs' safety commitments.
+
+### OpenAI Preparedness Framework
+
+**Role of METR:**
+- Conducts evaluations for cybersecurity, CBRN, persuasion, autonomy
+- Pre-deployment testing for new models
+- Threshold definitions informed by METR methodology
+- Red-teaming and capability elicitation
+- Independent assessment
+
+**Framework integration:**
+- Models must pass METR evaluations before deployment
+- If exceed risk thresholds, deployment blocked or mitigated
+- Regular testing as models improve
+- Public reporting of evaluation results (high-level)
+
+**Example**: GPT-4 deployment conditioned on ARC Evals (now METR) assessment
+
+### Anthropic Responsible Scaling Policy (RSP)
+
+**METR's role:**
+- ASL (AI Safety Level) thresholds partly defined by evaluations
+- Testing whether models meet dangerous capability criteria
+- ASL-3 determination requires evaluation
+- Continuous monitoring as models approach thresholds
+
+**Integration:**
+- Anthropic pledges not to advance ASL without safety measures
+- METR evaluations inform when thresholds crossed
+- Independent verification of Anthropic's safety claims
+- Collaboration on evaluation methodology
+
+### Google DeepMind Frontier Safety Framework
+
+**Evaluation integration:**
+- Critical Capability Levels (CCLs) informed by METR work
+- Pre-deployment evaluations for new models
+- Testing for early warning signs
+- Red-teaming and capability assessment
+
+**Collaboration:**
+- METR works with DeepMind safety teams
+- Shared methodology development
+- Evaluation of Gemini models
+- Safety threshold definitions
+
+## Policy and Governance Impact
+
+### UK AI Safety Institute (AISI)
+
+**METR's influence:**
+- Consultation on evaluation methodologies
+- Training UK government evaluators
+- Shared protocols and approaches
+- Coordination on international standards
+
+**Goal**: Build government capacity to conduct independent evaluations
+
+### US AI Executive Order
+
+**Connection:**
+- Evaluation requirements for advanced models
+- Capability thresholds for reporting
+- Red-teaming mandates
+- METR methodology influences implementation
+
+### International Standards
+
+**METR contributing to:**
+- ISO standards for AI safety evaluation
+- International coordination on dangerous capabilities
+- Shared definitions and thresholds
+- Transparency and reporting frameworks
+
+**Challenges:**
+- National security concerns limit sharing
+- Different countries have different risk tolerance
+- Verification and enforcement
+- Balancing openness with security
+
+## Criticisms and Challenges
+
+### Can Evaluations Keep Pace?
+
+**Concern**: AI capabilities advancing faster than evaluation methodologies
+
+**Issues:**
+- New dangerous capabilities might emerge unexpectedly
+- Evaluation is reactive (test for known dangers)
+- Creative adversaries might find novel uses
+- Resource constraints limit testing scope
+
+**METR's response:**
+- Continuous methodology improvement
+- Broad threat modeling
+- Collaboration to expand capacity
+- Proactive capability forecasting
+
+**Uncertainty**: Will be sufficient for AGI-level systems?
+
+### Independence and Capture
+
+**Tension**: METR depends on labs for access and funding
+
+**Potential issues:**
+- Labs might pressure METR to soften findings
+- Financial dependency creates conflicts
+- Access conditional on favorable evaluations?
+- Self-censorship to maintain relationships
+
+**Mitigations:**
+- Grant funding (not only lab contracts)
+- Multiple lab relationships (not dependent on one)
+- Clear editorial independence agreements
+- Transparent about limitations
+- Track record of honest reporting
+
+**Question**: Can true independence be maintained long-term?
+
+### Evaluation Gaming
+
+**Fundamental challenge**: Models might be optimized to pass evaluations
+
+**Risks:**
+- "Teaching to the test"
+- Capability hiding during evaluation (sandbagging)
+- Goodhart's Law: measures cease to be good measures when targeted
+- Arms race between evaluation and evasion
+
+**METR's approach:**
+- Adversarial testing assumes gaming
+- Multiple contexts and framings
+- Capability elicitation techniques
+- Continuous methodology evolution
+- Coordination on anti-gaming measures
+
+**Open problem**: Can we stay ahead of increasingly sophisticated models?
+
+### What Threshold is "Too Dangerous"?
+
+**Difficult question**: When should evaluations block deployment?
+
+**Challenges:**
+- Risk tolerance varies
+- Uncertainty in assessments
+- Competitive pressure to deploy
+- No perfect safety
+- Cost-benefit trade-offs
+
+**Current approach:**
+- Labs set their own thresholds (with METR input)
+- No external enforcement
+- Self-regulation
+- Peer pressure and reputation
+
+**Concern**: Will labs deploy despite concerning evaluations if pressure is high enough?
+
+**Need**: Clearer governance and potentially regulation
+
+### Resource Constraints
+
+**Reality**: METR is small (~20-30 people) relative to task
+
+**Limitations:**
+- Can't evaluate everything
+- Deep testing is time-consuming
+- Need domain experts (cyber, bio, etc.)
+- Keeping up with new models
+- International scope
+
+**Scaling challenges:**
+- Hiring qualified evaluators
+- Training and methodology transfer
+- Maintaining quality
+- Funding sustainability
+
+<KeyQuestions questions={[
+  "Can dangerous capability evaluations reliably prevent catastrophic deployments?",
+  "Will METR maintain independence as commercial pressure grows?",
+  "How can evaluations stay ahead of capability advancement?",
+  "What happens when a lab wants to deploy despite concerning evaluations?",
+  "Should evaluations be government-run rather than private?",
+  "How to prevent models from gaming or evading evaluations?"
+]} />
+
+## Future Directions
+
+### Research and Methodology
+
+**Near-term:**
+- More sophisticated cyber evaluations
+- Better CBRN testing protocols
+- Deception and sandbagging detection
+- Automated evaluation tools
+- Scaling to more models and labs
+
+**Medium-term:**
+- Evaluations for multimodal models
+- Embodied AI and robotics
+- Collective intelligence scenarios
+- Novel dangerous capabilities
+- Verification and interpretability integration
+
+**Long-term:**
+- AGI-level evaluation frameworks
+- Provable safety properties (if possible)
+- International evaluation infrastructure
+- Real-time monitoring systems
+
+### Organizational Growth
+
+**Scaling METR:**
+- Larger team of evaluators
+- Domain expert network (cyber, bio, etc.)
+- International presence
+- Training programs for external evaluators
+- Open-source tools and methodologies
+
+**Challenges:**
+- Maintaining quality and rigor
+- Hiring top talent
+- Funding sustainability
+- Coordination at scale
+
+### Governance Integration
+
+**Goals:**
+- Government evaluation capacity (UK AISI, US, EU)
+- International standards for dangerous capabilities
+- Mandatory pre-deployment evaluations
+- Independent oversight mechanisms
+- Transparency and reporting frameworks
+
+**Open questions:**
+- How much should be public vs. classified?
+- Who has authority to block deployments?
+- International coordination mechanisms?
+- Enforcement and verification?
+
+<Section title="Perspectives on Evaluations">
+  <DisagreementMap
+    client:load
+    topic="Role and Sufficiency of Capability Evaluations"
+    positions={[
+      {
+        name: "Evaluations are Essential",
+        description: "Dangerous capability evaluations are critical safety measure. Should be mandatory before deployment. METR's work prevents catastrophic mistakes. Need more evaluation capacity, not less.",
+        proponents: ["Many safety researchers", "Policy community", "Cautious lab researchers"],
+        strength: 5
+      },
+      {
+        name: "Necessary but Insufficient",
+        description: "Evaluations help but aren't complete solution. Can't catch everything. Need combined with interpretability, alignment research, governance. METR valuable but not silver bullet.",
+        proponents: ["Many researchers", "Pragmatic safety advocates"],
+        strength: 4
+      },
+      {
+        name: "False Confidence Risk",
+        description: "Evaluations might create false sense of security. Models could game tests. Unknown unknowns dominant. Might enable dangerous deployments by providing cover ('we evaluated it').",
+        proponents: ["Some safety researchers", "MIRI-adjacent views"],
+        strength: 2
+      },
+      {
+        name: "Overly Restrictive",
+        description: "Evaluation requirements might slow beneficial AI development. Risk tolerance too low. Benefits of deployment outweigh risks. Innovation suffers from excessive caution.",
+        proponents: ["Some industry voices", "AI optimists"],
+        strength: 1
+      }
+    ]}
+  />
+</Section>
+
+## Comparisons to Other Organizations
+
+### vs Apollo Research
+
+**Similarities:**
+- Both do dangerous capability evaluations
+- Both test frontier models pre-deployment
+- Both work with major labs
+- Both inform safety frameworks
+
+**Differences:**
+- **METR**: Autonomous capabilities, cyber, CBRN
+- **Apollo**: Deception, scheming, sandbagging
+- **METR**: More operationally integrated with labs
+- **Apollo**: More research-publication focused
+- Complementary specializations
+
+### vs ARC Theory
+
+**Same origin (ARC), different paths:**
+- **ARC Theory**: Theoretical alignment research (ELK)
+- **METR (formerly ARC Evals)**: Practical capability testing
+- **ARC**: Smaller, research-focused
+- **METR**: Larger, operationally integrated
+- Both led by Paul Christiano (ARC) and Beth Barnes (METR) respectively
+
+### vs Redwood Research
+
+**Different approaches:**
+- **Redwood**: AI control (assume misalignment, prevent harm)
+- **METR**: Evaluations (detect dangerous capabilities)
+- **Redwood**: Interpretability and control techniques
+- **METR**: Red-teaming and testing
+- Complementary: METR finds problems, others might solve them
+
+### vs Government Evaluation Bodies (UK AISI)
+
+**Relationship:**
+- METR is private, AISI is government
+- METR trains and advises AISI
+- METR evaluates for labs, AISI evaluates for government
+- Different accountability and incentives
+- Collaborative rather than competitive
+
+**Future**: May see more government bodies, METR's role might evolve
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Capability Evaluations",
+    "Dangerous Capabilities",
+    "Autonomous Replication",
+    "Cybersecurity",
+    "CBRN",
+    "Bio Risk",
+    "Red Teaming",
+    "Capability Elicitation",
+    "AI Evaluations",
+    "Deployment Decisions",
+    "Pre-deployment Testing",
+    "Safety Thresholds",
+    "Responsible Scaling",
+    "Preparedness Framework"
+  ]} />
+</Section>
+
+<Section title="Related Entries">
+  <EntityCards>
+    <EntityCard
+      id="beth-barnes"
+      category="people"
+      title="Beth Barnes"
+      description="METR Executive Director"
+    />
+    <EntityCard
+      id="paul-christiano"
+      category="people"
+      title="Paul Christiano"
+      description="ARC founder, METR's origin"
+    />
+    <EntityCard
+      id="arc"
+      category="organizations"
+      title="ARC"
+      description="Parent organization, ARC Theory"
+    />
+    <EntityCard
+      id="apollo-research"
+      category="organizations"
+      title="Apollo Research"
+      description="Complementary evaluation organization"
+    />
+    <EntityCard
+      id="autonomous-replication"
+      category="risks"
+      title="Autonomous Replication"
+      description="Key capability METR evaluates"
+    />
+    <EntityCard
+      id="cyber-offense"
+      category="risks"
+      title="Cyber Offense"
+      description="Dangerous capability evaluated"
+    />
+    <EntityCard
+      id="bio-risk"
+      category="risks"
+      title="Biological Risk"
+      description="CBRN evaluation focus"
+    />
+    <EntityCard
+      id="anthropic"
+      category="organizations"
+      title="Anthropic"
+      description="Lab using METR evaluations"
+    />
+    <EntityCard
+      id="openai"
+      category="organizations"
+      title="OpenAI"
+      description="Lab using METR evaluations"
+    />
+    <EntityCard
+      id="uk-aisi"
+      category="organizations"
+      title="UK AI Safety Institute"
+      description="Government body METR advises"
+    />
+  </EntityCards>
+</Section>
+
+<Sources sources={[
+  { title: "METR Website", url: "https://metr.org" },
+  { title: "METR Evaluations", url: "https://metr.org/evaluations" },
+  { title: "GPT-4 System Card (ARC Evals section)", url: "https://cdn.openai.com/papers/gpt-4-system-card.pdf" },
+  { title: "OpenAI Preparedness Framework", url: "https://openai.com/safety/preparedness" },
+  { title: "Anthropic Responsible Scaling Policy", url: "https://anthropic.com/news/anthropics-responsible-scaling-policy" },
+  { title: "Beth Barnes on Twitter/X", url: "https://twitter.com/beth_from_ba" },
+  { title: "METR Research and Blog", url: "https://metr.org/blog" }
+]} />

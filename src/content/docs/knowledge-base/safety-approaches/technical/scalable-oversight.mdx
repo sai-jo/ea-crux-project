@@ -1,0 +1,146 @@
+---
+title: Scalable Oversight
+description: Enabling humans to supervise AI on tasks too complex for direct evaluation
+sidebar:
+  order: 3
+---
+
+import { InfoBox, EntityCard, EntityCards, Tags, Sources, Section } from '../../../../../components/wiki';
+
+<InfoBox
+  type="safety-agenda"
+  title="Scalable Oversight"
+  organization="ARC, Anthropic, DeepMind"
+  approach="Technical research"
+  customFields={[
+    { label: "Core Problem", value: "Superhuman tasks" },
+    { label: "Key Technique", value: "Recursive decomposition" },
+  ]}
+/>
+
+## Overview
+
+Scalable oversight addresses a fundamental challenge: How can humans supervise AI systems on tasks where humans can't directly evaluate the AI's output?
+
+As AI systems become more capable, they will work on problems where:
+- The solution is too complex for humans to verify
+- The reasoning is beyond human comprehension
+- The consequences are too difficult to predict
+
+We need oversight methods that scale with AI capability.
+
+## The Core Problem
+
+### Current Approach: RLHF
+Human evaluators rate AI outputs, and we train models to produce highly-rated outputs.
+
+### The Scaling Problem
+This fails when:
+- Outputs require expert knowledge to evaluate
+- Correctness requires checking many steps
+- AI can produce convincing but wrong outputs
+- Evaluators can be manipulated
+
+### Example
+An AI proves a mathematical theorem. The proof is 10,000 pages. How does a human verify it?
+
+## Proposed Solutions
+
+### Debate
+Two AI systems argue opposing positions; humans judge the debate:
+- Each AI tries to expose flaws in the other's argument
+- Humans only need to judge convincing arguments, not verify directly
+- Theoretically: truth has an advantage in adversarial debate
+
+### Recursive Reward Modeling
+Decompose hard tasks into easier subtasks:
+- AI breaks complex question into simpler questions
+- Humans evaluate the simple questions
+- Answers propagate up to solve the original question
+
+### Market-Based Approaches
+Use prediction markets or other mechanisms to aggregate evaluations across many humans and AI systems.
+
+### AI-Assisted Evaluation
+Use AI systems to help humans evaluate:
+- AI critiques other AI's work
+- AI explains complex reasoning
+- AI highlights potential problems
+
+### Process-Based Supervision
+Evaluate reasoning process, not just outcomes:
+- Reward good reasoning steps
+- Penalize suspicious reasoning patterns
+- Avoid optimizing solely for final output
+
+## Key Challenges
+
+### Deceptive AI
+If the AI is trying to deceive:
+- It may produce convincing but wrong arguments
+- It may sabotage debate opponents unfairly
+- It may game process-based supervision
+
+### Evaluation Difficulty
+Some tasks may be inherently hard to evaluate:
+- Creative tasks with subjective quality
+- Long-horizon predictions
+- Novel domains without ground truth
+
+### Decomposition Limits
+Not all tasks decompose naturally:
+- Holistic reasoning
+- Intuitive judgments
+- Emergent properties
+
+## Current Research
+
+### Empirical Work
+- Debate experiments on constrained tasks
+- Recursive reward modeling studies
+- Process supervision for math
+
+### Theoretical Work
+- Computational complexity of scalable oversight
+- Adversarial dynamics analysis
+- Information-theoretic limits
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Debate",
+    "Recursive Reward Modeling",
+    "Process Supervision",
+    "AI Evaluation",
+    "RLHF",
+    "Superhuman AI",
+  ]} />
+</Section>
+
+<Section title="Related Entries">
+  <EntityCards>
+    <EntityCard
+      id="arc"
+      category="lab"
+      title="ARC"
+      description="Key research on scalable oversight"
+    />
+    <EntityCard
+      id="deepmind"
+      category="lab"
+      title="DeepMind"
+      description="Debate and scalable oversight research"
+    />
+    <EntityCard
+      id="deceptive-alignment"
+      category="risk"
+      title="Deceptive Alignment"
+      description="Primary threat scalable oversight addresses"
+    />
+  </EntityCards>
+</Section>
+
+<Sources sources={[
+  { title: "AI Safety via Debate", url: "https://arxiv.org/abs/1805.00899", author: "Irving et al." },
+  { title: "Scalable Agent Alignment via Reward Modeling", url: "https://arxiv.org/abs/1811.07871", author: "Leike et al." },
+  { title: "Measuring Progress on Scalable Oversight", url: "https://arxiv.org/abs/2211.03540" },
+]} />

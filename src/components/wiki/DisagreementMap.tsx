@@ -1,4 +1,5 @@
 import React from 'react';
+import './wiki.css';
 
 interface Position {
   // Primary format

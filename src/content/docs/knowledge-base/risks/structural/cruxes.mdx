@@ -1,0 +1,605 @@
+---
+title: Structural Risk Cruxes
+description: Key uncertainties that determine views on AI-driven structural risks and their tractability
+sidebar:
+  order: 99
+---
+
+import { Crux, CruxList, DisagreementMap, KeyQuestions, Section, Tags } from '../../../../../components/wiki';
+
+## What Are Structural Risk Cruxes?
+
+**Cruxes** are the key uncertainties where your answer largely determines your overall view. For structural risks, your positions on these cruxes determine:
+- Whether you think structural risks are real and distinct
+- How urgent you think they are
+- Which interventions you prioritize
+- Whether you focus on structural dynamics or individual failures
+
+**Note**: Given the [conceptual fuzziness](/knowledge-base/risks/structural/) of structural risks, these cruxes are themselves more speculative than those in other domains.
+
+---
+
+## Foundational Cruxes
+
+<Crux
+  id="structural-distinct"
+  question="Are structural risks genuinely distinct from accident/misuse risks?"
+  domain="Foundations"
+  description="Whether 'structural risks' names real phenomena that require separate analysis, or is just a different level of abstraction on the same underlying risks."
+  importance="critical"
+  resolvability="years"
+  currentState="Debated; no consensus on category boundaries"
+  positions={[
+    {
+      view: "Structural risks are genuinely distinct",
+      probability: "40-55%",
+      holders: ["GovAI", "Some longtermists"],
+      implications: "Need structural interventions (governance, coordination); technical safety alone insufficient"
+    },
+    {
+      view: "Useful framing but substantially overlapping",
+      probability: "30-40%",
+      implications: "Use structural lens for some problems; don't treat as separate research agenda"
+    },
+    {
+      view: "Mostly aggregation of other risks; not a useful category",
+      probability: "15-25%",
+      holders: ["Some AI safety researchers"],
+      implications: "Focus on technical safety and misuse prevention; structural framing obscures more than clarifies"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Theoretical analysis of category boundaries",
+    "Cases where structural vs individual framing leads to different interventions",
+    "Evidence that structural dynamics have independent causal power"
+  ]}
+  relatedCruxes={["racing-inevitable", "coordination-possible"]}
+  relevantResearch={[
+    { title: "AI Governance Research Agenda", url: "https://www.fhi.ox.ac.uk/wp-content/uploads/GovAI-Agenda.pdf" }
+  ]}
+/>
+
+<Crux
+  id="ai-concentrating"
+  question="Does AI concentrate power more than previous technologies?"
+  domain="Foundations"
+  description="Whether AI is qualitatively different in its power-concentrating effects, or is following historical patterns of technological change."
+  importance="critical"
+  resolvability="years"
+  currentState="Unclear; AI is early-stage; historical comparisons contested"
+  positions={[
+    {
+      view: "AI is qualitatively different in concentration effects",
+      probability: "35-50%",
+      holders: ["Some AI governance researchers", "AI Now Institute"],
+      implications: "Urgent need for antitrust, redistribution, democratic governance of AI"
+    },
+    {
+      view: "AI continues historical pattern; not qualitatively new",
+      probability: "30-40%",
+      holders: ["Some economists", "Tech optimists"],
+      implications: "Apply existing regulatory frameworks; don't overreact to AI-specific concentration"
+    },
+    {
+      view: "AI may actually distribute power (open source, democratization)",
+      probability: "15-25%",
+      holders: ["Some open source advocates"],
+      implications: "Support open development; concentration concerns are overstated"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Empirical data on AI industry concentration trends",
+    "Historical analysis of technology and power concentration",
+    "Evidence on open source AI capability vs closed labs",
+    "Data on AI's effects on labor market concentration"
+  ]}
+  relatedCruxes={["structural-distinct", "winner-take-all"]}
+  relevantResearch={[
+    { title: "AI Now: Concentration and Power", url: "https://ainowinstitute.org/" },
+    { title: "CSET: AI and Market Concentration", url: "https://cset.georgetown.edu/" }
+  ]}
+/>
+
+---
+
+## Competition and Coordination Cruxes
+
+<Crux
+  id="racing-inevitable"
+  question="Are AI racing dynamics inevitable given competitive pressures?"
+  domain="Competition & Coordination"
+  description="Whether competitive pressures (commercial, geopolitical) make unsafe racing dynamics unavoidable, or if coordination can prevent races."
+  importance="critical"
+  resolvability="years"
+  currentState="Racing dynamics visible; some voluntary coordination attempts"
+  positions={[
+    {
+      view: "Racing is largely inevitable; coordination will fail",
+      probability: "30-45%",
+      holders: ["Some game theorists", "Realists"],
+      implications: "Focus on making racing safer; assume coordination fails; technical solutions paramount"
+    },
+    {
+      view: "Racing can be managed with the right mechanisms",
+      probability: "35-45%",
+      holders: ["GovAI", "Some policy researchers"],
+      implications: "Invest heavily in coordination mechanisms; compute governance; international agreements"
+    },
+    {
+      view: "Racing dynamics are overstated; labs can coordinate",
+      probability: "15-25%",
+      holders: ["Some industry observers"],
+      implications: "Support voluntary coordination; racing narrative may be self-fulfilling"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Success or failure of lab coordination (RSPs, etc.)",
+    "International coordination outcomes",
+    "Evidence from other domains on coordination under competitive pressure",
+    "Game-theoretic analysis with realistic assumptions"
+  ]}
+  relatedCruxes={["coordination-possible", "international-coordination"]}
+  relevantResearch={[
+    { title: "Racing to the Precipice", url: "https://nickbostrom.com/papers/racing.pdf" },
+    { title: "Debunking AI Arms Race Theory", url: "https://tnsr.org/2021/06/debunking-the-ai-arms-race-theory/" }
+  ]}
+/>
+
+<Crux
+  id="coordination-possible"
+  question="Can meaningful AI coordination be achieved without external enforcement?"
+  domain="Competition & Coordination"
+  description="Whether voluntary coordination among AI developers can work, or if binding regulation/enforcement is required."
+  importance="high"
+  resolvability="years"
+  currentState="Voluntary commitments exist (RSPs); limited enforcement; competitive pressures strong"
+  positions={[
+    {
+      view: "Voluntary coordination can work with right incentives",
+      probability: "20-35%",
+      holders: ["Some lab leadership"],
+      implications: "Support voluntary standards; build trust; avoid heavy regulation that might backfire"
+    },
+    {
+      view: "Coordination requires external enforcement",
+      probability: "40-55%",
+      holders: ["Most governance researchers"],
+      implications: "Focus on regulation, auditing, liability; don't rely on voluntary commitments"
+    },
+    {
+      view: "Neither voluntary nor regulatory coordination will work",
+      probability: "15-25%",
+      implications: "Focus on technical solutions; prepare for uncoordinated development; defensive measures"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Track record of RSPs and voluntary commitments",
+    "Regulatory enforcement attempts and outcomes",
+    "Evidence of labs defecting from commitments under pressure",
+    "Successful coordination in analogous domains"
+  ]}
+  relatedCruxes={["racing-inevitable", "international-coordination"]}
+  relevantResearch={[
+    { title: "Anthropic RSP", url: "https://www.anthropic.com/rsp" },
+    { title: "GovAI Research", url: "https://www.governance.ai/" }
+  ]}
+/>
+
+<Crux
+  id="international-coordination"
+  question="Can US-China AI coordination succeed despite geopolitical competition?"
+  domain="Competition & Coordination"
+  description="Whether major AI powers can coordinate on safety/governance despite strategic rivalry."
+  importance="critical"
+  resolvability="years"
+  currentState="Very limited coordination; competition dominant; some backchannel communication"
+  positions={[
+    {
+      view: "Meaningful coordination is achievable",
+      probability: "15-30%",
+      holders: ["Some diplomats", "Track II participants"],
+      implications: "Invest heavily in diplomatic channels; find areas of shared interest; build on bio/nuclear precedent"
+    },
+    {
+      view: "Narrow coordination on specific risks possible",
+      probability: "35-50%",
+      implications: "Focus on achievable goals (bioweapons prevention, accident hotlines); don't expect comprehensive regime"
+    },
+    {
+      view: "Great power competition precludes coordination",
+      probability: "25-40%",
+      holders: ["Realists", "Some national security analysts"],
+      implications: "Focus on domestic/allied governance; defensive measures; prepare for fragmented development"
+    }
+  ]}
+  wouldUpdateOn={[
+    "US-China AI dialogue outcomes",
+    "Coordination success on specific risks",
+    "Broader geopolitical relationship changes",
+    "Precedents from other technology domains"
+  ]}
+  relatedCruxes={["racing-inevitable", "coordination-possible"]}
+  relevantResearch={[
+    { title: "RAND: AI and Great Power Competition", url: "https://www.rand.org/" }
+  ]}
+/>
+
+---
+
+## Power and Lock-in Cruxes
+
+<Crux
+  id="winner-take-all"
+  question="Will AI development produce winner-take-all dynamics?"
+  domain="Power Dynamics"
+  description="Whether AI advantages compound to produce extreme concentration, or if competition will persist."
+  importance="high"
+  resolvability="years"
+  currentState="Some concentration visible; unclear if winner-take-all"
+  positions={[
+    {
+      view: "Winner-take-all is likely in frontier AI",
+      probability: "30-45%",
+      holders: ["Some AI researchers", "Critics of Big Tech"],
+      implications: "Urgent antitrust action needed; support for alternatives; public AI development"
+    },
+    {
+      view: "Oligopoly more likely than monopoly",
+      probability: "35-45%",
+      implications: "Manage concentration but don't expect single winner; focus on maintaining competition"
+    },
+    {
+      view: "Competition will persist; open source prevents lock-in",
+      probability: "20-30%",
+      holders: ["Open source advocates"],
+      implications: "Support open development; market will self-correct; concentration fears overstated"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Frontier AI market structure evolution",
+    "Open source capability vs closed labs over time",
+    "Evidence on returns to scale in AI",
+    "Regulatory intervention effects"
+  ]}
+  relatedCruxes={["ai-concentrating", "lock-in-reversible"]}
+/>
+
+<Crux
+  id="lock-in-reversible"
+  question="Would AI-enabled lock-in be reversible?"
+  domain="Power Dynamics"
+  description="Whether structures/values locked in via AI could later be changed, or if lock-in would be permanent."
+  importance="high"
+  resolvability="decades"
+  currentState="Speculative; no lock-in has occurred yet"
+  positions={[
+    {
+      view: "AI lock-in would be effectively permanent",
+      probability: "20-35%",
+      holders: ["Some longtermists", "Ord/MacAskill"],
+      implications: "Preventing lock-in is extremely high priority; current values matter enormously"
+    },
+    {
+      view: "Lock-in would be very hard but not impossible to reverse",
+      probability: "35-45%",
+      implications: "Lock-in prevention important but not absolute; build reversibility into systems"
+    },
+    {
+      view: "Lock-in is unlikely; systems are more fragile than we think",
+      probability: "25-35%",
+      holders: ["Some historians"],
+      implications: "Don't overweight lock-in concerns; focus on nearer-term risks"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Historical analysis of technological lock-in",
+    "Analysis of AI's effect on change difficulty",
+    "Evidence on value evolution in stable systems",
+    "Theoretical analysis of lock-in mechanisms"
+  ]}
+  relatedCruxes={["winner-take-all", "values-crystallization"]}
+  relevantResearch={[
+    { title: "The Precipice", url: "https://theprecipice.com/" },
+    { title: "What We Owe the Future", url: "https://whatweowethefuture.com/" }
+  ]}
+/>
+
+<Crux
+  id="values-crystallization"
+  question="Is there a risk of premature values crystallization?"
+  domain="Power Dynamics"
+  description="Whether AI could lock in current values before humanity has developed sufficient moral wisdom."
+  importance="medium"
+  resolvability="decades"
+  currentState="Theoretical concern; no near-term crystallization mechanism"
+  positions={[
+    {
+      view: "Premature crystallization is a serious risk",
+      probability: "25-40%",
+      holders: ["Ord", "MacAskill"],
+      implications: "Prioritize moral uncertainty; avoid embedding specific values; build for value evolution"
+    },
+    {
+      view: "Values will continue evolving regardless of AI",
+      probability: "35-45%",
+      implications: "Less urgent; focus on present values; trust future adaptation"
+    },
+    {
+      view: "Can't avoid embedding values; should embed best current ones",
+      probability: "20-30%",
+      implications: "Focus on getting values right now; crystallization may be unavoidable"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Analysis of how AI might crystallize values",
+    "Historical study of value evolution mechanisms",
+    "Research on moral progress drivers"
+  ]}
+  relatedCruxes={["lock-in-reversible"]}
+/>
+
+---
+
+## Human Agency Cruxes
+
+<Crux
+  id="agency-atrophy"
+  question="Will AI assistance cause human agency/capability atrophy?"
+  domain="Human Agency"
+  description="Whether humans will lose critical skills and decision-making capacity through AI dependency."
+  importance="high"
+  resolvability="years"
+  currentState="Early evidence from automation; AI assistance much newer"
+  positions={[
+    {
+      view: "Significant atrophy is likely without countermeasures",
+      probability: "40-55%",
+      holders: ["Nicholas Carr", "Some human factors researchers"],
+      implications: "Mandate skill maintenance; design AI to preserve human capability; accept efficiency loss"
+    },
+    {
+      view: "Some atrophy; critical skills can be preserved",
+      probability: "30-40%",
+      implications: "Identify and protect critical skills; let others atrophy; targeted intervention"
+    },
+    {
+      view: "New skills emerge; net positive transformation",
+      probability: "15-25%",
+      holders: ["Tech optimists"],
+      implications: "Focus on developing new skills; don't fight inevitable transitions"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Longitudinal studies on AI use and skill retention",
+    "Evidence from domains with long AI assistance history",
+    "Successful skill preservation programs",
+    "Analysis of what skills are actually needed"
+  ]}
+  relatedCruxes={["oversight-possible"]}
+  relevantResearch={[
+    { title: "The Glass Cage (Carr)", url: "https://www.nicholascarr.com/" },
+    { title: "FAA Human Factors", url: "https://www.faa.gov/about/initiatives/maintenance_hf" }
+  ]}
+/>
+
+<Crux
+  id="oversight-possible"
+  question="Can meaningful human oversight of advanced AI be maintained?"
+  domain="Human Agency"
+  description="Whether humans can maintain genuine oversight as AI systems become more capable and complex."
+  importance="critical"
+  resolvability="years"
+  currentState="Current oversight limited; scaling unclear"
+  positions={[
+    {
+      view: "Meaningful oversight is achievable with investment",
+      probability: "30-45%",
+      holders: ["Anthropic", "Some AI safety researchers"],
+      implications: "Invest heavily in interpretability, evaluation, oversight tools"
+    },
+    {
+      view: "Oversight will become increasingly formal/shallow",
+      probability: "35-45%",
+      implications: "Design for robustness to shallow oversight; accept limitations; build redundancy"
+    },
+    {
+      view: "Genuine oversight of advanced AI is not possible",
+      probability: "15-25%",
+      holders: ["Some AI pessimists"],
+      implications: "Don't build systems that require human oversight; fundamentally different approach needed"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Progress in interpretability research",
+    "Evidence on human ability to oversee complex systems",
+    "Development of oversight tools and their effectiveness",
+    "Empirical studies on oversight quality as systems scale"
+  ]}
+  relatedCruxes={["agency-atrophy"]}
+  relevantResearch={[
+    { title: "Anthropic interpretability research", url: "https://www.anthropic.com/" }
+  ]}
+/>
+
+---
+
+## Systemic Dynamics Cruxes
+
+<Crux
+  id="adaptation-speed"
+  question="Can social/institutional adaptation keep pace with AI change?"
+  domain="Systemic Dynamics"
+  description="Whether human institutions can adapt quickly enough to manage AI-driven changes."
+  importance="high"
+  resolvability="years"
+  currentState="AI changing faster than regulation; some adaptation occurring"
+  positions={[
+    {
+      view: "Adaptation will fall dangerously behind",
+      probability: "35-50%",
+      holders: ["Many AI governance researchers"],
+      implications: "Need to slow AI; build adaptive institutions; prepare for governance gaps"
+    },
+    {
+      view: "Adaptation will lag but manage",
+      probability: "35-45%",
+      implications: "Focus on building adaptability; accept some lag; don't panic"
+    },
+    {
+      view: "Institutions can adapt adequately",
+      probability: "15-25%",
+      holders: ["Some optimists"],
+      implications: "Trust existing institutions; incremental reform sufficient"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Speed of regulatory adaptation vs AI development",
+    "Historical comparison to other fast-changing technologies",
+    "Evidence on institutional flexibility",
+    "Success of adaptive governance experiments"
+  ]}
+  relatedCruxes={["flash-dynamics"]}
+/>
+
+<Crux
+  id="flash-dynamics"
+  question="Do AI interaction speeds create fundamentally new risks?"
+  domain="Systemic Dynamics"
+  description="Whether AI systems interacting faster than human reaction time creates qualitatively new dangers."
+  importance="medium"
+  resolvability="years"
+  currentState="Some fast AI interactions (trading); broader dynamics unclear"
+  positions={[
+    {
+      view: "Speed creates qualitatively new systemic risks",
+      probability: "30-45%",
+      holders: ["Some financial stability researchers"],
+      implications: "Build circuit breakers; require human checkpoints; slow down critical systems"
+    },
+    {
+      view: "Speed is a factor but manageable",
+      probability: "35-45%",
+      implications: "Design for fast failure recovery; accept some speed; targeted interventions"
+    },
+    {
+      view: "Speed concerns are overstated",
+      probability: "20-30%",
+      implications: "Don't sacrifice capability for speed limits; focus on other risks"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Analysis of flash crash dynamics",
+    "Evidence from high-speed AI system interactions",
+    "Research on human oversight of fast systems",
+    "Incidents involving AI speed"
+  ]}
+  relatedCruxes={["adaptation-speed", "oversight-possible"]}
+/>
+
+---
+
+## Summary: Position Implications
+
+| If you believe... | Prioritize... |
+|-------------------|---------------|
+| Structural risks are genuinely distinct | Governance and coordination research |
+| AI concentrates power qualitatively more | Antitrust, redistribution, democratic governance |
+| Racing is inevitable | Making racing safer; technical solutions |
+| Racing can be managed | Coordination mechanisms; compute governance |
+| International coordination is feasible | Diplomacy; international institutions |
+| Lock-in would be permanent | Preventing lock-in; value optionality |
+| Agency atrophy is likely | Skill preservation; AI design for human capability |
+| Oversight can be maintained | Interpretability; evaluation; oversight tools |
+| Adaptation will fall behind | Slowing AI; adaptive institutions |
+
+---
+
+## Summary Table
+
+<CruxList
+  domain="Structural Risks"
+  cruxes={[
+    {
+      id: "structural-distinct",
+      question: "Are structural risks genuinely distinct?",
+      importance: "critical",
+      summary: "Determines whether structural framing is useful"
+    },
+    {
+      id: "ai-concentrating",
+      question: "Does AI concentrate power more than previous tech?",
+      importance: "critical",
+      summary: "Determines urgency of power concentration concerns"
+    },
+    {
+      id: "racing-inevitable",
+      question: "Are racing dynamics inevitable?",
+      importance: "critical",
+      summary: "Determines coordination vs acceptance strategy"
+    },
+    {
+      id: "international-coordination",
+      question: "Can US-China coordinate on AI?",
+      importance: "critical",
+      summary: "Determines scope of possible governance"
+    },
+    {
+      id: "oversight-possible",
+      question: "Can meaningful human oversight be maintained?",
+      importance: "critical",
+      summary: "Determines viability of human-in-loop approaches"
+    },
+    {
+      id: "coordination-possible",
+      question: "Can voluntary AI coordination work?",
+      importance: "high",
+      summary: "Determines focus on voluntary vs regulatory approaches"
+    },
+    {
+      id: "winner-take-all",
+      question: "Will AI produce winner-take-all?",
+      importance: "high",
+      summary: "Determines urgency of antitrust intervention"
+    },
+    {
+      id: "lock-in-reversible",
+      question: "Would AI lock-in be reversible?",
+      importance: "high",
+      summary: "Determines priority of lock-in prevention"
+    },
+    {
+      id: "agency-atrophy",
+      question: "Will AI cause human capability atrophy?",
+      importance: "high",
+      summary: "Determines investment in skill preservation"
+    },
+    {
+      id: "adaptation-speed",
+      question: "Can institutions adapt fast enough?",
+      importance: "high",
+      summary: "Determines approach to governance gaps"
+    },
+    {
+      id: "values-crystallization",
+      question: "Risk of premature values crystallization?",
+      importance: "medium",
+      summary: "Determines priority of moral uncertainty"
+    },
+    {
+      id: "flash-dynamics",
+      question: "Do AI speeds create new risks?",
+      importance: "medium",
+      summary: "Determines need for speed-limiting interventions"
+    }
+  ]}
+/>
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Cruxes",
+    "Key Uncertainties",
+    "Structural Risks",
+    "Coordination",
+    "AI Governance",
+  ]} />
+</Section>

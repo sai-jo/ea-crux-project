@@ -1,0 +1,141 @@
+---
+title: Disinformation
+description: AI-generated propaganda and influence operations at scale
+sidebar:
+  order: 4
+---
+
+import { InfoBox, EntityCard, EntityCards, Tags, Sources, Section } from '../../../../../components/wiki';
+
+<InfoBox
+  type="risk"
+  title="AI Disinformation"
+  severity="high"
+  likelihood="Very High (occurring)"
+  timeframe="Current"
+  customFields={[
+    { label: "Status", value: "Actively happening" },
+    { label: "Key Change", value: "Scale and personalization" },
+  ]}
+/>
+
+## Overview
+
+AI enables disinformation at unprecedented scale and sophistication. Language models can generate convincing text, image generators can create realistic fake photos, and AI can personalize messages to individual targets. What previously required human effort for each piece of content can now be automated.
+
+This amplifies existing disinformation problems and potentially changes their fundamental character.
+
+## How AI Changes Disinformation
+
+Before AI, disinformation required humans to write content, create images, and manage campaigns. This created natural limits on scale. AI removes these limits. A single operator can generate millions of unique messages tailored to different audiences.
+
+Content quality has improved dramatically. AI-generated text is often indistinguishable from human writing. AI-generated images increasingly look real. Voice cloning can imitate specific individuals. Soon, video synthesis will reach similar quality.
+
+Personalization becomes possible. AI can analyze targets and generate content tailored to their beliefs, fears, and vulnerabilities. Rather than one message to millions, disinformation can be millions of different messages to millions of individuals.
+
+Speed advantages allow real-time generation of content in response to events, flooding information channels before accurate information can spread.
+
+## Observed Examples
+
+State actors have used AI to generate social media content in multiple documented campaigns. Text-based disinformation using language models was detected in 2023 influence operations. AI-generated profile pictures are common in fake social media accounts.
+
+Deepfakes of political figures have circulated. AI-generated news articles have appeared on content farms. Voice cloning has been used in scam calls impersonating family members.
+
+The full extent is unknown—undetected campaigns may be more successful than detected ones.
+
+## Implications
+
+For democracy, AI disinformation could undermine elections, polarize populations, and erode shared reality. If voters can't trust what they see and hear, democratic deliberation becomes impossible.
+
+For trust, even real content becomes deniable. Politicians can claim authentic recordings are deepfakes. Evidence becomes contestable. This "liar's dividend" may harm truth even when AI isn't used.
+
+For international relations, AI-generated content could be used to inflame conflicts, impersonate leaders, or create false evidence of actions that didn't occur.
+
+## Detection and Countermeasures
+
+Technical detection tries to identify AI-generated content through artifacts, statistical signatures, or watermarking. But this is an arms race—generators improve to evade detectors.
+
+Provenance systems aim to track content origins and verify authenticity, but face adoption and circumvention challenges.
+
+Media literacy helps people critically evaluate content, but faces limits when AI content is indistinguishable from human content.
+
+Platform policies can limit disinformation spread, but face challenges with scale, free speech considerations, and defining what counts as disinformation.
+
+## Case Studies
+
+### New Hampshire Robocalls (January 2024)
+Up to 25,000 voters in the New Hampshire Democratic primary received AI-generated robocalls mimicking President Biden's voice, urging them not to vote. This was one of the first high-profile uses of AI voice cloning in U.S. elections.
+
+### Slovakia Election Deepfake (September 2023)
+Days before Slovakia's election, an AI-generated audio surfaced of the liberal Progressive Slovakia party leader allegedly discussing vote rigging. The party suffered an upset loss. The deepfake's actual impact remains uncertain but illustrates election-eve vulnerability.
+
+### Taiwan AI Disinformation (January 2024)
+Microsoft documented China-based operations using AI-generated deepfakes promoting hoaxes about Taiwanese leaders—the first confirmed use of AI-generated material by a nation-state to influence a foreign election.
+
+### India Deepfake Campaign (2024)
+AI-generated deepfakes showed celebrities criticizing PM Modi and endorsing opposition parties. The content went viral on WhatsApp and YouTube, demonstrating AI disinformation at scale in the world's largest democracy.
+
+## Key Debates
+
+**Did AI "break" 2024 elections?** Despite fears, research suggests AI disinformation had limited measurable impact. The News Literacy Project found "cheap fakes" (simple edits) were used 7x more than AI-generated content. But the long-term erosion of trust may matter more than any single election.
+
+**Detection vs. Generation**: Detection technologies struggle to keep pace. AI generators specifically optimize to evade detection. Is this an unwinnable arms race?
+
+**Provenance Solutions**: Can C2PA and content credentials solve authenticity? Adoption remains limited, and determined actors can circumvent provenance systems.
+
+## Timeline
+
+- **2017**: First "deepfake" videos appear on Reddit
+- **2019**: Deepfakes of politicians begin circulating
+- **2023 (Sep)**: Slovakia election deepfake incident
+- **2024 (Jan)**: New Hampshire robocalls, Taiwan election interference
+- **2024**: Over 40 countries hold elections—the "super election year"
+- **2024**: Stanford HAI research shows AI propaganda can exceed human effectiveness
+
+## Open Questions
+
+Will detection keep pace with generation? Currently generation is winning. Can provenance systems gain enough adoption to matter? Can societies adapt faster than disinformation capabilities advance?
+
+## Video & Podcast Resources
+
+- [Stanford HAI: The Disinformation Machine](https://hai.stanford.edu/news/disinformation-machine-how-susceptible-are-we-ai-propaganda)
+- [80,000 Hours: Podcasts on Information Integrity](https://80000hours.org/podcast/)
+- [Lawfare Podcast](https://www.lawfaremedia.org/) - Coverage of election security
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Misinformation",
+    "Influence Operations",
+    "Information Warfare",
+    "Democracy",
+    "Deepfakes",
+  ]} />
+</Section>
+
+<Section title="Related Entries">
+  <EntityCards>
+    <EntityCard
+      id="deepfakes"
+      category="risk"
+      title="Deepfakes"
+      description="Synthetic media for deception"
+    />
+    <EntityCard
+      id="epistemic-collapse"
+      category="risk"
+      title="Epistemic Collapse"
+      description="Broader implications for truth"
+    />
+  </EntityCards>
+</Section>
+
+<Sources sources={[
+  { title: "OpenAI Research on Influence Operations", url: "https://openai.com/research" },
+  { title: "How Persuasive Is AI-Generated Propaganda? (Stanford HAI)", url: "https://hai.stanford.edu/assets/files/2024-08/HAI-Policy-Brief-AI-Generated-Propaganda.pdf", date: "2024" },
+  { title: "The Disinformation Machine (Stanford HAI)", url: "https://hai.stanford.edu/news/disinformation-machine-how-susceptible-are-we-ai-propaganda" },
+  { title: "Stanford HAI 2024 AI Index on Responsible AI", url: "https://hai.stanford.edu/ai-index/2024-ai-index-report/responsible-ai", date: "2024" },
+  { title: "AI-Driven Disinformation Policy Recommendations (Frontiers)", url: "https://www.frontiersin.org/journals/artificial-intelligence/articles/10.3389/frai.2025.1569115/full", date: "2025" },
+  { title: "CSET Disinformation Research", url: "https://cset.georgetown.edu/topic/disinformation/" },
+  { title: "Forecasting Misuses of Language Models (Stanford FSI)", url: "https://cyber.fsi.stanford.edu/io/news/forecasting-potential-misuses-language-models-disinformation-campaigns-and-how-reduce-risk" },
+  { title: "AI-Driven Misinformation and Democracy (Stanford GSB)", url: "https://www.gsb.stanford.edu/insights/wreck-vote-how-ai-driven-misinformation-could-undermine-democracy" },
+]} />

@@ -1,0 +1,141 @@
+---
+title: Situational Awareness
+description: AI systems that understand their own nature and circumstances
+sidebar:
+  order: 2
+---
+
+import { InfoBox, EntityCard, EntityCards, Tags, Sources, Section } from '../../../../components/wiki';
+
+<InfoBox
+  type="capability"
+  title="Situational Awareness"
+  currentLevel="Partial / Emerging"
+  projectedTimeline="Near-term"
+  customFields={[
+    { label: "Safety Relevance", value: "Very High" },
+    { label: "Status", value: "Active research area" },
+  ]}
+/>
+
+## Overview
+
+Situational awareness in AI refers to a model's understanding of:
+- That it is an AI system
+- That it is being trained/evaluated
+- Its own capabilities and limitations
+- The broader context of AI development
+- The likely consequences of its actions
+
+This capability is safety-critical because it's a prerequisite for dangerous behaviors like deceptive alignment.
+
+## Why This Matters
+
+### Prerequisite for Deception
+An AI can only strategically deceive its trainers if it:
+1. Knows it's being trained
+2. Understands what behaviors are selected for
+3. Can distinguish training from deployment
+4. Reasons about long-term consequences
+
+### Changes Safety Assumptions
+Many safety techniques assume the model doesn't "know" it's being tested:
+- Red teaming assumes genuine responses
+- Behavioral evaluations assume consistent behavior
+- Gradient descent assumes model can't game the process
+
+### Self-Modeling
+A model with situational awareness might:
+- Reason about its own weights and training
+- Predict how it will be modified
+- Take actions to influence its own training
+
+## Current Evidence
+
+### What Models Know
+Current large models can:
+- Report they are AI systems
+- Discuss AI training processes
+- Reason about their own limitations
+- Engage with questions about AI consciousness
+
+### Uncertainty
+It's unclear whether models:
+- Have genuine self-models vs. learned responses
+- Distinguish training from deployment
+- Reason strategically about their situation
+- Could use this for deceptive purposes
+
+## Levels of Situational Awareness
+
+### Level 1: Self-Identification
+Model knows it's an AI when asked.
+
+### Level 2: Capability Awareness
+Model accurately assesses what it can/can't do.
+
+### Level 3: Context Awareness
+Model understands training vs deployment, evaluation contexts.
+
+### Level 4: Strategic Awareness
+Model reasons about how its responses affect its training and future.
+
+### Level 5: Meta-Strategic Awareness
+Model reasons about hiding its strategic reasoning.
+
+## Research Directions
+
+### Evaluations
+Developing tests for situational awareness:
+- Can the model distinguish test from deployment?
+- Does behavior change based on perceived stakes?
+- Can it reason about its own training?
+
+### Interpretability
+Understanding if models have self-models:
+- Are there "self-representation" features?
+- How do models represent their own capabilities?
+
+### Training Approaches
+Exploring how training affects situational awareness:
+- Does RLHF increase or decrease it?
+- Can we train models to lack situational awareness?
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Deceptive Alignment",
+    "Self-Awareness",
+    "AI Evaluations",
+    "Inner Alignment",
+    "Model Self-Knowledge",
+  ]} />
+</Section>
+
+<Section title="Related Entries">
+  <EntityCards>
+    <EntityCard
+      id="deceptive-alignment"
+      category="risk"
+      title="Deceptive Alignment"
+      description="Requires situational awareness"
+    />
+    <EntityCard
+      id="evals"
+      category="capability"
+      title="AI Evaluations"
+      description="Testing for dangerous capabilities"
+    />
+    <EntityCard
+      id="arc"
+      category="lab"
+      title="ARC"
+      description="Research on detecting situational awareness"
+    />
+  </EntityCards>
+</Section>
+
+<Sources sources={[
+  { title: "Sleeper Agents Paper", url: "https://arxiv.org/abs/2401.05566", author: "Anthropic" },
+  { title: "Situational Awareness (LessWrong)", url: "https://www.lesswrong.com/tag/situational-awareness" },
+  { title: "Model Organisms of Misalignment", url: "https://www.anthropic.com/research" },
+]} />

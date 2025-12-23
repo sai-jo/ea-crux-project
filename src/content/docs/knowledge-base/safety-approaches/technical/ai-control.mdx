@@ -1,0 +1,152 @@
+---
+title: AI Control
+description: Ensuring AI safety even with potentially misaligned systems
+sidebar:
+  order: 4
+---
+
+import { InfoBox, EntityCard, EntityCards, Tags, Sources, Section } from '../../../../../components/wiki';
+
+<InfoBox
+  type="safety-agenda"
+  title="AI Control"
+  organization="Redwood Research"
+  approach="Assumes alignment may fail"
+  customFields={[
+    { label: "Key Paper", value: "December 2023" },
+    { label: "Core Assumption", value: "Untrusted AI" },
+  ]}
+/>
+
+## Overview
+
+AI Control is a research agenda that focuses on maintaining safety even when using AI systems that might be actively trying to subvert safety measures. Rather than assuming alignment succeeds, it asks: "How can we safely use AI systems that might be misaligned?"
+
+This represents a more defensive posture than pure alignment research.
+
+## Core Insight
+
+The key insight is separating two questions:
+1. **Alignment**: Making AI systems that pursue intended goals
+2. **Control**: Ensuring safety regardless of AI intentions
+
+Even if we can't guarantee alignment, we might still maintain control.
+
+## The Setting
+
+AI Control assumes:
+- We have capable AI systems (useful for tasks)
+- We aren't confident they're aligned
+- We want to use them safely anyway
+- The AI might actively try to cause harm
+
+This is relevant because:
+- Alignment is hard and might fail
+- Competitive pressure to deploy capable AI
+- We need defense in depth
+
+## Key Techniques
+
+### Monitoring
+Watch AI behavior for signs of misalignment:
+- Use trusted AI to monitor untrusted AI
+- Human review of suspicious actions
+- Anomaly detection in behavior patterns
+
+### Containment
+Limit what damage the AI can do:
+- Restricted capabilities
+- Sandboxed environments
+- Reversible actions only
+
+### Redundancy
+Don't rely on a single AI system:
+- Multiple AI systems check each other
+- Humans in critical decision points
+- Diverse implementations
+
+### Red-Teaming
+Actively try to find ways AI could cause harm:
+- Assume AI is adversarial
+- Find weakest points in protocols
+- Iterate on defenses
+
+## Red-Teaming Control Protocols
+
+The research methodology:
+1. Design a control protocol (monitoring + containment)
+2. Red-team: Try to find attacks that succeed
+3. Blue-team: Improve protocol against attacks
+4. Iterate until no attacks succeed
+
+The goal is protocols that work even against capable adversarial AI.
+
+## Relationship to Alignment
+
+| Alignment | Control |
+|-----------|---------|
+| Make AI want good things | Prevent AI from doing bad things |
+| Trust the AI's intentions | Don't rely on AI's intentions |
+| Solve the problem | Manage the risk |
+
+Control is complementary to alignment:
+- If alignment succeeds, control is a backup
+- If alignment fails, control is the defense
+- Defense in depth requires both
+
+## Limitations
+
+### Capability Costs
+Control measures may reduce AI usefulness:
+- Monitoring overhead
+- Restricted capabilities
+- Slower operation
+
+### Scalability
+At some capability level, control may be impossible:
+- Superintelligent AI might circumvent any control
+- Arms race between capability and control
+
+### Not a Long-Term Solution
+Control buys time but doesn't solve alignment:
+- Eventually need aligned AI
+- Can't control forever
+- Should enable alignment research
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Monitoring",
+    "Containment",
+    "Defense in Depth",
+    "Red-Teaming",
+    "Untrusted AI",
+  ]} />
+</Section>
+
+<Section title="Related Entries">
+  <EntityCards>
+    <EntityCard
+      id="redwood"
+      category="lab"
+      title="Redwood Research"
+      description="Primary developer of AI Control agenda"
+    />
+    <EntityCard
+      id="deceptive-alignment"
+      category="risk"
+      title="Deceptive Alignment"
+      description="Key risk that control addresses"
+    />
+    <EntityCard
+      id="agentic-ai"
+      category="capability"
+      title="Agentic AI"
+      description="Systems where control is most relevant"
+    />
+  </EntityCards>
+</Section>
+
+<Sources sources={[
+  { title: "AI Control: Improving Safety Despite Intentional Subversion", url: "https://arxiv.org/abs/2312.06942", author: "Greenblatt et al.", date: "2023" },
+  { title: "Redwood Research: AI Control", url: "https://www.redwoodresearch.org/control" },
+]} />

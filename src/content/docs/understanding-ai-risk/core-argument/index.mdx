@@ -116,10 +116,10 @@ The case for AI existential risk follows a chain of reasoning. **Disagreement on
         label: 'Accident Risk',
         description: 'Unintentional misalignment causes catastrophic harm.',
         type: 'intermediate',
-        confidence: 0.12,
-        confidenceLabel: 'expected loss',
+        confidence: '5-20%',
+        confidenceLabel: 'risk range',
         details: 'AI systems pursue goals that diverge from human values due to specification errors, mesa-optimization, or distributional shift. Not malicious, but dangerous.',
-        sources: ['Concrete Problems in AI Safety', 'Goal Misgeneralization'],
+        sources: ['Concrete Problems in AI Safety (Amodei et al. 2016)', 'Goal Misgeneralization (Shah et al. 2022)'],
         relatedConcepts: ['Inner misalignment', 'Reward hacking', 'Deceptive alignment']
       }
     },
@@ -146,10 +146,10 @@ The case for AI existential risk follows a chain of reasoning. **Disagreement on
         label: 'Bio Misuse',
         description: 'AI-enabled biological weapons development.',
         type: 'intermediate',
-        confidence: 0.04,
-        confidenceLabel: 'expected loss',
+        confidence: '1-10%',
+        confidenceLabel: 'risk range',
         details: 'AI lowers barriers to designing novel pathogens, enhancing transmissibility or lethality. Could enable non-state actors to create pandemic-capable agents.',
-        sources: ['Biosecurity reports', 'CBRN literature'],
+        sources: ['NTI Biosecurity Reports', 'RAND CBRN Studies'],
         relatedConcepts: ['Gain of function', 'Pandemic', 'Dual use']
       }
     },
@@ -161,10 +161,10 @@ The case for AI existential risk follows a chain of reasoning. **Disagreement on
         label: 'Cyber Misuse',
         description: 'AI-powered cyber attacks on critical infrastructure.',
         type: 'intermediate',
-        confidence: 0.025,
-        confidenceLabel: 'expected loss',
+        confidence: '1-5%',
+        confidenceLabel: 'risk range',
         details: 'Autonomous hacking, vulnerability discovery, and exploitation at scale. Could target power grids, financial systems, or military infrastructure.',
-        sources: ['Cyber security research', 'RAND reports'],
+        sources: ['RAND Cybersecurity Studies', 'CISA Reports'],
         relatedConcepts: ['Critical infrastructure', 'Autonomous weapons', 'Offense-defense balance']
       }
     },
@@ -176,10 +176,10 @@ The case for AI existential risk follows a chain of reasoning. **Disagreement on
         label: 'Nuclear Misuse',
         description: 'AI destabilizing nuclear deterrence or enabling attacks.',
         type: 'intermediate',
-        confidence: 0.015,
-        confidenceLabel: 'expected loss',
+        confidence: '0.5-3%',
+        confidenceLabel: 'risk range',
         details: 'AI could compromise early warning systems, enable first-strike advantages, or be used in autonomous launch decisions. Increases risk of accidental or intentional nuclear war.',
-        sources: ['Nuclear security literature', 'FHI reports'],
+        sources: ['FHI Nuclear Risk Reports', 'SIPRI Studies'],
         relatedConcepts: ['Deterrence', 'First strike', 'Autonomous weapons']
       }
     },
@@ -191,10 +191,10 @@ The case for AI existential risk follows a chain of reasoning. **Disagreement on
         label: 'Misuse Risk',
         description: 'Combined intentional harmful use of AI.',
         type: 'intermediate',
-        confidence: 0.08,
-        confidenceLabel: 'expected loss',
-        details: 'Sum of bio (~4%), cyber (~2.5%), and nuclear (~1.5%) misuse pathways. AI amplifies capability of bad actors across domains.',
-        sources: ['GCR from AI misuse', 'CBRN reports'],
+        confidence: '3-15%',
+        confidenceLabel: 'risk range',
+        details: 'Combined bio, cyber, and nuclear misuse pathways. AI amplifies capability of bad actors across domains. Wide uncertainty in estimates.',
+        sources: ['GovAI Misuse Research', 'CBRN Literature'],
         relatedConcepts: ['Bioweapons', 'Cyber offense', 'Nuclear risk']
       }
     },
@@ -236,10 +236,10 @@ The case for AI existential risk follows a chain of reasoning. **Disagreement on
         label: 'Structural Risk',
         description: 'Systemic failures even with aligned AI.',
         type: 'intermediate',
-        confidence: 0.06,
-        confidenceLabel: 'expected loss',
+        confidence: '2-15%',
+        confidenceLabel: 'risk range',
         details: 'Even if individual AI systems are aligned, racing, proliferation, and coordination failures lead to catastrophe. The system fails even if components work.',
-        sources: ['Multi-agent safety', 'AI governance'],
+        sources: ['GovAI Research', 'Racing to the Precipice (Armstrong et al.)'],
         relatedConcepts: ['Race dynamics', 'Collective action', 'Systemic risk']
       }
     },
@@ -248,13 +248,13 @@ The case for AI existential risk follows a chain of reasoning. **Disagreement on
       type: 'causeEffect',
       position: { x: 0, y: 0 },
       data: {
-        label: 'Total Global Loss',
-        description: 'Combined expected loss from AI catastrophe.',
+        label: 'Total Global Risk',
+        description: 'Combined risk from AI catastrophe pathways.',
         type: 'effect',
-        confidence: 0.25,
-        confidenceLabel: 'expected loss',
-        details: 'Sum of accident (~12%), misuse (~8%), and structural (~6%) risk pathways, with some overlap. Estimates vary widely (5-90%) depending on assumptions.',
-        sources: ['The Precipice (Ord)', 'Expert surveys', 'Metaculus'],
+        confidence: '5-50%',
+        confidenceLabel: 'risk range',
+        details: 'Combined accident, misuse, and structural risk pathways with significant overlap. Expert estimates vary from under 5% to >90% depending on worldview and assumptions.',
+        sources: ['The Precipice (Ord 2020)', 'AI Impacts Survey 2023', 'Metaculus AGI Questions'],
         relatedConcepts: ['P(doom)', 'X-risk', 'Long-term future']
       }
     }
@@ -289,21 +289,21 @@ The case for AI existential risk follows a chain of reasoning. **Disagreement on
 
 | Claim | If you disagree... |
 |-------|-------------------|
-| [Advanced AI will be developed soon](/risk-argument/timelines) | Risk is far away, less urgent |
-| [It will be transformatively powerful](/risk-argument/capabilities) | AI won't be capable enough to pose existential risk |
-| [Takeoff could be fast](/risk-argument/takeoff) | We'll have time to course-correct |
-| [AI will be goal-directed in dangerous ways](/risk-argument/goal-directedness) | AI will be tool-like, not agentic |
-| [Alignment is fundamentally hard](/risk-argument/alignment-difficulty) | We'll solve it through normal engineering |
-| [Misalignment would be catastrophic](/risk-argument/catastrophe) | Failures will be contained/correctable |
-| [We'll fail to coordinate](/risk-argument/coordination) | We'll successfully manage the transition |
+| [Advanced AI will be developed soon](/understanding-ai-risk/core-argument/timelines/) | Risk is far away, less urgent |
+| [It will be transformatively powerful](/understanding-ai-risk/core-argument/capabilities/) | AI won't be capable enough to pose existential risk |
+| [Takeoff could be fast](/understanding-ai-risk/core-argument/takeoff/) | We'll have time to course-correct |
+| [AI will be goal-directed in dangerous ways](/understanding-ai-risk/core-argument/goal-directedness/) | AI will be tool-like, not agentic |
+| [Alignment is fundamentally hard](/understanding-ai-risk/core-argument/alignment-difficulty/) | We'll solve it through normal engineering |
+| [Misalignment would be catastrophic](/understanding-ai-risk/core-argument/catastrophe/) | Failures will be contained/correctable |
+| [We'll fail to coordinate](/understanding-ai-risk/core-argument/coordination/) | We'll successfully manage the transition |
 
 ## How This Leads to P(doom)
 
-Your probability estimate for AI catastrophe is roughly:
+Your probability estimate for AI catastrophe depends on how you evaluate each step in the argument chain. However, **these factors are not independent**—they interact in complex ways that simple multiplication doesn't capture.
 
-**P(doom) ≈ P(soon) × P(powerful) × P(fast takeoff matters) × P(goal-directed) × P(hard alignment) × P(catastrophic) × P(coordination fails)**
+A rough intuition: if you're skeptical of *any* major step (timelines, capabilities, alignment difficulty, etc.), your overall risk estimate will be much lower. If you find all steps plausible, your estimate will be higher.
 
-This is why experts disagree so much—small differences at each step compound.
+**Caution**: Precise probability estimates for these deeply uncertain questions should be treated as rough intuitions, not rigorous calculations. The wide disagreement among experts reflects genuine uncertainty, not just different information.
 
 | Worldview | Steps they doubt | Resulting P(doom) |
 |-----------|------------------|-------------------|
@@ -318,14 +318,14 @@ This is why experts disagree so much—small differences at each step compound.
   client:load
   topic="P(AI Catastrophe)"
   description="Expert estimates of probability that AI causes existential or civilizational catastrophe this century."
-  spectrum={{ low: "Very unlikely (<1%)", high: "Near-certain (>90%)" }}
+  spectrum={{ low: "Very unlikely (under 1%)", high: "Near-certain (>90%)" }}
   positions={[
-    { actor: "Eliezer Yudkowsky", position: "Very high", estimate: ">90%", confidence: "high" },
-    { actor: "Paul Christiano", position: "Significant", estimate: "10-20%", confidence: "medium" },
-    { actor: "Toby Ord", position: "Moderate", estimate: "10%", confidence: "medium", source: "The Precipice" },
+    { actor: "Eliezer Yudkowsky", position: "Very high", estimate: ">90%", confidence: "high", source: "AGI Ruin (2022)" },
+    { actor: "Paul Christiano", position: "Significant", estimate: "10-20%", confidence: "medium", source: "Various posts (2022-2023)" },
+    { actor: "Toby Ord", position: "Moderate", estimate: "10%", confidence: "medium", source: "The Precipice (2020)" },
     { actor: "AI Impacts Survey", position: "Lower", estimate: "5%", confidence: "low", source: "2023 Expert Survey" },
-    { actor: "Stuart Russell", position: "Concerned", estimate: "15-25%", confidence: "medium" },
-    { actor: "Yoshua Bengio", position: "Concerned", estimate: "10-15%", confidence: "medium" }
+    { actor: "Stuart Russell", position: "Concerned", estimate: "15-25%", confidence: "medium", source: "Interviews (2021-2023)" },
+    { actor: "Yoshua Bengio", position: "Concerned", estimate: "10-15%", confidence: "medium", source: "Public statements (2023)" }
   ]}
 />
 

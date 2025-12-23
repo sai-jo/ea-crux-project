@@ -13,6 +13,9 @@ export { EstimateBox } from './EstimateBox';
 export { KeyQuestions } from './KeyQuestions';
 export { DisagreementMap } from './DisagreementMap';
 
+// Crux tracking
+export { Crux, CruxList } from './Crux';
+
 // Glossary and tooltips
 export { GlossaryTerm, GlossaryList } from './Glossary';
 

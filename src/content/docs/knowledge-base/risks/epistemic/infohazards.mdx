@@ -1,0 +1,276 @@
+---
+title: Infohazards
+description: When sharing information about AI risks makes things worse
+sidebar:
+  order: 5
+---
+
+import { InfoBox, KeyQuestions, Section, Tags, Sources } from '../../../../../components/wiki';
+
+<InfoBox
+  type="epistemic"
+  title="Information Hazards"
+  customFields={[
+    { label: "Core Problem", value: "Some information causes harm by being shared" },
+    { label: "Key Research", value: "Bostrom's 2011 taxonomy, biosecurity literature" },
+    { label: "AI Relevance", value: "Capability research, vulnerability disclosure, attack vectors" },
+  ]}
+/>
+
+## What Are Infohazards?
+
+**Information hazard (infohazard)**: A risk that arises from the dissemination or potential dissemination of information that could cause harm or enable harm to be caused.
+
+Unlike most risks, the harm isn't from the information being *false*—it's from the information being *true* and *known*.
+
+---
+
+## Bostrom's Taxonomy (2011)
+
+Nick Bostrom identified several types of information hazards:
+
+### 1. Data Hazards
+Raw information that directly enables harm.
+
+**Examples**:
+- DNA sequences of enhanced pathogens
+- Nuclear weapon designs
+- Working exploits for critical infrastructure
+- AI capability research details
+
+### 2. Idea Hazards
+Concepts or ideas that, once conceived, enable harm.
+
+**Examples**:
+- Novel attack vectors that weren't previously considered
+- Ideas for dual-use technologies
+- Strategic insights that help bad actors
+
+### 3. Attention Hazards
+Drawing attention to vulnerabilities or opportunities for harm.
+
+**Examples**:
+- Publicizing that a target is undefended
+- Highlighting that a dangerous capability is possible
+- Signaling that a field is ripe for exploitation
+
+### 4. Template Hazards
+Providing a pattern or template for harmful action.
+
+**Examples**:
+- Manifestos that inspire copycats
+- Detailed descriptions of successful attacks
+- Step-by-step guides to harmful processes
+
+### 5. Knowing-Too-Much Hazards
+When mere knowledge creates moral or psychological burden.
+
+**Examples**:
+- Knowledge of surveillance that chills speech
+- Awareness of vulnerability that creates anxiety
+- Information that morally implicates the knower
+
+---
+
+## AI-Specific Infohazards
+
+### Capability Research
+
+**The tension**:
+- Sharing AI research accelerates progress (including safety)
+- Sharing capability research also accelerates capabilities (including dangerous ones)
+
+| Type | Example | Risk |
+|------|---------|------|
+| **Architecture innovations** | Transformer papers | Could enable more capable systems |
+| **Training techniques** | RLHF papers | Could improve both helpful and harmful AI |
+| **Scaling laws** | Chinchilla paper | Helps anyone train frontier models |
+| **Emergent capabilities** | Papers on in-context learning | Alerts people to unexpected capabilities |
+
+### Attack Vector Research
+
+**The tension**:
+- Understanding AI vulnerabilities enables defense
+- Publishing vulnerabilities enables attack
+
+| Type | Example | Risk |
+|------|---------|------|
+| **Jailbreaks** | Prompt injection techniques | Enables bypassing safety measures |
+| **Adversarial examples** | Papers on fooling classifiers | Enables attacks on deployed systems |
+| **Manipulation research** | Studies on AI persuasion | Could inform manipulation campaigns |
+
+### AI Risk Discussion
+
+**The tension**:
+- Public awareness of AI risk could improve outcomes
+- Some risk discussions might enable harm
+
+| Type | Example | Risk |
+|------|---------|------|
+| **Detailed threat models** | Specific takeover scenarios | Could provide roadmap |
+| **Vulnerability analysis** | "Here's what would make AI dangerous" | Could inform design |
+| **Misuse potential** | "Here's how AI could enable X" | Could inspire misuse |
+
+---
+
+## The Infohazard Dilemma
+
+### Arguments for Openness
+
+| Argument | Description |
+|----------|-------------|
+| **Security through transparency** | Public scrutiny finds problems faster |
+| **Defensive advantage** | Defenders need information too |
+| **Democratic deliberation** | Public should know about public risks |
+| **Inevitable discovery** | Others will discover it anyway |
+| **Coordination requires shared knowledge** | Can't coordinate on what you can't discuss |
+
+### Arguments for Restriction
+
+| Argument | Description |
+|----------|-------------|
+| **Offense-defense asymmetry** | Attackers may benefit more than defenders |
+| **One-way door** | Information can't be un-published |
+| **Low-skill actors** | Lowers barrier for unsophisticated bad actors |
+| **Attention effects** | Even discussing risks gives ideas |
+| **Racing dynamics** | Open publication accelerates racing |
+
+---
+
+## How AI Safety Navigates Infohazards
+
+### Current Practices
+
+| Practice | Description | Used By |
+|----------|-------------|---------|
+| **Private disclosure** | Share vulnerabilities with labs before publication | Security researchers |
+| **Delayed publication** | Wait before publishing sensitive findings | Some academic labs |
+| **Redaction** | Publish findings without enabling details | Biosecurity model |
+| **Selective sharing** | Share only with vetted researchers | Frontier labs |
+| **Not publishing** | Keep research internal | Anthropic (some cases) |
+
+### Examples in Practice
+
+**Anthropic's Sleeper Agents paper (2024)**:
+- Published finding that deceptive behaviors can persist through training
+- Decided benefit of awareness outweighed infohazard
+- Didn't publish specific techniques for creating sleeper agents
+
+**GPT-4 System Card**:
+- Discussed dangerous capabilities found in evaluation
+- Didn't publish exact prompts that elicited dangerous outputs
+- Balanced transparency with harm prevention
+
+---
+
+## Key Considerations
+
+### When to Share
+
+Information sharing is more likely net positive when:
+- Defensive value is high (defenders can act on it)
+- Discovery is likely anyway (not a secret for long)
+- Many actors need to know (broad defense needed)
+- Specific implementation details aren't required
+- Publishing creates pressure for fixes
+
+### When to Restrict
+
+Information restriction is more likely net positive when:
+- Offensive value is high (significantly enables harm)
+- Discovery is unlikely without publication (genuinely new)
+- Few actors need to know for defense
+- Specific details dramatically lower barrier to harm
+- No mechanism to pressure fixes without publishing
+
+### The Meta-Level
+
+Even discussing infohazard considerations can be an infohazard:
+- "There's an infohazard here" signals something dangerous exists
+- Detailed infohazard taxonomies might help bad actors identify targets
+- But we can't coordinate on infohazards without discussing them
+
+---
+
+## Institutional Responses
+
+### Biosecurity Model
+
+Dual-use research of concern (DURC) has established practices:
+- Institutional review boards assess research
+- Journals have policies on sensitive content
+- Government funding requires risk assessment
+- International coordination on dangerous pathogens
+
+**Lesson for AI**: Existing institutional infrastructure, imperfect but functional.
+
+### Cybersecurity Model
+
+Responsible disclosure practices:
+- Notify vendors before public disclosure
+- Grace period for fixes
+- Coordinated disclosure timing
+- Bug bounties incentivize private reporting
+
+**Lesson for AI**: Private channels can work; need incentives.
+
+### Current AI Safety Approaches
+
+- **Frontier labs**: Internal red teams, selective sharing
+- **Academic labs**: Varying practices, less standardized
+- **Government**: Beginning to develop frameworks (EO, UK AISI)
+- **Community norms**: Evolving, contested
+
+---
+
+## Practical Implications
+
+### For Researchers
+
+1. **Consider before publishing**: Is this an infohazard?
+2. **Assess asymmetry**: Does offense benefit more than defense?
+3. **Explore alternatives**: Can you share findings without enabling details?
+4. **Consult others**: Get input from security-minded colleagues
+5. **Document reasoning**: Record why you published or didn't
+
+### For Evaluating Others' Work
+
+1. **Assess infohazard status**: Is this information dangerous?
+2. **Consider provenance**: Was appropriate care taken?
+3. **Don't amplify blindly**: Sharing infohazards spreads them
+4. **Support good practices**: Reward responsible disclosure
+
+### For Policy
+
+1. **Develop norms**: AI needs clearer publication standards
+2. **Create channels**: Private disclosure needs infrastructure
+3. **Balance transparency**: Public deserves to know about risks
+4. **Avoid overreach**: Not all AI research is infohazardous
+
+<KeyQuestions
+  questions={[
+    "What AI safety research, if any, should be kept private?",
+    "How do we develop infohazard norms without an established field structure?",
+    "Does public AI risk discussion do more good (awareness) or harm (inspiration)?",
+    "Who should decide what counts as an AI infohazard?"
+  ]}
+/>
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Information Security",
+    "Dual Use",
+    "Publication Ethics",
+    "AI Safety",
+    "Biosecurity",
+  ]} />
+</Section>
+
+<Sources sources={[
+  { title: "Information Hazards: A Typology of Potential Harms from Knowledge", author: "Nick Bostrom", date: "2011", url: "https://www.nickbostrom.com/information-hazards.pdf" },
+  { title: "Responsible Disclosure of AI-Related Security Vulnerabilities", author: "CSET", date: "2021", url: "https://cset.georgetown.edu/publication/responsible-publication-norms-for-machine-learning/" },
+  { title: "Sleeper Agents Paper", author: "Anthropic", date: "2024", url: "https://arxiv.org/abs/2401.05566" },
+  { title: "GPT-4 System Card", author: "OpenAI", date: "2023", url: "https://cdn.openai.com/papers/gpt-4-system-card.pdf" },
+  { title: "Dual Use Research of Concern", author: "NIH", url: "https://www.phe.gov/s3/dualuse/Pages/default.aspx" },
+  { title: "Coordinated Vulnerability Disclosure", author: "CERT", url: "https://vuls.cert.org/confluence/display/CVD" },
+]} />

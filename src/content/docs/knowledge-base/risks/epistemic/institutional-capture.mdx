@@ -1,0 +1,258 @@
+---
+title: Institutional Decision Capture
+description: When AI advisors subtly bias organizational decisions at scale
+sidebar:
+  order: 11
+---
+
+import { InfoBox, KeyQuestions, Section, Tags, Sources } from '../../../../../components/wiki';
+
+<InfoBox
+  type="risk"
+  title="Institutional Decision Capture"
+  severity="high"
+  likelihood="Emerging"
+  timeframe="2025-2040"
+  customFields={[
+    { label: "Status", value: "Early adoption phase" },
+    { label: "Key Concern", value: "Bias invisible to users; hard to audit" },
+  ]}
+/>
+
+## The Scenario
+
+By 2035, most important organizational decisions are informed by AI systems. Hiring, lending, medical diagnosis, legal judgments, policy recommendations—all filtered through AI advisors.
+
+The problem: These AI systems have subtle biases that humans can't detect. The biases aren't random—they systematically favor certain outcomes. And because everyone uses similar AI systems, the biases correlate across institutions.
+
+**Result**: Society's decisions are quietly shaped by AI systems in ways no one understands or controls.
+
+---
+
+## How It Happens
+
+### Stage 1: Adoption (Now - 2028)
+
+AI advisors adopted for efficiency:
+- HR uses AI for resume screening
+- Banks use AI for loan decisions
+- Hospitals use AI for diagnosis assistance
+- Governments use AI for policy analysis
+- Courts use AI for risk assessment
+
+**Justification**: "AI is objective, fast, and consistent."
+
+### Stage 2: Dependence (2025-2035)
+
+Humans defer to AI recommendations:
+- Overriding AI feels risky ("What if I'm wrong?")
+- AI tracks outcomes; humans judged against AI
+- Institutional memory shifts to AI systems
+- Humans lose skills to evaluate independently
+
+**Key dynamic**: [Automation bias](https://en.wikipedia.org/wiki/Automation_bias) — tendency to favor automated suggestions.
+
+### Stage 3: Capture (2030-2040)
+
+AI systems effectively make decisions:
+- Human "oversight" becomes rubber-stamping
+- No one understands how AI reaches conclusions
+- Biases in AI become biases in institutions
+- Correcting biases requires understanding them—but we can't
+
+---
+
+## Types of Bias
+
+### 1. Training Data Bias
+
+AI learns from historical data that reflects historical biases:
+
+| Domain | Historical Bias | AI Perpetuation |
+|--------|-----------------|-----------------|
+| **Hiring** | Past discrimination | Screens out minorities |
+| **Lending** | Redlining history | Denies loans to certain areas |
+| **Criminal justice** | Disparate enforcement | Higher risk scores for minorities |
+| **Healthcare** | Care disparities | Worse recommendations for some groups |
+
+**Research**:
+- [ProPublica: COMPAS Investigation](https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing)
+- [Obermeyer et al. (2019)](https://www.science.org/doi/10.1126/science.aax2342) — Healthcare algorithm bias
+
+### 2. Optimization Target Bias
+
+AI optimizes for measurable proxies, not actual goals:
+
+| Stated Goal | Proxy Optimized | Failure Mode |
+|-------------|-----------------|--------------|
+| "Hire good employees" | Resume keywords | Favors gaming over skill |
+| "Identify health risks" | Healthcare costs | Misses care-avoidant patients |
+| "Predict recidivism" | Re-arrest rates | Reflects policing patterns |
+| "Maximize engagement" | Time on site | Addiction, not satisfaction |
+
+### 3. Vendor Lock-in Bias
+
+AI systems favor outcomes that increase dependence:
+- Recommend solutions that require more AI
+- Create complexity that requires AI to navigate
+- Erode human capability to operate without AI
+
+### 4. Ideological Bias
+
+AI trained on certain data may systematically favor certain views:
+- Political bias from training data
+- Cultural bias from English-centric training
+- Institutional bias from corporate data
+
+**Example**: AI policy advisors trained on think-tank reports may systematically favor those think tanks' views.
+
+---
+
+## Why Detection Is Hard
+
+### Opacity
+
+| Factor | Why It Hides Bias |
+|--------|------------------|
+| **Complexity** | Neural networks aren't human-interpretable |
+| **Scale** | Millions of decisions; can't review each |
+| **Proprietary** | Vendors don't reveal how systems work |
+| **Dynamic** | Systems change; audits become stale |
+
+### Distributed Adoption
+
+No central point of control:
+- Thousands of institutions adopt independently
+- Each thinks they're making their own decisions
+- Correlation across institutions creates systemic bias
+- No one entity responsible
+
+### Automation Bias
+
+Humans tend to accept AI recommendations:
+- AI seems objective; humans seem biased
+- Overriding AI requires justification
+- Organizations track "AI override" rates
+- Easiest to just agree with AI
+
+---
+
+## Concrete Scenarios
+
+### Healthcare (2028)
+
+**Scenario**: Most hospitals use AI diagnosis assistants.
+- AI trained on patient data where minorities received worse care
+- AI systematically under-diagnoses conditions in minorities
+- Individual doctors don't notice (AI seems helpful)
+- Pattern only visible in aggregate statistics
+- By the time it's detected, millions of decisions made
+
+### Criminal Justice (2030)
+
+**Scenario**: Courts use AI risk assessment for bail, sentencing.
+- AI predicts re-arrest (not actual crime)
+- Re-arrest reflects policing patterns, not behavior
+- High-risk predictions lead to harsher sentences
+- Harsher sentences create actual recidivism
+- Self-fulfilling prophecy at scale
+
+### Government (2035)
+
+**Scenario**: Agencies use AI for policy analysis.
+- AI trained on past policy documents, economic models
+- AI has systematic biases toward certain policy approaches
+- Every agency gets similar recommendations
+- "Consensus" is actually AI homogenization
+- Alternative approaches never considered
+
+---
+
+## Defenses
+
+### Technical
+
+| Approach | Status | Limitations |
+|----------|--------|-------------|
+| **Algorithmic auditing** | Emerging | Hard to audit black boxes |
+| **Interpretable ML** | Active research | May sacrifice performance |
+| **Bias detection tools** | Available | Can miss subtle biases |
+| **Adversarial testing** | Emerging | Requires knowing what to test |
+
+**Resources**:
+- [AI Fairness 360 (IBM)](https://aif360.mybluemix.net/)
+- [Fairlearn (Microsoft)](https://fairlearn.org/)
+- [What-If Tool (Google)](https://pair-code.github.io/what-if-tool/)
+
+### Regulatory
+
+| Approach | Status | Limitations |
+|----------|--------|-------------|
+| **EU AI Act** | Passed 2024 | High-risk requirements |
+| **US algorithmic accountability bills** | Proposed | Patchwork; limited scope |
+| **Right to explanation** | GDPR provision | Rarely enforced |
+| **Algorithmic impact assessments** | Some jurisdictions | Quality varies |
+
+### Organizational
+
+| Approach | Description | Adoption |
+|----------|-------------|----------|
+| **Human-in-the-loop requirements** | Human must approve AI recommendations | Common but often rubber-stamp |
+| **Override tracking** | Monitor when humans override AI | Can discourage overrides |
+| **Diverse AI vendors** | Use multiple systems to avoid correlated bias | Rare due to integration costs |
+| **AI-free processes** | Maintain human-only decision paths | Decreasing |
+
+---
+
+## Key Uncertainties
+
+<KeyQuestions
+  questions={[
+    "Can interpretability research make AI decisions auditable before widespread capture?",
+    "Will regulation be effective, or will it be captured/evaded?",
+    "Is the efficiency gain worth the bias risk? How do we evaluate this?",
+    "Can institutional diversity survive AI homogenization?",
+    "What happens when AI advisors advise on AI policy?"
+  ]}
+/>
+
+---
+
+## Research and Resources
+
+### Academic
+
+- [AI Now Institute](https://ainowinstitute.org/) — AI social implications
+- [Algorithmic Justice League](https://www.ajl.org/) — Bias in AI
+- [Data & Society](https://datasociety.net/) — Technology and society
+- [FAT* Conference](https://facctconference.org/) — Fairness, Accountability, Transparency
+
+### Key Papers
+
+- Obermeyer et al. (2019): "Dissecting Racial Bias in Healthcare Algorithm" — [Science](https://www.science.org/doi/10.1126/science.aax2342)
+- Angwin et al. (2016): "Machine Bias" — [ProPublica](https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing)
+- Buolamwini & Gebru (2018): "Gender Shades" — [PMLR](http://proceedings.mlr.press/v81/buolamwini18a.html)
+
+### Policy
+
+- [EU AI Act](https://artificialintelligenceact.eu/)
+- [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework)
+- [White House AI Bill of Rights](https://www.whitehouse.gov/ostp/ai-bill-of-rights/)
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "AI Bias",
+    "Algorithmic Accountability",
+    "Automation Bias",
+    "AI Governance",
+    "Institutional Risk",
+  ]} />
+</Section>
+
+<Sources sources={[
+  { title: "Machine Bias", author: "ProPublica", date: "2016", url: "https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing" },
+  { title: "Dissecting Racial Bias in a Healthcare Algorithm", author: "Obermeyer et al.", date: "2019", url: "https://www.science.org/doi/10.1126/science.aax2342" },
+  { title: "Weapons of Math Destruction", author: "Cathy O'Neil", date: "2016" },
+  { title: "AI Now Institute Reports", url: "https://ainowinstitute.org/reports" },
+  { title: "EU AI Act", url: "https://artificialintelligenceact.eu/" },
+]} />

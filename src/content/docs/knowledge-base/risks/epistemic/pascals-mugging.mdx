@@ -1,0 +1,219 @@
+---
+title: Pascal's Mugging & Fanaticism
+description: How tiny probabilities of extreme outcomes can dominate decisions
+sidebar:
+  order: 3
+---
+
+import { InfoBox, KeyQuestions, Section, Tags, Sources } from '../../../../../components/wiki';
+
+<InfoBox
+  type="epistemic"
+  title="Pascal's Mugging"
+  customFields={[
+    { label: "Core Problem", value: "Tiny P × Huge Value = ??? " },
+    { label: "Key Research", value: "Bostrom, Beckstead, MacAskill on fanaticism" },
+    { label: "Relevance", value: "AI x-risk involves small-to-medium P of extinction" },
+  ]}
+/>
+
+## The Problem
+
+Pascal's original wager: Even if God's existence is unlikely, infinite heavenly reward makes believing rational.
+
+**Pascal's Mugging** (Bostrom, 2009): A mugger claims they'll create 10^100 utils if you give them $5. Even with tiny probability, doesn't expected value reasoning say you should pay?
+
+**The AI version**: Even if P(AI extinction) is 0.1%, extinction affects 10^50+ potential future lives. Doesn't this dominate all other considerations?
+
+---
+
+## Why This Matters for AI Safety
+
+### The Astronomical Stakes Argument
+
+Some argue AI safety is important *because* the stakes are astronomical:
+
+| Component | Estimate |
+|-----------|----------|
+| P(AI causes extinction this century) | 1-20% (varies widely) |
+| Future lives at stake | 10^30 to 10^50+ |
+| Expected lives saved by reducing risk | Astronomically large |
+
+Even small reductions in extinction probability would have enormous expected value.
+
+### The Problem
+
+This reasoning has uncomfortable implications:
+
+1. **Any claimed x-risk dominates**: Someone claiming 0.00001% probability of a 10^100-scale catastrophe should still dominate your attention
+2. **Vulnerable to manipulation**: Anyone can claim arbitrarily large stakes
+3. **Paralysis**: Infinite considerations overwhelm finite ones
+4. **Absurdity**: Would you give up everything for a 10^-20 chance of saving 10^30 lives?
+
+---
+
+## Philosophical Responses
+
+### 1. Bounded Utility Functions
+
+**Solution**: Cap the utility function—no outcome can have utility above some threshold.
+
+| Approach | Description |
+|----------|-------------|
+| **Risk-neutral with bounds** | Utilities capped at ±10^15 or similar |
+| **Risk-averse** | Diminishing marginal utility of lives saved |
+| **Lexical thresholds** | Ignore probabilities below 10^-6 or similar |
+
+**Problems**:
+- Arbitrary-seeming cutoffs
+- May conflict with impartiality
+- Why that threshold and not another?
+
+### 2. Probability Discounting
+
+**Solution**: Weight tiny probabilities less than their face value.
+
+**Mechanism**:
+- Probabilities below 10^-6 are "practically zero"
+- Evidence for tiny probabilities is itself uncertain
+- Meta-uncertainty about probabilities
+
+**Example**: If someone claims 10^-10 probability of a huge event, your uncertainty about their claim may exceed 10^-10—so you shouldn't take it at face value.
+
+**Problems**:
+- Also seems arbitrary
+- Loses information
+- When exactly to discount?
+
+### 3. Leverage Penalties (Hanson)
+
+**Solution**: Discount claims proportional to the leverage they grant you.
+
+**Reasoning**:
+- If your action affects 10^50 lives, that's extraordinary
+- Extraordinary claims require extraordinary evidence
+- The leverage itself is evidence against the claim
+
+**Example**: "My donation prevents extinction" claims enormous leverage. The prior probability of having such leverage is tiny, which should discount the claim.
+
+### 4. Maximum Expected Value (MEV) Constraints
+
+**Solution**: Never take an action with probability p of benefit if it has probability (1-p) of catastrophic downside.
+
+**Problems**:
+- Requires defining "catastrophic"
+- May not match intuitions
+
+### 5. Moral Uncertainty
+
+**Solution**: Give weight to ethical views that reject fanaticism.
+
+**Reasoning**:
+- We're uncertain about ethics
+- Some plausible ethical views reject expected value maximization
+- We should hedge across ethical views
+
+---
+
+## How This Applies to AI Safety
+
+### The Central Tension
+
+| If you accept fanaticism | If you reject fanaticism |
+|-------------------------|-------------------------|
+| AI safety is overwhelmingly important | AI safety may be only moderately important |
+| Even 0.01% x-risk justifies enormous resources | Need higher confidence to justify large investments |
+| Long-term future dominates all near-term considerations | Near-term and long-term compete more normally |
+
+### What P(doom) Actually Matters?
+
+The good news: Most AI safety estimates aren't in Pascal's Mugging territory.
+
+| Estimate Range | Status |
+|----------------|--------|
+| **50-90% (Yudkowsky)** | Not a mugging—this is just high probability |
+| **10-25% (many researchers)** | Definitely decision-relevant by any framework |
+| **1-10% (Ord, surveys)** | Important; not fanaticism to worry about 1% extinction risk |
+| **0.01-0.1%** | Entering mugging territory |
+| **Under 0.01%** | Clearly Pascal's Mugging unless stakes are bounded |
+
+**The live debate** is mostly in the 5-50% range—not Mugging territory.
+
+### But Watch for Scope Creep
+
+Arguments that AI safety is important *because* of astronomical future stakes (vs. just preventing human extinction) may invoke fanaticism:
+
+- "We're not just saving current humans, but 10^50 future lives"
+- "We're preventing permanent lock-in of bad values across the cosmos"
+- "The long-term future is almost all the value"
+
+These may be true, but evaluate whether you're endorsing fanaticism when you endorse them.
+
+---
+
+## Practical Implications
+
+### For Prioritization
+
+| Approach | Implication |
+|----------|-------------|
+| **Accept some fanaticism** | AI safety is clearly a top priority |
+| **Partial fanaticism** | AI safety is important but so are other things |
+| **Reject fanaticism** | AI safety competes normally with other priorities |
+
+### For Estimating AI Risk
+
+Be careful about:
+- Anchoring on extreme estimates to make expected value high
+- Multiplying small probabilities by huge stakes as primary justification
+- Using astronomical stakes to dismiss criticism
+
+### For Communication
+
+- **Don't rely on mugging arguments**: They're controversial and may backfire
+- **Multiple framings**: AI safety is important even without astronomical stakes
+- **Acknowledge the issue**: Don't pretend fanaticism isn't a real philosophical problem
+
+---
+
+## The Broader Debate
+
+This connects to foundational debates in ethics:
+
+| View | Position on Fanaticism |
+|------|----------------------|
+| **Classical utilitarianism** | Tends to accept (expected value maximization) |
+| **Bounded consequentialism** | Rejects via utility bounds |
+| **Deontology** | May reject (side constraints limit what expected value can justify) |
+| **Virtue ethics** | Mixed (depends on what virtues require) |
+| **Moral uncertainty** | Hedge across views |
+
+There's no consensus. This is a live philosophical debate.
+
+<KeyQuestions
+  questions={[
+    "What probability of extinction is low enough that you wouldn't work on preventing it?",
+    "Should astronomical stakes (10^50 lives) change decisions differently than merely large stakes (10^9 lives)?",
+    "Does your view on AI safety depend on accepting fanaticism?",
+    "How do you distinguish legitimate x-risk concern from Pascal's Mugging?"
+  ]}
+/>
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Decision Theory",
+    "Expected Value",
+    "X-Risk",
+    "Ethics",
+    "Fanaticism",
+  ]} />
+</Section>
+
+<Sources sources={[
+  { title: "Pascal's Mugging", author: "Nick Bostrom", date: "2009", url: "https://www.nickbostrom.com/papers/pascal.pdf" },
+  { title: "On the Overwhelming Importance of Shaping the Far Future", author: "Nick Beckstead", date: "2013", url: "https://rucore.libraries.rutgers.edu/rutgers-lib/40469/" },
+  { title: "Moral Uncertainty", author: "William MacAskill, Krister Bykvist, Toby Ord", date: "2020" },
+  { title: "Astronomical Waste", author: "Nick Bostrom", date: "2003", url: "https://www.nickbostrom.com/astronomical/waste.html" },
+  { title: "Against the Astronomical Value of the Long-Term Future", author: "David Thorstad", date: "2023", url: "https://globalprioritiesinstitute.org/against-the-astronomical-value-of-the-long-term-future-david-thorstad/" },
+  { title: "The Case Against Strong Longtermism", author: "Vaden Masrani", date: "2021", url: "https://forum.effectivealtruism.org/posts/TBe9vBLCmK4oJLTgq/the-case-against-strong-longtermism" },
+]} />

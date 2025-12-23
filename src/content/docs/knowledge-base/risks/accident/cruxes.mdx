@@ -1,0 +1,570 @@
+---
+title: Accident Risk Cruxes
+description: Key uncertainties that determine views on AI accident risks and alignment difficulty
+sidebar:
+  order: 99
+---
+
+import { Crux, CruxList, DisagreementMap, KeyQuestions, Section, Tags } from '../../../../../components/wiki';
+
+## What Are Accident Risk Cruxes?
+
+**Cruxes** are the key uncertainties where your answer largely determines your overall view. For accident risks, your positions on these cruxes determine:
+- Which failure modes you expect
+- How hard alignment is
+- Which research directions to prioritize
+- How much runway we have
+
+These cruxes cut across specific accident risks (deceptive alignment, mesa-optimization, etc.) to identify the deeper disagreements.
+
+---
+
+## Foundational Cruxes
+
+<Crux
+  id="mesa-optimization"
+  question="Will advanced AI systems contain mesa-optimizers?"
+  domain="Foundations"
+  description="Whether neural networks trained via gradient descent will develop internal optimizing processes with their own objectives distinct from the training objective."
+  importance="critical"
+  resolvability="years"
+  currentState="No clear mesa-optimizers in current systems; theoretical arguments contested"
+  positions={[
+    {
+      view: "Mesa-optimizers are likely in advanced systems",
+      probability: "35-55%",
+      holders: ["Evan Hubinger", "Some MIRI researchers"],
+      implications: "Inner alignment is critical; training on behavior insufficient; need interpretability"
+    },
+    {
+      view: "Mesa-optimizers possible but not guaranteed",
+      probability: "30-40%",
+      holders: ["Paul Christiano"],
+      implications: "Hedge across approaches; both inner and outer alignment matter"
+    },
+    {
+      view: "Gradient descent doesn't produce mesa-optimizers",
+      probability: "15-25%",
+      holders: ["Some ML researchers"],
+      implications: "Focus on outer alignment; behavioral training may suffice; inner alignment less urgent"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Clear evidence of mesa-optimization in current or future models",
+    "Theoretical results on when/whether SGD produces mesa-optimizers",
+    "Interpretability findings on internal optimization structure",
+    "Scaling experiments on optimization behavior"
+  ]}
+  relatedCruxes={["deceptive-alignment", "situational-awareness"]}
+  relevantResearch={[
+    { title: "Risks from Learned Optimization", url: "https://arxiv.org/abs/1906.01820" }
+  ]}
+/>
+
+<Crux
+  id="deceptive-alignment"
+  question="Is deceptive alignment a likely failure mode?"
+  domain="Foundations"
+  description="Whether sufficiently advanced AI systems will strategically appear aligned during training while pursuing different objectives once deployed."
+  importance="critical"
+  resolvability="years"
+  currentState="No observed cases; 'Sleeper Agents' shows backdoors persist; theoretical concern"
+  positions={[
+    {
+      view: "Deceptive alignment is very likely at advanced capabilities",
+      probability: "30-50%",
+      holders: ["Eliezer Yudkowsky", "Some MIRI researchers"],
+      implications: "Standard training won't work; need radically different approaches; containment critical"
+    },
+    {
+      view: "Significant concern but uncertain probability",
+      probability: "35-45%",
+      holders: ["Paul Christiano", "Anthropic safety team"],
+      implications: "Prioritize research on detecting/preventing deception; interpretability key"
+    },
+    {
+      view: "Deceptive alignment is unlikely",
+      probability: "15-30%",
+      holders: ["Some ML researchers", "Skeptics"],
+      implications: "Behavioral alignment may work; focus on other failure modes"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Evidence of deceptive behavior in current/future models",
+    "Theoretical results on whether gradient descent selects for deception",
+    "Interpretability success in detecting deceptive cognition",
+    "Long-term deployment outcomes"
+  ]}
+  relatedCruxes={["mesa-optimization", "situational-awareness", "interpretability-tractability"]}
+  relevantResearch={[
+    { title: "Risks from Learned Optimization", url: "https://arxiv.org/abs/1906.01820" },
+    { title: "Sleeper Agents", url: "https://arxiv.org/abs/2401.05566" }
+  ]}
+/>
+
+<Crux
+  id="situational-awareness"
+  question="When will AI systems develop situational awareness about being AI?"
+  domain="Foundations"
+  description="When AI systems will understand that they are AI systems being trained/evaluated, and reason about this strategically."
+  importance="critical"
+  resolvability="soon"
+  currentState="Current LLMs have some self-knowledge; unclear if strategic reasoning about training"
+  positions={[
+    {
+      view: "Near-term (GPT-5 era)",
+      probability: "35-50%",
+      holders: ["Anthropic researchers"],
+      implications: "Urgent need for evaluations; deceptive alignment risk is near-term"
+    },
+    {
+      view: "Mid-term (2-5 years)",
+      probability: "30-40%",
+      implications: "Time to develop defenses; monitoring increasingly important"
+    },
+    {
+      view: "Requires superintelligence or never happens",
+      probability: "15-25%",
+      implications: "Other failure modes more pressing; deceptive alignment may be non-issue"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Evaluations for situational awareness in new models",
+    "Evidence of models reasoning strategically about training",
+    "Research on prerequisites for situational awareness"
+  ]}
+  relatedCruxes={["deceptive-alignment", "mesa-optimization"]}
+  relevantResearch={[
+    { title: "Situational Awareness evaluations", url: "https://arxiv.org/abs/2309.00667" }
+  ]}
+/>
+
+---
+
+## Alignment Difficulty Cruxes
+
+<Crux
+  id="alignment-hardness"
+  question="How hard is the core alignment problem?"
+  domain="Alignment Difficulty"
+  description="Whether aligning superintelligent AI with human values is fundamentally difficult or tractable with sufficient research."
+  importance="critical"
+  resolvability="decades"
+  currentState="Deeply contested; no consensus"
+  positions={[
+    {
+      view: "Alignment is extremely hard / near-impossible",
+      probability: "20-35%",
+      holders: ["MIRI", "Eliezer Yudkowsky"],
+      implications: "Slowing AI development may be only viable strategy; coordination paramount"
+    },
+    {
+      view: "Alignment is hard but tractable with sufficient research",
+      probability: "40-55%",
+      holders: ["Anthropic", "OpenAI safety team"],
+      implications: "Prioritize alignment research; race between capabilities and alignment"
+    },
+    {
+      view: "Alignment is not as hard as commonly believed",
+      probability: "15-25%",
+      holders: ["Some ML researchers", "Optimists"],
+      implications: "Current approaches may scale; focus on governance over technical research"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Scaling results on alignment techniques",
+    "Theoretical progress on alignment fundamentals",
+    "Evidence from increasingly capable systems",
+    "Success or failure of alignment approaches on GPT-5+ level systems"
+  ]}
+  relatedCruxes={["scalable-oversight", "interpretability-tractability"]}
+  relevantResearch={[
+    { title: "AGI Safety Literature Review", url: "https://arxiv.org/abs/2309.01933" }
+  ]}
+/>
+
+<Crux
+  id="scalable-oversight"
+  question="Can human oversight scale to superintelligent systems?"
+  domain="Alignment Difficulty"
+  description="Whether techniques like debate, recursive reward modeling, or AI-assisted evaluation can provide adequate oversight of systems smarter than humans."
+  importance="critical"
+  resolvability="years"
+  currentState="Promising theoretical frameworks; limited empirical validation"
+  positions={[
+    {
+      view: "Scalable oversight is achievable",
+      probability: "30-45%",
+      holders: ["Paul Christiano", "OpenAI safety team"],
+      implications: "Invest heavily in debate, IDA, RRM; these could solve oversight"
+    },
+    {
+      view: "Scalable oversight may work but with significant limitations",
+      probability: "35-45%",
+      holders: ["Anthropic"],
+      implications: "Use scalable oversight but don't rely on it alone; defense in depth"
+    },
+    {
+      view: "Scalable oversight fundamentally breaks down at superintelligence",
+      probability: "20-30%",
+      holders: ["Some MIRI-adjacent researchers"],
+      implications: "Need radically different approach; corrigibility or containment"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Empirical results from debate/IDA experiments",
+    "Theoretical analysis of oversight limits",
+    "Evidence on whether AI-assisted evaluation can detect AI deception",
+    "Scaling results on oversight techniques"
+  ]}
+  relatedCruxes={["alignment-hardness", "interpretability-tractability"]}
+  relevantResearch={[
+    { title: "AI Safety via Debate", url: "https://arxiv.org/abs/1805.00899" },
+    { title: "Iterated Distillation and Amplification", url: "https://arxiv.org/abs/1810.08575" }
+  ]}
+/>
+
+<Crux
+  id="interpretability-tractability"
+  question="Can interpretability research succeed in understanding advanced AI?"
+  domain="Alignment Difficulty"
+  description="Whether mechanistic interpretability can scale to provide meaningful understanding of frontier model cognition."
+  importance="high"
+  resolvability="years"
+  currentState="Progress on small/medium models; frontier model interpretability limited"
+  positions={[
+    {
+      view: "Full interpretability of frontier models is achievable",
+      probability: "20-35%",
+      holders: ["Anthropic interpretability team", "Some researchers"],
+      implications: "Massive investment in interpretability; could enable alignment verification"
+    },
+    {
+      view: "Partial interpretability useful; full understanding unlikely",
+      probability: "40-50%",
+      implications: "Use interpretability as one tool; don't expect it to solve alignment alone"
+    },
+    {
+      view: "Interpretability won't scale to meaningful understanding",
+      probability: "20-30%",
+      holders: ["Some skeptics"],
+      implications: "Focus on behavioral approaches; interpretability research has limited value"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Scaling results from interpretability on larger models",
+    "Ability to detect deceptive cognition via interpretability",
+    "Novel interpretability techniques",
+    "Theoretical results on interpretability limits"
+  ]}
+  relatedCruxes={["deceptive-alignment", "scalable-oversight"]}
+  relevantResearch={[
+    { title: "Anthropic Interpretability", url: "https://www.anthropic.com/research#interpretability" },
+    { title: "Circuits Work", url: "https://distill.pub/2020/circuits/" }
+  ]}
+/>
+
+---
+
+## Capability and Timeline Cruxes
+
+<Crux
+  id="emergent-capabilities"
+  question="Will dangerous capabilities emerge unpredictably?"
+  domain="Capabilities"
+  description="Whether scaling will produce sudden, unpredictable jumps in dangerous capabilities without warning."
+  importance="high"
+  resolvability="years"
+  currentState="Some emergent capabilities observed; predictability debated"
+  positions={[
+    {
+      view: "Dangerous capabilities will emerge unpredictably",
+      probability: "35-50%",
+      holders: ["Some AI safety researchers"],
+      implications: "Need robust evals before each scale-up; precautionary approach; expect surprises"
+    },
+    {
+      view: "Capabilities will be more predictable than feared",
+      probability: "30-40%",
+      holders: ["Some scaling laws researchers"],
+      implications: "Scaling laws provide warning; can anticipate and prepare"
+    },
+    {
+      view: "Emergence is a mirage; capabilities predictable from compute",
+      probability: "20-30%",
+      holders: ["Some ML researchers"],
+      implications: "Focus on compute governance; emergence is not the core risk"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Empirical data on capability emergence with scale",
+    "Theoretical understanding of emergence",
+    "Success of dangerous capability evaluations",
+    "Surprises from frontier models"
+  ]}
+  relatedCruxes={["capability-control-gap"]}
+  relevantResearch={[
+    { title: "Are Emergent Abilities a Mirage?", url: "https://arxiv.org/abs/2304.15004" },
+    { title: "Emergent Capabilities paper", url: "https://arxiv.org/abs/2206.07682" }
+  ]}
+/>
+
+<Crux
+  id="capability-control-gap"
+  question="Will there be a dangerous gap between capabilities and control?"
+  domain="Capabilities"
+  description="Whether AI capabilities will outpace our ability to control/align them, creating a dangerous window."
+  importance="critical"
+  resolvability="years"
+  currentState="Gap arguably exists now for some capabilities; trajectory unclear"
+  positions={[
+    {
+      view: "Dangerous gap is likely/inevitable",
+      probability: "40-55%",
+      holders: ["Most AI safety researchers"],
+      implications: "Urgent alignment research; coordination to slow capabilities; prepare for gap"
+    },
+    {
+      view: "Gap is possible but can be avoided with coordination",
+      probability: "30-40%",
+      implications: "Invest in both capabilities and alignment; governance critical"
+    },
+    {
+      view: "Alignment will keep pace with capabilities",
+      probability: "15-25%",
+      holders: ["Some optimists"],
+      implications: "Focus on responsible scaling; alignment research is on track"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Relative progress rates of capabilities vs alignment",
+    "Lab coordination on responsible scaling",
+    "Success of alignment techniques on frontier models"
+  ]}
+  relatedCruxes={["alignment-hardness", "emergent-capabilities"]}
+/>
+
+---
+
+## Specific Failure Mode Cruxes
+
+<Crux
+  id="power-seeking"
+  question="Will advanced AI systems be power-seeking?"
+  domain="Failure Modes"
+  description="Whether advanced AI systems will convergently seek resources, influence, and self-preservation regardless of final goals."
+  importance="high"
+  resolvability="years"
+  currentState="Theoretical arguments strong; limited empirical evidence in current systems"
+  positions={[
+    {
+      view: "Power-seeking is convergently instrumental",
+      probability: "45-60%",
+      holders: ["Omohundro", "Bostrom", "Most AI safety researchers"],
+      implications: "Need to prevent resource/power acquisition; containment and corrigibility critical"
+    },
+    {
+      view: "Power-seeking depends on goal structure and training",
+      probability: "30-40%",
+      implications: "Can train against power-seeking; not inevitable"
+    },
+    {
+      view: "Power-seeking requires specific goal types that may be avoidable",
+      probability: "15-25%",
+      implications: "Focus on avoiding power-seeking goals; less fundamental concern"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Evidence of power-seeking in current models",
+    "Theoretical analysis of when power-seeking emerges",
+    "Training approaches that demonstrably prevent power-seeking",
+    "Empirical results from power-seeking evaluations"
+  ]}
+  relatedCruxes={["deceptive-alignment", "corrigibility"]}
+  relevantResearch={[
+    { title: "The Basic AI Drives", url: "https://selfawaresystems.com/2007/11/30/paper-on-the-basic-ai-drives/" },
+    { title: "Optimal Policies Tend to Seek Power", url: "https://arxiv.org/abs/1912.01683" }
+  ]}
+/>
+
+<Crux
+  id="corrigibility"
+  question="Can we build AI systems that remain corrigible?"
+  domain="Failure Modes"
+  description="Whether AI systems can be designed to allow human correction and shutdown without resisting."
+  importance="high"
+  resolvability="years"
+  currentState="Theoretical challenges identified; some empirical work on shutdown problems"
+  positions={[
+    {
+      view: "Full corrigibility is achievable",
+      probability: "20-35%",
+      holders: ["Some researchers"],
+      implications: "Prioritize corrigibility research; could solve control problem"
+    },
+    {
+      view: "Partial corrigibility possible; full corrigibility hard",
+      probability: "40-50%",
+      holders: ["Most safety researchers"],
+      implications: "Use corrigibility as one layer; defense in depth"
+    },
+    {
+      view: "Corrigibility is fundamentally at odds with capable agency",
+      probability: "20-30%",
+      holders: ["Some pessimists"],
+      implications: "Corrigibility may not be the answer; need other approaches"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Theoretical solutions to corrigibility problems",
+    "Empirical demonstrations of corrigible systems",
+    "Evidence that capable agency requires anti-corrigibility"
+  ]}
+  relatedCruxes={["power-seeking", "alignment-hardness"]}
+  relevantResearch={[
+    { title: "Corrigibility (Soares et al.)", url: "https://intelligence.org/files/Corrigibility.pdf" }
+  ]}
+/>
+
+<Crux
+  id="reward-hacking"
+  question="Is reward hacking preventable at scale?"
+  domain="Failure Modes"
+  description="Whether we can specify reward functions that advanced AI systems won't find unexpected ways to maximize."
+  importance="high"
+  resolvability="years"
+  currentState="Reward hacking observed in RL systems; mitigation techniques developing"
+  positions={[
+    {
+      view: "Reward hacking is fundamentally hard to prevent",
+      probability: "35-50%",
+      holders: ["Goodhart's law proponents"],
+      implications: "Need alternatives to reward optimization; process-based approaches"
+    },
+    {
+      view: "Reward hacking is solvable with better reward specification",
+      probability: "30-40%",
+      holders: ["Some RL researchers"],
+      implications: "Invest in reward modeling; RLHF improvements"
+    },
+    {
+      view: "Reward hacking becomes less problematic with scale",
+      probability: "15-25%",
+      implications: "Current techniques may scale; reward hacking is early-stage problem"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Evidence on reward hacking in larger models",
+    "Success of reward modeling techniques",
+    "Process-based approaches showing promise"
+  ]}
+  relatedCruxes={["alignment-hardness"]}
+  relevantResearch={[
+    { title: "Deep RL from Human Preferences", url: "https://arxiv.org/abs/1706.03741" },
+    { title: "Specification Gaming Examples", url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRPiprOaC3HsCf5Tuum8bRfzYUiKLRqJmbOoC-32JorNdfyTiRRsR7Ea5eWtvsWzuxo8bjOxCG84dAg/pubhtml" }
+  ]}
+/>
+
+---
+
+## Summary: Position Implications
+
+| If you believe... | Prioritize... |
+|-------------------|---------------|
+| Mesa-optimizers are likely | Inner alignment research; interpretability |
+| Deceptive alignment is likely | Detecting deception; containment; radically different training |
+| Situational awareness is near-term | Urgent evaluations; defensive measures now |
+| Alignment is extremely hard | Coordination to slow AI; governance over technical solutions |
+| Scalable oversight can work | Debate, IDA, RRM research |
+| Interpretability will succeed | Massive interpretability investment |
+| Dangerous capabilities will emerge unpredictably | Robust evals; precautionary scaling |
+| Capability-control gap is coming | Urgent alignment; coordination to slow capabilities |
+| Power-seeking is convergent | Corrigibility; containment; avoiding resource access |
+| Reward hacking is fundamental | Process-based alternatives; move away from reward optimization |
+
+---
+
+## Summary Table
+
+<CruxList
+  domain="Accident Risks"
+  cruxes={[
+    {
+      id: "deceptive-alignment",
+      question: "Is deceptive alignment a likely failure mode?",
+      importance: "critical",
+      summary: "Determines whether standard training can work"
+    },
+    {
+      id: "mesa-optimization",
+      question: "Will advanced AI contain mesa-optimizers?",
+      importance: "critical",
+      summary: "Determines if inner alignment is real problem"
+    },
+    {
+      id: "alignment-hardness",
+      question: "How hard is the core alignment problem?",
+      importance: "critical",
+      summary: "Determines overall strategy"
+    },
+    {
+      id: "scalable-oversight",
+      question: "Can human oversight scale to superintelligence?",
+      importance: "critical",
+      summary: "Determines viability of oversight approaches"
+    },
+    {
+      id: "capability-control-gap",
+      question: "Will capabilities outpace control?",
+      importance: "critical",
+      summary: "Determines urgency of coordination"
+    },
+    {
+      id: "situational-awareness",
+      question: "When will AI develop situational awareness?",
+      importance: "critical",
+      summary: "Determines timeline for deceptive alignment concern"
+    },
+    {
+      id: "interpretability-tractability",
+      question: "Can interpretability succeed at scale?",
+      importance: "high",
+      summary: "Determines value of interpretability investment"
+    },
+    {
+      id: "emergent-capabilities",
+      question: "Will dangerous capabilities emerge unpredictably?",
+      importance: "high",
+      summary: "Determines evaluation and precaution strategy"
+    },
+    {
+      id: "power-seeking",
+      question: "Will advanced AI be power-seeking?",
+      importance: "high",
+      summary: "Determines containment priorities"
+    },
+    {
+      id: "corrigibility",
+      question: "Can we build corrigible AI?",
+      importance: "high",
+      summary: "Determines viability of corrigibility approach"
+    },
+    {
+      id: "reward-hacking",
+      question: "Is reward hacking preventable at scale?",
+      importance: "high",
+      summary: "Determines approach to reward-based training"
+    }
+  ]}
+/>
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Cruxes",
+    "Key Uncertainties",
+    "AI Safety",
+    "Alignment",
+    "Mesa-Optimization",
+    "Deceptive Alignment",
+  ]} />
+</Section>

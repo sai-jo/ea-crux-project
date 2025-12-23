@@ -1,0 +1,543 @@
+---
+title: Open vs Closed Source AI
+description: The safety implications of releasing AI model weights publicly versus keeping them proprietary
+sidebar:
+  order: 3
+---
+
+import { ArgumentMap, InfoBox, KeyQuestions, EntityCard, EntityCards, Section, Tags, Sources, DisagreementMap, ComparisonTable } from '../../../../components/wiki';
+
+<InfoBox
+  type="crux"
+  title="Open vs Closed Source AI"
+  customFields={[
+    { label: "Question", value: "Should frontier AI model weights be released publicly?" },
+    { label: "Stakes", value: "Balance between safety, innovation, and democratic access" },
+    { label: "Current Trend", value: "Major labs increasingly keeping models closed" },
+  ]}
+/>
+
+One of the most heated debates in AI: Should powerful AI models be released as open source (weights publicly available), or kept closed to prevent misuse?
+
+## What's At Stake
+
+**Open source** means releasing model weights so anyone can download, modify, and run the model locally:
+- Examples: Llama 2, Mistral, Falcon
+- Can't be recalled or controlled after release
+- Anyone can fine-tune for any purpose
+
+**Closed source** means keeping weights proprietary, providing access only via API:
+- Examples: GPT-4, Claude, Gemini
+- Lab maintains control and can monitor usage
+- Can update, revoke access, refuse harmful requests
+
+<ArgumentMap
+  client:load
+  title="Should Frontier AI Be Open Source?"
+  description="Arguments for and against releasing powerful AI model weights publicly"
+  mainClaim="Frontier AI model weights should be released as open source"
+  proArguments={[
+    {
+      id: "democratization",
+      claim: "Open source democratizes AI access",
+      type: "pro",
+      strength: "strong",
+      summary: "Concentrating AI power in a few corporations is dangerous. Open source ensures broader access and prevents monopolization.",
+      details: "If only OpenAI, Anthropic, Google, and Meta control advanced AI, they wield enormous power. Open source levels the playing field, allowing researchers, startups, and developing countries to benefit from AI progress.",
+      supporters: ["Yann LeCun", "Meta AI", "Stability AI", "Open source advocates"],
+      rebuttals: [
+        "Access via API can be democratized without releasing weights",
+        "Open source benefits those with compute to run models",
+        "Democratization includes democratizing risks"
+      ]
+    },
+    {
+      id: "safety-through-scrutiny",
+      claim: "Open source enables better safety research",
+      type: "pro",
+      strength: "strong",
+      summary: "Security through obscurity doesn't work. Open models allow independent safety research and red-teaming.",
+      details: "Thousands of researchers can examine open models for vulnerabilities, bias, and failure modes. Closed models hide problems. History shows open source software is often more secure through community scrutiny.",
+      supporters: ["EleutherAI", "Open source researchers", "Hugging Face"],
+      rebuttals: [
+        "Can provide researcher access without full public release",
+        "Bad actors also get to study vulnerabilities",
+        "Software security ≠ AI safety"
+      ]
+    },
+    {
+      id: "innovation-acceleration",
+      claim: "Open source accelerates beneficial innovation",
+      type: "pro",
+      strength: "moderate",
+      summary: "Allowing anyone to build on frontier models speeds up beneficial applications in medicine, education, science.",
+      details: "Startups and researchers can fine-tune for specialized tasks: medical diagnosis, educational tutoring, scientific research. Closed APIs limit customization and create dependency.",
+      supporters: ["Tech industry", "Researchers", "Startups"],
+      rebuttals: [
+        "Same innovation possible via API",
+        "Speed isn't always good if racing ahead on capabilities",
+        "Most beneficial uses don't require local weights"
+      ]
+    },
+    {
+      id: "corporate-control",
+      claim: "Prevents dangerous corporate control of AI",
+      type: "pro",
+      strength: "moderate",
+      summary: "Trusting a few corporations to be gatekeepers is dangerous. Open source prevents centralized control.",
+      details: "What if OpenAI or Anthropic are acquired by hostile actors? What if they change terms of service? What if they align AI to their values, not society's? Open source prevents these single points of failure.",
+      supporters: ["Decentralization advocates"],
+      rebuttals: [
+        "Corporations face accountability and oversight",
+        "Open source enables hostile actors directly",
+        "Regulation can address corporate control"
+      ]
+    },
+    {
+      id: "inevitable",
+      claim: "Open source is inevitable anyway",
+      type: "pro",
+      strength: "moderate",
+      summary: "Model weights will leak, be recreated, or be developed by others. Might as well benefit from openness.",
+      details: "Llama 1 leaked within days. China will develop powerful models. Trying to keep models closed is futile—better to shape the open ecosystem than fight losing battle.",
+      supporters: ["Pragmatists"],
+      rebuttals: [
+        "Delay matters for safety preparation",
+        "Not all models will leak",
+        "Self-fulfilling prophecy"
+      ]
+    },
+    {
+      id: "genie-out",
+      claim: "Genie is already out of the bottle",
+      type: "pro",
+      strength: "weak",
+      summary: "Powerful open models already exist. Keeping newer ones closed won't help.",
+      details: "Llama 2 70B, Mistral, and other open models are already very capable. The baseline for what's publicly available keeps rising regardless.",
+      supporters: ["Open source advocates"],
+      rebuttals: [
+        "Frontier models are significantly more capable",
+        "Should stop making it worse",
+        "Bad reasoning: 'Already did some harm, so let's do more'"
+      ]
+    }
+  ]}
+  conArguments={[
+    {
+      id: "dual-use",
+      claim: "Open models enable misuse at scale",
+      type: "con",
+      strength: "strong",
+      summary: "Once released, can't prevent use for bioweapons, cyberattacks, disinformation, or other harms.",
+      details: "Bad actors can fine-tune for generating bioweapon instructions, autonomous hacking, mass manipulation, or removing safety guardrails. Can't monitor or control usage once weights are public. No recall mechanism.",
+      supporters: ["OpenAI", "Anthropic", "Security researchers"],
+      rebuttals: [
+        "Misuse is possible via API jailbreaking too",
+        "Capabilities for serious harm aren't there yet",
+        "Benefits outweigh misuse risks"
+      ]
+    },
+    {
+      id: "irreversible",
+      claim: "Release is permanent and irreversible",
+      type: "con",
+      strength: "strong",
+      summary: "Once model weights are public, they're public forever. Can't take back if we discover serious risks.",
+      details: "Unlike API access, can't patch vulnerabilities, update safety measures, or revoke access to open source models. If we discover a model can be misused in unexpected ways, it's too late.",
+      supporters: ["AI safety researchers"],
+      rebuttals: [
+        "Can release updated safer versions",
+        "APIs can also be archived and reused",
+        "Overstates permanence"
+      ]
+    },
+    {
+      id: "jailbreak-guaranteed",
+      claim: "Safety measures can be trivially removed",
+      type: "con",
+      strength: "strong",
+      summary: "Anyone with compute can fine-tune away safety guardrails, creating unrestricted models.",
+      details: "Research shows safety training can be removed with minimal fine-tuning. Open source models will spawn uncensored versions (already happening). Can't enforce safety in models you don't control.",
+      supporters: ["Safety researchers"],
+      rebuttals: [
+        "Jailbreaking also works on closed models",
+        "Can make safety more robust",
+        "Not all users want to remove safety"
+      ],
+      sources: [
+        { title: "Fine-tuning Aligned Language Models Compromises Safety", url: "https://arxiv.org/abs/2310.03693" }
+      ]
+    },
+    {
+      id: "capabilities-acceleration",
+      claim: "Open source accelerates dangerous capabilities race",
+      type: "con",
+      strength: "moderate",
+      summary: "Public models lower barriers to entry, increasing number of actors racing to build powerful AI.",
+      details: "If Meta releases Llama 3 matching GPT-4, every competitor can build on it. Accelerates timeline to dangerous capabilities by lowering costs and barriers.",
+      supporters: ["Some AI safety researchers"],
+      rebuttals: [
+        "Capabilities advancing regardless",
+        "More actors means more safety research too",
+        "Competition can be good"
+      ]
+    },
+    {
+      id: "no-monitoring",
+      claim: "Can't monitor for emerging risks",
+      type: "con",
+      strength: "moderate",
+      summary: "With closed models, can monitor usage patterns and detect problems. Open models are invisible.",
+      details: "API providers see how models are used, can detect abuse patterns, implement rate limits. With open models running locally, no visibility into deployment or usage.",
+      supporters: ["AI safety researchers", "Security experts"],
+      rebuttals: [
+        "Monitoring is privacy-invasive",
+        "Limited value for safety",
+        "Can still monitor public outputs"
+      ]
+    },
+    {
+      id: "state-actors",
+      claim: "Enables hostile state actors",
+      type: "con",
+      strength: "moderate",
+      summary: "Countries under sanctions or with malicious intent get free access to advanced AI.",
+      details: "North Korea, Iran, or other actors can use open models for surveillance, propaganda, weapons development. Wouldn't have access to US company APIs but can download open weights.",
+      supporters: ["National security experts"],
+      rebuttals: [
+        "These actors will develop their own AI",
+        "Can restrict access via export controls",
+        "Overstates current model capabilities"
+      ]
+    }
+  ]}
+  considerations={[
+    {
+      id: "capability-threshold",
+      claim: "May depend on capability level",
+      type: "consideration",
+      strength: "strong",
+      summary: "Open sourcing GPT-2 was fine. Open sourcing superintelligence would be crazy. Where's the line?"
+    },
+    {
+      id: "hybrid-approaches",
+      claim: "Hybrid models possible",
+      type: "consideration",
+      strength: "strong",
+      summary: "Staged release, researcher access, security-cleared access, or open source with delays could balance benefits."
+    },
+    {
+      id: "international-dimension",
+      claim: "Becomes irrelevant if China open sources",
+      type: "consideration",
+      strength: "moderate",
+      summary: "If any major power releases open source models, others' restraint may not matter."
+    }
+  ]}
+  verdict={{
+    position: "Depends on capability level—responsible openness for current models, caution for future frontier models",
+    confidence: "medium",
+    reasoning: "Current models (GPT-3.5 level) seem fine to open source—benefits outweigh risks. But as capabilities approach dangerous thresholds (bioweapons, autonomous hacking, manipulation at scale), the irreversibility of release argues for caution. Need clear criteria for when models are too dangerous."
+  }}
+/>
+
+## Current Landscape
+
+<ComparisonTable
+  client:load
+  title="Open vs Closed Models"
+  items={[
+    {
+      name: "GPT-4",
+      attributes: {
+        "Openness": "Closed",
+        "Access": "API only",
+        "Safety": "Strong guardrails, monitored",
+        "Customization": "Limited",
+        "Cost": "Pay per token",
+        "Control": "OpenAI maintains full control"
+      }
+    },
+    {
+      name: "Claude 3",
+      attributes: {
+        "Openness": "Closed",
+        "Access": "API only",
+        "Safety": "Constitutional AI, monitored",
+        "Customization": "Limited",
+        "Cost": "Pay per token",
+        "Control": "Anthropic maintains full control"
+      }
+    },
+    {
+      name: "Llama 2 70B",
+      attributes: {
+        "Openness": "Open weights",
+        "Access": "Download and run locally",
+        "Safety": "Basic guardrails, easily removed",
+        "Customization": "Full fine-tuning possible",
+        "Cost": "Free (need own compute)",
+        "Control": "No control after release"
+      }
+    },
+    {
+      name: "Mistral 7B/8x7B",
+      attributes: {
+        "Openness": "Open weights",
+        "Access": "Download and run locally",
+        "Safety": "Minimal restrictions",
+        "Customization": "Full fine-tuning possible",
+        "Cost": "Free (need own compute)",
+        "Control": "No control after release"
+      }
+    }
+  ]}
+/>
+
+## Key Positions
+
+<DisagreementMap
+  client:load
+  title="Positions on Open Source AI"
+  description="Where different actors stand on releasing model weights"
+  positions={[
+    {
+      name: "Yann LeCun (Meta)",
+      stance: "strong-open",
+      confidence: "high",
+      reasoning: "Argues open source is essential for safety, innovation, and preventing corporate monopoly. Concentration of AI power is the real risk.",
+      evidence: ["Llama releases", "Public statements"],
+      quote: "Open source makes AI safer, not more dangerous"
+    },
+    {
+      name: "Dario Amodei (Anthropic)",
+      stance: "cautious-closed",
+      confidence: "high",
+      reasoning: "Concerned about irreversibility and misuse. Believes responsible scaling means keeping frontier models closed.",
+      evidence: ["Claude is closed", "Responsible Scaling Policy"],
+      quote: "Can't unring the bell once weights are public"
+    },
+    {
+      name: "Sam Altman (OpenAI)",
+      stance: "closed",
+      confidence: "high",
+      reasoning: "Shifted from open (GPT-2) to closed (GPT-4) as capabilities increased. Cites safety concerns.",
+      evidence: ["GPT-4 closed", "Public statements"],
+      quote: "GPT-4 is too dangerous to release openly"
+    },
+    {
+      name: "Demis Hassabis (Google DeepMind)",
+      stance: "mostly-closed",
+      confidence: "medium",
+      reasoning: "Gemini models are closed, but Google has history of open research. Pragmatic about risks.",
+      evidence: ["Gemini closed", "Some open research"],
+      quote: "Case-by-case based on capabilities"
+    },
+    {
+      name: "Stability AI",
+      stance: "strong-open",
+      confidence: "high",
+      reasoning: "Business model and philosophy built on open source. Argues openness is ethical imperative.",
+      evidence: ["Stable Diffusion", "Open models"],
+      quote: "AI should be accessible to everyone"
+    },
+    {
+      name: "Eliezer Yudkowsky",
+      stance: "strongly-closed",
+      confidence: "high",
+      reasoning: "Believes open sourcing powerful AI is one of the most dangerous things we could do.",
+      evidence: ["Public writing"],
+      quote: "Open sourcing AGI would be suicide"
+    }
+  ]}
+/>
+
+## Key Cruxes
+
+<KeyQuestions
+  client:load
+  questions={[
+    {
+      question: "Can safety guardrails be made robust to fine-tuning?",
+      positions: [
+        {
+          position: "No - always removable",
+          confidence: "high",
+          reasoning: "Research shows safety training is superficial and easily overridden with fine-tuning.",
+          implications: "Open source will always enable misuse"
+        },
+        {
+          position: "Yes - with better techniques",
+          confidence: "low",
+          reasoning: "We can make safety intrinsic to the model, not just surface-level training.",
+          implications: "Open source can be safe"
+        }
+      ]
+    },
+    {
+      question: "Will open models leak or be recreated anyway?",
+      positions: [
+        {
+          position: "Yes - inevitable",
+          confidence: "medium",
+          reasoning: "Too many actors with capability and motivation. Secrets don't keep in ML.",
+          implications: "Better to shape open ecosystem than fight it"
+        },
+        {
+          position: "No - frontier models stay ahead",
+          confidence: "medium",
+          reasoning: "Leading labs maintain advantage. Not everything leaks.",
+          implications: "Keeping closed is feasible and valuable"
+        }
+      ]
+    },
+    {
+      question: "At what capability level does open source become too dangerous?",
+      positions: [
+        {
+          position: "Already crossed it",
+          confidence: "low",
+          reasoning: "Current models can assist in serious harms if unconstrained.",
+          implications: "Should stop open sourcing now"
+        },
+        {
+          position: "Not even close yet",
+          confidence: "medium",
+          reasoning: "Current models not capable enough for catastrophic misuse.",
+          implications: "Continue open sourcing current generations"
+        },
+        {
+          position: "Dangerous at AGI-level",
+          confidence: "high",
+          reasoning: "When models can autonomously plan and execute complex tasks, open source becomes untenable.",
+          implications: "Have time to decide on framework"
+        }
+      ]
+    },
+    {
+      question: "Do the benefits of scrutiny outweigh misuse risks?",
+      positions: [
+        {
+          position: "Yes - security through transparency",
+          confidence: "medium",
+          reasoning: "More eyes finding and fixing problems. History of open source security.",
+          implications: "Open source is safer"
+        },
+        {
+          position: "No - attackers benefit more than defenders",
+          confidence: "medium",
+          reasoning: "One attacker can exploit what thousands of defenders miss.",
+          implications: "Closed is safer"
+        }
+      ]
+    }
+  ]}
+/>
+
+## Possible Middle Grounds
+
+Several proposals try to capture benefits of both:
+
+**Staged Release**
+- Release with 6-12 month delay after initial deployment
+- Allows monitoring for risks before open release
+- Example: Not done yet, but proposed
+
+**Structured Access**
+- Provide weights to vetted researchers
+- More access than API, less than fully public
+- Example: GPT-2 XL initially
+
+**Differential Access**
+- Smaller models open, frontier models closed
+- Balance innovation with safety
+- Example: Current status quo
+
+**Safety-Contingent Release**
+- Release if safety evaluations pass thresholds
+- Create clear criteria for release decisions
+- Example: Anthropic's RSP (for deployment, not release)
+
+**Open Source with Hardware Controls**
+- Release weights but require specialized hardware to run
+- Harder but not perfect control
+- Example: Not implemented
+
+## The International Dimension
+
+This debate has geopolitical implications:
+
+**If US/Western labs stay closed:**
+- May slow dangerous capabilities
+- But China may open source strategically
+- Could lose innovation race
+
+**If US/Western labs open source:**
+- Loses monitoring capability
+- But levels playing field globally
+- Benefits developing world
+
+**Coordination problem:**
+- Optimal if all major powers coordinate
+- But unilateral restraint may not work
+- Race dynamics push toward openness
+
+## Implications for Different Risks
+
+The open vs closed question has different implications for different risks:
+
+**Misuse risks (bioweapons, cyberattacks):**
+- Clear case for closed: irreversibility, removal of guardrails
+- Open source dramatically increases risk
+
+**Accident risks (unintended behavior):**
+- Mixed: Open source enables safety research but also deployment
+- Depends on whether scrutiny or proliferation dominates
+
+**Structural risks (power concentration):**
+- Clear case for open: prevents monopoly
+- But only if open source is actually accessible (requires compute)
+
+**Race dynamics:**
+- Open source may accelerate race (lower barriers)
+- But also may reduce pressure (can build on shared base)
+
+<Section title="Related Debates">
+  <EntityCards>
+    <EntityCard
+      id="regulation-debate"
+      category="crux"
+      title="Regulation vs Self-Governance"
+      description="Who should control AI development?"
+    />
+    <EntityCard
+      id="pause-debate"
+      category="crux"
+      title="Should We Pause AI?"
+      description="Calls to slow or pause development"
+    />
+  </EntityCards>
+</Section>
+
+<Section title="Related Topics">
+  <Tags tags={[
+    "Open Source",
+    "Misuse Risk",
+    "Dual Use",
+    "Model Release",
+    "AI Policy",
+    "Democratization",
+    "Safety",
+  ]} />
+</Section>
+
+<Sources sources={[
+  { title: "The Case for Open-Source AI", author: "Yann LeCun", date: "2024", url: "https://www.facebook.com/yann.lecun/posts/10157957730342143" },
+  { title: "On Open-Source AI", author: "Anthropic", date: "2023", url: "https://www.anthropic.com/index/on-open-source-ai" },
+  { title: "Fine-tuning Aligned Language Models Compromises Safety", author: "Qi et al.", date: "2023", url: "https://arxiv.org/abs/2310.03693" },
+  { title: "The Llama 2 Release", author: "Meta AI", date: "2023", url: "https://ai.meta.com/llama/" },
+  { title: "Open-Sourcing Highly Capable Foundation Models", author: "Seger et al.", date: "2023", url: "https://arxiv.org/abs/2311.09227" },
+  { title: "Model Openness Framework", author: "Linux Foundation", date: "2024", url: "https://mozilla.ai/en/model-openness-framework/" },
+  { title: "Responsible Scaling Policy", author: "Anthropic", date: "2023", url: "https://www.anthropic.com/index/anthropics-responsible-scaling-policy" },
+  { title: "Open Source AI Is the Path Forward", author: "Mark Zuckerberg", date: "2024", url: "https://about.fb.com/news/2024/07/open-source-ai-is-the-path-forward/" },
+]} />

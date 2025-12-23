@@ -56,11 +56,11 @@ This dashboard aggregates key probability estimates, expert positions, and criti
   description="Expert disagreement on whether current alignment techniques (RLHF, Constitutional AI, etc.) will remain effective as AI capabilities increase."
   spectrum={{ low: "Will fail", high: "Will scale" }}
   positions={[
-    { actor: "Eliezer Yudkowsky", position: "Very unlikely", estimate: "5%", confidence: "high", url: "https://intelligence.org" },
-    { actor: "Paul Christiano", position: "Uncertain", estimate: "40%", confidence: "medium" },
-    { actor: "Dario Amodei", position: "Cautiously optimistic", estimate: "60%", confidence: "medium" },
-    { actor: "Jan Leike", position: "Uncertain", estimate: "45%", confidence: "medium" },
-    { actor: "Stuart Russell", position: "Unlikely without changes", estimate: "25%", confidence: "medium" }
+    { actor: "Eliezer Yudkowsky", position: "Very unlikely", estimate: "5%", confidence: "high", source: "AGI Ruin (2022)", url: "https://www.lesswrong.com/posts/uMQ3cqWDPHhjtiesc/agi-ruin-a-list-of-lethalities" },
+    { actor: "Paul Christiano", position: "Uncertain", estimate: "40%", confidence: "medium", source: "ARC Research (2023)" },
+    { actor: "Dario Amodei", position: "Cautiously optimistic", estimate: "60%", confidence: "medium", source: "Anthropic Core Views (2023)" },
+    { actor: "Jan Leike", position: "Uncertain", estimate: "45%", confidence: "medium", source: "OpenAI Superalignment (2023)" },
+    { actor: "Stuart Russell", position: "Unlikely without changes", estimate: "25%", confidence: "medium", source: "Human Compatible (2019)" }
   ]}
 />
 
@@ -85,10 +85,10 @@ This dashboard aggregates key probability estimates, expert positions, and criti
   topic="Primary Source of AI Catastrophic Risk"
   description="Where does the main risk come from? This affects what interventions matter most."
   positions={[
-    { actor: "MIRI", position: "Misalignment", estimate: "80%", confidence: "high" },
-    { actor: "GovAI", position: "Misuse/Governance", estimate: "60%", confidence: "medium" },
-    { actor: "CAIS", position: "Structural/Systemic", estimate: "50%", confidence: "medium" },
-    { actor: "FHI", position: "Multiple sources", estimate: "—", confidence: "high" }
+    { actor: "MIRI", position: "Misalignment", estimate: "80%", confidence: "high", source: "Research focus (2023)" },
+    { actor: "GovAI", position: "Misuse/Governance", estimate: "60%", confidence: "medium", source: "Research agenda (2023)" },
+    { actor: "CAIS", position: "Structural/Systemic", estimate: "50%", confidence: "medium", source: "Research focus (2023)" },
+    { actor: "FHI", position: "Multiple sources", estimate: "—", confidence: "high", source: "The Precipice (2020)" }
   ]}
 />
 
@@ -156,6 +156,103 @@ The AI safety field has significant disagreements on fundamental questions:
 | Timeline to TAI | 5-50+ years | Urgency level |
 | Governance feasibility | Pessimistic to optimistic | Strategy emphasis |
 
+---
+
+## Disagreement Decomposition
+
+Understanding *why* experts disagree is more useful than knowing *that* they disagree. Below we decompose major disagreements into their component cruxes.
+
+### Yudkowsky (~90% doom) vs. Christiano (~15% doom)
+
+These two influential researchers disagree by ~75 percentage points. Here's where:
+
+| Sub-Question | Yudkowsky | Christiano | Disagreement Level |
+|--------------|-----------|------------|-------------------|
+| **Timelines to TAI** | 2025-2035 | 2030-2045 | Minor |
+| **Will TAI be agentic/goal-directed?** | Yes, strongly | Yes, but controllably | Moderate |
+| **Will current techniques scale?** | No (5%) | Maybe (40%) | **MAJOR** |
+| **Will we get warning signs?** | No | Probably some | **MAJOR** |
+| **Can we iterate to safety?** | No—first mistake is fatal | Yes—we can learn from failures | **MAJOR** |
+| **Is deceptive alignment likely?** | Very likely | Possible but detectable | **MAJOR** |
+| **Can AI help with alignment?** | No—can't trust it | Yes—key to solution | Moderate |
+
+**Key crux**: Their core disagreement is about whether alignment is an iterative engineering problem (Christiano) or a one-shot challenge we'll likely fail (Yudkowsky). If you could resolve this question, you'd resolve most of their disagreement.
+
+**What would update them**:
+- *Toward Yudkowsky*: Evidence of deceptive behavior in current systems; alignment techniques breaking at scale
+- *Toward Christiano*: Continued success of RLHF/CAI; interpretability revealing model internals; no signs of deception despite looking
+
+---
+
+### Safety Community (~20% doom) vs. ML Mainstream (~2% doom)
+
+| Sub-Question | Safety Community | ML Mainstream | Disagreement Level |
+|--------------|-----------------|---------------|-------------------|
+| **Is "AGI" a coherent concept?** | Yes | Often skeptical | **MAJOR** |
+| **Are current systems on path to AGI?** | Probably | Uncertain/skeptical | **MAJOR** |
+| **Will AI be goal-directed?** | Yes, increasingly | LLMs aren't goal-directed | **MAJOR** |
+| **Is theoretical risk analysis valid?** | Yes | Prefer empirical evidence | Moderate |
+| **Is orthogonality thesis true?** | Yes | May not apply to trained systems | Moderate |
+| **Should we worry before seeing danger?** | Yes—proactive | No—reactive is fine | **MAJOR** |
+
+**Key crux**: The fundamental disagreement is whether AI risk arguments are valid *before* we see empirical evidence of danger, or whether this is unfounded speculation. The safety community treats absence of evidence as compatible with high risk; mainstream ML treats it as evidence of absence.
+
+**What would update them**:
+- *Toward safety community*: AI systems showing goal-directed deceptive behavior; capability jumps that surprise researchers
+- *Toward ML mainstream*: Continued absence of concerning behaviors despite capable systems; alignment techniques working without theoretical breakthroughs
+
+---
+
+### X-Risk Focus vs. AI Ethics Focus
+
+| Sub-Question | X-Risk Focus | AI Ethics Focus | Disagreement Level |
+|--------------|--------------|-----------------|-------------------|
+| **Most important AI risks** | Existential (future) | Bias, labor, surveillance (present) | **MAJOR** |
+| **Tractability** | Speculative x-risk is tractable | Present harms more tractable | **MAJOR** |
+| **Who is harmed by AI** | Future generations | Marginalized groups today | **MAJOR** |
+| **Lab incentives** | Labs need safety pressure | Labs benefit from x-risk hype | Moderate |
+| **What's neglected** | X-risk is neglected | Present harms are neglected | **MAJOR** |
+| **Funding priorities** | More x-risk funding | More ethics/fairness funding | **MAJOR** |
+
+**Key crux**: This is partly an empirical disagreement (which risks are larger?) but largely a values disagreement (how to weigh certain present harms vs. uncertain future catastrophe?). These worldviews may be incommensurable.
+
+**Note**: This wiki is written primarily from the x-risk perspective. See the [Limitations section](/) for acknowledgment of this bias.
+
+---
+
+### Optimistic Safety Researchers vs. Pessimistic Safety Researchers
+
+Even within AI safety, there's significant disagreement:
+
+| Sub-Question | Optimistic (e.g., Anthropic) | Pessimistic (e.g., MIRI) | Disagreement Level |
+|--------------|------------------------------|-------------------------|-------------------|
+| **Should we build frontier AI?** | Yes, with safety | No—too dangerous | **MAJOR** |
+| **Is empirical work sufficient?** | Mostly yes | No—need theory | **MAJOR** |
+| **Will scaling help safety?** | Yes—more capable = more helpful | No—more capable = more dangerous | Moderate |
+| **Can labs be trusted?** | Somewhat | No | Moderate |
+| **Is technical work still valuable?** | Yes | Maybe not (MIRI pivoted to governance) | **MAJOR** |
+
+**Key crux**: Whether working on safety at frontier labs is net positive (contributing to safety) or net negative (accelerating capabilities faster than safety). This determines whether "safety researcher at Anthropic" is a good career or complicity.
+
+---
+
+## Using This Decomposition
+
+### To find your cruxes
+1. Look at the sub-questions where major disagreements exist
+2. Ask yourself: Where do I stand on each?
+3. Your position on these cruxes determines your overall view
+
+### To have productive disagreements
+1. Identify which sub-question you and your interlocutor disagree on
+2. Focus the conversation on that specific crux
+3. Ask: "What evidence would change your mind on *this specific point*?"
+
+### To update your views
+1. Track evidence relevant to the specific cruxes
+2. Don't update on overall "AI safety" vibes—update on specific sub-questions
+3. If a crux resolves, propagate the update to your overall view
+
 ## Methodology Notes
 
 These estimates are aggregated from public statements, surveys, and publications. Key limitations:
@@ -171,4 +268,4 @@ For the most current estimates, consult primary sources like Metaculus, AI Impac
 
 - [Risk Models](/understanding-ai-risk/models/) - Frameworks for thinking about AI risk
 - [Worldviews](/understanding-ai-risk/worldviews/) - Different perspectives on AI development
-- [Technical Safety](/safety-approaches/technical/) - Approaches to solving alignment
+- [Technical Safety](/knowledge-base/safety-approaches/technical/) - Approaches to solving alignment
