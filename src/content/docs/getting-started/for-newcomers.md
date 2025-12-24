@@ -38,7 +38,7 @@ If those numbers concern you, spend 30 more minutes reading the [Core Argument](
 If you have half an hour, here's the recommended order:
 
 ### 1. Start with the FAQ (10 minutes)
-[Read the FAQ](/knowledge-base/resources/faq/) to get quick answers to the most common questions:
+[Read the FAQ](/getting-started/faq/) to get quick answers to the most common questions:
 - Isn't this just science fiction?
 - Why worry about future AI when we have current problems?
 - Can't we just turn it off?
@@ -52,7 +52,7 @@ Read the overview of the [Core Argument](/understanding-ai-risk/core-argument/):
 - Why coordination is challenging
 
 ### 3. See What Can Be Done (5 minutes)
-Skim [Interventions Overview](/knowledge-base/interventions/) to understand that this isn't hopeless—there are concrete things being done and that you could do.
+Skim [Responses Overview](/knowledge-base/responses/) to understand that this isn't hopeless—there are concrete things being done and that you could do.
 
 **After 30 minutes, you'll have**: A basic understanding of the concern, why it's taken seriously, and that there are responses available.
 
@@ -87,14 +87,14 @@ Explore how people weigh the evidence differently:
 
 **5. What's Being Done (20 minutes)**
 Review safety approaches:
-- [Interpretability](/knowledge-base/safety-approaches/technical/interpretability/) - Understanding how AI systems work internally
-- [Scalable Oversight](/knowledge-base/safety-approaches/technical/scalable-oversight/) - How to supervise superhuman AI
-- [Governance Approaches](/knowledge-base/safety-approaches/governance/governance/) - Policy and coordination
+- [Interpretability](/knowledge-base/responses/technical/interpretability/) - Understanding how AI systems work internally
+- [Scalable Oversight](/knowledge-base/responses/technical/scalable-oversight/) - How to supervise superhuman AI
+- [Governance Approaches](/knowledge-base/responses/governance/) - Policy and coordination
 
 **6. Who's Working on This (20 minutes)**
 Understand the organizational landscape:
-- [Anthropic](/knowledge-base/organizations/anthropic/) - Example of a "safety-focused" frontier lab
-- [ARC](/knowledge-base/organizations/arc/) - Example of alignment research organization
+- [Anthropic](/knowledge-base/organizations/labs/anthropic/) - Example of a "safety-focused" frontier lab
+- [ARC](/knowledge-base/organizations/safety-orgs/arc/) - Example of alignment research organization
 - [Organizations Overview](/knowledge-base/organizations/) - The broader landscape
 
 **After 2 hours, you'll have**: A solid foundation for following AI safety discussions and forming preliminary views.
@@ -132,17 +132,17 @@ Read [Historical Case Studies](/analysis/case-studies/) over lunch:
 
 **1:00-2:00 - Technical Safety Approaches**
 Understand what technical safety research looks like:
-- [Interpretability](/knowledge-base/safety-approaches/technical/interpretability/)
-- [AI Control](/knowledge-base/safety-approaches/technical/ai-control/)
-- [RLHF and Alignment](/knowledge-base/safety-approaches/technical/rlhf/)
-- [Research Agendas Comparison](/knowledge-base/research-agendas/)
+- [Interpretability](/knowledge-base/responses/technical/interpretability/)
+- [AI Control](/knowledge-base/responses/technical/ai-control/)
+- [RLHF and Alignment](/knowledge-base/responses/technical/rlhf/)
+- [Research Agendas Comparison](/knowledge-base/responses/technical/research-agendas/)
 
 **2:00-3:00 - Governance and Coordination**
 Understand non-technical approaches:
-- [Governance Overview](/knowledge-base/safety-approaches/governance/governance/)
-- [International Coordination](/knowledge-base/safety-approaches/governance/international/)
-- [Compute Governance](/knowledge-base/policies/) - Can we govern AI through hardware?
-- [Racing Dynamics](/knowledge-base/risks/structural/racing-dynamics/) - Understanding competitive pressure
+- [Governance Overview](/knowledge-base/responses/governance/)
+- [International Coordination](/knowledge-base/responses/governance/international/)
+- [Compute Governance](/knowledge-base/responses/governance/) - Can we govern AI through hardware?
+- [Racing Dynamics](/knowledge-base/risk-factors/racing-dynamics/) - Understanding competitive pressure
 
 ### Evening Session: Synthesis and Next Steps (2 hours)
 
@@ -157,7 +157,7 @@ Understand key controversies:
 Understand who's working on what:
 - Read about 3-4 [key researchers](/knowledge-base/people/) who represent different perspectives
 - Review 3-4 [organizations](/knowledge-base/organizations/) across different categories (frontier labs, safety orgs, governance)
-- Understand the [funding landscape](/knowledge-base/resources/funding/)
+- Understand the [funding landscape](/knowledge-base/funders/)
 
 **After a full day, you'll have**: A comprehensive understanding of AI safety, enough to engage seriously with the field and identify how you might contribute.
 
@@ -170,15 +170,15 @@ Not everyone learns best linearly. Here are paths organized by topic:
 1. [Capabilities](/understanding-ai-risk/core-argument/capabilities/) - What can AI systems do?
 2. [Alignment Difficulty](/understanding-ai-risk/core-argument/alignment-difficulty/) - Why is alignment hard technically?
 3. [Accident Risks](/knowledge-base/risks/accident/) - Technical failure modes
-4. [Technical Safety Approaches](/knowledge-base/safety-approaches/technical/) - What researchers are building
-5. [Research Agendas](/knowledge-base/research-agendas/) - Comparing different technical approaches
+4. [Technical Safety Approaches](/knowledge-base/responses/technical/) - What researchers are building
+5. [Research Agendas](/knowledge-base/responses/technical/research-agendas/) - Comparing different technical approaches
 
 ### If You're Most Interested in Strategy and Governance
 
 1. [Coordination Challenges](/understanding-ai-risk/core-argument/coordination/) - Why cooperation is hard
 2. [Structural Risks](/knowledge-base/risks/structural/) - Systemic problems
-3. [Governance Approaches](/knowledge-base/safety-approaches/governance/governance/)
-4. [International Coordination](/knowledge-base/safety-approaches/governance/international/)
+3. [Governance Approaches](/knowledge-base/responses/governance/)
+4. [International Coordination](/knowledge-base/responses/governance/international/)
 5. [Case Studies](/analysis/case-studies/) - Historical parallels
 
 ### If You're Most Interested in Probability and Forecasting
@@ -191,11 +191,11 @@ Not everyone learns best linearly. Here are paths organized by topic:
 
 ### If You're Most Interested in What You Can Do
 
-1. [Interventions Overview](/knowledge-base/interventions/) - What actions are available?
-2. [Field Building](/knowledge-base/interventions/field-building/) - Growing the AI safety community
+1. [Responses Overview](/knowledge-base/responses/) - What actions are available?
+2. [Field Building](/knowledge-base/responses/field-building/) - Growing the AI safety community
 3. [Organizations](/knowledge-base/organizations/) - Who's hiring and what they do
-4. [Funding Landscape](/knowledge-base/resources/funding/) - How to get resources
-5. [Career Paths](/knowledge-base/resources/careers/) - How to contribute (if this page exists)
+4. [Funding Landscape](/knowledge-base/funders/) - How to get resources
+5. Career Paths - How to contribute
 
 ## Common Learning Obstacles
 
@@ -234,7 +234,7 @@ Every newcomer has "simple solutions" that turn out to be harder than they appea
 **What helps**:
 - Focus on the conceptual rather than mathematical content
 - Read the governance and strategy sections first
-- Use the [Glossary](/knowledge-base/resources/glossary/) liberally
+- Use the [Glossary](/getting-started/glossary/) liberally
 - Don't worry if you can't follow every technical detail
 
 ### "Everyone Disagrees About Everything"
@@ -364,9 +364,9 @@ Once you have a foundation, here's how to go deeper:
 4. Calibrate your confidence appropriately
 
 **If you're considering contributing:**
-1. Explore [Interventions](/knowledge-base/interventions/) to see what work exists
+1. Explore [Responses](/knowledge-base/responses/) to see what work exists
 2. Review [Organizations](/knowledge-base/organizations/) to understand who does what
-3. Check out the [Funding Landscape](/knowledge-base/resources/funding/)
+3. Check out the [Funders](/knowledge-base/funders/)
 4. Consider which paths match your skills and comparative advantage
 
 **If you want to stay informed:**
@@ -394,4 +394,4 @@ All of these are legitimate responses. The goal of this learning path isn't to c
 
 **The most important thing**: Engage seriously with the arguments, understand the uncertainties, and decide for yourself what you believe and what (if anything) you want to do about it.
 
-Ready to begin? Start with the [FAQ](/knowledge-base/resources/faq/) and go from there. Good luck on your learning journey.
+Ready to begin? Start with the [FAQ](/getting-started/faq/) and go from there. Good luck on your learning journey.

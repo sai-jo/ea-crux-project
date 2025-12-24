@@ -4,7 +4,7 @@ import './wiki.css';
 interface RiskNode {
   id: string;
   label: string;
-  category: 'crux' | 'risk' | 'outcome' | 'capability' | 'intervention';
+  category: 'crux' | 'risk' | 'outcome' | 'capability' | 'intervention' | 'factor' | 'risk-category';
   description?: string;
   x?: number;
   y?: number;
@@ -32,6 +32,8 @@ const CATEGORY_COLORS: Record<string, { bg: string; border: string; text: string
   outcome: { bg: '#fce7f3', border: '#ec4899', text: '#9d174d' },
   capability: { bg: '#dbeafe', border: '#3b82f6', text: '#1e40af' },
   intervention: { bg: '#d1fae5', border: '#10b981', text: '#065f46' },
+  factor: { bg: '#f3f4f6', border: '#9ca3af', text: '#374151' },
+  'risk-category': { bg: '#fef3c7', border: '#f59e0b', text: '#92400e' },
 };
 
 const EDGE_COLORS: Record<string, string> = {

@@ -55,5 +55,5 @@ Analysis of:
 ## Related Sections
 
 - [Understanding AI Risk](/understanding-ai-risk/) - The core argument these scenarios explore
-- [Safety Approaches](/knowledge-base/safety-approaches/) - Technical details of interventions
+- [Responses](/knowledge-base/responses/) - Technical and governance interventions
 - [Risks](/knowledge-base/risks/) - The failure modes scenarios might involve

@@ -26,6 +26,13 @@ interface RelatedEntry {
   description?: string;
 }
 
+interface RelatedSolution {
+  id: string;
+  title: string;
+  type: string;
+  href: string;
+}
+
 interface InfoBoxProps {
   type: EntityType;
   // Common fields
@@ -43,6 +50,9 @@ interface InfoBoxProps {
   severity?: 'low' | 'medium' | 'high' | 'catastrophic';
   likelihood?: string;
   timeframe?: string;
+  category?: string;
+  maturity?: string;
+  relatedSolutions?: RelatedSolution[];
 
   // Policy-specific
   jurisdiction?: string;
@@ -98,6 +108,20 @@ const severityColors: Record<string, string> = {
   catastrophic: '#dc2626',
 };
 
+const categoryConfig: Record<string, { label: string; color: string }> = {
+  accident: { label: 'Accident Risk', color: '#f59e0b' },
+  misuse: { label: 'Misuse Risk', color: '#ef4444' },
+  structural: { label: 'Structural Risk', color: '#6366f1' },
+  epistemic: { label: 'Epistemic Risk', color: '#a855f7' },
+};
+
+const maturityConfig: Record<string, { label: string; color: string }> = {
+  neglected: { label: 'Neglected', color: '#ef4444' },
+  emerging: { label: 'Emerging', color: '#f59e0b' },
+  growing: { label: 'Growing', color: '#3b82f6' },
+  mature: { label: 'Mature', color: '#22c55e' },
+};
+
 export function InfoBox({
   type,
   title,
@@ -110,6 +134,9 @@ export function InfoBox({
   severity,
   likelihood,
   timeframe,
+  category,
+  maturity,
+  relatedSolutions,
   jurisdiction,
   status,
   effectiveDate,
@@ -133,9 +160,17 @@ export function InfoBox({
   if (location) fields.push({ label: 'Location', value: location });
   if (headcount) fields.push({ label: 'Employees', value: headcount });
   if (funding) fields.push({ label: 'Funding', value: funding });
+  if (category) {
+    const catConfig = categoryConfig[category];
+    fields.push({ label: 'Category', value: catConfig?.label || category });
+  }
   if (severity) fields.push({ label: 'Severity', value: severity.charAt(0).toUpperCase() + severity.slice(1) });
   if (likelihood) fields.push({ label: 'Likelihood', value: likelihood });
   if (timeframe) fields.push({ label: 'Timeframe', value: timeframe });
+  if (maturity) {
+    const matConfig = maturityConfig[maturity.toLowerCase()];
+    fields.push({ label: 'Maturity', value: matConfig?.label || maturity });
+  }
   if (jurisdiction) fields.push({ label: 'Jurisdiction', value: jurisdiction });
   if (status) fields.push({ label: 'Status', value: status });
   if (effectiveDate) fields.push({ label: 'Effective', value: effectiveDate });
@@ -152,6 +187,10 @@ export function InfoBox({
   if (customFields) {
     fields.push(...customFields);
   }
+
+  // Get category color for styling
+  const catColor = category ? categoryConfig[category]?.color : undefined;
+  const matColor = maturity ? maturityConfig[maturity.toLowerCase()]?.color : undefined;
 
   return (
     <div className="wiki-infobox">
@@ -170,28 +209,46 @@ export function InfoBox({
       )}
 
       <div className="wiki-infobox__content">
-        {fields.map((field, index) => (
-          <div key={index} className="wiki-infobox__row">
-            <span className="wiki-infobox__label">{field.label}</span>
-            <span
-              className="wiki-infobox__value"
-              style={
-                field.label === 'Severity' && severity
-                  ? { color: severityColors[severity] || 'inherit', fontWeight: 600 }
-                  : undefined
-              }
-            >
-              {field.label === 'Website' ? (
-                <a href={field.value} target="_blank" rel="noopener noreferrer">
-                  {new URL(field.value).hostname.replace('www.', '')}
-                </a>
-              ) : (
-                field.value
-              )}
-            </span>
-          </div>
-        ))}
+        {fields.map((field, index) => {
+          // Determine styling based on field type
+          let valueStyle: React.CSSProperties | undefined;
+          if (field.label === 'Severity' && severity) {
+            valueStyle = { color: severityColors[severity] || 'inherit', fontWeight: 600 };
+          } else if (field.label === 'Category' && catColor) {
+            valueStyle = { color: catColor, fontWeight: 500 };
+          } else if (field.label === 'Maturity' && matColor) {
+            valueStyle = { color: matColor, fontWeight: 500 };
+          }
+
+          return (
+            <div key={index} className="wiki-infobox__row">
+              <span className="wiki-infobox__label">{field.label}</span>
+              <span className="wiki-infobox__value" style={valueStyle}>
+                {field.label === 'Website' ? (
+                  <a href={field.value} target="_blank" rel="noopener noreferrer">
+                    {new URL(field.value).hostname.replace('www.', '')}
+                  </a>
+                ) : (
+                  field.value
+                )}
+              </span>
+            </div>
+          );
+        })}
       </div>
+
+      {relatedSolutions && relatedSolutions.length > 0 && (
+        <div className="wiki-infobox__section">
+          <div className="wiki-infobox__section-title">Solutions</div>
+          <div className="wiki-infobox__solutions">
+            {relatedSolutions.map((solution, index) => (
+              <a key={index} href={solution.href} className="wiki-infobox__solution-tag">
+                {solution.title}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
 
       {relatedTopics && relatedTopics.length > 0 && (
         <div className="wiki-infobox__section">

@@ -267,6 +267,7 @@ export type Graph = z.infer<typeof Graph>;
 
 export const EntityType = z.enum([
   'risk',
+  'risk-factor',
   'capability',
   'safety-agenda',
   'intervention',  // Technical or policy interventions

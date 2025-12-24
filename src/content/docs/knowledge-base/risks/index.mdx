@@ -1,6 +1,6 @@
 ---
 title: Risks & Failure Modes
-description: Comprehensive catalog of AI-related risks from technical failures to societal harms
+description: End-state harms from AI systems—technical failures, misuse, and societal impacts
 sidebar:
   order: 0
 tableOfContents: false
@@ -9,7 +9,9 @@ tableOfContents: false
 import { RisksTable, RiskCategoryCard, RecentUpdates, TagBrowser } from '../../../../components/wiki';
 import { getRisksForTable } from '../../../../data';
 
-This section documents risks from AI systems across four major categories: accident risks (technical failures), misuse risks (intentional harm), structural risks (systemic and societal), and epistemic risks (threats to knowledge and truth).
+This section documents **risks**—harmful end states we want to avoid. These are organized into four categories: accident risks (technical failures), misuse risks (intentional harm), structural risks (societal harms), and epistemic risks (threats to collective knowledge).
+
+For contributing dynamics and mechanisms that increase these risks, see **[Risk Factors](/knowledge-base/risk-factors/)**.
 
 ## Risk Categories
 
@@ -20,17 +22,19 @@ This section documents risks from AI systems across four major categories: accid
   <RiskCategoryCard client:load category="epistemic" href="/knowledge-base/risks/epistemic/" />
 </div>
 
+## Risks vs Risk Factors
+
+| Risks (this section) | Risk Factors |
+|---------------------|--------------|
+| End-state harms | Contributing dynamics |
+| What we want to avoid | What increases probability |
+| e.g., Lock-in, Epistemic Collapse | e.g., Racing Dynamics, Trust Erosion |
+
+**[Browse Risk Factors →](/knowledge-base/risk-factors/)**
+
 ## All Risks
 
 <RisksTable client:load risks={getRisksForTable()} />
-
-## Risk Assessment Framework
-
-Each risk profile includes:
-- **Severity**: Low / Medium / High / Catastrophic
-- **Likelihood**: Probability estimate with uncertainty
-- **Timeframe**: When might this become relevant?
-- **Status**: Theoretical, emerging, or currently occurring
 
 ## Observable vs Theoretical
 
@@ -39,9 +43,8 @@ Each risk profile includes:
 | Sycophancy | Sandbagging | Scheming |
 | Reward Hacking | Disinformation at scale | Treacherous Turn |
 | Specification Gaming | Deepfakes | Sharp Left Turn |
-| Racing Dynamics | Economic Disruption | Lock-in |
-| Automation Bias | Emergent Capabilities | Corrigibility Failure |
-| Trust Erosion | Concentration of Power | Power-Seeking AI |
+| Concentration of Power | Emergent Capabilities | Lock-in |
+| Reality Fragmentation | Institutional Capture | Power-Seeking AI |
 
 Understanding observable failures helps us reason about future risks, though the relationship between current problems and future catastrophic risks is debated.
 
@@ -49,7 +52,7 @@ Understanding observable failures helps us reason about future risks, though the
 
 These categories aren't independent:
 - **Accident + Misuse**: Misuse is more dangerous when AI is more capable; accident risks determine capability levels
-- **Structural + Accident**: Racing dynamics make accidents more likely by reducing safety investment
+- **Structural + Accident**: Racing dynamics (a risk factor) make accidents more likely by reducing safety investment
 - **Epistemic + All**: If we can't agree on what risks exist, coordinating responses is impossible
 - **Structural + Misuse**: Concentration of power determines who might misuse AI; proliferation determines who has access
 

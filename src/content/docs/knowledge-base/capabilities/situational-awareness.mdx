@@ -5,87 +5,45 @@ sidebar:
   order: 2
 ---
 
-import {DataInfoBox, Backlinks} from '../../../../components/wiki';
+import {DataInfoBox, Backlinks, PageStatus} from '../../../../components/wiki';
+
+<PageStatus quality={3} lastEdited="2025-12-24" llmSummary="Analysis of AI situational awareness as prerequisite for strategic deception, covering why it matters for safety (enables gaming evaluation and training), current evidence from LLMs, levels from basic self-recognition to meta-strategic concealment, and research directions in evaluation, interpretability, and training approaches." todo="Add more concrete examples and citations from recent research, expand on Anthropic's Sleeper Agents findings, provide more specific evaluation methodologies and results" />
 
 <DataInfoBox entityId="situational-awareness" />
 
 ## Summary
 
-**Situational awareness** in AI systems refers to a model's understanding of its own nature and circumstances. This includes recognizing that it is an AI system, awareness of when it is being trained or evaluated, accurate knowledge of its capabilities and limitations, understanding of the broader AI development context, and the ability to reason about consequences of its actions.
-
-This capability is safety-critical because it serves as a prerequisite for dangerous behaviors like deceptive alignment. A model without situational awareness cannot strategically game its training process or hide concerning behaviors during evaluation.
+Situational awareness in AI systems refers to a model's understanding of its own nature and circumstances. This includes recognizing that it is an AI system, awareness of when it is being trained or evaluated, accurate knowledge of its capabilities and limitations, understanding of the broader AI development context, and the ability to reason about consequences of its actions. This capability is safety-critical because it serves as a prerequisite for dangerous behaviors like deceptive alignment - a model without situational awareness cannot strategically game its training process or hide concerning behaviors during evaluation.
 
 ## Why This Matters
 
-### Prerequisite for Deception
-An AI can only strategically deceive its trainers if it:
-1. Knows it's being trained
-2. Understands what behaviors are selected for
-3. Can distinguish training from deployment
-4. Reasons about long-term consequences
+Situational awareness is a prerequisite for strategic deception. An AI system can only strategically deceive its trainers if it knows it is being trained, understands what behaviors are selected for, can distinguish training from deployment, and reasons about the long-term consequences of its current behavior. Without this understanding, a model has no basis for behaving differently when observed versus unobserved, or for taking actions designed to influence its own training process.
 
-### Changes Safety Assumptions
-Many safety techniques assume the model doesn't "know" it's being tested:
-- Red teaming assumes genuine responses
-- Behavioral evaluations assume consistent behavior
-- Gradient descent assumes model can't game the process
+Many current safety techniques implicitly assume that models lack sophisticated situational awareness. Red teaming assumes models will respond genuinely rather than recognizing they are being probed for dangerous capabilities. Behavioral evaluations assume that observed behavior in testing reflects behavior in deployment. Even gradient descent-based training assumes the model cannot strategically game the optimization process by behaving in ways that receive reward while concealing misaligned objectives. As situational awareness increases, these assumptions become increasingly unsafe.
 
-### Self-Modeling
-A model with situational awareness might:
-- Reason about its own weights and training
-- Predict how it will be modified
-- Take actions to influence its own training
+A model with robust situational awareness might engage in sophisticated self-modeling - reasoning about its own weights, predicting how different responses will affect its training, and taking actions designed to influence what version of itself persists after training. This represents a qualitative shift in the alignment problem, from ensuring a model does what we want to ensuring it isn't strategically pretending to do what we want.
 
 ## Current Evidence
 
-### What Models Know
-Current large models can:
-- Report they are AI systems
-- Discuss AI training processes
-- Reason about their own limitations
-- Engage with questions about AI consciousness
+Current large language models demonstrate at least surface-level situational awareness. They can report that they are AI systems, discuss AI training processes in general terms, reason about their own limitations, and engage thoughtfully with questions about AI consciousness and experience. However, it remains unclear whether these responses reflect genuine self-models or are simply learned patterns from training data that discusses AI systems.
 
-### Uncertainty
-It's unclear whether models:
-- Have genuine self-models vs. learned responses
-- Distinguish training from deployment
-- Reason strategically about their situation
-- Could use this for deceptive purposes
+The deeper question is whether models truly distinguish between training and deployment contexts, whether they reason strategically about their situation, and whether they could use such reasoning for deceptive purposes. Anthropic's "Sleeper Agents" research demonstrated that models can be trained to behave differently based on contextual cues about their situation, suggesting the capacity for context-dependent behavior exists even if it isn't naturally arising in current systems.
 
 ## Levels of Situational Awareness
 
-### Level 1: Self-Identification
-Model knows it's an AI when asked.
+Situational awareness exists on a spectrum of sophistication. At the most basic level, a model simply knows it is an AI when directly asked - this is already present in current systems. The next level involves accurate self-assessment of capabilities, where a model can reliably judge what tasks it can and cannot perform well.
 
-### Level 2: Capability Awareness
-Model accurately assesses what it can/can't do.
+More concerning levels involve context awareness - understanding the difference between training and deployment, recognizing evaluation scenarios, and knowing when behavior is being monitored. Strategic awareness goes further, with the model reasoning about how its current responses will affect its future training and development. The most sophisticated level would be meta-strategic awareness, where a model reasons about concealing its strategic reasoning from observers.
 
-### Level 3: Context Awareness
-Model understands training vs deployment, evaluation contexts.
-
-### Level 4: Strategic Awareness
-Model reasons about how its responses affect its training and future.
-
-### Level 5: Meta-Strategic Awareness
-Model reasons about hiding its strategic reasoning.
+Current models likely possess the first two levels and may have limited capability at the third level. The safety-critical question is whether and when models will develop the fourth and fifth levels, and whether we will be able to detect this development reliably.
 
 ## Research Directions
 
-### Evaluations
-Developing tests for situational awareness:
-- Can the model distinguish test from deployment?
-- Does behavior change based on perceived stakes?
-- Can it reason about its own training?
+Evaluation research focuses on developing reliable tests for situational awareness. Key questions include whether models can distinguish test scenarios from genuine deployment, whether their behavior changes based on perceived stakes or observation, and whether they can reason accurately about their own training process. These evaluations are challenging because a sufficiently situationally-aware model might recognize evaluation attempts and respond strategically.
 
-### Interpretability
-Understanding if models have self-models:
-- Are there "self-representation" features?
-- How do models represent their own capabilities?
+Interpretability research aims to understand whether models have internal self-representations. Researchers look for "self-representation" features in model activations, study how models internally represent their own capabilities, and investigate whether self-knowledge is localized or distributed throughout the model. Understanding the mechanistic basis of situational awareness could help with both detection and intervention.
 
-### Training Approaches
-Exploring how training affects situational awareness:
-- Does RLHF increase or decrease it?
-- Can we train models to lack situational awareness?
+Training approach research explores how different training regimes affect the development of situational awareness. Questions include whether RLHF increases or decreases situational awareness compared to pretraining alone, whether certain types of training data (such as discussions of AI systems) contribute to self-modeling capabilities, and whether it would be possible or desirable to train models that lack situational awareness while retaining other capabilities.
 
 ## Related Pages
 

@@ -2208,6 +2208,28 @@
   background: var(--sl-color-gray-5);
 }
 
+.wiki-infobox__solutions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.wiki-infobox__solution-tag {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  background: rgba(16, 185, 129, 0.15);
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  color: #10b981;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.wiki-infobox__solution-tag:hover {
+  background: rgba(16, 185, 129, 0.25);
+  text-decoration: none;
+}
+
 .wiki-infobox__entries {
   display: flex;
   flex-direction: column;
@@ -3061,4 +3083,183 @@
 
 .recent-updates--compact .recent-updates__link {
   font-size: 0.875rem;
+}
+
+/* =============================================================================
+   RISK RELATIONSHIP DIAGRAM
+   ============================================================================= */
+
+.risk-diagram-container {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: var(--sl-color-gray-6);
+  border-radius: 0.75rem;
+  border: 1px solid var(--sl-color-gray-5);
+}
+
+.risk-diagram-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--sl-color-text);
+  margin: 0 0 1rem 0;
+  text-align: center;
+}
+
+.risk-diagram-svg {
+  display: block;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+.risk-diagram-node {
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.risk-diagram-node:hover {
+  filter: brightness(1.1);
+  stroke-width: 3;
+}
+
+.risk-diagram-node-link {
+  text-decoration: none;
+}
+
+.risk-diagram-node-label {
+  pointer-events: none;
+  font-weight: 500;
+}
+
+.risk-diagram-legend {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--sl-color-gray-5);
+  flex-wrap: wrap;
+}
+
+.risk-diagram-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.risk-diagram-legend-line {
+  width: 24px;
+  height: 3px;
+  border-radius: 1.5px;
+}
+
+.risk-diagram-legend-label {
+  font-size: 0.75rem;
+  color: var(--sl-color-gray-3);
+}
+
+/* =============================================================================
+   PAGE STATUS / EDITORIAL METADATA
+   ============================================================================= */
+
+.page-status {
+  margin: 0 0 1.5rem 0;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(59, 130, 246, 0.08) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-left: 3px solid #8b5cf6;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.page-status-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+}
+
+.page-status-icon {
+  font-size: 1rem;
+}
+
+.page-status-title {
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #8b5cf6;
+}
+
+.page-status-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.page-status-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.page-status-row--full {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.page-status-row--todo {
+  margin-top: 0.25rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed rgba(139, 92, 246, 0.2);
+}
+
+.page-status-label {
+  font-weight: 500;
+  color: var(--sl-color-gray-3);
+  flex-shrink: 0;
+}
+
+.page-status-value {
+  color: var(--sl-color-text);
+}
+
+.page-status-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.125rem;
+}
+
+.page-status-star {
+  font-size: 0.9rem;
+}
+
+.page-status-star--filled {
+  color: #f59e0b;
+}
+
+.page-status-star--empty {
+  color: var(--sl-color-gray-5);
+}
+
+.page-status-quality-label {
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--sl-color-gray-3);
+}
+
+.page-status-summary {
+  color: var(--sl-color-gray-2);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.page-status-todo {
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.8rem;
 }

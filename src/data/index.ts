@@ -269,6 +269,7 @@ export function getCruxData(cruxId: string) {
  * Get data formatted for InfoBox component (entity)
  * Resolves related entries to include hrefs
  * For researchers, also pulls in expert data
+ * For risks, also includes category, maturity, and solutions
  */
 export function getEntityInfoBoxData(entityId: string) {
   const entity = getEntityById(entityId);
@@ -325,6 +326,43 @@ export function getEntityInfoBoxData(entityId: string) {
     }
   }
 
+  // For risks, compute category, maturity, and solutions
+  let category: string | undefined;
+  let maturity: string | undefined;
+  let relatedSolutions: RiskTableSolution[] | undefined;
+
+  if (entity.type === 'risk') {
+    // Compute category from ID patterns
+    const epistemicIds = ['authentication-collapse', 'automation-bias', 'consensus-manufacturing', 'cyber-psychosis', 'epistemic-collapse', 'expertise-atrophy', 'historical-revisionism', 'institutional-capture', 'knowledge-monopoly', 'learned-helplessness', 'legal-evidence-crisis', 'preference-manipulation', 'reality-fragmentation', 'scientific-corruption', 'sycophancy-scale', 'trust-cascade', 'trust-erosion'];
+    const misuseIds = ['authoritarian-tools', 'autonomous-weapons', 'bioweapons', 'cyberweapons', 'deepfakes', 'disinformation', 'fraud', 'surveillance'];
+    const structuralIds = ['concentration-of-power', 'economic-disruption', 'enfeeblement', 'erosion-of-agency', 'flash-dynamics', 'irreversibility', 'lock-in', 'multipolar-trap', 'proliferation', 'racing-dynamics', 'winner-take-all'];
+
+    if (epistemicIds.includes(entity.id)) category = 'epistemic';
+    else if (misuseIds.includes(entity.id)) category = 'misuse';
+    else if (structuralIds.includes(entity.id)) category = 'structural';
+    else category = 'accident';
+
+    // Get maturity
+    maturity = (entity as any).maturity;
+
+    // Find solutions that link to this risk
+    const solutionEntities = entities.filter(e =>
+      e.type === 'safety-agenda' || e.type === 'intervention'
+    );
+    relatedSolutions = [];
+    for (const solution of solutionEntities) {
+      const linkedRisks = solution.relatedEntries?.filter(re => re.type === 'risk') || [];
+      if (linkedRisks.some(r => r.id === entity.id)) {
+        relatedSolutions.push({
+          id: solution.id,
+          title: solution.title,
+          type: solution.type,
+          href: getEntityHref(solution.id, solution.type),
+        });
+      }
+    }
+  }
+
   return {
     type: entity.type,
     title: entity.title,
@@ -336,6 +374,10 @@ export function getEntityInfoBoxData(entityId: string) {
     relatedTopics: entity.relatedTopics,
     relatedEntries: resolvedRelatedEntries,
     sources: (entity as any).sources,
+    // Risk-specific fields
+    category,
+    maturity,
+    relatedSolutions,
   };
 }
 

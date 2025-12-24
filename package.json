@@ -11,7 +11,12 @@
     "generate-yaml": "node scripts/generate-yaml.mjs",
     "cleanup-data": "node scripts/cleanup-data.mjs",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "validate": "node scripts/validate-all.mjs",
+    "validate:data": "node scripts/validate-data.mjs",
+    "validate:links": "node scripts/validate-internal-links.mjs",
+    "validate:orphans": "node scripts/validate-orphaned-files.mjs",
+    "validate:ci": "node scripts/validate-all.mjs --ci"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.2",

@@ -1,0 +1,98 @@
+name: Validate Content
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  # Allow manual trigger
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Run Validation Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build data
+        run: npm run build:data
+
+      - name: Run all validations
+        id: validate
+        run: |
+          # Run validation and capture output
+          npm run validate:ci > validation-results.json 2>&1 || true
+
+          # Parse results for summary
+          cat validation-results.json
+
+          # Check if any checks failed
+          FAILED=$(node -e "const r = require('./validation-results.json'); console.log(r.summary.failed)")
+
+          if [ "$FAILED" != "0" ]; then
+            echo "::error::$FAILED validation check(s) failed"
+            exit 1
+          fi
+
+      - name: Upload validation results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-results
+          path: validation-results.json
+          retention-days: 7
+
+      - name: Create job summary
+        if: always()
+        run: |
+          echo "## Validation Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ -f validation-results.json ]; then
+            node -e "
+              const r = require('./validation-results.json');
+              console.log('| Check | Status |');
+              console.log('|-------|--------|');
+              for (const c of r.checks) {
+                const status = c.skipped ? '⊘ Skipped' : (c.passed ? '✅ Passed' : '❌ Failed');
+                console.log('| ' + c.name + ' | ' + status + ' |');
+              }
+              console.log('');
+              console.log('**Duration:** ' + r.duration);
+            " >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Validation script failed to produce results" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  build:
+    name: Build Site
+    runs-on: ubuntu-latest
+    needs: validate
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build site
+        run: npm run build

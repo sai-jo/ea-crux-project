@@ -52,3 +52,9 @@ export { Backlinks } from './Backlinks';
 export { TagBrowser } from './TagBrowser';
 export { EntityIndex } from './EntityIndex';
 export { RecentUpdates } from './RecentUpdates';
+
+// Risk relationship diagrams
+export { RiskRelationshipDiagram } from './RiskRelationshipDiagram';
+
+// Editorial / page management
+export { PageStatus } from './PageStatus';

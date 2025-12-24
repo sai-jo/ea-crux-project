@@ -8,7 +8,44 @@ sidebar:
 import { RiskDependencyGraph } from '../../../components/wiki';
 
 
-This page provides an interactive visualization of how different AI risk factors relate to each other. Click on nodes to see details about each factor and its connections.
+This page provides interactive visualizations of how different AI risks and risk factors connect. Click on nodes to see details.
+
+## Risk Landscape Overview
+
+A high-level view showing how risk factors contribute to different categories of end-state risks.
+
+<RiskDependencyGraph
+  client:load
+  title="Risk Factors → Risk Categories"
+  description="How contributing dynamics increase probability of end-state harms"
+  width={950}
+  height={500}
+  nodes={[
+    { id: "racing", label: "Racing Dynamics", category: "factor", description: "Competitive pressure driving speed over safety" },
+    { id: "proliferation", label: "Proliferation", category: "factor", description: "AI capabilities spreading to more actors" },
+    { id: "flash", label: "Flash Dynamics", category: "factor", description: "AI operating faster than human oversight" },
+    { id: "auth-tools", label: "Authoritarian Tools", category: "factor", description: "AI enabling surveillance and control" },
+    { id: "auth-collapse", label: "Authentication Collapse", category: "factor", description: "Verification failing to keep pace with generation" },
+    { id: "accident", label: "Accident Risks", category: "risk-category", description: "Technical failures in AI systems" },
+    { id: "misuse", label: "Misuse Risks", category: "risk-category", description: "Intentional harmful applications" },
+    { id: "structural", label: "Structural Risks", category: "risk-category", description: "Societal reshaping and power concentration" },
+    { id: "epistemic", label: "Epistemic Harms", category: "risk-category", description: "Damage to collective knowledge and truth" },
+  ]}
+  edges={[
+    { from: "racing", to: "accident", type: "causes", label: "less safety" },
+    { from: "racing", to: "structural", type: "causes", label: "concentration" },
+    { from: "flash", to: "accident", type: "causes", label: "no oversight" },
+    { from: "proliferation", to: "misuse", type: "enables", label: "more actors" },
+    { from: "auth-tools", to: "misuse", type: "enables" },
+    { from: "auth-tools", to: "structural", type: "enables", label: "authoritarianism" },
+    { from: "auth-collapse", to: "epistemic", type: "causes", label: "can't verify" },
+    { from: "auth-collapse", to: "misuse", type: "enables", label: "deepfakes work" },
+  ]}
+/>
+
+*Gray nodes are risk factors (dynamics/mechanisms); colored nodes are risk categories (end-state harms).*
+
+---
 
 ## Core Argument Structure
 

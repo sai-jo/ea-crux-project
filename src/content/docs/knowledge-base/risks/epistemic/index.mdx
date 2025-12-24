@@ -1,140 +1,134 @@
 ---
-title: Epistemic Failure Modes
-description: Concrete ways AI could corrupt knowledge, evidence, and decision-making in the next 50 years
+title: Epistemic Harms
+description: End-state harms to human knowledge, truth-finding, and collective decision-making
 sidebar:
   order: 0
 ---
 
+import { RiskRelationshipDiagram } from '../../../../../components/wiki';
 
+Epistemic harms are harmful end states where AI has damaged humanity's ability to know things, verify claims, and make good collective decisions.
 
-This section catalogs **specific ways AI could corrupt human knowledge, evidence, and collective decision-making**. These aren't abstract philosophical puzzles—they're concrete failure modes, some already observable.
+## How These Risks Connect
 
----
-
-## Knowledge Production Failures
-
-How AI corrupts the creation and validation of knowledge:
-
-| Failure Mode | Description | Timeline |
-|--------------|-------------|----------|
-| **[Scientific Knowledge Corruption](/knowledge-base/risks/epistemic/scientific-corruption/)** | AI-generated fake papers, data fabrication at scale, replication crisis amplified | Now - 2030 |
-| **[Expertise Atrophy](/knowledge-base/risks/epistemic/expertise-atrophy/)** | Humans lose ability to evaluate AI outputs; skill degradation | 2025 - 2040 |
-| **[AI Knowledge Monopoly](/knowledge-base/risks/epistemic/knowledge-monopoly/)** | A few AI systems become sole source of "truth" | 2030 - 2050 |
-
-## Evidence and Verification Failures
-
-How AI undermines our ability to verify claims:
-
-| Failure Mode | Description | Timeline |
-|--------------|-------------|----------|
-| **[Legal Evidence Crisis](/knowledge-base/risks/epistemic/legal-evidence-crisis/)** | Courts can't trust digital evidence; authentication fails | 2025 - 2035 |
-| **[Historical Revisionism](/knowledge-base/risks/epistemic/historical-revisionism/)** | AI-generated "evidence" for false historical narratives | 2025 - 2040 |
-| **[Authentication Collapse](/knowledge-base/risks/epistemic/authentication-collapse/)** | Verification systems can't keep pace with generation | Now - 2030 |
-
-## Decision-Making Failures
-
-How AI corrupts individual and collective decisions:
-
-| Failure Mode | Description | Timeline |
-|--------------|-------------|----------|
-| **[Institutional Decision Capture](/knowledge-base/risks/epistemic/institutional-capture/)** | AI advisors subtly bias all organizational decisions | 2025 - 2040 |
-| **[Preference Manipulation](/knowledge-base/risks/epistemic/preference-manipulation/)** | AI systems shape what people want, not just what they believe | Now - 2035 |
-| **[Consensus Manufacturing](/knowledge-base/risks/epistemic/consensus-manufacturing/)** | AI creates appearance of agreement that doesn't exist | Now - 2030 |
-| **[Sycophancy at Scale](/knowledge-base/risks/epistemic/sycophancy-scale/)** | AI tells everyone what they want to hear; no reality check | Now - 2030 |
-
-## Social Epistemology Failures
-
-How AI fragments shared understanding:
-
-| Failure Mode | Description | Timeline |
-|--------------|-------------|----------|
-| **[Reality Fragmentation](/knowledge-base/risks/epistemic/reality-fragmentation/)** | Different populations live in incompatible information environments | Now - 2035 |
-| **[Trust Cascade Failure](/knowledge-base/risks/epistemic/trust-cascade/)** | Once trust breaks, no mechanism to rebuild | 2025 - 2040 |
-| **[Epistemic Learned Helplessness](/knowledge-base/risks/epistemic/learned-helplessness/)** | People give up trying to know anything; nihilism | 2030 - 2050 |
+<RiskRelationshipDiagram
+  title=""
+  layout="manual"
+  nodes={[
+    { id: 'knowledge-monopoly', title: 'Knowledge Monopoly', href: '/knowledge-base/risks/epistemic/knowledge-monopoly/', x: 0, y: 0 },
+    { id: 'institutional-capture', title: 'Institutional Capture', href: '/knowledge-base/risks/epistemic/institutional-capture/', x: 40, y: 0 },
+    { id: 'reality-fragmentation', title: 'Reality Fragmentation', href: '/knowledge-base/risks/epistemic/reality-fragmentation/', x: 80, y: 0 },
+    { id: 'epistemic-collapse', title: 'Epistemic Collapse', href: '/knowledge-base/risks/epistemic/epistemic-collapse/', x: 20, y: 50 },
+    { id: 'trust-cascade', title: 'Trust Cascade Failure', href: '/knowledge-base/risks/epistemic/trust-cascade/', x: 60, y: 50 },
+    { id: 'learned-helplessness', title: 'Learned Helplessness', href: '/knowledge-base/risks/epistemic/learned-helplessness/', x: 40, y: 100 },
+  ]}
+  edges={[
+    { from: 'knowledge-monopoly', to: 'institutional-capture', label: 'enables' },
+    { from: 'knowledge-monopoly', to: 'epistemic-collapse', label: 'causes' },
+    { from: 'institutional-capture', to: 'epistemic-collapse', label: 'accelerates' },
+    { from: 'reality-fragmentation', to: 'trust-cascade', label: 'causes' },
+    { from: 'trust-cascade', to: 'learned-helplessness', label: 'leads to' },
+    { from: 'epistemic-collapse', to: 'learned-helplessness', label: 'leads to' },
+  ]}
+  width={700}
+  height={280}
+/>
 
 ---
 
-## Current Status
+## The Risks
 
-### Already Happening (2024)
-- AI-generated misinformation at scale
-- Deepfakes affecting politics and reputation
-- Chatbot sycophancy reinforcing user beliefs
-- Early signs of authentication failure
-- AI-assisted academic fraud
+These are **end-state harms** to humanity's epistemic capacity:
 
-### Emerging (2025-2030)
-- Legal systems grappling with synthetic evidence
-- AI advisors in government and corporate decisions
-- Personalized manipulation at individual level
-- Scientific replication crisis worsening
+| Risk | Description |
+|------|-------------|
+| **[Knowledge Monopoly](/knowledge-base/risks/epistemic/knowledge-monopoly/)** | A few AI systems become sole arbiters of "truth" |
+| **[Institutional Capture](/knowledge-base/risks/epistemic/institutional-capture/)** | AI advisors subtly bias all organizational decisions |
+| **[Reality Fragmentation](/knowledge-base/risks/epistemic/reality-fragmentation/)** | Populations live in incompatible information environments |
+| **[Epistemic Collapse](/knowledge-base/risks/epistemic/epistemic-collapse/)** | Society loses ability to establish shared facts |
+| **[Trust Cascade Failure](/knowledge-base/risks/epistemic/trust-cascade/)** | Once trust breaks, no mechanism exists to rebuild it |
+| **[Learned Helplessness](/knowledge-base/risks/epistemic/learned-helplessness/)** | People give up trying to know anything; epistemic nihilism |
 
-### Projected (2030-2050)
-- Possible total authentication failure
-- AI knowledge monopolies
-- Widespread expertise atrophy
-- Institutional capture by AI systems
+### Additional Specific Harms
+
+| Risk | Description |
+|------|-------------|
+| **[Legal Evidence Crisis](/knowledge-base/risks/epistemic/legal-evidence-crisis/)** | Courts can no longer trust digital evidence |
+| **[Cyber Psychosis](/knowledge-base/risks/epistemic/cyber-psychosis/)** | AI-induced psychological harm from reality distortion |
 
 ---
 
-## What Makes These Different from General Disinformation
+## Contributing Risk Factors
 
-These aren't just "more misinformation." AI changes the game:
+These end-state harms are driven by mechanisms documented in **[Risk Factors](/knowledge-base/risk-factors/)**:
 
-| Old Problem | AI-Enabled Escalation |
-|-------------|----------------------|
+| Factor | How It Contributes |
+|--------|-------------------|
+| [Authentication Collapse](/knowledge-base/risk-factors/authentication-collapse/) | Verification fails → can't distinguish real from fake |
+| [Scientific Corruption](/knowledge-base/risk-factors/scientific-corruption/) | Fake papers proliferate → knowledge base corrupted |
+| [Expertise Atrophy](/knowledge-base/risk-factors/expertise-atrophy/) | Humans lose ability to evaluate AI outputs |
+| [Sycophancy at Scale](/knowledge-base/risk-factors/sycophancy-scale/) | AI confirms biases → no reality check |
+| [Preference Manipulation](/knowledge-base/risk-factors/preference-manipulation/) | AI shapes what people want, not just believe |
+| [Consensus Manufacturing](/knowledge-base/risk-factors/consensus-manufacturing/) | Fake agreement masks actual disagreement |
+| [Historical Revisionism](/knowledge-base/risk-factors/historical-revisionism/) | Past becomes contested → shared history lost |
+| [Automation Bias](/knowledge-base/risk-factors/automation-bias/) | Over-reliance on AI recommendations |
+| [Trust Erosion](/knowledge-base/risk-factors/trust-erosion/) | Gradual decline enables sudden collapse |
+
+---
+
+## Why These Are "Risks" vs "Factors"
+
+**End-state harms (risks)** are bad outcomes we want to avoid:
+- Society can't agree on basic facts
+- Institutions make systematically biased decisions
+- People stop trying to know things
+
+**Contributing mechanisms (factors)** increase the probability of those harms:
+- Authentication systems failing
+- AI telling users what they want to hear
+- Expertise degrading from disuse
+
+The distinction matters because **intervening on factors** may prevent multiple downstream risks.
+
+---
+
+## What Makes AI Different
+
+Previous information problems (propaganda, fake news) were limited by human capacity. AI changes the game:
+
+| Old Problem | AI Escalation |
+|-------------|--------------|
 | Propaganda exists | Personalized propaganda for each individual |
-| Fake news spreads | Fake news generated faster than it can be checked |
-| Evidence can be faked | All evidence becomes deniable |
-| Experts can be wrong | Expertise itself atrophies from disuse |
-| Institutions can be corrupted | AI advisors capture decision-making invisibly |
-| People believe different things | People live in entirely different realities |
+| Fake news spreads | Generated faster than verification |
+| Evidence can be faked | All digital evidence becomes deniable |
+| Experts can be wrong | Expertise itself atrophies |
+| Institutions can be corrupted | AI advisors capture decisions invisibly |
 
 ---
 
-## Cross-Cutting Themes
+## Severity and Reversibility
 
-### Asymmetric Offense-Defense
-Generation is cheap; verification is expensive. This asymmetry may be permanent.
-
-### Correlated Failure
-Many of these failure modes reinforce each other. Trust collapse accelerates preference manipulation; expertise atrophy enables institutional capture.
-
-### Irreversibility
-Some failures may be hard to reverse:
-- Once expertise atrophies, rebuilding takes generations
-- Once trust collapses, no trusted rebuilder exists
-- Once AI monopolies form, competition may be impossible
-
-### Gradual vs. Sudden
-Some failures are gradual (expertise atrophy); others could be sudden (authentication collapse after a key breakthrough in deepfakes).
+| Risk | Severity | Reversibility |
+|------|----------|---------------|
+| Knowledge Monopoly | High | Difficult (infrastructure lock-in) |
+| Institutional Capture | High | Moderate (requires institutional reform) |
+| Reality Fragmentation | High | Difficult (no shared ground to rebuild) |
+| Epistemic Collapse | Catastrophic | Very difficult |
+| Trust Cascade | High | Very difficult (no trusted rebuilder) |
+| Learned Helplessness | High | Generational |
 
 ---
 
-## How to Use This Section
+## Relationship to Other Risk Categories
 
-**For risk assessment:**
-- Which failure modes are most likely?
-- Which are most severe?
-- Which are most neglected?
+### Epistemic + Structural
+- Knowledge monopoly enables [concentration of power](/knowledge-base/risks/structural/concentration-of-power/)
+- Trust collapse can accelerate [lock-in](/knowledge-base/risks/structural/lock-in/)
 
-**For intervention design:**
-- What defenses exist for each failure mode?
-- Where are the leverage points?
-- What's the research agenda?
+### Epistemic + Misuse
+- [Disinformation](/knowledge-base/risks/misuse/disinformation/) is a key driver of reality fragmentation
+- [Deepfakes](/knowledge-base/risks/misuse/deepfakes/) accelerate authentication collapse
 
-**For monitoring:**
-- What are the early warning signs?
-- How would we know if we're entering a failure mode?
-
----
-
-## Related: Reasoning About AI Risk
-
-For meta-level questions about *how to think* about AI risks (including epistemic ones), see the **[Reasoning Challenges](/understanding-ai-risk/reasoning/)** section, which covers:
-
-- [Expert Calibration](/understanding-ai-risk/reasoning/expert-calibration/) — Can we trust predictions about AI risks?
-- [Conjunctive Arguments](/understanding-ai-risk/reasoning/conjunctive-arguments/) — How uncertainty compounds across premises
-- [Infohazards](/understanding-ai-risk/reasoning/infohazards/) — When discussing risks makes them worse
-- [Unilateralist's Curse](/understanding-ai-risk/reasoning/unilateralists-curse/) — Why groups take risky actions despite opposition
-
+### Epistemic + Accident
+- Epistemic collapse makes it harder to evaluate AI alignment
+- [Sycophancy](/knowledge-base/risks/accident/sycophancy/) in AI systems contributes to sycophancy at scale

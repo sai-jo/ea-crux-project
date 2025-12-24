@@ -19,6 +19,13 @@ interface RelatedEntry {
   href: string;
 }
 
+interface RelatedSolution {
+  id: string;
+  title: string;
+  type: string;
+  href: string;
+}
+
 interface DataInfoBoxProps {
   // Data lookup options
   entityId?: string;
@@ -37,6 +44,9 @@ interface DataInfoBoxProps {
   severity?: 'low' | 'medium' | 'high' | 'catastrophic';
   likelihood?: string;
   timeframe?: string;
+  category?: string;
+  maturity?: string;
+  relatedSolutions?: RelatedSolution[];
   jurisdiction?: string;
   status?: string;
   effectiveDate?: string;
@@ -81,6 +91,9 @@ export function DataInfoBox({
           severity={data.severity as any}
           likelihood={data.likelihood}
           timeframe={data.timeframe}
+          category={data.category}
+          maturity={data.maturity}
+          relatedSolutions={data.relatedSolutions as RelatedSolution[]}
           website={data.website}
           customFields={data.customFields}
           relatedTopics={data.relatedTopics}

@@ -54,7 +54,7 @@ export const categoryConfig: Record<RiskCategory, CategoryConfig> = {
   epistemic: {
     icon: Brain,
     label: "Epistemic",
-    description: "Risks to knowledge, truth, and collective understanding",
+    description: "End-state harms to collective knowledge and truth",
     colors: {
       bg: "bg-purple-50 dark:bg-purple-950/30",
       text: "text-purple-700 dark:text-purple-300",

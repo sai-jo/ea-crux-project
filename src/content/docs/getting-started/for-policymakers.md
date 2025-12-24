@@ -86,9 +86,9 @@ Actors using AI capabilities for malicious purposes.
 How AI reshapes society, power structures, and institutions.
 
 **Examples:**
-- [Racing Dynamics](/knowledge-base/risks/structural/racing-dynamics/) - Competition undermining safety
+- [Racing Dynamics](/knowledge-base/risk-factors/racing-dynamics/) - Competition undermining safety
 - [Concentration of Power](/knowledge-base/risks/structural/concentration-of-power/) - AI enabling unprecedented control
-- [Economic Disruption](/knowledge-base/risks/structural/economic-disruption/) - Mass displacement
+- [Economic Disruption](/knowledge-base/risk-factors/economic-disruption/) - Mass displacement
 - [Lock-in](/knowledge-base/risks/structural/lock-in/) - Permanent entrenchment of values or systems
 
 **Policy relevance**: These require institutional design, antitrust, labor policy, and international coordination.
@@ -102,8 +102,8 @@ AI undermining our ability to distinguish true from false.
 
 **Examples:**
 - [Epistemic Collapse](/knowledge-base/risks/epistemic/epistemic-collapse/) - Inability to verify information
-- [Trust Erosion](/knowledge-base/risks/epistemic/trust-erosion/) - Loss of faith in institutions
-- [Automation Bias](/knowledge-base/risks/epistemic/automation-bias/) - Over-reliance on AI outputs
+- [Trust Erosion](/knowledge-base/risk-factors/trust-erosion/) - Loss of faith in institutions
+- [Automation Bias](/knowledge-base/risk-factors/automation-bias/) - Over-reliance on AI outputs
 
 **Policy relevance**: Verification frameworks, authentication standards, institutional resilience.
 
@@ -125,13 +125,13 @@ AI undermining our ability to distinguish true from false.
 ### Current Policy Frameworks
 
 **United States:**
-- [Executive Order on AI](/knowledge-base/policies/) (October 2023) - Broad framework covering safety, security, privacy
+- Executive Order on AI (October 2023) - Broad framework covering safety, security, privacy
 - NIST AI Risk Management Framework - Voluntary standards
 - Emerging legislation (vary by state and federal proposals)
 - Limited specific focus on transformative AI risk
 
 **European Union:**
-- [EU AI Act](/knowledge-base/policies/eu-ai-act/) - Risk-based regulatory framework
+- EU AI Act - Risk-based regulatory framework
 - Classifies AI by risk level (minimal, limited, high, unacceptable)
 - Focuses primarily on current systems, less on future transformative AI
 - Enforcement through fines and market restrictions
@@ -154,7 +154,7 @@ AI undermining our ability to distinguish true from false.
 - Bletchley Declaration (non-binding) from UK AI Safety Summit
 - Limited substantive coordination so far
 
-**Read**: [Policies overview](/knowledge-base/policies/)
+**Read**: [Governance Responses](/knowledge-base/responses/governance/)
 
 ### High-Leverage Policy Interventions
 
@@ -181,7 +181,7 @@ Based on case studies and expert analysis, these approaches show promise:
 
 **Case study**: US export controls on advanced chips to China show compute governance is feasible, though long-term effectiveness uncertain.
 
-**Read more**: [Compute governance resources](/knowledge-base/policies/) and [International coordination](/knowledge-base/safety-approaches/governance/international/)
+**Read more**: [Governance Responses](/knowledge-base/responses/governance/) and [International coordination](/knowledge-base/responses/governance/international/)
 
 #### 2. Mandatory Safety Evaluations
 
@@ -211,7 +211,7 @@ Based on case studies and expert analysis, these approaches show promise:
 - Can evaluations keep pace with capabilities?
 - Risk of regulatory capture
 
-**Read**: [Evaluations approach](/knowledge-base/safety-approaches/technical/evals/) and [UK AISI](/knowledge-base/organizations/government/uk-aisi/)
+**Read**: [Evaluations approach](/knowledge-base/responses/technical/evals/) and [UK AISI](/knowledge-base/organizations/government/uk-aisi/)
 
 #### 3. Licensing and Registration
 
@@ -285,7 +285,7 @@ Based on case studies and expert analysis, these approaches show promise:
 - **Aviation**: ICAO (successful technical coordination)
 - **Internet**: ICANN (technical coordination model)
 
-**Read**: [International coordination approaches](/knowledge-base/safety-approaches/governance/international/) and [Case Studies](/analysis/case-studies/)
+**Read**: [International coordination approaches](/knowledge-base/responses/governance/international/) and [Case Studies](/analysis/case-studies/)
 
 #### 6. Institutional Design for Labs
 
@@ -308,7 +308,7 @@ Based on case studies and expert analysis, these approaches show promise:
 - Commercial pressure may override formal structures
 - Talent competition may prevent strict requirements
 
-**Read**: [Lab culture and institutional approaches](/knowledge-base/safety-approaches/institutional/lab-culture/)
+**Read**: [Institutional Approaches](/knowledge-base/responses/institutional/)
 
 ## Strategy Considerations (30 minutes)
 
@@ -462,28 +462,28 @@ Based on your specific policy focus:
 
 1. [Core Argument](/understanding-ai-risk/core-argument/) - Understand the basic case (1 hour)
 2. [Risks Overview](/knowledge-base/risks/) - What you're trying to prevent (1 hour)
-3. [Current Policies](/knowledge-base/policies/) - What exists already (30 min)
-4. [Governance Approaches](/knowledge-base/safety-approaches/governance/governance/) - Options available (45 min)
+3. [Governance Responses](/knowledge-base/responses/governance/) - What exists already (30 min)
+4. [Governance Approaches](/knowledge-base/responses/governance/) - Options available (45 min)
 5. [Case Studies](/analysis/case-studies/) - Historical lessons (1 hour)
 
 ### If You're Working on International Coordination
 
 1. [Coordination Challenges](/understanding-ai-risk/core-argument/coordination/) - Why this is hard (20 min)
 2. [Multi-Actor Landscape](/understanding-ai-risk/models/multi-actor-landscape/) - Who's involved (30 min)
-3. [Racing Dynamics](/knowledge-base/risks/structural/racing-dynamics/) - What you're trying to prevent (20 min)
-4. [International Coordination](/knowledge-base/safety-approaches/governance/international/) - Approaches (45 min)
+3. [Racing Dynamics](/knowledge-base/risk-factors/racing-dynamics/) - What you're trying to prevent (20 min)
+4. [International Coordination](/knowledge-base/responses/governance/international/) - Approaches (45 min)
 5. [Nuclear Case Study](/analysis/case-studies/nuclear/) - Historical precedent (30 min)
 
 ### If You're Working on Standards and Evaluation
 
 1. [Accident Risks](/knowledge-base/risks/accident/) - What to test for (1 hour)
-2. [Evaluations Approach](/knowledge-base/safety-approaches/technical/evals/) - How testing works (30 min)
+2. [Evaluations Approach](/knowledge-base/responses/technical/evals/) - How testing works (30 min)
 3. [UK AISI](/knowledge-base/organizations/government/uk-aisi/) - Government evaluation example (20 min)
 4. [Organizations](/knowledge-base/organizations/) - Who's developing evaluation frameworks (1 hour)
 
 ### If You're Working on Economic/Labor Policy
 
-1. [Economic Disruption](/knowledge-base/risks/structural/economic-disruption/) - Scale of potential displacement (20 min)
+1. [Economic Disruption](/knowledge-base/risk-factors/economic-disruption/) - Scale of potential displacement (20 min)
 2. [Erosion of Agency](/knowledge-base/risks/structural/erosion-of-agency/) - Broader societal impacts (20 min)
 3. [Timelines](/understanding-ai-risk/core-argument/timelines/) - When to expect impacts (30 min)
 4. [Social Media Case Study](/analysis/case-studies/social-media/) - Lessons from previous disruption (20 min)
@@ -589,21 +589,21 @@ As a policymaker, you have unique leverage:
 Depending on your specific role:
 
 **If you're drafting legislation:**
-1. Review [current policies](/knowledge-base/policies/) to understand existing frameworks
+1. Review [governance responses](/knowledge-base/responses/governance/) to understand existing frameworks
 2. Study [case studies](/analysis/case-studies/) for precedents
-3. Consult [governance approaches](/knowledge-base/safety-approaches/governance/governance/) for options
+3. Consult [governance approaches](/knowledge-base/responses/governance/) for options
 4. Engage experts across perspectives (not just industry)
 5. Design adaptive frameworks that can evolve
 
 **If you're working on international coordination:**
 1. Understand [multi-actor dynamics](/understanding-ai-risk/models/multi-actor-landscape/)
-2. Review [international coordination approaches](/knowledge-base/safety-approaches/governance/international/)
+2. Review [international coordination approaches](/knowledge-base/responses/governance/international/)
 3. Study [nuclear case study](/analysis/case-studies/nuclear/) for lessons
 4. Identify possible coalition partners
 5. Start with technically feasible measures (compute monitoring)
 
 **If you're setting standards:**
-1. Understand [what to evaluate](/knowledge-base/safety-approaches/technical/evals/)
+1. Understand [what to evaluate](/knowledge-base/responses/technical/evals/)
 2. Learn about [specific risks](/knowledge-base/risks/) to test for
 3. Review [UK AISI](/knowledge-base/organizations/government/uk-aisi/) as government evaluation model
 4. Engage technical experts on measurement
@@ -613,7 +613,7 @@ Depending on your specific role:
 1. Read the [Core Argument](/understanding-ai-risk/core-argument/) to understand the case
 2. Review [Different Worldviews](/understanding-ai-risk/worldviews/) to understand disagreement
 3. Study [Case Studies](/analysis/case-studies/) for historical precedent
-4. Explore [Interventions](/knowledge-base/interventions/) for what can be done
+4. Explore [Responses](/knowledge-base/responses/) for what can be done
 5. Reach out to researchers for briefings
 
 ## Additional Resources
@@ -625,7 +625,7 @@ Depending on your specific role:
 - Academic publications on AI governance
 
 **For technical background:**
-- This wiki's [technical safety approaches](/knowledge-base/safety-approaches/technical/)
+- This wiki's [technical safety approaches](/knowledge-base/responses/technical/)
 - NIST AI Risk Management Framework
 - UK government AI safety research
 - Academic computer science explainers
