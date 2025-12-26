@@ -12,7 +12,7 @@ ratings:
   completeness: 3
 ---
 
-import { DataInfoBox, Backlinks } from '../../../../components/wiki';
+import { DataInfoBox, Backlinks, Mermaid } from '../../../../components/wiki';
 
 <DataInfoBox entityId="bioweapons-ai-uplift" ratings={frontmatter.ratings} />
 
@@ -28,34 +28,32 @@ Early empirical evidence suggests current LLMs provide modest uplift for attack 
 
 The uplift framework decomposes AI's contribution to bioweapons risk into measurable components that can be estimated and tracked over time. Rather than treating AI as a monolithic threat, this approach identifies specific bottlenecks where AI assistance might—or might not—significantly alter attack feasibility.
 
-```mermaid
-flowchart TD
-    subgraph "Information Access Layer"
-        A[Scientific Literature] --> D{Attacker Knowledge<br/>Acquisition}
+<Mermaid client:load chart={`flowchart TD
+    subgraph InfoAccess["Information Access Layer"]
+        A[Scientific Literature] --> D{Attacker Knowledge Acquisition}
         B[Internet Sources] --> D
         C[AI Systems] --> D
     end
 
-    subgraph "Capability Development"
-        D --> E{Technical<br/>Planning}
-        E --> F{Resource<br/>Acquisition}
-        F --> G{Laboratory<br/>Synthesis}
+    subgraph CapDev["Capability Development"]
+        D --> E{Technical Planning}
+        E --> F{Resource Acquisition}
+        F --> G{Laboratory Synthesis}
     end
 
-    subgraph "Deployment"
-        G --> H{Biosecurity<br/>Evasion}
-        H --> I{Weaponization<br/>& Delivery}
+    subgraph Deploy["Deployment"]
+        G --> H{Biosecurity Evasion}
+        H --> I{Weaponization and Delivery}
     end
 
-    subgraph "AI Uplift Points"
+    subgraph UpliftPoints["AI Uplift Points"]
         C -.->|Knowledge Uplift| E
         C -.->|Planning Uplift| F
         C -.->|Evasion Uplift| H
     end
 
     J[Wet Lab Barrier] -->|Bottleneck| G
-    K[DNA Screening] -->|Bottleneck| F
-```
+    K[DNA Screening] -->|Bottleneck| F`} />
 
 The diagram illustrates the attack chain from information acquisition through deployment, highlighting three key points where AI may provide uplift: knowledge acquisition, technical planning, and biosecurity evasion. Critically, the wet laboratory barrier remains a significant bottleneck that AI alone cannot currently address—synthesizing dangerous biological agents requires physical infrastructure, specialized equipment, and tacit knowledge that cannot be easily transferred through digital means.
 
