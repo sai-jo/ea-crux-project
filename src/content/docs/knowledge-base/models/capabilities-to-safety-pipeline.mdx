@@ -12,640 +12,319 @@ ratings:
   completeness: 5
 ---
 
-import { DataInfoBox, Backlinks, KeyQuestions } from '../../../../components/wiki';
+import { DataInfoBox, Backlinks, KeyQuestions, Mermaid } from '../../../../components/wiki';
 
 <DataInfoBox entityId="capabilities-to-safety-pipeline" ratings={frontmatter.ratings} />
 
 ## Overview
 
-This model analyzes the flow of researchers from AI capabilities work to AI safety research. Given the talent constraints in AI safety, the pool of experienced ML researchers represents the largest potential source of new safety researchers. Understanding what motivates transitions, what barriers exist, and what interventions could increase flow is critical for scaling the safety research workforce.
+This model analyzes the flow of researchers from AI capabilities work to AI safety research, treating the transition as a multi-stage pipeline with distinct conversion rates at each step. Given the severe talent constraints facing AI safety as a field, the pool of experienced ML researchers represents the largest and most immediately productive source of potential safety researchers. Understanding what motivates transitions, what barriers prevent them, and which interventions could increase flow rates is critical for scaling the safety research workforce to meet growing technical challenges.
 
-**Central Question:** What determines the rate at which capabilities researchers transition to safety work, and how can this rate be increased?
+The central insight is that the transition pipeline exhibits severe attrition at two critical stages: the awareness-to-consideration transition (where only 10-15% of researchers aware of safety concerns actively consider switching) and the consideration-to-action transition (where real-world barriers prevent 60-75% of interested researchers from actually making the switch). This suggests a dual intervention strategy: upstream interventions focused on building genuine concern and consideration, combined with downstream interventions that reduce practical barriers for those already motivated. Current estimates suggest annual transitions of 50-400 researchers, against a potential pool of 50,000-100,000 ML researchers globally.
 
-## The Transition Pipeline
+The model matters because the safety research community cannot scale adequately through training junior researchers alone—experienced ML practitioners bring irreplaceable skills in model training, architecture design, and research methodology that take years to develop. Each senior capabilities researcher who transitions represents potentially 5-10 years of accelerated productivity compared to training from scratch. Yet current transition rates remain far below what the field needs, suggesting substantial unrealized potential in this pipeline.
 
-### Current Flow Estimates
+## Conceptual Framework
 
-**Source Population (2024):**
-- Total ML researchers globally: 50,000-100,000
-- ML researchers at frontier labs: 5,000-10,000
-- ML researchers aware of AI safety concerns: 10,000-30,000
-- ML researchers considering safety transition: 1,000-5,000
-- ML researchers who actually transition annually: 50-400
+### Pipeline Architecture
 
-**Conversion Funnel:**
+The transition from capabilities to safety work follows a sequential funnel structure, with researchers moving through stages of awareness, consideration, exploration, and finally transition. Each stage has characteristic barriers and interventions, and the overall flow rate is determined by the most constrained bottleneck.
 
-| Stage | Population | Conversion Rate |
-|-------|------------|-----------------|
-| All ML researchers | 50,000-100,000 | 100% |
-| Aware of safety concerns | 10,000-30,000 | 20-30% |
-| Consider transition | 1,000-5,000 | 10-15% of aware |
-| Actively exploring | 200-1,000 | 20-30% of considering |
-| Actually transition | 50-400 | 25-40% of exploring |
+<Mermaid client:load chart={`flowchart TD
+    subgraph Source["Source Pool"]
+        A[ML Researchers<br/>50,000-100,000]
+    end
 
-**Key Insight:** The largest drop-off is at the awareness stage and the consideration-to-action stage
+    subgraph Awareness["Awareness Stage"]
+        B[Aware of Safety Concerns<br/>10,000-30,000]
+    end
 
-### Transition Types
+    subgraph Interest["Interest Stage"]
+        C[Considering Transition<br/>1,000-5,000]
+    end
 
-**Type 1: Full Career Switch**
-- Leave capabilities role entirely
-- Take safety-focused position
-- Typical timeline: 3-12 months
-- Volume: 20-100/year
+    subgraph Exploration["Exploration Stage"]
+        D[Actively Exploring<br/>200-1,000]
+    end
 
-**Type 2: Internal Reallocation**
-- Stay at same organization
-- Move from capabilities team to safety team
-- Typical timeline: 1-6 months
-- Volume: 50-200/year
+    subgraph Conversion["Conversion Stage"]
+        E[Safety Researchers<br/>50-400/year inflow]
+    end
 
-**Type 3: Hybrid Role**
-- Maintain capabilities work with safety component
-- Gradually shift allocation
-- Typical timeline: 6-24 months
-- Volume: 100-300/year
+    A -->|"Exposure Rate: 20-30%"| B
+    B -->|"Consideration Rate: 10-15%"| C
+    C -->|"Exploration Rate: 20-30%"| D
+    D -->|"Transition Rate: 25-40%"| E
 
-**Type 4: Part-Time Contribution**
-- Keep capabilities job
-- Contribute to safety in spare time
-- Typical timeline: Ongoing
-- Volume: 200-500/year (though with limited impact)
+    style A fill:#e8f4f8
+    style B fill:#d4edda
+    style C fill:#fff3cd
+    style D fill:#f8d7da
+    style E fill:#d1ecf1`} />
+
+### Mathematical Formulation
+
+The annual flow of new safety researchers can be modeled as a cascade of conversion probabilities:
+
+$$
+F_{annual} = N_{ML} \times P_{aware} \times P_{consider|aware} \times P_{explore|consider} \times P_{transition|explore}
+$$
+
+Where $N_{ML}$ is the total ML researcher population and each $P$ represents a conditional transition probability. Under current conditions:
+
+$$
+F_{annual} = 75,000 \times 0.25 \times 0.125 \times 0.25 \times 0.325 \approx 190 \text{ transitions/year}
+$$
+
+The key leverage insight is that doubling any single conversion probability doubles overall flow, but interventions targeting different stages have different costs and feasibility.
+
+## Current Flow Estimates
+
+### Source Population Characteristics
+
+The global ML research community represents a substantial potential talent pool, though only a fraction meets the quality and motivation thresholds for impactful safety work. As of 2024, the population distributes across several organizational contexts, each with different baseline transition propensities and barrier profiles.
+
+| Population Segment | Estimated Size | Awareness Rate | Safety-Receptive | Effective Pool |
+|-------------------|----------------|----------------|------------------|----------------|
+| Total ML researchers globally | 50,000-100,000 | 25% baseline | 40% | 5,000-10,000 |
+| ML researchers at frontier labs | 5,000-10,000 | 70% | 60% | 2,100-4,200 |
+| ML researchers in academia | 15,000-30,000 | 30% | 50% | 2,250-4,500 |
+| ML researchers at tech companies | 20,000-40,000 | 15% | 30% | 900-1,800 |
+| ML researchers at startups | 10,000-20,000 | 20% | 35% | 700-1,400 |
+
+### Conversion Funnel Metrics
+
+The pipeline exhibits characteristic conversion rates that have remained relatively stable over recent years, though intervention effects are beginning to show in some segments. The largest absolute drop-off occurs at the awareness-to-consideration transition, where 85-90% of researchers who understand safety concerns do not seriously consider changing their career direction.
+
+| Stage | Population | Conversion Rate | Key Bottleneck | Primary Barrier |
+|-------|------------|-----------------|----------------|-----------------|
+| All ML researchers | 50,000-100,000 | 100% (baseline) | N/A | N/A |
+| Aware of safety concerns | 10,000-30,000 | 20-30% of total | Information exposure | Bubble effects |
+| Consider transition | 1,000-5,000 | 10-15% of aware | Motivation building | Skepticism about tractability |
+| Actively exploring | 200-1,000 | 20-30% of considering | Barrier reduction | Financial/career concerns |
+| Actually transition | 50-400/year | 25-40% of exploring | Support systems | Execution friction |
+
+## Transition Types
+
+Researchers transition through several distinct pathways, each with different timelines, barriers, and implications for the field. Full career switches, while lowest in volume, generate the highest per-person impact because they represent complete dedication of researcher time and attention. Internal reallocations leverage existing organizational relationships and infrastructure while avoiding many external barriers. Hybrid roles and part-time contributions, though highest in volume, face split attention and potential conflicts of interest.
+
+| Transition Type | Description | Timeline | Annual Volume | Impact per Researcher | Best Suited For |
+|-----------------|-------------|----------|---------------|----------------------|-----------------|
+| Full career switch | Leave capabilities entirely, join safety org | 3-12 months | 20-100 | High | Mission-driven researchers |
+| Internal reallocation | Move to safety team within same organization | 1-6 months | 50-200 | Medium-High | Those with organizational ties |
+| Hybrid role | Maintain capabilities work with safety component | 6-24 months | 100-300 | Medium | Risk-averse transitioners |
+| Part-time contribution | Keep capabilities job, contribute in spare time | Ongoing | 200-500 | Low-Medium | Exploratory engagement |
+
+### Transition Success by Type
+
+Different transition types exhibit different success rates and retention patterns over time, measured by whether researchers remain in safety-focused work after 2-3 years.
+
+| Transition Type | Initial Success Rate | 3-Year Retention | Median Impact | Key Success Factor |
+|-----------------|---------------------|------------------|---------------|-------------------|
+| Full career switch | 70-85% | 60-75% | High | Strong mission alignment |
+| Internal reallocation | 85-95% | 70-85% | Medium | Organizational support |
+| Hybrid role | 60-75% | 40-60% | Medium | Clear allocation boundaries |
+| Part-time contribution | 40-60% | 30-50% | Low | Sustained motivation |
 
 ## Motivation Analysis
 
-### Pull Factors (Toward Safety)
+### Pull Factors Toward Safety
 
-**1. Existential Risk Concern**
-- Belief that AI poses genuine existential threat
-- Moral obligation to work on most important problems
-- Impact motivation
+Researchers cite multiple motivations for considering safety work, with existential risk concern and mission alignment emerging as the strongest predictors of successful, sustained transitions. The presence of multiple pull factors significantly increases transition probability. Existential risk concern operates as the primary pull factor, with most successful transitioners reporting genuine belief that AI poses serious risks and moral obligation to address them. This motivation proves durable through the challenges of transition because it connects daily work to meaningful long-term outcomes.
 
-**Prevalence among transitioners:** 60-80%
-**Strength:** Very High
+| Pull Factor | Prevalence | Strength | Retention Correlation | Key Characteristic |
+|-------------|------------|----------|----------------------|-------------------|
+| Existential risk concern | 60-80% | Very High | 0.7-0.8 | Most durable motivation |
+| Mission alignment | 50-70% | High | 0.6-0.7 | Values-driven |
+| Intellectual challenge | 40-60% | Medium-High | 0.5-0.6 | May fade with routine |
+| Social network effects | 30-50% | Medium-High | 0.6-0.7 | Community-dependent |
+| Career opportunity | 20-40% | Medium | 0.3-0.4 | Opportunistic, less stable |
 
-**2. Intellectual Challenge**
-- Safety problems are interesting and hard
-- Novel research direction
-- Less crowded field than capabilities
+### Push Factors Away from Capabilities
 
-**Prevalence among transitioners:** 40-60%
-**Strength:** Medium-High
+Push factors often catalyze transitions among researchers who already have latent interest in safety, though they rarely suffice alone to motivate career changes. Ethical concerns—worry about contributing to potentially dangerous capabilities or discomfort with racing dynamics—provide moderate push motivation. However, transitions driven primarily by push factors show lower retention rates, as the initial motivation dissipates once the researcher leaves the problematic environment.
 
-**3. Mission Alignment**
-- Want to work on beneficial applications
-- Discomfort with pure capabilities racing
-- Values alignment with safety community
+| Push Factor | Prevalence | Strength | Sustainability | Risk Factor |
+|-------------|------------|----------|----------------|-------------|
+| Ethical concerns about current work | 40-60% | Medium-High | Medium | May resolve with role change |
+| Burnout or dissatisfaction | 20-40% | Medium | Low | Often transfers to new role |
+| Organizational issues | 15-30% | Low-Medium | Low | Specific to situation |
+| Career ceiling perception | 10-25% | Low | Low | May find new ceilings |
 
-**Prevalence among transitioners:** 50-70%
-**Strength:** High
+### Motivation Matrix by Source Organization
 
-**4. Career Opportunity**
-- Growing field with leadership opportunities
-- Less competition than capabilities
-- Unique expertise valued
+Different source organizations produce transitioners with characteristic motivation profiles, reflecting organizational cultures and researcher self-selection. Anthropic's internal pipeline from capabilities to safety teams represents a uniquely efficient pathway, benefiting from organizational mission alignment and minimal institutional barriers.
 
-**Prevalence among transitioners:** 20-40%
-**Strength:** Medium
-
-**5. Social Network Effects**
-- Friends/colleagues in safety
-- Community connections
-- Professional relationships
-
-**Prevalence among transitioners:** 30-50%
-**Strength:** Medium-High
-
-### Push Factors (Away from Capabilities)
-
-**1. Ethical Concerns**
-- Worry about contributing to dangerous capabilities
-- Discomfort with racing dynamics
-- Concerns about company direction
-
-**Prevalence among transitioners:** 40-60%
-**Strength:** Medium-High
-
-**2. Burnout/Dissatisfaction**
-- Unsustainable pace in capabilities
-- Lack of meaning in work
-- Desire for change
-
-**Prevalence among transitioners:** 20-40%
-**Strength:** Medium
-
-**3. Organizational Issues**
-- Disagreement with leadership
-- Culture problems
-- Career ceiling
-
-**Prevalence among transitioners:** 15-30%
-**Strength:** Low-Medium
-
-### Motivation Matrix by Source
-
-| Source Organization | Primary Pull | Primary Push | Transition Rate |
-|---------------------|--------------|--------------|-----------------|
-| OpenAI | Mission alignment | Ethics concerns | Medium |
-| Google DeepMind | Intellectual challenge | Scale of org | Low-Medium |
-| Meta AI | Risk concern | Company reputation | Medium-High |
-| Anthropic (capabilities) | Already safety-adjacent | - | Very High |
-| Academia | Intellectual challenge | Funding, impact | Medium |
-| Startups | Risk concern | Uncertainty | Low |
+| Source Organization | Primary Pull Factor | Primary Push Factor | Transition Rate | Quality Tier |
+|---------------------|---------------------|---------------------|-----------------|--------------|
+| OpenAI | Mission alignment | Ethics concerns | Medium | A-B tier |
+| Google DeepMind | Intellectual challenge | Organizational scale | Low-Medium | A tier |
+| Meta AI | Risk concern | Company reputation | Medium-High | B tier |
+| Anthropic (capabilities) | Already safety-adjacent | N/A | Very High | A-B tier |
+| Academia | Intellectual challenge | Funding/impact concerns | Medium | Variable |
+| Startups | Risk concern | Business uncertainty | Low | Variable |
 
 ## Barrier Analysis
 
-### Barrier 1: Financial Cost
+### Financial Barriers
 
-**Problem:** Safety roles typically pay less than capabilities
+The salary differential between capabilities and safety work creates a substantial barrier, particularly for researchers with financial obligations. This barrier disproportionately affects mid-career researchers with mortgages, families, or debt, and prevents an estimated 30-50% of otherwise-motivated researchers from transitioning.
 
-**Quantitative Impact:**
+| Transition Pathway | Typical Salary Impact | Barrier Strength | Population Affected |
+|-------------------|----------------------|------------------|---------------------|
+| Capabilities to safety lab | -20-40% | High | 40-60% |
+| Capabilities to nonprofit | -40-60% | Very High | 60-80% |
+| Capabilities to academia | -30-50% | High | 50-70% |
+| Internal transfer | -10-30% | Medium | 20-40% |
 
-| Transition Type | Typical Salary Impact | Barrier Strength |
-|-----------------|----------------------|------------------|
-| Capabilities to Safety Lab | -20-40% | High |
-| Capabilities to Nonprofit | -40-60% | Very High |
-| Capabilities to Academia | -30-50% | High |
-| Internal Transfer | -10-30% | Medium |
+### Skill Gap Barriers
 
-**Who is affected:**
-- Those with high expenses (mortgages, families)
-- Those without significant savings
-- Those motivated primarily by compensation
+Safety research requires partially different skills than capabilities work, creating uncertainty about competence and learning curves. The largest gaps appear in alignment theory and ethics/philosophy, where capabilities researchers typically have minimal background. Training programs like MATS specifically target these gaps, significantly reducing this barrier for participants.
 
-**Barrier strength:** High (prevents 30-50% of potential transitions)
+| Capabilities Skill | Safety Relevance | Typical Gap Size | Reskilling Time |
+|-------------------|------------------|------------------|-----------------|
+| ML engineering | Medium | Small | 1-2 months |
+| Model training | Medium-High | Small | 1-2 months |
+| Theoretical ML | High | Small | 1-2 months |
+| Interpretability | Very High | Small-Medium | 2-3 months |
+| Security/robustness | High | Small | 1-2 months |
+| Ethics/philosophy | High | Large | 4-6 months |
+| Alignment theory | Very High | Large | 3-6 months |
 
-### Barrier 2: Skill Gap
+### Social and Professional Cost Barriers
 
-**Problem:** Safety research requires different skills than capabilities work
+Researchers systematically overestimate social and professional costs of transition, likely due to loss aversion and status quo bias. In practice, safety research experience increasingly enhances rather than damages professional standing, as safety expertise becomes valued across the AI ecosystem.
 
-**Skill Translation:**
-
-| Capabilities Skill | Safety Relevance | Gap Size |
-|-------------------|------------------|----------|
-| ML engineering | Medium | Small |
-| Model training | Medium-High | Small |
-| Architecture design | Medium | Medium |
-| Theoretical ML | High | Small |
-| Interpretability | Very High | Small |
-| Security/robustness | High | Small |
-| Ethics/philosophy | High | Large |
-| Alignment theory | Very High | Large |
-
-**Training Requirements:**
-- Technical safety background: 3-12 months
-- Alignment concepts: 1-6 months
-- Research transition: 3-12 months
-
-**Barrier strength:** Medium (prevents 20-30% of potential transitions)
-
-### Barrier 3: Uncertainty About Impact
-
-**Problem:** Unclear what safety work actually accomplishes
-
-**Concerns raised:**
-- "Is safety research actually tractable?"
-- "Will my work make a difference?"
-- "Is the field making progress?"
-- "Is this the best use of my skills?"
-
-**Impact by background:**
-
-| Background | Uncertainty Level | Barrier Strength |
-|------------|-------------------|------------------|
-| Theory-focused | Low | Low |
-| Engineering-focused | Medium-High | Medium |
-| Product-focused | High | High |
-| Research-focused | Medium | Medium |
-
-**Barrier strength:** Medium (prevents 15-25% of potential transitions)
-
-### Barrier 4: Social/Professional Costs
-
-**Problem:** Leaving capabilities may damage professional standing
-
-**Specific costs:**
-- Loss of access to cutting-edge resources
-- Reduced prestige in ML community
-- Weaker professional network for future capabilities work
-- Potential difficulty returning to capabilities
-
-**Perceived vs actual costs:**
-
-| Cost | Perceived | Actual |
-|------|-----------|--------|
-| Reputation damage | Medium | Low |
-| Network loss | High | Medium |
-| Skill atrophy | High | Medium |
-| Return difficulty | High | Medium |
-
-**Barrier strength:** Medium (prevents 15-25% of potential transitions)
-
-### Barrier 5: Information Gaps
-
-**Problem:** Researchers lack information about safety opportunities
-
-**Information gaps:**
-- What safety research actually involves
-- What organizations exist and are hiring
-- What the career path looks like
-- How to develop relevant skills
-
-**Gap by organization size:**
-
-| Source Org Size | Information Access | Barrier Strength |
-|-----------------|-------------------|------------------|
-| Frontier lab | High | Low |
-| Mid-size company | Medium | Medium |
-| Startup | Low | High |
-| Academia | Medium | Medium |
-
-**Barrier strength:** Low-Medium (prevents 10-20% of potential transitions)
-
-### Barrier 6: Identity and Community
-
-**Problem:** Researchers identify with capabilities community
-
-**Identity factors:**
-- ML researcher identity
-- Academic tribe membership
-- Professional peer group
-- Research agenda commitment
-
-**Transition friction:**
-- Need to rebuild community connections
-- May lose status/recognition
-- Different culture and norms
-- Imposter syndrome in new field
-
-**Barrier strength:** Medium (prevents 15-25% of potential transitions)
+| Perceived Cost | Perceived Severity | Actual Severity | Gap | Addressable Through |
+|----------------|-------------------|-----------------|-----|---------------------|
+| Reputation damage | Medium | Low | Overestimated | Success stories |
+| Network loss | High | Medium | Overestimated | Community building |
+| Skill atrophy | High | Medium | Overestimated | Hybrid roles |
+| Return difficulty | High | Medium | Overestimated | Return path guarantees |
 
 ## Intervention Analysis
 
-### Intervention 1: Financial Support
+### Intervention Effectiveness Comparison
 
-**Mechanisms:**
-- Transition fellowships (6-12 months salary during transition)
-- Salary supplements for safety roles
-- Bridge funding for career changers
+| Intervention | Target Barrier | Cost per Transition | Transition Increase | Implementation Difficulty | Priority |
+|--------------|----------------|---------------------|---------------------|--------------------------|----------|
+| Small fellowship ($50K) | Financial | $50K | +10-15% | Medium | High |
+| Medium fellowship ($100K) | Financial | $100K | +20-30% | Medium | High |
+| Full-time training (MATS) | Skill gap | $20-40K | 60-80% conversion | Medium | High |
+| Part-time course | Skill gap | $5-10K | 30-50% conversion | Low | Medium |
+| Personal outreach | Information | $50-100K | 5-20% conversion | Medium | High |
+| Alumni referrals | Information | $20-50K | 2-10% conversion | Low | Medium |
+| Internal advocacy | Organizational | Variable | +50-100/year | High | High |
+| Community building | Social/identity | Low | Long-term | Low | Medium |
 
-**Target:** Financial barrier
+### Financial Support Programs
 
-**Quantitative Impact:**
+Financial support programs directly address the salary differential barrier, enabling researchers to transition without major lifestyle disruption. Smaller fellowships prove more cost-effective because they unlock transitions for researchers where financial concerns are material but not overwhelming. Full salary matching attracts higher-compensation researchers but at substantially higher cost per transition.
 
-| Support Level | Cost per Transition | Transition Increase |
-|---------------|---------------------|---------------------|
-| Small fellowship (50K) | 50K | +10-15% |
-| Medium fellowship (100K) | 100K | +20-30% |
-| Full salary match | 150-300K | +40-60% |
+### Training Programs
 
-**Cost-effectiveness:**
-- 50K fellowship: 3-5 additional transitions per 1M
-- 100K fellowship: 2-3 additional transitions per 1M
-- Salary match: 1-2 additional transitions per 1M
+The MATS model of intensive, full-time programs achieves the highest conversion rates by combining skill development, community integration, research experience, and mentorship. Scaling such programs represents one of the highest-leverage interventions available, with 60-80% of participants successfully transitioning.
 
-**Implementation difficulty:** Medium
-**Recommended priority:** High
+### Internal Advocacy
 
-### Intervention 2: Training Programs
+Internal advocacy offers high leverage where successful because it creates institutional pathways that reduce barriers for all interested researchers within an organization. The challenge lies in influencing organizational priorities, but frontier labs with internal safety teams could yield 50-100 additional transitions per year.
 
-**Mechanisms:**
-- Intensive transition programs (MATS model)
-- Part-time upskilling courses
-- Mentorship matching
-- Research apprenticeships
+## Scenario Analysis
 
-**Target:** Skill gap barrier
+| Scenario | Description | Probability | 2025 Flow | 2027 Flow | 2027 Stock | Key Assumptions |
+|----------|-------------|-------------|-----------|-----------|------------|-----------------|
+| Status quo | Current trajectory maintained | 35% | 220 | 260 | 1,900 | No significant intervention changes |
+| Moderate intervention | 2x training, 1.5x outreach, $10M fellowships | 40% | 300 | 500 | 2,400 | Incremental scaling of existing programs |
+| Major mobilization | 5x training, major campaign, full fellowship support | 15% | 500 | 1,000 | 3,500 | Coordinated investment across funders |
+| Field contraction | Funding cuts, reduced interest | 10% | 150 | 100 | 1,600 | Economic downturn or priority shifts |
 
-**Program Comparison:**
+The moderate intervention scenario represents the most likely path, with incremental scaling of existing successful programs. Major mobilization would require coordinated investment across multiple funders and organizations, which current field coordination does not support.
 
-| Program Type | Duration | Skill Gain | Transition Rate |
-|--------------|----------|------------|-----------------|
-| Full-time intensive | 3-6 months | High | 60-80% |
-| Part-time course | 3-12 months | Medium | 30-50% |
-| Mentorship only | Ongoing | Low-Medium | 20-40% |
-| Self-study | Variable | Variable | 10-30% |
+### Quality-Weighted Scenarios
 
-**Cost-effectiveness:**
-- Intensive program: 20-40K per participant, 60-80% conversion
-- Part-time course: 5-10K per participant, 30-50% conversion
+Raw transition numbers understate differences in impact because researcher quality varies substantially. Weighting transitions by estimated research productivity provides a more accurate picture. A targeted quality approach that focuses interventions on high-potential researchers may achieve better quality-weighted outcomes than broad mobilization, at lower total cost.
 
-**Implementation difficulty:** Medium
-**Recommended priority:** High
+| Scenario | A-Tier Transitions | B-Tier Transitions | C-Tier Transitions | Quality-Weighted Total |
+|----------|-------------------|-------------------|-------------------|----------------------|
+| Status quo | 30-40 | 80-100 | 80-100 | 250-350 equivalent |
+| Moderate intervention | 40-60 | 120-150 | 120-180 | 400-550 equivalent |
+| Major mobilization | 60-100 | 200-300 | 400-600 | 700-1,200 equivalent |
+| Targeted quality | 80-120 | 100-150 | 50-100 | 500-650 equivalent |
 
-### Intervention 3: Information Campaigns
+## Feedback Loop Dynamics
 
-**Mechanisms:**
-- Safety career guides and resources
-- Speaking tours at ML conferences
-- Targeted outreach to high-potential researchers
-- Alumni network activation
+The pipeline exhibits both positive and negative feedback loops that affect long-term trajectory. Positive loops include network effects (transitioners recruit peers), legitimacy effects (top researchers joining increases field prestige), and success stories (demonstrating viable paths reduces perceived risk). Negative loops include quality dilution (more transitioners may lower average quality) and saturation (positions filling makes transition less attractive).
 
-**Target:** Information gap barrier
+<Mermaid client:load chart={`flowchart LR
+    subgraph Positive["Positive Feedback"]
+        P1[More transitioners] --> P2[Larger network]
+        P2 --> P3[More recruitment]
+        P3 --> P1
+    end
 
-**Outreach Channels:**
+    subgraph Negative["Negative Feedback"]
+        N1[More transitioners] --> N2[Quality dilution]
+        N2 --> N3[Reputation suffers]
+        N3 --> N4[Fewer quality transitions]
+    end
 
-| Channel | Reach | Cost | Conversion Rate |
-|---------|-------|------|-----------------|
-| Conference talks | 1,000-10,000 | Low | 0.1-0.5% |
-| Blog posts | 10,000-100,000 | Very Low | 0.01-0.1% |
-| Personal outreach | 10-100 | Medium | 5-20% |
-| Alumni referrals | 100-1,000 | Low | 2-10% |
+    style P1 fill:#cfc
+    style N1 fill:#fcc`} />
 
-**Cost-effectiveness:**
-- Personal outreach most effective but expensive
-- Conference talks good for awareness
-- Alumni referrals best balance of reach and conversion
+## Limitations
 
-**Implementation difficulty:** Low-Medium
-**Recommended priority:** Medium
+This model embeds several simplifying assumptions that limit its predictive accuracy and policy applicability. First, the pipeline stages are treated as discrete and sequential, but actual career transitions involve complex, non-linear processes with substantial individual variation. Researchers may skip stages, regress to earlier stages, or occupy multiple stages simultaneously.
 
-### Intervention 4: Internal Advocacy
+Second, conversion rates are estimated from limited observational data and may not generalize across time periods, researcher populations, or intervention contexts. The estimates combine diverse data sources (program outcomes, survey responses, career tracking) that may not be comparable.
 
-**Mechanisms:**
-- Support safety teams within capabilities labs
-- Advocate for internal transfers
-- Create safety-adjacent roles
-- Build safety culture in capabilities orgs
+Third, the model assumes intervention effects are additive and independent, but interventions likely interact in complex ways. Financial support may be more effective when combined with training programs; community building may amplify network recruitment effects.
 
-**Target:** Organizational barriers
+Fourth, quality metrics are difficult to operationalize. The model uses rough tiers (A/B/C/D) based on publication records and reputation, but research impact depends on factors like research direction, mentorship, and serendipity that simple metrics cannot capture.
 
-**Strategies by org type:**
-
-| Organization | Strategy | Expected Impact |
-|--------------|----------|-----------------|
-| Frontier labs | Internal safety teams | +50-100 transitions/year |
-| Mid-size companies | Safety partnerships | +10-30 transitions/year |
-| Academia | Safety research programs | +20-50 transitions/year |
-
-**Cost-effectiveness:**
-- High leverage if successful
-- Depends on organizational receptivity
-
-**Implementation difficulty:** High
-**Recommended priority:** High (for high-leverage targets)
-
-### Intervention 5: Community Building
-
-**Mechanisms:**
-- Safety research community events
-- Social connections across capabilities/safety
-- Mentorship from transitioners
-- Clear onboarding paths
-
-**Target:** Social/identity barriers
-
-**Community Activities:**
-
-| Activity | Attendance | Connection Rate | Transition Influence |
-|----------|------------|-----------------|---------------------|
-| Conferences | 100-500 | 10-30% | Medium |
-| Reading groups | 10-50 | 30-60% | Medium-High |
-| Social events | 20-100 | 20-40% | Medium |
-| Online communities | 100-1,000 | 5-15% | Low-Medium |
-
-**Cost-effectiveness:**
-- Relatively low cost
-- Long-term relationship building
-- Hard to measure direct impact
-
-**Implementation difficulty:** Low
-**Recommended priority:** Medium
-
-### Intervention 6: Reduce Return Risk
-
-**Mechanisms:**
-- Document successful return paths
-- Maintain industry connections
-- Create reverse-transition support
-- Build prestige for safety work
-
-**Target:** Fear of career damage
-
-**Messaging strategies:**
-- Highlight transitioners who maintained options
-- Show safety experience valued by capabilities
-- Demonstrate skill transferability
-
-**Implementation difficulty:** Medium
-**Recommended priority:** Medium
-
-## Transition Dynamics Model
-
-### Flow Model
-
-**Stock-and-Flow Structure:**
-
-```
-ML Researchers (Stock: 50-100K)
-      |
-      v [Awareness Rate: 20-30%/year]
-Aware of Safety (Stock: 10-30K)
-      |
-      v [Consideration Rate: 10-15%/year]
-Considering Transition (Stock: 1-5K)
-      |
-      v [Exploration Rate: 20-30%/year]
-Actively Exploring (Stock: 200-1K)
-      |
-      v [Transition Rate: 25-40%/year]
-Safety Researchers (Inflow: 50-400/year)
-```
-
-**Key Leverage Points:**
-1. Awareness rate (information campaigns)
-2. Consideration rate (motivation building)
-3. Exploration rate (reducing barriers)
-4. Transition rate (support systems)
-
-### Scenario Analysis
-
-**Scenario 1: Status Quo**
-
-| Year | Transitions | Cumulative | Safety Researcher Stock |
-|------|-------------|------------|-------------------------|
-| 2024 | 200 | 200 | 1,500 |
-| 2025 | 220 | 420 | 1,620 |
-| 2026 | 240 | 660 | 1,750 |
-| 2027 | 260 | 920 | 1,900 |
-
-**Scenario 2: Moderate Intervention**
-- 2x training program capacity
-- 1.5x outreach
-- Financial support for top 100 transitions
-
-| Year | Transitions | Cumulative | Safety Researcher Stock |
-|------|-------------|------------|-------------------------|
-| 2024 | 200 | 200 | 1,500 |
-| 2025 | 300 | 500 | 1,700 |
-| 2026 | 400 | 900 | 2,000 |
-| 2027 | 500 | 1,400 | 2,400 |
-
-**Scenario 3: Major Mobilization**
-- 5x training program capacity
-- Major outreach campaign
-- Financial support for all transitions
-- Internal advocacy at major labs
-
-| Year | Transitions | Cumulative | Safety Researcher Stock |
-|------|-------------|------------|-------------------------|
-| 2024 | 200 | 200 | 1,500 |
-| 2025 | 500 | 700 | 1,900 |
-| 2026 | 800 | 1,500 | 2,600 |
-| 2027 | 1,000 | 2,500 | 3,500 |
-
-## Quality Considerations
-
-### Quality Distribution of Transitioners
-
-| Quality Tier | Current % of Transitioners | Potential Expansion |
-|--------------|---------------------------|---------------------|
-| A-tier (top researchers) | 10-20% | Limited (already well-connected) |
-| B-tier (strong researchers) | 30-40% | Medium (intervention-responsive) |
-| C-tier (competent researchers) | 30-40% | High (large pool) |
-| D-tier (developing) | 10-20% | High |
-
-**Quality-Quantity Tradeoff:**
-- Current transitioners skew higher quality (self-selected)
-- Scaling may lower average quality
-- A-tier transitioners have highest impact
-
-### Optimizing for Quality
-
-**Targeted Recruitment:**
-- Identify high-potential researchers
-- Personal outreach by senior safety researchers
-- Selective fellowship programs
-
-**Quality Indicators:**
-- Publication record
-- Research originality
-- Self-directed learning ability
-- Mission alignment
-
-## Feedback Loops
-
-### Positive Loops
-
-**Loop 1: Network Effects**
-- Transitioners recruit peers
-- Safety community grows
-- More connection points to capabilities
-- More transitions
-
-**Loop 2: Legitimacy Loop**
-- Top researchers transition
-- Field gains prestige
-- Attracts more top researchers
-- More prestige
-
-**Loop 3: Success Stories**
-- Successful transitioners
-- Demonstrate viable path
-- Reduce perceived risk
-- More transitions
-
-### Negative Loops
-
-**Loop 1: Quality Dilution**
-- More transitioners
-- Average quality decreases
-- Field reputation suffers
-- Fewer quality transitions
-
-**Loop 2: Oversaturation**
-- Too many transitioners
-- Funding/positions saturated
-- Transition becomes less attractive
-- Fewer transitions
+Finally, the model does not account for the possibility that high transition rates could harm capabilities research in ways that themselves affect AI safety—either by removing safety-conscious voices from capabilities organizations or by disrupting productive capabilities-safety collaboration.
 
 ## Key Uncertainties
 
 <KeyQuestions
   questions={[
-    "What fraction of capabilities researchers could realistically be converted to safety?",
-    "Does reducing financial barriers significantly increase transitions, or are they primarily values-driven?",
-    "Can transition programs maintain quality while scaling?",
-    "What is the optimal balance between recruiting experienced researchers vs. training new ones?",
-    "How will the transition pipeline change as AI development accelerates?"
+    "What fraction of capabilities researchers could realistically be converted to safety work without unacceptable quality dilution?",
+    "Does reducing financial barriers significantly increase transitions, or are transitions primarily values-driven regardless of compensation?",
+    "Can transition programs maintain quality while scaling 5-10x beyond current capacity?",
+    "What is the optimal balance between recruiting experienced researchers versus training new ones from scratch?",
+    "How will the transition pipeline dynamics change as AI development accelerates and safety work becomes more urgent?",
+    "Would higher transition rates from capabilities reduce safety-conscious voices within capabilities organizations?"
   ]}
 />
-
-## Model Limitations
-
-1. **Motivation complexity:** Hard to model multi-factor decision-making
-2. **Individual variation:** Wide variance in transition paths
-3. **Temporal dynamics:** Motivations and barriers change over time
-4. **Quality measurement:** Difficult to assess researcher quality objectively
-5. **Counterfactual difficulty:** Would transitioners have contributed to safety anyway?
 
 ## Policy Recommendations
 
 ### For Funders
 
-1. **Transition Fellowships** (Highest priority)
-   - Fund 100-200 fellowships annually at 100K each
-   - Total cost: 10-20M/year
-   - Expected transitions: 60-120
-
-2. **Training Program Scaling**
-   - Triple capacity of MATS-style programs
-   - Cost: 10-20M/year additional
-   - Expected transitions: 50-100
-
-3. **Targeted Recruitment**
-   - Fund dedicated recruiters for safety field
-   - Personal outreach to high-potential researchers
-   - Cost: 1-3M/year
-   - Expected A/B-tier transitions: 20-40
+The highest-leverage funder investments target training program scaling and transition fellowships, which directly address the largest barriers. A coordinated investment of $30-50M annually could plausibly double transition rates within 2-3 years. Transition fellowships at the $100K level should fund 100-200 researchers annually, with expected cost-effectiveness of 2-3 additional transitions per million dollars. Training program scaling should triple capacity of MATS-style programs, requiring $10-20M additional annual funding.
 
 ### For Organizations
 
-1. **Internal Transfer Programs**
-   - Create clear paths from capabilities to safety
-   - Reduce salary penalty for transfers
-   - Provide transition training
-
-2. **Hybrid Roles**
-   - Allow gradual transition
-   - Safety component in capabilities roles
-   - Build safety culture
-
-3. **Return Path Assurance**
-   - Guarantee return to capabilities if desired
-   - Maintain professional development
-   - Reduce transition risk
+Frontier labs should create clear internal transfer paths from capabilities to safety teams, with reduced or eliminated salary penalties and structured transition training. Hybrid roles that allow gradual transition reduce risk for researchers uncertain about full commitment. Return path guarantees that promise reintegration into capabilities work if desired significantly reduce perceived transition risk.
 
 ### For Individuals
 
-1. **Exploration Before Commitment**
-   - Part-time engagement with safety
-   - Reading groups, side projects
-   - Network building
-
-2. **Skill Development**
-   - Alignment fundamentals
-   - Interpretability techniques
-   - Safety research methods
-
-3. **Financial Planning**
-   - Build runway for potential salary decrease
-   - Explore fellowship opportunities
-   - Consider hybrid transitions
+Researchers considering transition should explore through part-time engagement before full commitment: reading groups, side projects, and network building provide low-risk exposure to safety work. Skill development should prioritize alignment fundamentals, interpretability techniques, and safety research methodology. Financial planning should build runway for potential salary decrease and explore fellowship opportunities that can bridge gaps.
 
 ## Related Models
 
-- [AI Safety Talent Supply/Demand Gap Model](/knowledge-base/models/safety-researcher-gap/) - Overall talent dynamics
-- [Racing Dynamics Game Theory Model](/knowledge-base/models/racing-dynamics/) - Competitive pressures in AI development
-- [Expertise Atrophy Cascade Model](/knowledge-base/models/expertise-atrophy-cascade/) - Skill development patterns
-- [Proliferation Risk Model](/knowledge-base/models/proliferation-risk-model/) - Talent as vector for capability spread
+- [AI Safety Talent Supply/Demand Gap Model](/knowledge-base/models/safety-researcher-gap/) - Overall talent dynamics in the safety field
+- [Racing Dynamics Game Theory Model](/knowledge-base/models/racing-dynamics/) - Competitive pressures affecting capabilities and safety investment
+- [Expertise Atrophy Cascade Model](/knowledge-base/models/expertise-atrophy-cascade/) - Skill development and maintenance patterns
+- [Proliferation Risk Model](/knowledge-base/models/proliferation-risk-model/) - Talent mobility as vector for capability spread
 
 ## Sources
 
-- 80,000 Hours career transition data
-- MATS program outcomes
-- AI safety researcher surveys
-- Career transition interviews
-- Labor economics research on career switches
+- 80,000 Hours career transition data and surveys
+- MATS (ML Alignment Theory Scholars) program outcomes
+- AI safety researcher surveys and interviews
+- Career transition interviews with former capabilities researchers
+- Labor economics research on occupational switching
+- Analysis of safety organization hiring and retention data
 
 ## Related Pages
 

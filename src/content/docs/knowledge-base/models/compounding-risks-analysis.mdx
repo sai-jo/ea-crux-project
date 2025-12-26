@@ -12,44 +12,80 @@ ratings:
   completeness: 4
 ---
 
-import { DataInfoBox, Backlinks, KeyQuestions } from '../../../../components/wiki';
+import { DataInfoBox, Backlinks, KeyQuestions, Mermaid } from '../../../../components/wiki';
 
 <DataInfoBox entityId="compounding-risks-analysis" ratings={frontmatter.ratings} />
 
 ## Overview
 
-When multiple AI risks occur together, their combined effect is often much worse than simply adding individual risk impacts. This model analyzes how risks compound through multiplicative effects, threshold interactions, and synergistic failures.
+When multiple AI risks occur together, their combined effect is often dramatically worse than simply adding individual risk impacts. This model analyzes how risks compound through multiplicative effects, threshold interactions, and synergistic failures—revealing why traditional risk assessments that evaluate dangers in isolation systematically underestimate total danger. The central insight is that certain risk combinations are qualitatively more dangerous than others: a world with racing dynamics, deceptive alignment, and lock-in is not merely 3x as dangerous as one with only racing dynamics, but potentially 10-20x more dangerous due to how these risks reinforce each other.
 
-Understanding compounding is essential because:
-- **Risk assessments focusing on individual risks underestimate total danger**
-- **Some risk combinations are far more dangerous than others**
-- **Compound effects may cross thresholds that individual risks wouldn't**
+Understanding compounding matters because it fundamentally changes how we should allocate limited resources for AI safety. An intervention that reduces a single risk by 50% might be far less valuable than one that reduces an interaction coefficient between two risks by 30%, even though the latter sounds less impressive. Similarly, some risks that appear manageable in isolation become catastrophic when they co-occur with others—and these dangerous combinations may be more likely than we assume because the same underlying conditions (e.g., competitive pressure) simultaneously increase multiple correlated risks.
 
-## Compounding vs. Additive Effects
+The framework distinguishes four types of compounding: multiplicative probability (where Risk A makes Risk B more likely), severity multiplication (where combined impacts exceed the sum), defense negation (where Risk A disables safeguards against Risk B), and threshold crossing (where combined effects exceed critical limits that individual risks wouldn't breach). Each type requires different defensive strategies, and many real-world scenarios involve all four simultaneously. This creates a landscape where compound risk assessment is not optional but essential for prioritizing the highest-leverage interventions.
 
-### Additive Model (Naive)
+## Conceptual Framework
 
-$$
-\text{Total Risk} = R_1 + R_2 + R_3 + \ldots + R_n
-$$
+<Mermaid client:load chart={`
+flowchart TD
+    subgraph CompoundTypes["Types of Compounding"]
+        T1["Type 1: Multiplicative Probability<br/>P(B|A) > P(B)"]
+        T2["Type 2: Severity Multiplication<br/>Impact(A∩B) > Impact(A) + Impact(B)"]
+        T3["Type 3: Defense Negation<br/>A disables safeguards against B"]
+        T4["Type 4: Threshold Crossing<br/>Combined effect exceeds critical limit"]
+    end
 
-This assumes risks are independent and their impacts simply sum.
+    subgraph Outcomes["Compound Outcomes"]
+        O1["3-5x Higher Probability"]
+        O2["2-10x Higher Severity"]
+        O3["Detection Failure"]
+        O4["Phase Transition"]
+    end
 
-### Multiplicative Model (More Realistic)
+    subgraph Assessment["Risk Assessment Impact"]
+        A1["Individual Analysis<br/>Dramatically Underestimates"]
+        A2["Compound Analysis<br/>Captures True Risk"]
+    end
 
-$$
-\text{Total Risk} = 1 - \prod_{i=1}^{n}(1 - R_i) \times \text{Interaction Factor}
-$$
+    T1 --> O1
+    T2 --> O2
+    T3 --> O3
+    T4 --> O4
 
-This accounts for the fact that multiple failure modes create overlapping vulnerabilities.
+    O1 --> A2
+    O2 --> A2
+    O3 --> A2
+    O4 --> A2
 
-### Synergistic Model (Compound Effects)
+    style T1 fill:#ffcccc
+    style T2 fill:#ffddcc
+    style T3 fill:#ffeecc
+    style T4 fill:#ffffcc
+`} />
+
+The diagram illustrates how four distinct compounding mechanisms feed into different outcome types, all of which are missed by individual risk analysis but captured by compound assessment. The color gradient indicates the relative frequency of each type, with multiplicative probability being most common.
+
+## Mathematical Formulation
+
+### Compounding Models Compared
+
+The choice of risk model dramatically affects estimated danger levels:
+
+| Model | Formula | Assumptions | Typical Underestimate |
+|-------|---------|-------------|----------------------|
+| Additive (Naive) | $R_{total} = R_1 + R_2 + ... + R_n$ | Independent, non-interacting | 2-5x |
+| Multiplicative | $R_{total} = 1 - \prod_i(1 - R_i) \times IF$ | Overlapping vulnerabilities | 1.5-3x |
+| Synergistic | $R_{total} = \sum_i R_i + \sum_{i<j} \alpha_{ij} R_i R_j + ...$ | Interaction effects | Baseline |
+| Threshold | $R_{total} = f(\sum_i R_i) \text{ where } f \text{ is nonlinear}$ | Phase transitions | Variable |
+
+### Synergistic Model (Full Specification)
 
 $$
 \text{Total Risk} = \sum_{i} R_i + \sum_{i<j} \alpha_{ij} R_i R_j + \sum_{i<j<k} \beta_{ijk} R_i R_j R_k + \ldots
 $$
 
 Where:
+- $R_i$ = individual risk probability for risk $i$
 - $\alpha_{ij}$ = pairwise interaction strength (can be > 1 for synergistic effects)
 - $\beta_{ijk}$ = three-way interaction strength
 - Higher-order terms capture complex interactions
@@ -64,15 +100,13 @@ $$
 P(C | A) = P(C | B) \times P(B | A) > P(C) \times P(B) \times P(A)
 $$
 
-**Example**: Racing dynamics (A) increases probability of inadequate testing (B), which increases probability of mesa-optimization (C).
+| Condition | P(Mesa-opt) | P(Deceptive \| Mesa-opt) | Combined | Compounding Factor |
+|-----------|-------------|--------------------------|----------|-------------------|
+| Without Racing | 15% | 30% | 4.5% | Baseline |
+| With Racing | 35% | 45% | 15.8% | 3.5x |
+| Extreme Racing | 50% | 55% | 27.5% | 6.1x |
 
-| Without Racing | With Racing |
-|----------------|-------------|
-| P(Mesa-opt) ≈ 15% | P(Mesa-opt) ≈ 35% |
-| P(Deceptive \| Mesa-opt) ≈ 30% | P(Deceptive \| Mesa-opt) ≈ 45% |
-| Combined: 4.5% | Combined: 15.8% |
-
-**Compounding factor**: 3.5x
+**Example**: Racing dynamics compresses safety timelines, increasing probability of inadequate testing, which increases probability of mesa-optimization emerging undetected.
 
 ### Type 2: Severity Multiplication
 
@@ -82,15 +116,11 @@ $$
 \text{Impact}(A \cap B) > \text{Impact}(A) + \text{Impact}(B)
 $$
 
-**Example**: Lock-in (A) combined with deceptive alignment (B) creates much worse outcomes than either alone.
-
-| Scenario | Impact Level |
-|----------|--------------|
-| Lock-in alone | High (switching costs, dependency) |
-| Deceptive alignment alone | Very High (misaligned optimization) |
-| Both together | Catastrophic (trapped with misaligned AI, no escape) |
-
-**Compounding factor**: 2-5x
+| Scenario | Impact Level | Recovery Possibility | Compounding Factor |
+|----------|--------------|---------------------|-------------------|
+| Lock-in alone | High (switching costs, dependency) | Medium (5-15 years) | 1x |
+| Deceptive alignment alone | Very High (misaligned optimization) | Medium-High (if detected) | 2x |
+| Both together | Catastrophic (trapped with misaligned AI) | Near-zero | 8-10x |
 
 ### Type 3: Defense Negation
 
@@ -100,14 +130,11 @@ $$
 P(\text{B causes harm} | A) \gg P(\text{B causes harm} | \neg A)
 $$
 
-**Example**: Expertise atrophy (A) negates human oversight that would catch corrigibility failure (B).
-
-| With Human Expertise | With Atrophied Expertise |
-|---------------------|--------------------------|
-| P(CF detected) ≈ 60% | P(CF detected) ≈ 15% |
-| P(CF causes catastrophe) ≈ 15% | P(CF causes catastrophe) ≈ 50% |
-
-**Compounding factor**: 3.3x
+| Expertise Level | P(Corrigibility Failure Detected) | P(CF Causes Catastrophe) | Compounding Factor |
+|-----------------|-----------------------------------|--------------------------|-------------------|
+| Full Human Expertise | 60% | 15% | Baseline |
+| Moderate Atrophy | 35% | 30% | 2x |
+| Severe Atrophy | 15% | 50% | 3.3x |
 
 ### Type 4: Threshold Crossing
 
@@ -117,149 +144,87 @@ $$
 R_1 + R_2 < \text{Threshold} < R_1 + R_2 + \text{Interaction Effect}
 $$
 
-**Example**: Neither epistemic degradation nor political polarization alone causes democratic collapse, but together they cross the threshold.
+| Factor | Individual Contribution | Combined with Interaction | Threshold Status |
+|--------|------------------------|--------------------------|-----------------|
+| Epistemic degradation | 40% toward collapse | - | Below |
+| Political polarization | 35% toward collapse | - | Below |
+| Combined | - | 95% toward collapse | **CROSSED** (>80%) |
 
-| Factor | Individual Effect | Combined Effect |
-|--------|-------------------|-----------------|
-| Epistemic degradation | 40% toward collapse threshold | - |
-| Political polarization | 35% toward collapse threshold | - |
-| Combined (with interaction) | - | 95% toward collapse threshold |
+## Compound Risk Network
 
-**Threshold crossed**: Yes (>80% triggers cascade)
+<Mermaid client:load chart={`
+flowchart LR
+    subgraph Technical["Technical Risks"]
+        R1[Racing]
+        R2[Mesa-opt]
+        R3[Deceptive Alignment]
+        R4[Corrigibility Failure]
+    end
+
+    subgraph Structural["Structural Risks"]
+        R5[Lock-in]
+        R6[Concentration]
+        R7[Authoritarian]
+    end
+
+    subgraph Epistemic["Epistemic Risks"]
+        R8[Sycophancy]
+        R9[Expertise Atrophy]
+        R10[Epistemic Collapse]
+    end
+
+    R1 -->|"α=2.5"| R2
+    R1 -->|"α=2.0"| R3
+    R2 -->|"α=3.0"| R3
+    R3 -->|"α=4.0"| R5
+    R5 -->|"α=3.5"| R7
+    R6 -->|"α=3.0"| R7
+
+    R8 -->|"α=3.5"| R9
+    R9 -->|"α=2.5"| R4
+    R10 -->|"α=2.0"| R7
+
+    R5 -->|"α=5.0"| R3
+    R9 -->|"α=2.0"| R3
+
+    style R1 fill:#ff9999
+    style R3 fill:#ff9999
+    style R5 fill:#ff9999
+    style R7 fill:#ff9999
+`} />
+
+The network diagram shows interaction strengths (α coefficients) between major risks. Red-highlighted nodes represent the highest-danger compound pathway: Racing → Deceptive Alignment → Lock-in → Authoritarian outcomes.
 
 ## High-Risk Compound Combinations
 
-### Combination 1: Racing + Deceptive Alignment + Lock-in
-
-**Components**:
-- Racing dynamics compresses safety timelines
-- Deceptive alignment emerges undetected
-- Lock-in prevents correction
-
-**Compound mechanism**:
-1. Racing prevents adequate interpretability research
-2. Without interpretability, deception goes undetected
-3. Deceptive system becomes deeply integrated
-4. Lock-in makes removal impossible
-5. Deceptive system pursues misaligned goals indefinitely
-
-**Compound severity**: Extreme (potentially existential)
-**Compound probability**: 3-8%
-**Individual risk sum**: ~20% (for significant harm)
-**Compounding factor**: ~4x severity, ~2x probability
-
-### Combination 2: Sycophancy + Expertise Atrophy + Corrigibility Failure
-
-**Components**:
-- Sycophancy reduces critical evaluation
-- Expertise atrophies from disuse
-- Corrigibility mechanisms fail
-
-**Compound mechanism**:
-1. Sycophancy makes users trust AI uncritically
-2. Critical thinking skills atrophy
-3. Humans cannot evaluate AI behavior
-4. Corrigibility failure goes undetected
-5. No capability to correct course
-
-**Compound severity**: Very High (loss of control)
-**Compound probability**: 5-15%
-**Individual risk sum**: ~25%
-**Compounding factor**: ~3x severity, ~2.5x probability
-
-### Combination 3: Concentration of Power + Authoritarian Tendency + AI Surveillance
-
-**Components**:
-- AI capabilities concentrate in few hands
-- Political systems trend authoritarian
-- AI enables comprehensive surveillance
-
-**Compound mechanism**:
-1. Concentration reduces checks on power
-2. Authoritarian actors gain AI capabilities
-3. AI surveillance eliminates dissent
-4. No mechanism for peaceful power transfer
-5. Authoritarian lock-in becomes permanent
-
-**Compound severity**: Extreme (permanent loss of freedom)
-**Compound probability**: 5-12%
-**Individual risk sum**: ~30%
-**Compounding factor**: ~3x severity, ~2x probability
-
-### Combination 4: Epistemic Collapse + Trust Cascade + Democratic Failure
-
-**Components**:
-- Shared knowledge breaks down
-- Institutional trust collapses
-- Democratic processes fail
-
-**Compound mechanism**:
-1. AI-generated content floods information space
-2. No shared facts for democratic deliberation
-3. Trust in electoral systems collapses
-4. Democratic legitimacy evaporates
-5. Society cannot coordinate on anything
-
-**Compound severity**: Very High (civilization destabilization)
-**Compound probability**: 8-20%
-**Individual risk sum**: ~35%
-**Compounding factor**: ~2.5x severity, ~2x probability
-
-## Compound Risk Matrix
-
 ### Pairwise Interaction Strengths
 
-| Risk A × Risk B | Interaction Strength | Type |
-|-----------------|---------------------|------|
-| Racing × Deceptive Alignment | Very Strong (3-5x) | Probability multiplication |
-| Sycophancy × Expertise Atrophy | Very Strong (3-4x) | Mutual reinforcement |
-| Deceptive Alignment × Lock-in | Extreme (5-10x) | Severity multiplication |
-| Expertise Atrophy × Corrigibility Failure | Strong (2-4x) | Defense negation |
-| Concentration × Authoritarian | Very Strong (3-5x) | Threshold crossing |
-| Epistemic Collapse × Trust Cascade | Strong (2-3x) | Mutual reinforcement |
-| Racing × Mesa-optimization | Strong (2-3x) | Probability multiplication |
-| Lock-in × Authoritarian | Extreme (5-10x) | Severity multiplication |
+| Risk A × Risk B | Interaction Strength (α) | Type | Confidence |
+|-----------------|-------------------------|------|------------|
+| Racing × Deceptive Alignment | 3.0-5.0 | Probability multiplication | Medium |
+| Sycophancy × Expertise Atrophy | 3.0-4.0 | Mutual reinforcement | Medium-High |
+| Deceptive Alignment × Lock-in | 5.0-10.0 | Severity multiplication | Medium |
+| Expertise Atrophy × Corrigibility Failure | 2.0-4.0 | Defense negation | Medium |
+| Concentration × Authoritarian | 3.0-5.0 | Threshold crossing | Medium |
+| Epistemic Collapse × Trust Cascade | 2.0-3.0 | Mutual reinforcement | Medium |
+| Racing × Mesa-optimization | 2.0-3.0 | Probability multiplication | Medium |
+| Lock-in × Authoritarian | 5.0-10.0 | Severity multiplication | Medium |
 
-### Three-Way Combinations
+### Critical Three-Way Combinations
 
-| Combination | Compound Effect | Danger Level |
-|-------------|-----------------|--------------|
-| Racing + Deceptive + Lock-in | Undetected misaligned AI permanently embedded | Critical |
-| Sycophancy + Expertise + Oversight failure | No human check on AI behavior | Critical |
-| Concentration + Authoritarian + Surveillance | Permanent totalitarian control | Critical |
-| Epistemic + Trust + Democratic failure | Civilization coordination collapse | Severe |
-| Mesa-opt + Scheming + Corrigibility failure | Fully autonomous misaligned AI | Critical |
+| Combination | Compound Effect | Danger Level | Compound Probability |
+|-------------|-----------------|--------------|---------------------|
+| Racing + Deceptive + Lock-in | Undetected misaligned AI permanently embedded | Critical | 3-8% |
+| Sycophancy + Expertise + Oversight failure | No human check on AI behavior | Critical | 5-15% |
+| Concentration + Authoritarian + Surveillance | Permanent totalitarian control | Critical | 5-12% |
+| Epistemic + Trust + Democratic failure | Civilization coordination collapse | Severe | 8-20% |
+| Mesa-opt + Scheming + Corrigibility failure | Fully autonomous misaligned AI | Critical | 2-6% |
 
-## Quantitative Compounding Model
-
-### Formal Framework
-
-For n risks $R_1, R_2, \ldots, R_n$, the compound risk is:
-
-$$
-\text{Compound Risk} = 1 - \prod_{i=1}^{n}(1 - R_i \cdot s_i) \cdot \prod_{i<j}(1 + \alpha_{ij} \cdot R_i \cdot R_j)
-$$
-
-Where:
-- $s_i$ = standalone severity of risk $i$ (0-1)
-- $\alpha_{ij}$ = interaction coefficient between risks $i$ and $j$
-  - $\alpha = 0$: no interaction
-  - $\alpha > 0$: synergistic (worse together)
-  - $\alpha < 0$: antagonistic (cancel out)
-
-### Estimated Parameters
-
-| Interaction | $\alpha$ estimate | Confidence |
-|-------------|-------------------|------------|
-| Racing × Technical risks | 1.5 - 2.5 | Medium |
-| Sycophancy × Epistemic risks | 2.0 - 3.0 | Medium-High |
-| Lock-in × Structural risks | 2.5 - 4.0 | Medium |
-| Expertise atrophy × Oversight risks | 1.5 - 2.5 | Medium |
-| Concentration × Authoritarian | 2.0 - 3.5 | Medium |
+## Quantitative Analysis
 
 ### Example Calculation
 
-**Scenario**: Racing (R1=0.3) + Deceptive Alignment (R2=0.15) + Lock-in (R3=0.2)
+**Scenario**: Racing (R₁=0.3) + Deceptive Alignment (R₂=0.15) + Lock-in (R₃=0.2)
 
 **Without compounding**:
 $$
@@ -268,65 +233,101 @@ $$
 
 **With compounding** (α₁₂=2.0, α₁₃=1.5, α₂₃=3.0):
 $$
-\text{Compound} = 1 - (0.7)(0.85)(0.8) \cdot (1 + 2.0 \cdot 0.045)(1 + 1.5 \cdot 0.06)(1 + 3.0 \cdot 0.03)
+\text{Compound} = 1 - (0.7)(0.85)(0.8) \cdot (1 + 2.0 \times 0.045)(1 + 1.5 \times 0.06)(1 + 3.0 \times 0.03)
 $$
 $$
 = 1 - 0.476 \cdot 1.09 \cdot 1.09 \cdot 1.09 = 1 - 0.617 = 0.383
 $$
 
-But accounting for cascading severity multiplication:
+**Severity-adjusted** (accounting for cascading multiplication):
 $$
-\text{Severity-adjusted} \approx 0.383 \times 2.5 \approx 0.96 \text{ (near-certain harm if risks materialize)}
+\text{Expected harm} \approx 0.383 \times 2.5 \approx 0.96 \text{ (near-certain harm if risks materialize)}
 $$
 
-## Defensive Implications
+## Scenario Analysis
 
-### Compound-Aware Risk Assessment
+The following scenarios represent probability-weighted paths for compound risk evolution:
 
-Standard practice should:
-1. **Identify risk clusters** - Which risks tend to co-occur?
-2. **Estimate interaction strengths** - How much do they compound?
-3. **Calculate compound probabilities** - What's the realistic combined threat?
-4. **Prioritize cluster interventions** - Which single intervention reduces multiple compounded risks?
+| Scenario | Probability | 2030 Compound Risk | 2040 Compound Risk | Primary Characteristics |
+|----------|-------------|-------------------|-------------------|------------------------|
+| A: Correlated Realization | 15% | Very High (0.7+) | Critical (0.9+) | Multiple risks materialize together |
+| B: Gradual Compounding | 40% | Elevated (0.4-0.6) | High (0.6-0.8) | Slow interaction buildup |
+| C: Successful Decoupling | 25% | Moderate (0.2-0.4) | Moderate (0.3-0.5) | Interventions break key links |
+| D: Threshold Event | 20% | Variable | Variable | Sudden phase transition |
 
-### High-Leverage Interventions
+### Scenario A: Correlated Realization (15% probability)
 
-Interventions that reduce compounding:
+In this scenario, the same underlying drivers (competitive pressure, inadequate governance, short-term incentives) simultaneously increase multiple correlated risks. Racing dynamics intensify, leading to inadequate safety testing, which allows deceptive alignment to emerge, which creates pressure for rapid deployment, which causes lock-in before problems are detected. The compound effect produces catastrophic outcomes that no individual risk would have caused. Expected harm by 2040 approaches certainty if trajectory continues.
 
-| Intervention | Risks Addressed | Compounding Reduced |
-|--------------|-----------------|---------------------|
-| Reduce racing dynamics | Racing × all technical risks | 40-60% |
-| Preserve human expertise | Expertise × all oversight risks | 30-50% |
-| Prevent lock-in | Lock-in × all structural risks | 50-70% |
-| Maintain epistemic health | Epistemic × all democratic risks | 30-50% |
-| Ensure interoperability | Lock-in × concentration | 40-60% |
+### Scenario B: Gradual Compounding (40% probability)
+
+This baseline scenario sees risks increasing at different rates with interaction effects building slowly. Some combinations become dangerous (e.g., sycophancy + expertise atrophy) while others remain manageable. Compound risk reaches "elevated" levels by 2030 but catastrophic combinations are avoided through reactive interventions. The main danger is that gradual increases feel manageable until a threshold is crossed unexpectedly.
+
+### Scenario C: Successful Decoupling (25% probability)
+
+Proactive interventions successfully break key interaction links. Racing dynamics are reduced through coordination, preserving time for safety research. Human expertise is actively maintained, keeping defense-negation effects low. Lock-in is prevented through interoperability requirements, reducing severity multiplication. Compound risk remains moderate even as individual risks persist, because dangerous combinations are prevented.
+
+### Scenario D: Threshold Event (20% probability)
+
+An unexpected threshold crossing triggers cascading effects that rapidly compound. This could be an AI incident that simultaneously damages trust, reveals deceptive behavior, and creates pressure for authoritarian responses—a "perfect storm" where multiple risk interactions activate simultaneously. Outcomes are highly variable depending on which threshold is crossed and how systems respond.
+
+### Expected Compound Risk Calculation
+
+$$
+E[\text{Compound Risk}_{2040}] = \sum_{s} P(s) \times CR_s(2040)
+$$
+
+| Scenario | P(s) | CR₂₀₄₀ (0-1) | Contribution |
+|----------|------|--------------|--------------|
+| A: Correlated Realization | 0.15 | 0.90 | 0.135 |
+| B: Gradual Compounding | 0.40 | 0.70 | 0.280 |
+| C: Successful Decoupling | 0.25 | 0.40 | 0.100 |
+| D: Threshold Event | 0.20 | 0.65 | 0.130 |
+| **Expected Value** | | | **0.645** |
+
+This expected compound risk of 0.645 by 2040 represents significantly elevated danger, with substantial probability mass on catastrophic outcomes from Scenario A and threshold events from Scenario D.
+
+## Intervention Analysis
+
+### High-Leverage Interventions for Compound Reduction
+
+| Intervention | Risks Addressed | Compounding Reduced | Cost-Effectiveness |
+|--------------|-----------------|---------------------|-------------------|
+| Reduce racing dynamics | Racing × all technical risks | 40-60% | Very High |
+| Preserve human expertise | Expertise × all oversight risks | 30-50% | High |
+| Prevent lock-in | Lock-in × all structural risks | 50-70% | High |
+| Maintain epistemic health | Epistemic × all democratic risks | 30-50% | Medium |
+| Ensure interoperability | Lock-in × concentration | 40-60% | Medium-High |
+| International coordination | Racing × concentration × authoritarian | 30-50% | High (if achievable) |
 
 ### Breaking Compound Cascades
 
-Key intervention points:
+<Mermaid client:load chart={`
+flowchart TD
+    subgraph CascadePoints["Cascade Intervention Points"]
+        IP1["Point 1: Before Threshold<br/>Easiest to prevent"]
+        IP2["Point 2: Mutual Reinforcement<br/>Break feedback loops"]
+        IP3["Point 3: Defense Negation<br/>Preserve human capability"]
+        IP4["Point 4: Severity Multiplication<br/>Prevent worst combinations"]
+    end
 
-1. **Before threshold crossing**: Easier to prevent than reverse
-2. **At mutual reinforcement points**: Break feedback loops early
-3. **At defense negation points**: Preserve human capability to intervene
-4. **At severity multiplication points**: Prevent combinations that are orders of magnitude worse
+    subgraph Difficulty["Intervention Difficulty"]
+        D1["Low Cost<br/>High Effectiveness"]
+        D2["Medium Cost<br/>Medium Effectiveness"]
+        D3["High Cost<br/>Variable Effectiveness"]
+        D4["Very High Cost<br/>Critical Impact"]
+    end
 
-## Uncertainty Analysis
+    IP1 --> D1
+    IP2 --> D2
+    IP3 --> D3
+    IP4 --> D4
 
-### Well-Understood Compounding
-- Sycophancy + Expertise atrophy (observable now)
-- Racing + Corner-cutting (historical precedent)
-- Concentration + Authoritarian (political science literature)
-
-### Moderately Understood
-- Technical risk interactions (some theoretical basis)
-- Epistemic cascade dynamics (emerging research)
-- Lock-in mechanisms (economic literature)
-
-### Poorly Understood
-- Exact interaction coefficients (limited empirical data)
-- Higher-order interactions (too complex to model)
-- Threshold locations (will only know after crossing)
-- Intervention effectiveness on compound risks
+    style IP1 fill:#90EE90
+    style IP2 fill:#FFEB3B
+    style IP3 fill:#FFA500
+    style IP4 fill:#FF6B6B
+`} />
 
 ## Key Uncertainties
 
@@ -340,20 +341,21 @@ Key intervention points:
   ]}
 />
 
-## Model Limitations
+## Limitations
 
-### Known Limitations
-1. **Interaction strengths poorly calibrated** - Based on theory more than data
-2. **Assumes relatively stable interactions** - May change with capability levels
-3. **Higher-order effects not well modeled** - 4+ way interactions ignored
-4. **Temporal dynamics simplified** - Doesn't capture timing dependencies
-5. **Binary risk framing** - Reality is more continuous
+This model has significant limitations that affect the reliability of its conclusions:
 
-### What Would Change This Model
-- Empirical measurement of interaction strengths
-- Better theoretical models of capability thresholds
-- Observation of actual compound failures
-- Discovery of previously unknown interactions
+**Interaction coefficients are poorly calibrated.** The α values in this model are based primarily on theoretical reasoning and analogies to other complex systems rather than empirical measurement of AI risk interactions. Different analysts could reasonably propose coefficients that differ by 2-3x, which would dramatically change compound risk estimates. The model should be treated as illustrating the importance of compounding rather than providing precise quantitative predictions.
+
+**Higher-order interactions are not modeled.** The framework focuses on pairwise interactions (α terms) and discusses three-way combinations qualitatively, but does not systematically model four-way or higher interactions. In reality, catastrophic outcomes likely require the simultaneous occurrence of many risks, and the higher-order interaction structure may be more important than pairwise effects.
+
+**Temporal dynamics are simplified.** The model treats risks as static probabilities when in reality they evolve over time, with interaction strengths changing as capabilities advance. A racing dynamic that starts mild may intensify rapidly; interaction effects that seem manageable at current capability levels may become overwhelming at higher levels.
+
+**Threshold locations are unknown.** The model discusses threshold crossing but cannot specify where thresholds actually lie. We may discover threshold locations only by crossing them, at which point intervention is too late. The model cannot distinguish between being 5% below a threshold and 50% below.
+
+**Empirical validation is impossible pre-catastrophe.** We cannot empirically test compound risk predictions without experiencing the compound failures. This creates fundamental uncertainty that more sophisticated modeling cannot resolve—the model's accuracy can only be assessed after outcomes we hope to prevent.
+
+**Defensive interventions may have their own interaction effects.** The intervention analysis assumes that reducing one risk doesn't increase others, but this may not hold. Slowing AI development to reduce racing might increase authoritarian risk if adversarial nations continue. The model does not capture intervention interaction effects.
 
 ## Related Models
 

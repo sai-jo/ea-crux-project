@@ -5,12 +5,49 @@ interface MermaidProps {
   chart: string;
 }
 
-// Initialize mermaid with settings
+// Initialize mermaid with settings optimized for readability
 mermaid.initialize({
   startOnLoad: false,
-  theme: 'dark',
+  theme: 'base',
   securityLevel: 'loose',
   fontFamily: 'inherit',
+  themeVariables: {
+    // Primary colors - good contrast
+    primaryColor: '#e8f4fc',
+    primaryTextColor: '#1a1a2e',
+    primaryBorderColor: '#4a90d9',
+
+    // Secondary colors
+    secondaryColor: '#f0f7e6',
+    secondaryTextColor: '#1a1a2e',
+    secondaryBorderColor: '#6b8e23',
+
+    // Tertiary colors
+    tertiaryColor: '#fff3e0',
+    tertiaryTextColor: '#1a1a2e',
+    tertiaryBorderColor: '#e67e22',
+
+    // Line and text colors
+    lineColor: '#5c6370',
+    textColor: '#1a1a2e',
+
+    // Node defaults
+    nodeBorder: '#4a90d9',
+    nodeTextColor: '#1a1a2e',
+
+    // Background
+    mainBkg: '#f8f9fa',
+
+    // Subgraph styling
+    clusterBkg: '#f0f4f8',
+    clusterBorder: '#8b9dc3',
+
+    // State diagram colors
+    labelColor: '#1a1a2e',
+
+    // Flowchart specific
+    edgeLabelBackground: '#ffffff',
+  },
 });
 
 export function Mermaid({ chart }: MermaidProps) {
