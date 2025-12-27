@@ -42,7 +42,6 @@ export default defineConfig({
                       { label: 'Worldviews', collapsed: true, autogenerate: { directory: 'understanding-ai-risk/worldviews' } },
                       { label: 'Key Debates', collapsed: true, autogenerate: { directory: 'understanding-ai-risk/debates' } },
                       { label: 'Arguments', collapsed: true, autogenerate: { directory: 'understanding-ai-risk/arguments' } },
-                      { label: 'Reasoning Challenges', collapsed: true, autogenerate: { directory: 'understanding-ai-risk/reasoning' } },
                   ],
               },
               {
