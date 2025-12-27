@@ -162,6 +162,7 @@ function buildPagesRegistry() {
           filePath: relative(CONTENT_DIR, fullPath),
           title: fm.title || id.replace(/-/g, ' '),
           quality: fm.quality ? parseInt(fm.quality) : null,
+          importance: fm.importance ? parseInt(fm.importance) : null,
           lastUpdated: fm.lastUpdated || fm.lastEdited || null,
           llmSummary: fm.llmSummary || null,
           description: fm.description || null,

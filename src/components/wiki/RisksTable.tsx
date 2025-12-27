@@ -16,6 +16,7 @@ interface Risk {
   maturity?: string
   category: string
   relatedSolutions: RiskTableSolution[]
+  importance: number | null
 }
 
 interface RisksTableProps {
@@ -33,6 +34,24 @@ function Badge({ children, variant = "default" }: { children: React.ReactNode; v
   return (
     <span className={cn("inline-block px-2 py-0.5 rounded text-xs font-medium", variants[variant])}>
       {children}
+    </span>
+  )
+}
+
+function RatingCell({ value }: { value: number | null }) {
+  if (value === null) return <span className="text-muted-foreground">—</span>
+
+  const colorClass = value >= 4
+    ? "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300"
+    : value >= 3
+    ? "bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-300"
+    : value >= 2
+    ? "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300"
+    : "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300"
+
+  return (
+    <span className={cn("inline-flex items-center justify-center w-6 h-6 rounded text-sm font-medium", colorClass)}>
+      {value}
     </span>
   )
 }
@@ -96,6 +115,16 @@ function SolutionsCell({ solutions }: { solutions: RiskTableSolution[] }) {
 }
 
 const columns: ColumnDef<Risk>[] = [
+  {
+    accessorKey: "importance",
+    header: ({ column }) => <SortableHeader column={column}>Imp</SortableHeader>,
+    cell: ({ row }) => <RatingCell value={row.getValue("importance")} />,
+    sortingFn: (rowA, rowB) => {
+      const a = rowA.getValue("importance") as number | null
+      const b = rowB.getValue("importance") as number | null
+      return (a ?? -1) - (b ?? -1)
+    },
+  },
   {
     accessorKey: "title",
     header: ({ column }) => <SortableHeader column={column}>Risk</SortableHeader>,

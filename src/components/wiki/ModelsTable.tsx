@@ -9,6 +9,7 @@ interface ModelRow {
   id: string
   title: string
   href: string
+  importance: number | null
   modelType: string | null
   novelty: number | null
   rigor: number | null
@@ -32,6 +33,16 @@ function TypeBadge({ type }: { type: string | null }) {
 }
 
 const columns: ColumnDef<ModelRow>[] = [
+  {
+    accessorKey: "importance",
+    header: ({ column }) => <SortableHeader column={column}>Imp</SortableHeader>,
+    cell: ({ row }) => <RatingCell value={row.getValue("importance")} />,
+    sortingFn: (rowA, rowB) => {
+      const a = rowA.getValue("importance") as number | null
+      const b = rowB.getValue("importance") as number | null
+      return (a ?? -1) - (b ?? -1)
+    },
+  },
   {
     accessorKey: "title",
     header: ({ column }) => <SortableHeader column={column}>Model</SortableHeader>,
@@ -87,6 +98,7 @@ export function ModelsTable() {
         id: model.id,
         title: model.title,
         href: getEntityHref(model.id, model.type),
+        importance: page?.importance ?? null,
         modelType,
         novelty: page?.ratings?.novelty ?? null,
         rigor: page?.ratings?.rigor ?? null,

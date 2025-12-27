@@ -33,6 +33,7 @@ interface InfoBoxProps {
   title?: string;
   image?: string;
   website?: string;
+  importance?: number;
 
   // Lab-specific
   founded?: string;
@@ -141,11 +142,21 @@ const maturityConfig: Record<string, { label: string; color: string }> = {
   mature: { label: 'Mature', color: '#22c55e' },
 };
 
+// Importance uses purple color scheme (matching PageIndex)
+const importanceColors: Record<number, string> = {
+  5: '#7c3aed', // purple-600
+  4: '#8b5cf6', // purple-500
+  3: '#6366f1', // indigo-500
+  2: '#3b82f6', // blue-500
+  1: '#94a3b8', // slate-400
+};
+
 export function InfoBox({
   type,
   title,
   image,
   website,
+  importance,
   founded,
   location,
   headcount,
@@ -174,6 +185,11 @@ export function InfoBox({
   const typeInfo = typeLabels[type] || defaultTypeInfo;
 
   const fields: { label: string; value: string }[] = [];
+
+  // Add importance first if present (universal field)
+  if (importance !== undefined) {
+    fields.push({ label: 'Importance', value: importance.toString() });
+  }
 
   // Add fields based on type
   if (founded) fields.push({ label: 'Founded', value: founded });
@@ -232,7 +248,9 @@ export function InfoBox({
         {fields.map((field, index) => {
           // Determine styling based on field type
           let valueStyle: React.CSSProperties | undefined;
-          if (field.label === 'Severity' && severity) {
+          if (field.label === 'Importance' && importance) {
+            valueStyle = { color: importanceColors[importance] || 'inherit', fontWeight: 600 };
+          } else if (field.label === 'Severity' && severity) {
             valueStyle = { color: severityColors[severity] || 'inherit', fontWeight: 600 };
           } else if (field.label === 'Category' && catColor) {
             valueStyle = { color: catColor, fontWeight: 500 };

@@ -42,6 +42,7 @@ export interface Page {
   filePath: string;
   title: string;
   quality: number | null;
+  importance: number | null;
   lastUpdated: string | null;
   llmSummary: string | null;
   description: string | null;
@@ -468,6 +469,7 @@ export interface RiskTableRow {
   category: string;
   relatedSolutions: RiskTableSolution[];
   customFields?: { label: string; value: string }[];
+  importance: number | null;
 }
 
 /**
@@ -579,6 +581,9 @@ export function getRisksForTable(): RiskTableRow[] {
       }
     }
 
+    // Get importance from page data
+    const page = getPageById(e.id);
+
     return {
       id: e.id,
       title: e.title,
@@ -589,6 +594,7 @@ export function getRisksForTable(): RiskTableRow[] {
       category,
       relatedSolutions: riskToSolutions[e.id] || [],
       customFields: e.customFields,
+      importance: page?.importance ?? null,
     };
   });
 }

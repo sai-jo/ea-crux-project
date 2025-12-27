@@ -11,6 +11,7 @@ interface PageRow {
   title: string
   category: string
   quality: number | null
+  importance: number | null
   lastUpdated: string | null
 }
 
@@ -21,17 +22,29 @@ interface PageIndexProps {
   title?: string
 }
 
-function QualityCell({ quality }: { quality: number | null }) {
-  if (quality === null) return <span className="text-muted-foreground">—</span>
+function RatingCell({ value, colorScheme = "quality" }: { value: number | null; colorScheme?: "quality" | "importance" }) {
+  if (value === null) return <span className="text-muted-foreground">—</span>
+
+  const qualityColors = {
+    high: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300",
+    medium: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300",
+    low: "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300",
+    minimal: "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300",
+  }
+
+  const importanceColors = {
+    high: "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300",
+    medium: "bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-300",
+    low: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300",
+    minimal: "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300",
+  }
+
+  const colors = colorScheme === "importance" ? importanceColors : qualityColors
+  const colorClass = value >= 4 ? colors.high : value >= 3 ? colors.medium : value >= 2 ? colors.low : colors.minimal
+
   return (
-    <span className={cn(
-      "inline-flex items-center justify-center w-6 h-6 rounded text-sm font-medium",
-      quality >= 4 ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300" :
-      quality >= 3 ? "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300" :
-      quality >= 2 ? "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300" :
-      "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300"
-    )}>
-      {quality}
+    <span className={cn("inline-flex items-center justify-center w-6 h-6 rounded text-sm font-medium", colorClass)}>
+      {value}
     </span>
   )
 }
@@ -58,9 +71,19 @@ function CategoryBadge({ category }: { category: string }) {
 
 const columns: ColumnDef<PageRow>[] = [
   {
+    accessorKey: "importance",
+    header: ({ column }) => <SortableHeader column={column}>Imp</SortableHeader>,
+    cell: ({ row }) => <RatingCell value={row.getValue("importance")} colorScheme="importance" />,
+    sortingFn: (rowA, rowB) => {
+      const a = rowA.getValue("importance") as number | null
+      const b = rowB.getValue("importance") as number | null
+      return (a ?? -1) - (b ?? -1)
+    },
+  },
+  {
     accessorKey: "quality",
-    header: ({ column }) => <SortableHeader column={column}>Quality</SortableHeader>,
-    cell: ({ row }) => <QualityCell quality={row.getValue("quality")} />,
+    header: ({ column }) => <SortableHeader column={column}>Qual</SortableHeader>,
+    cell: ({ row }) => <RatingCell value={row.getValue("quality")} colorScheme="quality" />,
     sortingFn: (rowA, rowB) => {
       const a = rowA.getValue("quality") as number | null
       const b = rowB.getValue("quality") as number | null
@@ -95,6 +118,7 @@ export function PageIndex({ showSearch = true, filterCategory, maxItems, title }
       title: p.title,
       category: p.category,
       quality: p.quality,
+      importance: p.importance,
       lastUpdated: p.lastUpdated,
     }))
 
@@ -111,15 +135,29 @@ export function PageIndex({ showSearch = true, filterCategory, maxItems, title }
 
   const stats = React.useMemo(() => {
     const byQuality: Record<number, number> = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 }
-    let noRating = 0
+    const byImportance: Record<number, number> = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 }
+    let noQuality = 0
+    let noImportance = 0
+
     pages.forEach(p => {
       if (p.quality !== null && p.quality >= 1 && p.quality <= 5) {
         byQuality[p.quality]++
       } else {
-        noRating++
+        noQuality++
+      }
+      if (p.importance !== null && p.importance >= 1 && p.importance <= 5) {
+        byImportance[p.importance]++
+      } else {
+        noImportance++
       }
     })
-    return { total: pages.length, byQuality, noRating }
+
+    const withImportance = pages.length - noImportance
+    const avgImportance = withImportance > 0
+      ? (Object.entries(byImportance).reduce((sum, [k, v]) => sum + parseInt(k) * v, 0) / withImportance).toFixed(1)
+      : "—"
+
+    return { total: pages.length, byQuality, byImportance, noQuality, noImportance, withImportance, avgImportance }
   }, [])
 
   return (
@@ -132,22 +170,17 @@ export function PageIndex({ showSearch = true, filterCategory, maxItems, title }
           <span className="text-2xl font-bold">{stats.total}</span>
           <span className="text-xs text-muted-foreground uppercase tracking-wide">Total</span>
         </div>
-        {[5, 4, 3, 2, 1].map(q => (
-          <div key={q} className={cn(
-            "flex flex-col border-l-2 pl-3",
-            q === 5 ? "border-l-emerald-500" :
-            q === 4 ? "border-l-emerald-400" :
-            q === 3 ? "border-l-blue-500" :
-            q === 2 ? "border-l-amber-500" :
-            "border-l-slate-400"
-          )}>
-            <span className="text-2xl font-bold">{stats.byQuality[q]}</span>
-            <span className="text-xs text-muted-foreground uppercase tracking-wide">{q} Star</span>
-          </div>
-        ))}
-        <div className="flex flex-col border-l-2 border-l-slate-300 pl-3">
-          <span className="text-2xl font-bold">{stats.noRating}</span>
-          <span className="text-xs text-muted-foreground uppercase tracking-wide">No Rating</span>
+        <div className="flex flex-col border-l-2 border-l-purple-500 pl-3">
+          <span className="text-2xl font-bold">{stats.withImportance}</span>
+          <span className="text-xs text-muted-foreground uppercase tracking-wide">With Importance</span>
+        </div>
+        <div className="flex flex-col border-l-2 border-l-purple-400 pl-3">
+          <span className="text-2xl font-bold">{stats.avgImportance}</span>
+          <span className="text-xs text-muted-foreground uppercase tracking-wide">Avg Importance</span>
+        </div>
+        <div className="flex flex-col border-l-2 border-l-emerald-500 pl-3">
+          <span className="text-2xl font-bold">{stats.total - stats.noQuality}</span>
+          <span className="text-xs text-muted-foreground uppercase tracking-wide">With Quality</span>
         </div>
       </div>
 
@@ -156,7 +189,7 @@ export function PageIndex({ showSearch = true, filterCategory, maxItems, title }
         columns={columns}
         data={data}
         searchPlaceholder="Search pages..."
-        defaultSorting={[{ id: "quality", desc: true }]}
+        defaultSorting={[{ id: "importance", desc: true }]}
       />
     </div>
   )
