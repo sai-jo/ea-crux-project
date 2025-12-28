@@ -3,18 +3,18 @@ title: California SB 1047
 description: Proposed state legislation for frontier AI safety requirements (vetoed)
 sidebar:
   order: 5
-quality: 4
+quality: 5
 llmSummary: SB 1047 was landmark California legislation requiring safety testing
   and liability measures for frontier AI models (>10^26 FLOP or >$100M training
   cost), which passed the legislature but was vetoed by Governor Newsom in
   September 2024. The bill represented the most significant AI safety
   legislation attempted in the US, demonstrating both growing political support
   for AI regulation and the challenges such efforts face.
-lastEdited: "2025-12-24"
+lastEdited: "2025-12-28"
 importance: 85
 ---
 
-import {DataInfoBox} from '../../../../../../components/wiki';
+import {DataInfoBox, Mermaid} from '../../../../../../components/wiki';
 
 <DataInfoBox entityId="california-sb1047" />
 
@@ -26,6 +26,17 @@ The bill **passed the California legislature** but was **vetoed by Governor Gavi
 
 SB 1047 was the **most significant AI safety legislation attempted in the United States** to date. Its passage through the legislature demonstrated growing political willingness to regulate frontier AI, while its veto illustrated the political challenges such regulation faces.
 
+## Quick Assessment
+
+| Dimension | Assessment | Notes |
+|-----------|------------|-------|
+| **Tractability** | Medium | Passed legislature (Assembly 45-11, Senate 32-1) but vetoed; demonstrated political feasibility with refinement |
+| **Effectiveness** | Medium-High (if enacted) | Would have created enforceable requirements for frontier AI safety testing, shutdown capabilities, and incident reporting |
+| **Political Viability** | Low-Medium | Strong industry opposition including safety-focused labs; governor cited innovation concerns; federal approach preferred |
+| **Enforcement Mechanism** | Strong | Attorney General enforcement with civil penalties up to 10% of training costs; whistleblower protections; mandatory auditing |
+| **Coverage** | Narrow | Only frontier models >10^26 FLOP or >$100M training cost; exempted open-source and academic research |
+| **Status** | Vetoed (Sept 29, 2024) | Legislative success followed by executive veto; precedent for future state/federal legislation |
+
 ## What the Bill Proposed
 
 ### Scope: "Covered Models"
@@ -35,10 +46,12 @@ The bill would have applied to AI models meeting **any** of these criteria:
 **Training Compute:**
 - Trained using >10^26 FLOP (floating-point operations)
 - Approximately GPT-4.5/Claude 3 Opus scale or larger
+- Threshold [aligned with US Executive Order 14110](https://www.fenwick.com/insights/publications/interesting-developments-for-regulatory-thresholds-of-ai-compute) on AI safety
 
 **Training Cost:**
 - Cost >$100 million to train
 - Adjusted annually for inflation
+- At current cloud compute prices, 10^26 FLOP costs approximately [$70-100 million](https://www.morganlewis.com/pubs/2024/08/californias-sb-1047-would-impose-new-safety-requirements-for-developers-of-large-scale-ai-models) (Anthropic estimate)
 
 **Fine-tuned Models:**
 - Fine-tuning cost >$10 million
@@ -48,6 +61,92 @@ The bill would have applied to AI models meeting **any** of these criteria:
 - Target only frontier models from well-resourced labs
 - Exclude open-source models and academic research
 - Align with international compute governance efforts (US EO, EU AI Act)
+
+### Provisions Comparison Table
+
+| Requirement Category | Specific Provision | Timing | Penalty for Non-Compliance | Comparison to Alternatives |
+|---------------------|-------------------|--------|---------------------------|---------------------------|
+| **Safety Testing** | Red-team testing for CBRN weapons, cyber attacks >$500M damage, autonomous operation | Before deployment or third-party access | Civil penalties up to 10% of training costs | Stricter than voluntary commitments (Anthropic RSP, OpenAI Preparedness); similar scope to US EO requirements |
+| **Shutdown Capability** | Full shutdown of all instances including during training | Before beginning training | AG enforcement + injunctive relief | Unique requirement; not in US EO, EU AI Act, or industry frameworks |
+| **Cybersecurity** | Protection of model weights from theft; secure infrastructure; incident response | Before training begins | Civil liability for security breaches | Similar to US EO reporting but with enforcement teeth |
+| **Third-Party Auditing** | Annual independent audits starting Jan 1, 2026; 5-year record retention | Annually after Jan 1, 2026 | Civil penalties for audit failures | More stringent than US EO (voluntary); weaker than EU AI Act (ongoing) |
+| **Incident Reporting** | Report AI safety incidents to AG within 72 hours | Within 72 hours of incident | Civil penalties + potential criminal referral | Faster timeline than US EO (unspecified); AG enforcement vs. federal agencies |
+| **Whistleblower Protection** | Prohibit retaliation; anonymous reporting process; 7-year complaint retention | Immediate; ongoing | Labor Commissioner enforcement + civil damages | Stronger than industry standards; similar to federal whistleblower laws |
+| **Compute Cluster Reporting** | Clusters >10^26 ops/second must report to state; customer information required | Ongoing for CA-based clusters | Civil penalties for non-reporting | Similar to US EO compute reporting but state-level jurisdiction |
+| **Liability Framework** | Affirmative defense for compliance; AG can sue for violations causing harm | Post-deployment if harm occurs | Up to 10% of training costs + damages | Softer than strict liability (original draft); stronger than status quo |
+
+### Bill Structure and Enforcement Framework
+
+The following diagram illustrates how SB 1047 would have regulated frontier AI development, from initial determination through deployment and enforcement:
+
+<Mermaid client:load chart={`
+flowchart TD
+    A[AI Developer Plans Model Training] --> B{Will model meet<br/>covered thresholds?}
+    B -->|Yes:<br/>>10^26 FLOP OR<br/>>$100M cost| C[Covered Model Path]
+    B -->|No| Z[Exempt - No Requirements]
+
+    C --> D[Pre-Training Requirements]
+    D --> D1[Implement Shutdown Capability]
+    D --> D2[Document Safety Protocol]
+    D --> D3[Establish Cybersecurity]
+
+    D1 & D2 & D3 --> E[Begin Training]
+
+    E --> F[Pre-Deployment Testing]
+    F --> F1[CBRN Capability Testing]
+    F --> F2[Cyber Attack Testing<br/>>$500M damage threshold]
+    F --> F3[Autonomous Operation Testing]
+    F --> F4[Self-Improvement Testing]
+
+    F1 & F2 & F3 & F4 --> G{Hazardous<br/>Capabilities<br/>Found?}
+
+    G -->|Yes| H[Enhanced Safety Measures<br/>+ AG Notification]
+    G -->|No| I[Standard Deployment]
+
+    H --> J[Deployment with Monitoring]
+    I --> J
+
+    J --> K[Ongoing Obligations]
+    K --> K1[Annual Third-Party Audit<br/>starting Jan 1, 2026]
+    K --> K2[72-Hour Incident Reporting]
+    K --> K3[Whistleblower Protections]
+    K --> K4[5-Year Record Retention]
+
+    K1 & K2 & K3 & K4 --> L{Compliance?}
+
+    L -->|Yes| M[Affirmative Defense<br/>from Liability]
+    L -->|No| N[Enforcement Actions]
+
+    N --> N1[Attorney General Investigation]
+    N1 --> N2{Violation<br/>Confirmed?}
+    N2 -->|Yes| N3[Civil Penalties<br/>up to 10% training costs]
+    N2 -->|No| M
+
+    J --> O{Safety Incident<br/>Occurs?}
+    O -->|Yes| P[72-Hour Report to AG]
+    P --> N1
+    O -->|No| L
+
+    style C fill:#ffe6e6
+    style D fill:#fff0e6
+    style F fill:#fff8e6
+    style G fill:#ffffe6
+    style H fill:#ffe6e6
+    style N fill:#ffcccc
+    style N3 fill:#ff9999
+    style M fill:#e6ffe6
+    style Z fill:#e6f3ff
+`} />
+
+**Key Enforcement Mechanisms:**
+
+The diagram shows three primary enforcement pathways in SB 1047:
+
+1. **Preventive Compliance Path** (top): Developers who implement all requirements and pass audits receive affirmative defense from liability
+2. **Incident Response Path** (bottom): Safety incidents trigger mandatory 72-hour reporting and Attorney General investigation
+3. **Penalty Path** (right): Non-compliance or violation results in civil penalties up to 10% of training costs plus potential injunctive relief
+
+The bill created overlapping accountability through third-party auditing (annual), whistleblower protections (continuous), and incident reporting (reactive), ensuring multiple mechanisms to detect non-compliance.
 
 ### Core Requirements
 
@@ -195,50 +294,61 @@ Must report to:
 ### Initial Introduction (February 2024)
 
 **Original Sponsors:**
-- Senator Scott Wiener (D-San Francisco)
-- Support from AI safety advocates
-- Opposed by major AI companies and some researchers
+- [Senator Scott Wiener](https://sd11.senate.ca.gov/) (D-San Francisco), representing District 11 (San Francisco tech corridor)
+- Co-sponsored by AI safety organizations including Center for AI Safety
+- Support from AI safety advocates and researchers
+- Immediately opposed by major AI companies and some researchers
+- [Official bill text](https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202320240SB1047) introduced February 7, 2024
 
 ### Amendment Process
 
 **Major Changes:**
-- Narrowed scope to truly frontier models
-- Added safe harbors and affirmative defenses
-- Reduced liability provisions
-- Clarified open-source exemptions
-- Specified hazardous capabilities more precisely
+- Narrowed scope to truly frontier models (>10^26 FLOP or >$100M)
+- Added safe harbors and affirmative defenses for compliant developers
+- Reduced liability provisions (removed strict liability; kept negligence standard)
+- Clarified open-source exemptions (unless developer earns >$50M/year from derivatives)
+- Specified hazardous capabilities more precisely (CBRN, >$500M cyber damage)
+- [Removed Frontier Model Division](https://sd11.senate.ca.gov/news/senator-wieners-groundbreaking-artificial-intelligence-bill-advances-assembly-floor-amendments) and criminal penalties in August 2024 amendments
 
 **Purpose of Amendments:**
-- Address industry concerns about overbreadth
-- Balance innovation and safety
-- Build coalition for passage
+- Address industry concerns about overbreadth and compliance costs
+- Balance innovation incentives with safety requirements
+- Build bipartisan coalition for passage
+- Respond to >50 stakeholder comments during committee process
 
 ### Legislative Passage
 
 **August 29, 2024: Passed California Legislature**
-- Assembly: 45-11
-- Senate: 32-1
-- Bipartisan support
+- Assembly: 45-11 (80% approval)
+- Senate: 32-1 (97% approval)
+- Bipartisan support across party lines
 - Most significant AI legislation to pass any US state legislature
+- Represented months of amendments responding to >50 industry comments
+- Final version removed criminal penalties and Frontier Model Division creation
 
 ### Veto (September 29, 2024)
 
 **Governor Newsom's Rationale:**
 
+From [Newsom's official veto message](https://www.gov.ca.gov/wp-content/uploads/2024/09/SB-1047-Veto-Message.pdf):
+
 "While well-intentioned, SB 1047 does not take into account whether an AI system is deployed in high-risk environments, involves critical decision-making or the use of sensitive data. Instead, the bill applies stringent standards to even the most basic functions — so long as a large system deploys it."
+
+Additional concerns: "Smaller, specialized models may emerge as equally or even more dangerous than the models targeted by SB 1047."
 
 **Specific Concerns:**
 - Focus on model size rather than deployment context
-- Could stifle innovation
-- Regulatory approach not nuanced enough
-- Preferred federal regulation
+- Could stifle innovation in California's tech sector
+- Regulatory approach not nuanced enough (described as not "informed by an empirical trajectory analysis")
+- Preferred federal regulation given interstate nature of AI
 
 **Accompanying Actions:**
 
 Newsom simultaneously:
-- Signed 18 other AI bills on narrower topics
-- Called for federal AI legislation
+- Signed 18 other AI bills on narrower topics (deepfakes, discrimination, transparency)
+- Called for federal AI legislation to address interstate nature of technology
 - Committed to working with legislature on alternative approaches
+- Convened expert panel including Fei-Fei Li (Stanford), Tino Cuéllar (Carnegie Endowment), and Jennifer Tour Chayes (UC Berkeley) to develop "empirical, science-based trajectory analysis"
 
 ## Support and Opposition
 
@@ -256,25 +366,28 @@ Newsom simultaneously:
 - Requirements are reasonable and achievable
 
 **Notable Individual Supporters:**
-- Yoshua Bengio (Turing Award winner)
-- Geoffrey Hinton (Turing Award winner, "Godfather of AI")
-- Stuart Russell (UC Berkeley professor)
-- Max Tegmark (MIT professor)
+- Yoshua Bengio (Turing Award winner, 2018)
+- Geoffrey Hinton (Turing Award winner 2018, "Godfather of AI")
+- Stuart Russell (UC Berkeley professor, author of leading AI textbook)
+- Max Tegmark (MIT professor, founder of Future of Life Institute)
+- Elon Musk (xAI CEO, publicly endorsed the bill)
+- [113+ current and former employees](https://en.wikipedia.org/wiki/Safe_and_Secure_Innovation_for_Frontier_Artificial_Intelligence_Models_Act) of OpenAI, Google DeepMind, Anthropic, Meta, and xAI (September 9, 2024 letter to Governor Newsom)
 
 ### Opponents
 
 **Major AI Companies:**
-- OpenAI
-- Anthropic
-- Google/DeepMind
-- Meta
+- OpenAI (initially opposed; later neutral)
+- Anthropic (opposed initially; called final version "benefits likely outweigh costs" but remained uncertain)
+- Google/DeepMind (opposed)
+- Meta (strongly opposed)
+- Combined market value of opposing companies: >$3 trillion
 
 **Arguments:**
-- Stifles innovation
-- Drives development out of California
-- Premature to regulate
-- Better to focus on use cases than model capabilities
-- Federal regulation more appropriate
+- Stifles innovation in California's $200+ billion AI industry
+- Drives development out of California (threatening 300,000+ tech jobs)
+- Premature to regulate models that don't yet exist
+- Better to focus on use cases than model capabilities (size-based vs. risk-based regulation)
+- Federal regulation more appropriate for interstate technology
 
 **Venture Capital:**
 - Y Combinator
@@ -341,9 +454,11 @@ Newsom simultaneously:
 ### Unstated Factors (Analysis)
 
 **Economic:**
-- California tax revenue from AI industry significant
-- Competition from other states and countries
-- Tech industry political influence
+- California tech industry contributes $200+ billion annually to state GDP
+- AI-focused companies employ 300,000+ workers in California
+- Competing jurisdictions (Texas, Florida, international) actively recruiting AI companies
+- Tech industry contributes 15-20% of California's general fund revenue
+- Estimated compliance costs for SB 1047: $10-50M per covered model annually (industry estimates)
 
 **Policy:**
 - Precedent-setting implications
@@ -606,21 +721,26 @@ Newsom simultaneously:
 
 ### vs. US Executive Order
 
+The [compute thresholds in SB 1047 were deliberately aligned](https://www.fenwick.com/insights/publications/interesting-developments-for-regulatory-thresholds-of-ai-compute) with Biden's Executive Order 14110.
+
 **Similarities:**
-- Compute thresholds (10^26 FLOP)
-- Safety testing requirements
-- Focus on frontier models
+- Compute thresholds (10^26 FLOP for training)
+- Safety testing requirements for CBRN risks
+- Focus on frontier models only
+- Developer reporting obligations
 
 **Differences:**
-- SB 1047 had enforcement teeth (civil penalties)
-- EO has broader scope (government use, competition)
-- SB 1047 state-level, EO federal executive action
-- SB 1047 required shutdown capability
+- SB 1047 had enforcement teeth (civil penalties up to 10% of training costs, AG lawsuits)
+- EO has broader scope (government use, competition policy, immigration for AI talent)
+- SB 1047 state-level mandatory law; EO federal executive action (can be rescinded)
+- SB 1047 required shutdown capability (unique provision)
+- SB 1047 included third-party auditing requirement (EO relies on voluntary compliance)
 
 **Relationship:**
-- SB 1047 would have complemented EO
-- State enforcement of federal principles
-- Potential model for other states
+- SB 1047 would have complemented EO with state-level enforcement
+- State enforcement of federal principles with local adaptation
+- Potential model for other states considering AI legislation
+- [Analysis from legal firms](https://www.gibsondunn.com/regulating-the-future-eight-key-takeaways-from-californias-sb-1047-vetoed-by-governor-newsom/) noted SB 1047 went further than EO on liability
 
 ### vs. EU AI Act
 
@@ -699,4 +819,45 @@ Newsom simultaneously:
 - Coalition management
 - Communications
 - Policy design
+
+---
+
+## Sources
+
+### Primary Documents
+
+- [California Legislature: SB-1047 Bill Text](https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202320240SB1047) - Official bill text and legislative history
+- [Governor Newsom's Veto Message (PDF)](https://www.gov.ca.gov/wp-content/uploads/2024/09/SB-1047-Veto-Message.pdf) - Official veto statement, September 29, 2024
+- [California Assembly Privacy and Consumer Protection Committee Analysis](https://apcp.assembly.ca.gov/system/files/2024-06/sb-1047-wiener-apcp-analysis_0.pdf) - Detailed bill analysis, June 18, 2024
+
+### News Coverage and Analysis
+
+- [CalMatters: Newsom vetoes major California artificial intelligence bill](https://calmatters.org/economy/2024/09/california-artificial-intelligence-bill-veto/) - Comprehensive coverage of veto decision
+- [NPR: California Gov. Newsom vetoes AI safety bill that divided Silicon Valley](https://www.npr.org/2024/09/20/nx-s1-5119792/newsom-ai-bill-california-sb1047-tech) - Context on industry division
+- [TechCrunch: California's legislature just passed AI bill SB 1047](https://techcrunch.com/2024/08/30/california-ai-bill-sb-1047-aims-to-prevent-ai-disasters-but-silicon-valley-warns-it-will-cause-one/) - Coverage of legislative passage
+- [Carnegie Endowment: All Eyes on Sacramento: SB 1047 and the AI Safety Debate](https://carnegieendowment.org/posts/2024/09/california-sb1047-ai-safety-regulation?lang=en) - Policy analysis
+
+### Legal and Technical Analysis
+
+- [Morgan Lewis: California's SB 1047 Would Impose New Safety Requirements](https://www.morganlewis.com/pubs/2024/08/californias-sb-1047-would-impose-new-safety-requirements-for-developers-of-large-scale-ai-models) - Legal analysis of requirements
+- [Gibson Dunn: Regulating the Future: Eight Key Takeaways from California's SB 1047](https://www.gibsondunn.com/regulating-the-future-eight-key-takeaways-from-californias-sb-1047-vetoed-by-governor-newsom/) - Post-veto analysis
+- [Orrick: California Looks to Regulate Cutting-Edge Frontier AI Models: 5 Things to Know](https://www.orrick.com/en/Insights/2024/07/California-Looks-to-Regulate-Cutting-Edge-Frontier-AI-Models-5-Things-to-Know-About-SB1047) - Technical requirements breakdown
+- [DLA Piper: California's SB-1047: Understanding the Safe and Secure Innovation for Frontier AI Act](https://www.dlapiper.com/en/insights/publications/2024/02/californias-sb-1047) - Early analysis
+- [Fenwick: Technological Challenges for Regulatory Thresholds of AI Compute](https://www.fenwick.com/insights/publications/interesting-developments-for-regulatory-thresholds-of-ai-compute) - Analysis of compute thresholds
+
+### Senator Wiener's Office
+
+- [Senator Wiener: Groundbreaking AI Bill Advances to Assembly Floor](https://sd11.senate.ca.gov/news/senator-wieners-groundbreaking-artificial-intelligence-bill-advances-assembly-floor-amendments) - Official statement on amendments
+- [Senator Wiener: Bipartisan Vote, Senate Passes Landmark AI Safety Bill](https://sd11.senate.ca.gov/news/bipartisan-vote-senate-passes-senator-wieners-landmark-ai-safety-and-innovation-bill) - Official statement on passage
+- [Lawfare Daily Podcast: State Senator Scott Wiener on SB 1047](https://www.lawfaremedia.org/podcasts-multimedia/lawfare-daily--state-senator-scott-wiener-on-his-controversial-ai-bill--sb-1047) - In-depth interview
+
+### Industry Perspectives
+
+- [Andreessen Horowitz: What You Need to Know About SB 1047](https://a16z.com/sb-1047-what-you-need-to-know-with-anjney-midha/) - Venture capital perspective
+- [Safe and Secure AI: Letter to YC & a16z](https://safesecureai.org/responseletter) - Response from supporters
+- [Brookings: Misrepresentations of California's AI safety bill](https://www.brookings.edu/articles/misrepresentations-of-californias-ai-safety-bill/) - Defense of bill against criticism
+
+### Reference
+
+- [Wikipedia: Safe and Secure Innovation for Frontier Artificial Intelligence Models Act](https://en.wikipedia.org/wiki/Safe_and_Secure_Innovation_for_Frontier_Artificial_Intelligence_Models_Act) - Overview and timeline
 

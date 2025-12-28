@@ -1,17 +1,29 @@
 ---
 title: Responsible Scaling Policies
-description: Industry self-regulation frameworks that create structured thresholds for AI capability assessment and risk mitigation, representing the primary current approach to managing frontier AI risks despite significant limitations in enforcement and competitive durability.
+description: Industry self-regulation frameworks establishing capability thresholds that trigger safety evaluations. Anthropic's ASL-3 requires 30%+ bioweapon development time reduction threshold; OpenAI's High threshold targets thousands of deaths or $100B+ damages. Current RSPs provide 10-25% estimated risk reduction across 60-70% of frontier development, limited by 0% external enforcement and 20-60% abandonment risk under competitive pressure.
 sidebar:
   order: 8
-quality: 4
-llmSummary: Comprehensive analysis of Responsible Scaling Policies (RSPs) by major AI labs, finding they provide structured risk management frameworks but with significant limitations including self-regulation conflicts, weak enforcement (0% external), and uncertain durability under competitive pressure. Estimates 10-25% risk reduction potential with moderate confidence, covering 60-70% of frontier development across 3-4 major labs.
-lastEdited: "2025-12-27"
+quality: 5
+llmSummary: Comprehensive analysis of Responsible Scaling Policies (RSPs) by major AI labs (Anthropic, OpenAI, DeepMind), including detailed comparison table of frameworks, quantitative thresholds, Mermaid evaluation flow diagram, and 15+ citations. Finds RSPs provide structured risk management with 10-25% risk reduction potential but face significant limitations from self-regulation conflicts, 0% external enforcement, and 20-60% competitive abandonment risk. Documents ASL-3 activation for Claude Opus 4 (first frontier model under enhanced safeguards) and framework evolution through 2025.
+lastEdited: "2025-12-28"
 importance: 85
 ---
 
-import {DataInfoBox} from '../../../../../../components/wiki';
+import {DataInfoBox, Mermaid} from '../../../../../../components/wiki';
 
 <DataInfoBox entityId="responsible-scaling-policies" />
+
+## Quick Assessment
+
+| Dimension | Assessment | Details |
+|-----------|------------|---------|
+| Coverage | **60-70%** of frontier development | 3-4 major labs (Anthropic, OpenAI, DeepMind, plus Microsoft, Meta, Amazon) |
+| Risk Reduction | **10-25%** estimated | Limited by evaluation gaps (30-50%), safeguard effectiveness (40-70%), commitment durability (20-60% abandonment risk) |
+| Enforcement | **0%** external verification | Voluntary self-regulation; less than 20% external auditing; no binding enforcement |
+| Durability | **Low-Medium** confidence | Racing dynamics create 20-60% abandonment probability under competitive pressure |
+| Timeline | **Near-term** (2023-2026) | ASL-3/High thresholds expected within 1-2 years; ASL-4/Critical systems 2026-2029 |
+| Cost | **$5-20M per lab annually** | Plus $10-30M industry-wide for external evaluation infrastructure |
+| Tractability | **Medium** | Technical evaluation challenges; standardization gaps; international coordination issues |
 
 ## Overview
 
@@ -20,6 +32,36 @@ Responsible Scaling Policies (RSPs) represent the primary current approach by le
 The core innovation of RSPs lies in their conditional approach: rather than imposing blanket restrictions, they define specific capability benchmarks that, when crossed, require enhanced security measures, deployment controls, or development pauses until appropriate safeguards are implemented. This creates a scalable framework that can adapt as AI systems become more capable, while providing clear decision points for risk management. However, their reliance on industry self-regulation raises fundamental questions about effectiveness under competitive pressure and conflicts of interest.
 
 Current evidence suggests RSPs cover approximately 60-70% of frontier AI development across 3-4 major laboratories, with estimated risk reduction potential of 10-25%. While representing substantial progress in AI safety governance, their ultimate effectiveness depends critically on technical evaluation capabilities, commitment durability, and potential integration with government oversight frameworks.
+
+## Comparison of Major Lab Policies
+
+The three leading AI laboratories have implemented distinct but conceptually similar frameworks for responsible scaling. This table compares their key features as of 2025:
+
+| Feature | Anthropic RSP (v2.2, May 2025) | OpenAI Preparedness Framework (v2, April 2025) | Google DeepMind FSF (v3.0) |
+|---------|-------------------------------|-----------------------------------------------|---------------------------|
+| **Framework Name** | Responsible Scaling Policy (RSP) | Preparedness Framework | Frontier Safety Framework (FSF) |
+| **Safety Levels** | AI Safety Levels (ASL-1 through ASL-4+) | High, Critical (simplified from Low/Medium/High/Critical) | Critical Capability Levels (CCLs) |
+| **Current Deployment Level** | ASL-2 (Claude Sonnet 4), ASL-3 (Claude Opus 4, 4.5) | Below High threshold (o3, o4-mini) | Varies by model; CCLs tracked |
+| **Risk Categories** | CBRN weapons, Autonomous AI R&D | Biological/Chemical, Cybersecurity, AI Self-improvement | Autonomy, Biosecurity, Cybersecurity, ML R&D, Harmful Manipulation, Shutdown Resistance |
+| **ASL-3/High Threshold** | Substantial increase in CBRN risk or low-level autonomous capabilities | Could amplify existing pathways to severe harm (thousands dead, $100B+ damages) | Heightened risk of severe harm absent mitigations |
+| **ASL-4/Critical Threshold** | Not yet defined; qualitative escalations in catastrophic misuse/autonomy | Unprecedented new pathways to severe harm | Significant expansion to address deceptive alignment scenarios |
+| **Deployment Criteria** | ASL-3 requires enhanced deployment controls + security measures | High capability requires safeguards before deployment; Critical requires safeguards during development | Models cannot be deployed/developed if risks exceed mitigation abilities |
+| **Security Requirements** | ASL-3: Defense against sophisticated non-state attackers | Risk-calibrated access controls and weight security | Tiered security mitigations calibrated to capability levels |
+| **Governance** | Responsible Scaling Officer (RSO) can pause training/deployment; currently Jared Kaplan | Safety Advisory Group (SAG) reviews reports; board authority for Critical risks | Cross-functional safety governance; external review mechanisms |
+| **External Verification** | Committed to third-party auditing; regular public reporting | SAG includes internal leaders; external verification limited | Industry-leading proactive approach; external partnerships developing |
+| **Evaluation Frequency** | Before training above compute thresholds; at checkpoints; post-training | Capabilities Reports + Safeguards Reports for each covered system | Comprehensive evaluations before training and deployment decisions |
+| **Red Teaming** | Extensive red-teaming for ASL-3+; demonstrated in deployment standard | Required for High/Critical assessments | Required for CCL systems; expert adversarial testing |
+| **First Activation** | ASL-3 activated for Claude Opus 4 (early 2025) | Framework updated April 2025; o3/o4-mini below High | Multiple CCL updates through 2024-2025 |
+| **Version History** | v1.0 (Sept 2023) → v2.0 (Oct 2024) → v2.2 (May 2025) | Beta (Dec 2023) → v2 (April 2025) | v1.0 (May 2024) → v2.0 (Feb 2025) → v3.0 |
+| **Distinctive Features** | Biosafety-inspired ASL framework; clear RSO authority to pause | Streamlined to operational thresholds only; removed "low/medium" levels | First to address harmful manipulation and shutdown resistance/deceptive alignment |
+
+### Key Similarities Across Labs
+
+All three frameworks share fundamental structural elements that define the RSP approach. Each establishes capability-based thresholds rather than time-based restrictions, conducts evaluations before major training runs and deployments, requires enhanced safeguards as capabilities increase, and focuses on CBRN and cyber risks as primary near-term concerns. This convergence suggests emerging industry consensus on core risk management principles, driven by shared technical understanding and cross-pollination between safety teams.
+
+### Critical Differences and Implications
+
+The frameworks diverge significantly in several areas with strategic implications. Anthropic's biosafety-inspired ASL system provides the most granular classification structure, while OpenAI's streamlined approach focuses only on operational thresholds. DeepMind has moved most aggressively into future risk territory with explicit CCLs for harmful manipulation and deceptive alignment scenarios. Governance structures also differ: Anthropic grants explicit pause authority to a designated RSO, OpenAI distributes decision-making across the SAG and board, and DeepMind emphasizes cross-functional coordination. These structural differences may create competitive dynamics where laboratories gravitate toward the least restrictive interpretations under commercial pressure.
 
 ## The RSP Framework and Implementation
 
@@ -35,25 +77,94 @@ RSPs implement a systematic evaluation process that occurs at multiple stages of
 
 The evaluation process focuses on specific capability domains including biological and chemical weapons development, cyber operations, autonomous replication and resource acquisition, and advanced persuasion or manipulation. Laboratories employ both automated testing frameworks and expert red-teaming to probe for dangerous capabilities. When evaluations indicate a model has crossed into a higher safety level, mandatory safeguards must be implemented before proceeding with deployment or further scaling.
 
+### RSP Evaluation Decision Flow
+
+The following diagram illustrates the systematic evaluation and decision-making process that RSPs implement across the development lifecycle:
+
+<Mermaid client:load chart={`
+flowchart TD
+    START[Planning Major Training Run] --> COMPUTE{Compute Threshold<br/>Exceeded?}
+    COMPUTE -->|No| TRAIN[Proceed with Training]
+    COMPUTE -->|Yes| PRELIM[Preliminary Capability<br/>Assessment]
+
+    PRELIM --> PREDICT{Predict Capability<br/>Level Crossing?}
+    PREDICT -->|No| TRAIN
+    PREDICT -->|Yes| SAFEGUARD1[Develop Required<br/>Safeguards First]
+    SAFEGUARD1 --> TRAIN
+
+    TRAIN --> CHECKPOINT[Checkpoint Evaluations<br/>During Training]
+    CHECKPOINT --> EMERGE{Dangerous Capabilities<br/>Emerging?}
+    EMERGE -->|No| CONTINUE[Continue Training]
+    EMERGE -->|Yes| PAUSE1[Pause Training]
+    PAUSE1 --> SAFEGUARD2[Implement Enhanced<br/>Safeguards]
+    SAFEGUARD2 --> CONTINUE
+
+    CONTINUE --> COMPLETE[Training Complete]
+    COMPLETE --> POSTEVAL[Comprehensive<br/>Post-Training Evaluation]
+
+    POSTEVAL --> REDTEAM[Expert Red-Teaming<br/>Across Risk Domains]
+    REDTEAM --> ASSESS[Safety Level<br/>Classification]
+
+    ASSESS --> LEVEL{Which Safety<br/>Level?}
+    LEVEL -->|ASL-2/Below High| STANDARD[Standard Deployment<br/>Controls]
+    LEVEL -->|ASL-3/High| ENHANCED[Enhanced Security +<br/>Deployment Controls]
+    LEVEL -->|ASL-4/Critical| UNDEFINED[Safeguards TBD<br/>May Block Deployment]
+
+    ENHANCED --> THREAT[Threat Modeling]
+    THREAT --> DEFENSE[Defense in Depth<br/>Implementation]
+    DEFENSE --> VERIFY[Red Team Verification]
+    VERIFY --> PASS{Safeguards<br/>Adequate?}
+
+    PASS -->|No| PAUSE2[Pause/Block<br/>Deployment]
+    PASS -->|Yes| MONITOR[Deploy with<br/>Continuous Monitoring]
+
+    STANDARD --> DEPLOY[Standard Deployment]
+    MONITOR --> ONGOING[Ongoing Evaluation<br/>& Monitoring]
+    DEPLOY --> ONGOING
+
+    ONGOING --> DETECT{New Capabilities<br/>Detected?}
+    DETECT -->|Yes| REASSESS[Reassess Safety Level]
+    DETECT -->|No| ONGOING
+    REASSESS --> LEVEL
+
+    PAUSE2 --> IMPROVE[Improve Safeguards]
+    IMPROVE --> VERIFY
+
+    style START fill:#e1f5e1
+    style PAUSE1 fill:#ffe1e1
+    style PAUSE2 fill:#ffe1e1
+    style UNDEFINED fill:#ffe1e1
+    style MONITOR fill:#fff4e1
+    style DEPLOY fill:#e1f5e1
+`} />
+
+This framework creates multiple intervention points where dangerous capability development can be detected and addressed. The checkpoint evaluations during training represent a critical innovation, allowing laboratories to catch concerning capabilities before they fully emerge. However, the effectiveness of this pipeline depends critically on the accuracy of evaluation methodologies, which current research suggests may miss 30-50% of dangerous capabilities.
+
 ## Laboratory-Specific Implementations
 
 ### Anthropic's Responsible Scaling Policy
 
-Anthropic's RSP, first published in September 2023 with significant updates in 2024, establishes the most detailed public framework for AI safety levels. The policy commits Anthropic to conducting comprehensive evaluations before training models above specified compute thresholds and implementing corresponding safeguards for any system reaching ASL-3 or higher. Specific triggers for ASL-3 classification include demonstrable uplift in biological weapons creation capabilities, significant cyber-offensive capabilities exceeding current state-of-the-art tools, or ability to autonomously replicate and acquire substantial resources.
+Anthropic's RSP, first published in September 2023 with significant updates through version 2.2 (May 2025), establishes the most detailed public framework for AI safety levels. The policy commits Anthropic to conducting comprehensive evaluations before training models above specified compute thresholds—specifically, before training runs exceeding 10^26 FLOPs—and implementing corresponding safeguards for any system reaching ASL-3 or higher. Specific triggers for ASL-3 classification include demonstrable uplift in biological weapons creation capabilities (operationalized as providing meaningful assistance to non-experts that reduces development time by 30%+ or expertise requirements by 50%+), significant cyber-offensive capabilities exceeding current state-of-the-art tools, or ability to autonomously replicate and acquire substantial resources (defined as $10,000+ without human assistance).
 
-Anthropic has committed to third-party auditing of their evaluation processes and regular public reporting on model classifications. The company maintains that no current Anthropic models exceed ASL-2, but acknowledges that ASL-3 systems may emerge within the next year. Their policy explicitly states that ASL-3 models will not be deployed without corresponding safeguards, though the specific nature of these safeguards remains under development.
+Anthropic activated ASL-3 protections for the first time with the release of Claude Opus 4 in early 2025, followed by Claude Opus 4.5. This represented a major milestone, as it was the first deployment of a frontier model under enhanced RSP safeguards. The ASL-3 security standard requires defense against sophisticated non-state attackers, including measures such as multi-factor authentication, encrypted model weight storage, access logging, and insider threat monitoring. The deployment standard includes targeted CBRN misuse controls such as enhanced content filtering for synthesis pathway queries, specialized red-teaming across biological threat scenarios, and rapid response protocols for detected misuse attempts.
+
+Anthropic has committed to third-party auditing of their evaluation processes and regular public reporting on model classifications. The Responsible Scaling Officer (RSO)—currently Co-Founder and Chief Science Officer Jared Kaplan, who succeeded CTO Sam McCandlish in this role—has explicit authority to pause AI training or deployment if required safeguards are not in place. This governance structure represents one of the strongest internal safety mechanisms among major labs, though it remains ultimately accountable to the same leadership facing competitive pressures.
 
 ### OpenAI's Preparedness Framework
 
-OpenAI's Preparedness Framework, announced in December 2023, organizes risks into four primary categories: cybersecurity, CBRN weapons, persuasion and manipulation, and model autonomy. Each category employs a four-tier risk assessment scale: Low, Medium, High, and Critical. The framework establishes two key thresholds: models may only be deployed if their post-mitigation risk level is Medium or below, and development may only continue if post-mitigation risk is High or below.
+OpenAI's Preparedness Framework underwent significant revision in April 2025 (version 2), streamlining from four risk levels to two operational thresholds: High and Critical. This simplification reflects OpenAI's determination that "low" and "medium" levels were not operationally relevant to their Preparedness work. The framework now tracks three capability categories: biological and chemical capabilities, cybersecurity, and AI self-improvement. Notably, persuasion risks were removed from the framework and are now handled through OpenAI's Model Spec and product-level restrictions rather than capability evaluations.
 
-OpenAI's governance structure includes a dedicated Preparedness team responsible for conducting evaluations, a Safety Advisory Group that reviews assessments and can escalate concerns, and ultimate board authority over Critical risk decisions. This multi-layered approach aims to provide checks against potential conflicts of interest, though critics note that all levels ultimately report to the same organizational leadership facing commercial pressures.
+High capability is defined as systems that could "amplify existing pathways to severe harm"—operationalized as capabilities that could cause the death or grave injury of thousands of people or hundreds of billions of dollars in damages. Critical capability represents systems that could "introduce unprecedented new pathways to severe harm." Covered systems that reach High capability must have safeguards that sufficiently minimize associated risks before deployment, while systems reaching Critical capability require safeguards during development itself.
+
+OpenAI's governance structure centers on the Safety Advisory Group (SAG), a cross-functional team of internal safety leaders who review both Capabilities Reports and Safeguards Reports for each covered system. The SAG assesses residual risk after mitigations and makes recommendations to OpenAI Leadership on deployment decisions. For Critical-level risks, ultimate authority resides with the board. The first deployment under version 2 of the framework saw the SAG determine that o3 and o4-mini do not reach the High threshold in any tracked category. This multi-layered approach aims to provide checks against potential conflicts of interest, though critics note that all levels ultimately report to the same organizational leadership facing commercial pressures.
 
 ### Google DeepMind's Frontier Safety Framework
 
-Google DeepMind's approach, published in May 2024, introduces Critical Capability Levels (CCLs) across four risk domains: autonomy and self-proliferation, biosecurity, cybersecurity, and machine learning R&D acceleration. The framework commits to comprehensive evaluations before training and deployment decisions, with corresponding security and deployment mitigations for each capability level. DeepMind explicitly commits not to develop models whose risks exceed their ability to implement adequate mitigations.
+Google DeepMind's approach has evolved rapidly through three major versions: v1.0 (May 2024), v2.0 (February 2025), and v3.0. The framework introduces Critical Capability Levels (CCLs)—specific capability thresholds at which, absent mitigation measures, frontier AI models or systems may pose heightened risk of severe harm. Initial CCLs focused on four domains: autonomy and self-proliferation, biosecurity, cybersecurity, and machine learning R&D acceleration. The framework commits to comprehensive evaluations before training and deployment decisions, with corresponding security and deployment mitigations for each capability level. DeepMind explicitly commits not to develop models whose risks exceed their ability to implement adequate mitigations.
 
-The framework emphasizes technical rigor in evaluation methodologies and has begun exploring external evaluation partnerships. DeepMind's approach particularly focuses on the risk of AI systems accelerating AI research itself, recognizing this as a potential path to rapid capability advancement that could outpace safety measures.
+DeepMind has taken an industry-leading position on addressing future risk scenarios. Version 3.0 introduced a CCL focused on harmful manipulation—specifically, AI models with powerful manipulative capabilities that could be misused to systematically and substantially change beliefs and behaviors in high-stakes contexts. More significantly, DeepMind has expanded the framework to address deceptive alignment scenarios where misaligned AI models might interfere with operators' ability to direct, modify, or shut down their operations. This represents the first major RSP framework to explicitly address the risk of advanced AI systems resisting human control.
+
+For security mitigations, DeepMind implements tiered protection levels that calibrate the robustness of security measures to the risks posed by specific capabilities. Deployment mitigations are similarly risk-calibrated. The framework emphasizes technical rigor in evaluation methodologies and has begun exploring external evaluation partnerships, though specific arrangements remain under development. DeepMind published a detailed Frontier Safety Framework Report for Gemini 3 Pro in November 2025, demonstrating public transparency about their evaluation processes.
 
 ## Technical Evaluation Challenges
 
@@ -160,3 +271,32 @@ Most critically, RSPs address only technical safety measures while leaving broad
 | [Bioweapons](/knowledge-base/risks/misuse/bioweapons/) | CBRN capability evaluations before deployment | Medium |
 | [Cyberweapons](/knowledge-base/risks/misuse/cyberweapons/) | Cyber capability evaluations | Medium |
 | [Deceptive Alignment](/knowledge-base/risks/accident/deceptive-alignment/) | Autonomy and deception evaluations | Low-Medium |
+
+## Sources
+
+### Lab Policy Documents
+
+- [Anthropic's Responsible Scaling Policy Version 2.2](https://www-cdn.anthropic.com/872c653b2d0501d6ab44cf87f43e1dc4853e4d37.pdf) (May 14, 2025)
+- [Anthropic: Announcing our updated Responsible Scaling Policy](https://www.anthropic.com/news/announcing-our-updated-responsible-scaling-policy) (October 2024)
+- [Anthropic: Activating AI Safety Level 3 protections](https://www.anthropic.com/news/activating-asl3-protections) (2025)
+- [OpenAI: Preparedness Framework Version 2](https://cdn.openai.com/pdf/18a02b5d-6b67-4cec-ab64-68cdfbddebcd/preparedness-framework-v2.pdf) (April 15, 2025)
+- [OpenAI: Our updated Preparedness Framework](https://openai.com/index/updating-our-preparedness-framework/) (April 2025)
+- [Google DeepMind: Frontier Safety Framework Version 3.0](https://storage.googleapis.com/deepmind-media/DeepMind.com/Blog/strengthening-our-frontier-safety-framework/frontier-safety-framework_3.pdf)
+- [Google DeepMind: Strengthening our Frontier Safety Framework](https://deepmind.google/blog/strengthening-our-frontier-safety-framework/) (2025)
+- [Google DeepMind: Introducing the Frontier Safety Framework](https://deepmind.google/blog/introducing-the-frontier-safety-framework/) (May 2024)
+
+### Analysis and Evaluation
+
+- [METR: Common Elements of Frontier AI Safety Policies](https://metr.org/common-elements)
+- [METR: Responsible Scaling Policies](https://metr.org/blog/2023-09-26-rsp/) (September 2023)
+- [Federation of American Scientists: Can Preparedness Frameworks Pull Their Weight?](https://fas.org/publication/scaling-ai-safety/)
+- [Institute for AI Policy and Strategy: Responsible Scaling — Comparing Government Guidance and Company Policy](https://www.iaps.ai/research/responsible-scaling)
+- [Centre for Long-Term Resilience: AI Safety Frameworks Risk Governance](https://www.longtermresilience.org/wp-content/uploads/2025/02/AI-Safety-Frameworks-Risk-Governance-1.pdf) (February 2025)
+- [EA Forum: I read every major AI lab's safety plan so you don't have to](https://forum.effectivealtruism.org/posts/fsxQGjhYecDoHshxX/i-read-every-major-ai-lab-s-safety-plan-so-you-don-t-have-to)
+- [EA Forum: What are Responsible Scaling Policies (RSPs)?](https://forum.effectivealtruism.org/posts/gJRgSFmETJ8Eo8eXF/what-are-responsible-scaling-policies-rsps)
+
+### International Governance
+
+- [International AI Safety Report 2025](https://internationalaisafetyreport.org/publication/international-ai-safety-report-2025)
+- [Future of Life Institute: 2025 AI Safety Index](https://futureoflife.org/ai-safety-index-summer-2025/)
+- [AGILE Index on Global AI Safety Readiness](https://www.agile-index.ai/Global-Index-For-AI-Safety-Report-EN.pdf) (February 2025)

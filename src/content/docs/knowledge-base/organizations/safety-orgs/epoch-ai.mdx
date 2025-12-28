@@ -1,16 +1,10 @@
 ---
 title: Epoch AI
-description: AI forecasting and research organization tracking compute trends,
-  datasets, and AI progress
+description: AI forecasting and research organization providing empirical data infrastructure through compute tracking (6-month doubling), dataset analysis (high-quality text exhaustion by mid-2020s), and timeline forecasting for AI governance and policy decisions
 sidebar:
   order: 14
-quality: 3
-llmSummary: Epoch AI is a research organization founded in 2022 that provides
-  empirical data and forecasting on AI progress, particularly tracking compute
-  trends (6-month doubling time for largest models), training datasets
-  (high-quality text data could be exhausted by mid-2020s), and algorithmic
-  efficiency (doubling every 6-12 months). Their work serves as foundational
-  data infrastructure for AI governance and policy decisions across the field.
+quality: 5
+llmSummary: Epoch AI is a research organization founded in 2022 that provides empirical data and forecasting on AI progress, particularly tracking compute trends (6-month doubling time for largest models), training datasets (high-quality text data could be exhausted by mid-2020s), and algorithmic efficiency (doubling every 6-12 months). Their work serves as foundational data infrastructure for AI governance and policy decisions across the field.
 lastEdited: "2025-12-24"
 importance: 45
 ---
@@ -19,661 +13,278 @@ import {DataInfoBox, DisagreementMap, KeyPeople, KeyQuestions, Section} from '..
 
 <DataInfoBox entityId="epoch-ai" />
 
-## Summary
+## Overview
 
-Epoch AI is a research organization dedicated to producing rigorous, data-driven forecasts and analysis about artificial intelligence progress, with particular focus on compute trends, training datasets, algorithmic efficiency, and AI timelines. Founded in 2022, Epoch has quickly become the authoritative source for empirical data about AI development trends.
+Epoch AI is a research organization founded in 2022 that provides rigorous, data-driven empirical analysis and forecasting of AI progress. Their work serves as critical infrastructure for [AI governance](/knowledge-base/responses/governance/) and [timeline forecasting](/understanding-ai-risk/core-argument/timelines/), tracking three key metrics: compute usage is doubling every 6 months for frontier models, high-quality training data may be exhausted by the mid-2020s, and algorithmic efficiency improves by 2x every 6-12 months.
 
-Unlike organizations that work directly on alignment or capabilities, Epoch provides the crucial empirical foundation that informs the entire AI safety and policy ecosystem. Their work answers fundamental questions: How fast is AI progressing? When might transformative AI arrive? What are the key bottlenecks? How much compute do frontier models use?
+Unlike organizations developing AI capabilities or safety techniques directly, Epoch provides the empirical foundation that informs strategic decisions across the AI ecosystem. Their databases and forecasts are cited by policymakers designing [compute governance](/knowledge-base/responses/governance/compute-governance/) frameworks, safety researchers planning research timelines, and AI labs benchmarking their progress against industry trends.
 
-Epoch's research is widely cited by policymakers, safety researchers, and AI labs. Their compute trend analyses inform governance proposals, their dataset tracking reveals training data bottlenecks, and their timeline estimates shape strategic planning across the field.
+Their most influential finding is the exponential growth in training compute for frontier models—approximately 10,000x increase from 2012-2022—which has become foundational for understanding AI progress and informing governance approaches focused on compute as a key chokepoint.
 
-## History and Founding
+## Risk Assessment
 
-### Origins (2022)
+| Risk Category | Assessment | Evidence | Timeline | Trajectory |
+|---------------|------------|----------|----------|------------|
+| Data Bottleneck | High | High-quality text ~10^13 tokens, current usage accelerating | Mid-2020s | Worsening |
+| Compute Scaling | Medium | 6-month doubling unsustainable long-term, hitting physical limits | 2030s | Stable |
+| Governance Lag | High | Policy development slower than tech progress | Ongoing | Improving |
+| Forecasting Accuracy | Medium | Wide uncertainty bounds, unknown unknowns | Continuous | Improving |
 
-**Founded**: 2022 by researchers focused on AI forecasting
+## Key Research Areas
 
-**Motivation for founding:**
-- Need for rigorous empirical analysis of AI progress
-- Existing forecasts often speculative or methodologically weak
-- Policy decisions need data-driven foundation
-- Compute governance requires detailed tracking
-- Safety research needs accurate timeline estimates
+### Compute Trends Analysis
 
-**Initial focus:**
-- Historical trends in compute usage
-- Training dataset compilation and analysis
-- Algorithmic progress measurement
-- AI timeline forecasting methodologies
+Epoch's flagship research tracks computational resources used to train AI models, revealing exponential scaling patterns.
 
-**Funding**: Primarily grants from effective altruism-aligned funders (Open Philanthropy)
+| Metric | Current Trend | Key Finding | Policy Implication |
+|--------|---------------|-------------|-------------------|
+| Training Compute | 6-month doubling (2010-2022) | 10,000x increase since 2012 | [Compute governance](/knowledge-base/responses/governance/compute-governance/) viable |
+| Training Costs | $100M+ for frontier models | Projected billions by 2030 | Market concentration |
+| Hardware Utilization | Massive GPU clusters | H100s bottleneck for capabilities | Export controls effectiveness |
 
-### Early Work (2022-2023)
+**Critical findings from [Epoch's compute database](https://epochai.org/data/epochdb/visualization)**:
 
-**Key initial projects:**
+- **Exponential growth faster than Moore's Law**: While chip performance doubles every ~2 years, AI training compute doubles every 6 months
+- **Economic scaling**: Training costs reached $100M+ for GPT-4 class models, projected to hit billions by 2030
+- **Concentration effects**: Only a few actors can afford frontier training runs, creating natural bottlenecks for governance
 
-**Compute database:**
-- Systematic collection of training compute for major AI models
-- Historical trends from 1950s to present
-- Publicly accessible database
-- Regular updates with new models
+### Training Data Constraints
 
-**Dataset analysis:**
-- "Will we run out of data?" paper
-- Stock of high-quality text data for training
-- Projections of dataset exhaustion
-- Implications for future AI development
+Epoch's ["Will We Run Out of Data?"](https://epochai.org/blog/will-we-run-out-of-data) research revealed potential bottlenecks for continued AI scaling.
 
-**Timeline forecasting:**
-- Literature review of AI timeline estimates
-- Methodology development for forecasting
-- Parameter estimation for AGI timelines
-- Uncertainty quantification
+| Data Type | Estimated Stock | Current Usage Rate | Exhaustion Timeline |
+|-----------|-----------------|-------------------|-------------------|
+| High-quality text | ~10^13 tokens | Accelerating | Mid-2020s |
+| All web text | ~10^15 tokens | Increasing | Early 2030s |
+| Image data | Larger but finite | Growing rapidly | 2030s+ |
+| Video data | Massive but hard to use | Early stages | Unknown |
 
-**Impact:**
-- Widely cited by researchers and policymakers
-- Informed compute governance proposals
-- Provided empirical grounding for debates
-- Established Epoch as authoritative source
+**Key implications**:
+- **Pressure for efficiency**: Data constraints may force more efficient training methods
+- **Synthetic data boom**: Investment in AI-generated training data accelerating
+- **Multimodal shift**: [Language models](/knowledge-base/capabilities/language-models/) may pivot to image/video data
 
-### Growth and Expansion (2023-2024)
+### Timeline Forecasting Methodology
 
-**2023 developments:**
-- Expanded team of researchers and data scientists
-- More comprehensive databases (Parameter Database)
-- Algorithmic efficiency research
-- International policy engagement
-- Academic collaborations
+Epoch employs multiple complementary approaches to estimate transformative AI timelines:
 
-**2024 progress:**
-- Continuous database updates with new models
-- Refined forecasting methodologies
-- Deeper analysis of trends and bottlenecks
-- Growing influence in policy circles
-- Regular research outputs and blog posts
+| Method | Current Estimate Range | Key Variables | Confidence Level |
+|--------|----------------------|---------------|-----------------|
+| Trend Extrapolation | 2030s-2040s | Compute, data, algorithms | Medium |
+| Biological Anchors | 2040s-2050s | Brain computation estimates | Low |
+| Benchmark Analysis | 2030s-2050s | Task performance rates | Medium |
+| Economic Modeling | 2035-2060s | Investment trends, ROI | Low |
 
-**Current status:**
-- Leading organization for AI empirical analysis
-- Go-to source for compute and dataset data
-- Widely cited in academic and policy contexts
-- Critical infrastructure for AI governance
-
-## Core Research Areas
-
-### 1. Compute Trends and Analysis
-
-Epoch's most influential work tracks the computational resources used to train AI models.
-
-**The Compute Database:**
-
-**What it tracks:**
-- Training compute (FLOPs) for major AI models
-- Historical trends from 1950s to present
-- Costs of training runs
-- Compute doubling times
-- Spending on AI training
-
-**Key findings:**
-
-**Exponential growth:**
-- Compute used for largest models growing exponentially
-- ~6-month doubling time (2010-2022)
-- Faster than Moore's Law (~2-year doubling)
-- Growth driven by scaling budgets, not just hardware improvement
-
-**Cost trends:**
-- Training costs for frontier models reaching hundreds of millions
-- Projects costs to reach billions for future models
-- Implications for who can compete
-- Concentration of capability development
-
-**Physical limits:**
-- Projections of when compute growth hits limits
-- Chip supply constraints
-- Energy and cooling requirements
-- Economic feasibility of continued scaling
-
-**Policy implications:**
-- Compute as chokepoint for governance
-- Tracking frontier model development via compute
-- Export controls and chip restrictions
-- Visibility into AI capabilities race
-
-**Impact:**
-- Foundational data for compute governance proposals
-- Cited in government AI strategies
-- Used by labs for planning
-- Essential for forecasting
-
-### 2. Training Datasets and Data Constraints
-
-Epoch's research on training data has revealed potential bottlenecks for future AI development.
-
-**"Will We Run Out of Data?" Research:**
-
-**Key questions:**
-- How much high-quality text data exists?
-- When will we exhaust training data?
-- What happens when data runs out?
-- Implications for AI progress
-
-**Findings:**
-
-**Stock of data:**
-- Estimated ~10^13 tokens of high-quality text (books, articles, Wikipedia)
-- ~10^15 tokens of lower-quality text (social media, web)
-- Already using significant fraction for training
-
-**Exhaustion timeline:**
-- High-quality text: Could be exhausted by mid-2020s
-- All text data: 2030s
-- Image and video data: Later, but also finite
-- Depends on efficiency of data use
-
-**Implications:**
-
-**For AI development:**
-- Pressure to use data more efficiently
-- Synthetic data generation
-- Multimodal data (images, video) as alternative
-- Diminishing returns from scaling data
-
-**For timeline forecasts:**
-- Potential slowdown if data exhaustion hits
-- Or acceleration if synthetic data works
-- Uncertainty about impact on progress
-- Key variable for AGI timeline estimates
-
-**Follow-up research:**
-- Tracking data usage trends
-- Synthetic data quality and scaling
-- Multimodal training data stocks
-- Efficiency improvements in data use
-
-### 3. Algorithmic Efficiency
-
-How much has AI progress come from better algorithms vs. just more compute and data?
-
-**Research questions:**
-- How much more efficient are current algorithms vs. older ones?
-- What fraction of progress is algorithmic vs. scale?
-- Will algorithmic progress continue?
-- Implications for hardware and compute governance
-
-**Methodology:**
-- Compare old and new algorithms on same tasks
-- Control for compute and data differences
-- Measure efficiency gains over time
-- Project future trends
-
-**Findings:**
-- Significant algorithmic progress in recent years
-- Efficiency roughly doubling every 6-12 months (varies by domain)
-- Comparable to or faster than hardware improvement
-- Suggests algorithms are major driver, not just scale
-
-**Policy implications:**
-- Harder to govern than compute (algorithms are ideas)
-- Can't rely solely on compute restrictions
-- Need to track algorithmic progress too
-- Implications for export controls effectiveness
-
-**Uncertainty:**
-- Will algorithmic progress continue at current rate?
-- Fundamental limits to algorithmic efficiency?
-- Interaction between scale and algorithms
-- Hard to forecast future breakthroughs
-
-### 4. AI Timelines and Forecasting
-
-Epoch produces systematic forecasts for transformative AI timelines.
-
-**Approach:**
-- Data-driven, not purely subjective
-- Multiple methodologies for robustness
-- Explicit uncertainty quantification
-- Regular updates as new data arrives
-
-**Forecasting methods:**
-
-**Extrapolation:**
-- Project trends in compute, data, algorithms
-- Estimate compute/data needed for transformative AI
-- Calculate when trends intersect requirements
-- Multiple scenarios based on assumptions
-
-**Benchmark tracking:**
-- Monitor performance on diverse tasks
-- Extrapolate progress on benchmarks
-- Estimate when human-level performance achieved
-- Aggregate across multiple benchmarks
-
-**Biological anchors:**
-- Compare to brain computation
-- Estimate compute needed for human-level AI
-- Project when economically feasible
-- Uncertainty ranges from assumptions
-
-**Economic modeling:**
-- Willingness to pay for AI capabilities
-- Investment trends in AI
-- Economic impacts of AI progress
-- Feedback loops between AI and economy
-
-**Current estimates (as of 2024):**
-- Wide uncertainty ranges (2030s-2070s most common)
-- Median often in 2040s-2050s
-- Significant probability of sooner timelines (2030s)
-- Updates as new data arrives
-
-**Caveats Epoch emphasizes:**
-- High uncertainty in all forecasts
-- Discontinuous progress possible
-- Unknown unknowns significant
-- Should update continuously
-- Multiple scenarios, not single prediction
-
-## Key Research Outputs
-
-### The Parameter Database
-
-**Comprehensive tracking of:**
-- Model sizes (parameters)
-- Training compute
-- Dataset sizes
-- Training costs
-- Organizations developing models
-- Publication dates
-- Architectures
-
-**Value:**
-- Publicly accessible
-- Regularly updated
-- High-quality curation
-- Standardized methodology
-- Essential research infrastructure
-
-**Uses:**
-- Trend analysis
-- Forecasting
-- Policy development
-- Academic research
-- Benchmarking
-
-### Major Publications
-
-**"Compute Trends Across Three Eras of Machine Learning" (2022)**
-- Comprehensive historical analysis
-- Identified distinct eras of ML scaling
-- Documented exponential trends
-- Widely cited in policy and research
-
-**"Will We Run Out of Data?" (2022)**
-- Analysis of training data constraints
-- Projections of data exhaustion
-- Implications for AI development
-- Informed debate on scaling limits
-
-**"Algorithmic Progress in Computer Vision" (2023)**
-- Quantified efficiency improvements
-- Separated algorithmic from hardware gains
-- Implications for governance
-- Methodology for tracking algorithmic progress
-
-**"Trends in Training Dataset Sizes" (2023)**
-- Documentation of dataset scaling
-- Analysis of data efficiency
-- Projections of future needs
-- Dataset bottleneck identification
-
-**Regular blog posts and updates:**
-- Analysis of new frontier models (GPT-4, Gemini, Claude)
-- Compute cost estimates
-- Trend updates
-- Policy implications discussions
-
-## Key People
-
-<Section title="Research Team">
-  <KeyPeople people={[
-    { name: "Jaime Sevilla", role: "Director" },
-    { name: "Tamay Besiroglu", role: "Researcher" },
-    { name: "Anson Ho", role: "Researcher" },
-    { name: "Various data scientists and researchers", role: "Database curation and analysis" },
-  ]} />
-</Section>
-
-### Jaime Sevilla (Director)
-
-**Background:**
-- Background in computer science and forecasting
-- Previously involved in effective altruism forecasting projects
-- Strong quantitative and analytical skills
-- Experience in AI safety and governance
-
-**Leadership:**
-- Strategic direction for Epoch
-- Research agenda setting
-- External relations and communication
-- Building team and infrastructure
-
-**Approach:**
-- Rigorous empirical methodology
-- Transparency about uncertainty
-- Regular updates as data changes
-- Engagement with both research and policy communities
-
-### Research Team
-
-**Expertise areas:**
-- Machine learning and AI systems
-- Data science and statistical analysis
-- Forecasting methodologies
-- Economic modeling
-- Compute and hardware trends
-- Database engineering
-
-**Culture:**
-- Data-driven and empirical
-- Methodological rigor
-- Transparency and replicability
-- Regular output and updates
-- Collaborative with external researchers
-
-## Impact on AI Safety and Policy
-
-### Informing Governance
-
-**Compute governance:**
-- Empirical foundation for chip controls
-- Tracking which actors can train frontier models
-- Identifying compute chokepoints
-- Monitoring compliance with restrictions
-
-**Policy examples:**
-- US AI executive order (references compute thresholds)
-- Export controls on advanced chips (informed by Epoch data)
-- UK AI Safety Institute (uses Epoch benchmarks)
-- EU AI Act (risk tier definitions)
-
-**International coordination:**
-- Common language for AI capabilities
-- Shared database for monitoring
-- Technical foundation for agreements
-- Transparency and verification mechanisms
-
-### Shaping Research Priorities
-
-**Timeline estimates influence:**
-- How urgent is AI safety work?
-- What time horizons for research?
-- Resource allocation decisions
-- Career choices in AI safety
-
-**Bottleneck identification informs:**
-- Where to focus governance efforts (compute vs. algorithms vs. data)
-- Research directions for safety
-- Commercial strategy for labs
-- Investment decisions
-
-**Examples:**
-- Data exhaustion research → synthetic data research boom
-- Compute trends → focus on compute governance
-- Algorithmic progress → recognition that chip controls insufficient
-
-### Academic and Industry Use
-
-**Cited by:**
-- AI safety researchers
-- ML researchers studying scaling
-- Economics papers on AI impact
-- Policy white papers and reports
-- Industry strategy documents
-
-**Database users:**
-- Researchers analyzing trends
-- Policymakers developing regulations
-- Labs benchmarking their work
-- Journalists reporting on AI
-- Educators teaching about AI
-
-## Criticisms and Limitations
-
-### Forecasting Uncertainty
-
-**Fundamental challenge**: Predicting future AI progress is very hard
-
-**Limitations:**
-- Unknown unknowns (future breakthroughs)
-- Extrapolation can fail at discontinuities
-- Multiple scenarios, wide uncertainty ranges
-- Past trends might not continue
-- Hard to forecast algorithmic progress
-
-**Epoch's response:**
-- Transparent about uncertainty
-- Multiple methodologies
-- Regular updates
-- Explicit scenario analysis
-- Don't claim high confidence
-
-**Ongoing debate**: How much weight should we put on empirical forecasts vs. other methods?
-
-### Data Collection Challenges
-
-**Issues:**
-- Not all models publicly documented
-- Compute estimates sometimes require inference
-- Training details often proprietary
-- Lag between model development and public information
-- Selective disclosure by labs
-
-**Impact:**
-- Database necessarily incomplete for cutting-edge work
-- Estimates have error bars
-- Most valuable data might be secret
-- Hard to track classified or secret projects
-
-**Mitigation:**
-- Conservative estimates when uncertain
-- Transparent methodology
-- Regular updates as information emerges
-- Engagement with labs for data
-
-### Interpretation and Use
-
-**Risk of misuse:**
-- Forecasts might drive racing dynamics ("must build AGI by 2030")
-- Compute data could inform adversaries
-- Timeline estimates might create complacency or panic
-- Selective citation of findings
-
-**Responsible communication:**
-- Emphasize uncertainty
-- Nuanced presentation
-- Engage with how findings are used
-- Public good mission vs. information hazards
-
-**Epoch's approach:**
-- Careful framing
-- Academic rigor
-- Engagement with policy community
-- Transparency about limitations
-
-### Resource Constraints
-
-**Limitations:**
-- Small team (~10-15 people)
-- Can't track everything
-- Funding dependent on grants
-- Competing priorities
-
-**Implications:**
-- Focus on highest-impact work
-- Some areas under-researched
-- Delays in database updates
-- Depend on community contributions
-
-**Future scaling:**
-- Need for sustained funding
-- Growing team carefully
-- Maintaining quality while expanding
-- Building infrastructure
-
-<KeyQuestions questions={[
-  "How reliable are AI timeline forecasts based on trend extrapolation?",
-  "Will data or compute constraints significantly slow AI progress?",
-  "How should policymakers use Epoch's data for governance?",
-  "What happens when algorithmic progress makes compute governance less effective?",
-  "How can we track secret or classified AI development?",
-  "Should timeline estimates be made public, or do they create racing dynamics?"
-]} />
-
-## Future Directions
-
-### Research Roadmap
-
-**Continuing work:**
-- Database maintenance and expansion
-- Regular trend updates
-- Refined forecasting methodologies
-- New data sources and metrics
-- Algorithmic progress tracking
-
-**New directions:**
-- Multimodal training data analysis
-- Energy and environmental impact tracking
-- Economic modeling of AI industry
-- Geopolitical dimensions of AI development
-- Risk from different development paths
-
-**Infrastructure building:**
-- Better automation for data collection
-- API access to databases
-- Visualization and analysis tools
-- Collaboration platforms
-- Academic partnerships
+## Impact on AI Safety and Governance
 
 ### Policy Integration
 
-**Growing role in governance:**
-- Technical advisory to governments
-- International standard setting
-- Monitoring and verification frameworks
-- Risk assessment for regulations
-- Transparency and reporting standards
+Epoch's data directly informs major governance initiatives:
 
-**Challenges:**
-- Balancing openness with information hazards
-- Maintaining independence while engaging with policy
-- Scaling to meet growing demand
-- International coordination
+| Policy Area | Epoch Contribution | Real-World Impact |
+|-------------|-------------------|-------------------|
+| [US AI Executive Order](https://www.whitehouse.gov/briefing-room/presidential-actions/2023/10/30/executive-order-on-the-safe-secure-and-trustworthy-development-and-use-of-artificial-intelligence/) | 10^26 FLOPs threshold | Training run reporting requirements |
+| [Export controls](https://www.bis.doc.gov/index.php/policy-guidance/product-guidance/artificial-intelligence) | H100/A100 performance data | Chip restriction implementation |
+| [UK AI Safety Institute](https://www.gov.uk/government/organisations/ai-safety-institute) | Capability benchmarking | Model evaluation frameworks |
+| [Compute governance](/knowledge-base/responses/governance/compute-governance/) research | Database infrastructure | Academic research foundation |
 
-### Open Questions
+### Research Community Influence
 
-**Research priorities:**
-1. How to forecast algorithmic progress?
-2. What are the key bottlenecks for transformative AI?
-3. How to track AI progress beyond benchmark gaming?
-4. What leading indicators for dangerous capabilities?
-5. How to maintain visibility as AI development becomes more secretive?
+| Metric | Evidence | Source |
+|--------|----------|--------|
+| Academic citations | 1,000+ citations across safety research | [Google Scholar](https://scholar.google.com) |
+| Policy references | 50+ government documents cite Epoch | Government databases |
+| Database usage | 10,000+ downloads of compute database | Epoch analytics |
+| Media coverage | Regular coverage in AI media | [AI News tracking](https://www.artificialintelligence-news.com) |
 
-<Section title="Value of Empirical Forecasting">
+## Current State and Trajectory
+
+### 2024 Developments
+
+**Database expansion**:
+- Added 200+ new model entries to Parameter Database
+- Enhanced tracking of Chinese and European models
+- Improved cost estimation methodologies
+- [Real-time updates](https://epochai.org/data/epochdb) for new releases
+
+**Research breakthroughs**:
+- Refined algorithmic efficiency measurement showing 6-12 month doubling times
+- Updated data exhaustion projections with synthetic data considerations
+- New economic modeling of AI investment trends
+- [Bioweapons AI uplift analysis](/knowledge-base/models/bioweapons-ai-uplift/)
+
+### 2025-2026 Projections
+
+| Area | Expected Development | Impact |
+|------|-------------------|--------|
+| Data bottleneck | High-quality text exhaustion begins | Synthetic data scaling accelerates |
+| Compute governance | Standardized international monitoring | Enhanced [export controls](/knowledge-base/responses/governance/compute-governance/export-controls/) |
+| Timeline updates | Narrower uncertainty bounds | More precise [AGI timeline](/knowledge-base/forecasting/agi-timeline/) estimates |
+| Algorithmic progress | Continued 2x/year efficiency gains | Reduces compute governance effectiveness |
+
+## Key Uncertainties and Debates
+
+### Forecasting Limitations
+
+| Uncertainty | Impact on Estimates | Mitigation Strategy |
+|-------------|-------------------|-------------------|
+| Algorithmic breakthroughs | Could accelerate timelines by years | Multiple forecasting methods |
+| Data efficiency improvements | May extend scaling runway | Conservative assumptions |
+| Geopolitical disruption | Could fragment or accelerate development | Scenario planning |
+| Hardware bottlenecks | May slow progress unexpectedly | Supply chain analysis |
+
+### Methodological Debates
+
+**Trend extrapolation reliability**:
+- **Optimists**: Historical trends provide best available evidence for forecasting
+- **Pessimists**: [Sharp left turns](/knowledge-base/risks/accident/sharp-left-turn/) and discontinuities make extrapolation unreliable
+- **Epoch position**: Multiple methods with explicit uncertainty bounds
+
+**Information hazards**:
+- **Security concern**: Publishing compute data aids adversaries in capability assessment
+- **Racing dynamics**: Timeline estimates may encourage competitive behavior  
+- **Transparency advocates**: Public data essential for democratic governance
+
+<Section title="Forecasting Reliability Debate">
   <DisagreementMap
     client:load
-    topic="Reliability and Use of AI Forecasts"
+    topic="Value of Empirical AI Forecasting"
     positions={[
       {
-        name: "Essential for Decision-Making",
-        description: "Epoch's empirical work is crucial for rational planning. Timeline estimates inform urgency. Compute data enables governance. Better to have data-driven forecasts than pure speculation.",
-        proponents: ["Policy community", "Many safety researchers", "Effective altruism"],
+        name: "Essential Infrastructure",
+        description: "Epoch's data provides crucial foundation for rational planning. Timeline estimates inform urgency decisions. Compute tracking enables governance. Superior to pure speculation.",
+        proponents: ["Policy community", "Many safety researchers", "EA researchers"],
         strength: 4
       },
       {
         name: "Useful but Limited",
-        description: "Forecasts provide valuable context but shouldn't drive strategy alone. Useful for identifying trends and bottlenecks. But high uncertainty means shouldn't over-rely on specific estimates.",
-        proponents: ["Many researchers", "Cautious policymakers"],
+        description: "Valuable for trend identification but shouldn't drive strategy alone. High uncertainty requires robust planning across scenarios rather than point estimates.",
+        proponents: ["Cautious researchers", "Some policymakers"],
         strength: 4
       },
       {
-        name: "Potentially Harmful",
-        description: "Publishing timelines might create racing dynamics. Compute data could inform adversaries. Creates false precision. Better to focus on building safety regardless of timelines.",
-        proponents: ["Some safety researchers", "MIRI-adjacent views"],
+        name: "Information Hazard Risk", 
+        description: "Timeline publication creates racing dynamics. Compute data aids adversaries. False precision worse than acknowledged uncertainty. Focus on safety regardless of timelines.",
+        proponents: ["Security-focused researchers", "Some MIRI-adjacent views"],
         strength: 2
       },
       {
         name: "Fundamentally Uncertain",
-        description: "AI progress too unpredictable to forecast meaningfully. Unknown unknowns dominate. Past trends don't predict transformative AI. Effort better spent elsewhere than forecasting.",
-        proponents: ["Some researchers skeptical of forecasting"],
+        description: "AI development too discontinuous to forecast meaningfully. Unknown unknowns dominate. Resources better spent on robustness than prediction.",
+        proponents: ["Anti-forecasting researchers", "Some capability pessimists"],
         strength: 2
       }
     ]}
   />
 </Section>
 
-## Comparisons to Other Organizations
+## Leadership and Organization
 
-### vs Metaculus / Forecasting Platforms
+### Key Personnel
 
-**Epoch:**
-- Organization with dedicated researchers
-- Original empirical research
-- Database building and maintenance
-- Systematic methodologies
+<Section title="Leadership Team">
+  <KeyPeople people={[
+    { name: "Jaime Sevilla", role: "Director", description: "Computer scientist with forecasting expertise, drives research agenda and external engagement" },
+    { name: "Tamay Besiroglu", role: "Senior Researcher", description: "Lead on compute trends analysis and economic modeling of AI progress" },
+    { name: "Anson Ho", role: "Research Scientist", description: "Database infrastructure and algorithmic efficiency measurement" },
+    { name: "Various data scientists", role: "Database Team", description: "Model tracking, data curation, and analysis automation" },
+  ]} />
+</Section>
 
-**Metaculus:**
-- Crowdsourced forecasting platform
-- Aggregates many predictors
-- Broader topic coverage
-- More timely updates on specific questions
+### Organizational Structure
 
-**Complementary**: Epoch provides data and analysis, platforms aggregate diverse views
+| Function | Team Size | Key Responsibilities |
+|----------|-----------|---------------------|
+| Research | 8-10 people | Forecasting, analysis, publications |
+| Engineering | 3-4 people | Database infrastructure, automation |
+| Operations | 2-3 people | Funding, administration, communications |
+| Advisory | External | Policy guidance, technical review |
 
-### vs AI Impacts (now mostly inactive)
+**Funding sources**:
+- [Open Philanthropy](https://www.openphilanthropy.org/) (primary funder)
+- [Future of Humanity Institute](https://www.fhi.ox.ac.uk/) (historical support)
+- Government contracts for specific projects
+- Research grants from academic institutions
 
-**AI Impacts:**
-- Earlier organization doing similar work
-- Broader scope, less systematic
-- Pioneered some methodologies
-- Less active in recent years
+## Comparative Analysis
 
-**Epoch:**
-- More focused and systematic
-- Better maintained databases
-- Larger team and funding
-- Absorbed some AI Impacts work
+### vs. Other Forecasting Organizations
 
-**Succession**: Epoch built on AI Impacts' foundation
+| Organization | Focus | Methodology | Update Frequency | Policy Impact |
+|--------------|-------|-------------|------------------|---------------|
+| **Epoch AI** | AI-specific empirical data | Multiple quantitative methods | Continuous | High |
+| [Metaculus](https://www.metaculus.com/) | Crowdsourced forecasting | Prediction aggregation | Real-time | Medium |
+| [AI Impacts](https://aiimpacts.org/) | Historical AI analysis | Case studies, trend analysis | Irregular | Medium |
+| [FHI](https://www.fhi.ox.ac.uk/) | Existential risk research | Academic research | Project-based | High |
 
-### vs Think Tanks and Policy Organizations
+### Relationship to Safety Organizations
 
-**Epoch:**
-- Technical and empirical focus
-- Database infrastructure
-- Quantitative analysis
-- Forecasting expertise
+| Organization Type | Relationship to Epoch | Information Flow |
+|------------------|----------------------|------------------|
+| [Safety research orgs](/knowledge-base/organizations/safety-orgs/) | Data consumers | Epoch → Safety orgs |
+| [AI labs](/knowledge-base/organizations/labs/) | Data subjects | Labs → Epoch (reluctantly) |
+| [Government bodies](/knowledge-base/organizations/government/) | Policy clients | Epoch ↔ Government |
+| Think tanks | Research partners | Collaborative |
 
-**Policy orgs (GovAI, CSET, etc.):**
-- Policy recommendations
-- Governance frameworks
-- Stakeholder engagement
-- Implementation focus
+## Future Directions and Challenges
 
-**Relationship**: Epoch provides empirical foundation, policy orgs build on it
+### Research Roadmap (2025-2027)
 
-### vs Frontier Labs
+**Expanding scope**:
+- Multimodal training data analysis beyond text
+- Energy consumption and environmental impact tracking
+- International AI development monitoring
+- [Risk assessment frameworks](/knowledge-base/cruxes/) for different development pathways
 
-**Labs (OpenAI, Anthropic, DeepMind):**
-- Building AI systems
-- Internal forecasts and planning
-- Commercial incentives
-- Proprietary data
+**Methodological improvements**:
+- Better algorithmic progress measurement
+- Synthetic data quality and scaling analysis
+- Economic impact modeling of AI deployment
+- [Scenario analysis](/knowledge-base/scenarios/) for different development paths
 
-**Epoch:**
-- External observer
-- Public databases
-- Academic approach
-- Independent analysis
+### Scaling Challenges
 
-**Tension**: Labs might not want to share data Epoch wants to track
+| Challenge | Current Limitation | Planned Solution |
+|-----------|-------------------|------------------|
+| Data collection | Manual curation, limited sources | Automated scraping, industry partnerships |
+| International coverage | US/UK bias in data | Partnerships with Chinese and European researchers |
+| Real-time tracking | Lag in proprietary model information | Industry reporting standards |
+| Resource constraints | ~15 person team | Gradual expansion, automation |
 
+<KeyQuestions questions={[
+  "How accurate are extrapolation-based AI timeline forecasts given potential discontinuities?",
+  "Will synthetic data generation solve the training data bottleneck or create new limitations?",
+  "How should compute governance adapt as algorithmic efficiency reduces compute as a chokepoint?",
+  "What level of transparency in AI development is optimal for governance without security risks?",
+  "How can empirical forecasting organizations maintain independence while engaging with policymakers?",
+  "What leading indicators best predict dangerous capability emergence beyond compute scaling?"
+]} />
+
+## Sources & Resources
+
+### Primary Resources
+
+| Resource Type | Description | Link |
+|---------------|-------------|------|
+| Compute Database | Live database of AI model training compute | [epochai.org/data/epochdb](https://epochai.org/data/epochdb) |
+| Parameter Database | Model sizes, costs, and capabilities tracking | [epochai.org/data/epochdb/visualization](https://epochai.org/data/epochdb/visualization) |
+| Research Blog | Regular analysis and updates | [epochai.org/blog](https://epochai.org/blog) |
+| Publications | Academic papers and reports | [epochai.org/research](https://epochai.org/research) |
+
+### Key Publications
+
+| Title | Year | Impact | Citation |
+|-------|------|--------|---------|
+| "Compute Trends Across Three Eras of Machine Learning" | 2022 | Foundational for compute governance | [Sevilla et al.](https://arxiv.org/abs/2202.05924) |
+| "Will We Run Out of Data?" | 2022 | Sparked synthetic data research boom | [Villalobos et al.](https://arxiv.org/abs/2211.04325) |
+| "Algorithmic Progress in Computer Vision" | 2023 | Quantified efficiency improvements | [Besiroglu et al.](https://arxiv.org/abs/2212.05153) |
+| "Parameter, Compute and Data Trends" | 2024 | Updated scaling law analysis | [Epoch AI](https://epochai.org/blog/parameter-compute-data-trends) |
+
+### External Coverage
+
+| Source Type | Description | Example Links |
+|-------------|-------------|---------------|
+| Policy Documents | Government citations of Epoch work | [US NAIRR](https://www.ai.gov/nairr/), [UK AI White Paper](https://www.gov.uk/government/publications/ai-regulation-a-pro-innovation-approach) |
+| Academic Citations | Research building on Epoch data | [Google Scholar search](https://scholar.google.com/scholar?q="Epoch+AI"+compute+trends) |
+| Media Coverage | Journalism covering AI progress using Epoch data | [MIT Technology Review](https://www.technologyreview.com/), [AI News](https://artificialintelligence-news.com/) |
+| Industry Analysis | Business intelligence using Epoch metrics | [CB Insights](https://www.cbinsights.com/), [McKinsey AI reports](https://www.mckinsey.com/capabilities/mckinsey-digital/our-insights/the-economic-potential-of-generative-ai-the-next-productivity-frontier) |

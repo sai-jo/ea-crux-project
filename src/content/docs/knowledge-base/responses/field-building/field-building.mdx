@@ -1,35 +1,72 @@
 ---
 title: Field Building and Community
-description: Growing the AI safety research community and ecosystem
+description: This analysis examines AI safety field-building interventions including
+  education programs (ARENA, MATS, BlueDot). It finds the field grew from approximately 400 FTEs
+  in 2022 to 1,100 FTEs in 2025 (21-30% annual growth), with training programs achieving
+  37% career conversion rates and costs of $5,000-40,000 per career change.
 sidebar:
   order: 4
-quality: 4
+quality: 5
 llmSummary: Comprehensive analysis of AI safety field-building interventions
-  including education programs (ARENA, MATS), funding mechanisms (~$200M+/year
-  from Open Philanthropy), and community infrastructure, with cost estimates of
-  $5,000-40,000 per career change depending on program intensity. Identifies key
-  bottleneck that funding currently exceeds available talent in the field.
-lastEdited: "2025-12-24"
-todo: Update program statistics and funding figures for 2025; add more outcome
-  metrics for training program effectiveness
+  including education programs (ARENA, MATS), funding mechanisms (~$110-130M/year
+  philanthropic, ~$600M total including corporate), and community infrastructure, with cost estimates of
+  $5,000-40,000 per career change depending on program intensity. Field grew from 400 FTEs (2022)
+  to 1,100 FTEs (2025) at 21-30% annual growth rate. Identifies key bottleneck that
+  talent pipeline is over-optimized for researchers while neglecting other roles.
+lastEdited: "2025-12-28"
 importance: 78.5
 ---
 
-import {DataInfoBox, EstimateBox, KeyQuestions} from '../../../../../components/wiki';
+import {DataInfoBox, EstimateBox, KeyQuestions, Mermaid} from '../../../../../components/wiki';
 
 <DataInfoBox entityId="field-building" />
 
-## Summary
+### Quick Assessment
+
+| Dimension | Assessment | Evidence |
+|-----------|------------|----------|
+| Field Size (2025) | **1,100 FTEs** (600 technical, 500 non-technical) | [AI Safety Field Growth Analysis 2025](https://forum.effectivealtruism.org/posts/7YDyziQxkWxbGmF3u/ai-safety-field-growth-analysis-2025) |
+| Annual Growth Rate | **21-30%** since 2020 | Technical: 21% FTE growth; Non-technical: 30% |
+| Total Philanthropic Funding | **$110-130M/year** (2024) | [Overview of AI Safety Funding](https://forum.effectivealtruism.org/posts/XdhwXppfqrpPL2YDX/an-overview-of-the-ai-safety-funding-situation) |
+| Training Program Conversion | **37%** work full-time in AI safety | [BlueDot 2022 Cohort Analysis](https://blog.bluedot.org/p/2022-ai-alignment-course-impact) |
+| Cost per Career Change | **$5,000-40,000** depending on program | ARENA lower-touch, MATS higher-touch |
+| Key Bottleneck | Talent pipeline over-optimized for researchers | [EA Forum analysis](https://forum.effectivealtruism.org/posts/m5dDrMfHjLtMu293G/ai-safety-s-talent-pipeline-is-over-optimised-for) |
+| Tractability | **Medium-High** | Programs show measurable outcomes |
+
+## Overview
 
 Field-building focuses on **growing the AI safety ecosystem** rather than doing direct research or policy work. The theory is that by increasing the number and quality of people working on AI safety, we multiply the impact of all other interventions.
 
 This is a **meta-level** or **capacity-building** intervention—it doesn't directly solve the technical or governance problems, but creates the infrastructure and talent pipeline that makes solving them possible.
 
+The field has grown substantially: from approximately 400 full-time equivalents (FTEs) in 2022 to roughly 1,100 FTEs in 2025, with technical AI safety organizations growing at 24% annually and non-technical organizations at approximately 30% annually. However, this growth has created new challenges—the pipeline may be over-optimized for researchers while neglecting operations, policy, and other critical roles.
+
 ## Theory of Change
 
-```
-Field-building programs → More capable people working on safety → More research + policy progress → Reduced x-risk
-```
+<Mermaid client:load chart={`
+flowchart TD
+    FB[Field-Building Programs] --> TP[Talent Pipeline]
+    FB --> KD[Knowledge Dissemination]
+    FB --> CB[Community Building]
+    FB --> FI[Funding Infrastructure]
+
+    TP --> RC[Research Capacity]
+    KD --> RC
+    CB --> RC
+    FI --> RC
+
+    RC --> TR[Technical Research]
+    RC --> GP[Governance & Policy]
+    RC --> CI[Corporate Influence]
+
+    TR --> RR[Reduced Risk]
+    GP --> RR
+    CI --> RR
+
+    style FB fill:#e6f3ff
+    style RC fill:#fff3e6
+    style RR fill:#e6ffe6
+`} />
 
 **Key mechanisms:**
 1. **Talent pipeline:** Train and recruit people into AI safety
@@ -44,49 +81,48 @@ Field-building programs → More capable people working on safety → More resea
 
 **Goal:** Teach AI safety concepts and skills to potential contributors.
 
-**Key Programs:**
+#### Training Program Comparison
 
-**ARENA (AI Safety Research Engineering):**
-- 6-8 week intensive program
-- Technical ML + alignment curriculum
-- Hands-on projects and mentorship
-- ~100-200 participants/year
-- Focus: Research engineers and researchers
-- Strong track record of placement at safety orgs
+| Program | Format | Duration | Scale | Cost/Participant | Placement Rate | Key Outcomes |
+|---------|--------|----------|-------|------------------|----------------|--------------|
+| [MATS](https://www.matsprogram.org/) | Research mentorship | 3-4 months | 30-50/cohort | ~$20,000-40,000 | 75% publish results | Alumni at Anthropic, OpenAI, DeepMind; founded Apollo Research, Timaeus |
+| [ARENA](https://www.arena.education/) | In-person bootcamp | 4-5 weeks | 20-30/cohort | ~$5,000-15,000 | 8 confirmed FT positions (5.0 cohort) | Alumni at Apollo Research, METR, UK AISI |
+| [BlueDot Impact](https://bluedot.org/) | Online cohort-based | 8 weeks | 1,000+/year | ~$440/student | 37% work FT in AI safety | 6,000+ trained since 2022; 75% completion rate |
+| [SPAR](https://sparai.org/) | Part-time remote | Varies | 50+/cohort | Low (volunteer mentors) | Research output focused | Connects aspiring researchers with professionals |
+| AI Safety Camp | Project-based | 1-2 weeks | 20-40/camp | Varies | Project completion | Multiple camps globally |
 
-**MATS (ML Alignment & Theory Scholars):**
-- 3-4 month research mentorship
-- Scholars work directly with established researchers
-- ~30-50 scholars per cohort, 2-3 cohorts/year
-- Focus: Research-ready individuals
-- Many alumni join labs or start independent research
+**Key Programs in Detail:**
 
-**AGI Safety Fundamentals:**
-- Online course (~8 weeks)
-- Technical and Governance tracks
-- Facilitated discussion groups
-- Free and scalable
-- ~1,000+ participants total
-- Introductory, not research training
+**[MATS (ML Alignment & Theory Scholars)](https://www.matsprogram.org/):**
+- Since 2021, has supported 298 scholars and 75 mentors
+- Summer 2024: 1,220 applicants, 3-5% acceptance rate (comparable to MIT admissions)
+- Spring 2024 Extension: 75% of scholars published results; 57% accepted to conferences
+- Notable: Nina Panickssery's paper on steering Llama 2 won Outstanding Paper Award at ACL 2024
+- Alumni include researchers at Anthropic, OpenAI, and Google DeepMind
+- Received [$23.6M in Open Philanthropy funding](https://www.openphilanthropy.org/grants/mats-research-ai-safety-research-expenses/) for general support
 
-**AI Safety Camp:**
-- Project-based intensive workshops
-- Teams work on specific research questions
-- Multiple camps per year globally
-- Mix of mentorship and peer collaboration
+**[ARENA (Alignment Research Engineer Accelerator)](https://www.arena.education/):**
+- Run 2-3 bootcamps per year, each 4-5 weeks, based at LISA in London
+- [ARENA 5.0](https://www.lesswrong.com/posts/XXTanE2GeP5Lchp9G/arena-5-0-impact-report): 8 participants confirmed full-time AI safety positions post-program
+- Participants rate exercise enjoyment 8.7/10, LISA location value 9.6/10
+- Alumni quote: "ARENA was the most useful thing that could happen to someone with a mathematical background who wants to enter technical AI safety research"
+- Claims to be among most cost-effective technical AI safety training programs
 
-**BlueDot Impact (formerly AI Safety Fundamentals):**
-- Running AGI Safety Fundamentals
-- Multiple course offerings
-- Growing to broader topics
+**[BlueDot Impact](https://bluedot.org/) (formerly AI Safety Fundamentals):**
+- Trained 6,000+ professionals worldwide since 2022
+- [2022 cohort analysis](https://blog.bluedot.org/p/2022-ai-alignment-course-impact): 123 alumni (37% of 342) now work full-time on AI safety
+- 20 alumni would not be working on AI safety were it not for the course (counterfactual impact)
+- 75% completion rate (vs. 20% for typical Coursera courses)
+- Raised $34M total funding, including $25M in 2025
+- Alumni at Anthropic, Google DeepMind, UK AI Security Institute
 
 **Theory of change:** Train people in AI safety → some pursue careers → net increase in research capacity
 
 **Effectiveness considerations:**
 - **High leverage:** One good researcher can contribute for decades
-- **Uncertain conversion:** Not all trainees become AI safety researchers
-- **Counterfactual question:** Would they have entered anyway?
-- **Quality vs. quantity:** Better to train 10 excellent researchers or 100 mediocre ones?
+- **Measurable conversion:** BlueDot shows 37% career conversion; ARENA shows 8+ direct placements per cohort
+- **Counterfactual question:** BlueDot estimates 20 counterfactual career changes from 2022 cohort
+- **Quality vs. quantity:** More selective programs (MATS, ARENA) show higher placement rates
 
 <EstimateBox
   client:load
@@ -96,7 +132,7 @@ Field-building programs → More capable people working on safety → More resea
   estimates={[
     { source: "ARENA (successful cases)", value: "$5,000-15,000", notes: "Direct program costs per career change" },
     { source: "MATS", value: "$20,000-40,000", notes: "Higher touch, research mentorship" },
-    { source: "AGI SF", value: "$500-2,000", notes: "Scalable but lower conversion rate" },
+    { source: "BlueDot Impact", value: "$440-2,000", notes: "Scalable online; 37% conversion rate" },
   ]}
 />
 
@@ -156,13 +192,36 @@ Field-building programs → More capable people working on safety → More resea
 
 **Goal:** Direct resources to high-impact work and people.
 
+#### AI Safety Funding Landscape (2024)
+
+| Funding Source | Amount (2024) | % of Total | Key Recipients |
+|----------------|---------------|------------|----------------|
+| Open Philanthropy | ~$63.6M | 49% | CAIS ($8.5M), Redwood ($6.2M), MIRI ($4.1M) |
+| Individual Donors (e.g., Jaan Tallinn) | ~$20M | 15% | Various orgs and researchers |
+| Government Funding | ~$32.4M | 25% | AI Safety Institutes, university research |
+| Corporate External Investment | ~$8.2M | 6% | Frontier Model Forum AI Safety Fund |
+| Academic Endowments | ~$6.8M | 5% | University centers |
+| **Total Philanthropic** | **$110-130M** | 100% | — |
+
+*Source: [Overview of AI Safety Funding Situation](https://forum.effectivealtruism.org/posts/XdhwXppfqrpPL2YDX/an-overview-of-the-ai-safety-funding-situation)*
+
+**Note:** This excludes internal corporate safety research budgets, estimated at greater than $500M annually across major AI labs. Total ecosystem funding including corporate is approximately $600-650M/year.
+
+**Context:** Philanthropic funding for climate risk mitigation was approximately $9-15 billion in 2023—roughly 20x philanthropic AI safety funding. With over $189 billion invested in AI projected for 2024, safety funding remains less than 2% of total AI investment.
+
 **Major Funders:**
 
-**Open Philanthropy:**
-- Largest AI safety funder (~$200M+/year to AI safety)
-- Funds research orgs, policy work, field-building
-- Long-term, high-leverage focus
-- Key grants: Anthropic ($500M+), MIRI, Redwood, university centers
+**[Open Philanthropy](https://www.openphilanthropy.org/):**
+- Largest AI safety funder (~$50-65M/year to technical AI safety)
+- [2025 Technical AI Safety RFP](https://www.openphilanthropy.org/request-for-proposals-technical-ai-safety-research/): Expected to spend ~$40M over 5 months
+- Key 2024-25 grants: MATS ($23.6M), CAIS ($8.5M), Redwood Research ($6.2M)
+- Self-assessment: "Rate of spending was too slow" in 2024; committed to expanding support
+- Supporting work on AI safety since 2015
+
+**[AI Safety Fund (Frontier Model Forum)](https://www.frontiermodelforum.org/ai-safety-fund/):**
+- $10M+ collaborative initiative established October 2023
+- Founding members: Anthropic, Google, Microsoft, OpenAI
+- Philanthropic partners: Patrick J. McGovern Foundation, Packard Foundation, Schmidt Sciences, Jaan Tallinn
 
 **Survival and Flourishing Fund (SFF):**
 - ~$30-50M/year
@@ -175,12 +234,6 @@ Field-building programs → More capable people working on safety → More resea
 - Small to medium grants
 - Individual researchers and projects
 - Lower bar for experimental work
-
-**Other:**
-- Founders Pledge
-- FTX Future Fund (defunct)
-- Individual donors (Vitalik Buterin, others)
-- Some government funding emerging
 
 **Grantmaking Strategies:**
 
@@ -202,9 +255,9 @@ Field-building programs → More capable people working on safety → More resea
 **Theory of change:** Capital → enables people and orgs to work on AI safety → research and policy progress
 
 **Bottlenecks:**
-- **"More funding than talent":** Currently funding is less constrained than excellent people/projects
-- **Grantmaker capacity:** Limited bandwidth to evaluate proposals
-- **Risk aversion:** Tendency to fund safe bets over moonshots
+- **Talent exceeds funding for roles, but not for orgs:** Plenty of aspiring researchers but [not enough organizations to hire them](https://forum.effectivealtruism.org/posts/m5dDrMfHjLtMu293G/ai-safety-s-talent-pipeline-is-over-optimised-for)
+- **Grantmaker capacity:** Open Philanthropy [struggled to make qualified senior hires](https://www.openphilanthropy.org/research/our-progress-in-2024-and-plans-for-2025/) for technical AI safety grantmaking
+- **Competition with labs:** AI Safety Institutes and external research struggle to compete on compensation with frontier labs
 
 **Who should consider this:**
 - Program officers at foundations
@@ -261,32 +314,40 @@ Field-building programs → More capable people working on safety → More resea
 
 **Goal:** Establish AI safety as legitimate academic field.
 
-**Approaches:**
+**University Centers and Programs:**
 
-**University Centers:**
-- CHAI (UC Berkeley) - Center for Human-Compatible AI
-- FHI (Oxford) - Future of Humanity Institute (closed 2024)
-- MIT AI Safety
-- Stanford HAI (some safety work)
-- Various smaller groups
+| Institution | Center/Program | Focus | Status |
+|-------------|----------------|-------|--------|
+| UC Berkeley | [CHAI](https://humancompatible.ai/) (Center for Human-Compatible AI) | Foundational alignment research | Active |
+| Oxford | Future of Humanity Institute | Existential risk research | Closed 2024 |
+| MIT | AI Safety Initiative | Technical safety, governance | Growing |
+| Stanford | HAI (Human-Centered AI) | Broad AI policy, some safety | Active |
+| Carnegie Mellon | AI Safety Research | Technical safety | Active |
+| Cambridge | LCFI, CSER | Existential risk, policy | Active |
+
+**Key Developments (2024-2025):**
+- FHI closure at Oxford marks significant shift in academic landscape
+- Growing number of PhD programs with explicit AI safety focus
+- NSF and other agencies beginning to fund safety research specifically
+- [Open Philanthropy funding university-based safety research](https://www.openphilanthropy.org/grants/?q=ai+safety) including Ohio State
 
 **Academic Incentives:**
-- Tenure-track positions in AI safety
+- Tenure-track positions in AI safety emerging
 - PhD programs with safety focus
 - Grants for safety research (NSF, etc.)
-- Prestigious publication venues
-- Academic conferences
+- Prestigious publication venues (NeurIPS safety track, ICLR)
+- Academic conferences (AI Safety research conferences)
 
 **Curriculum Development:**
-- AI safety courses at universities
-- Textbooks and syllabi
-- Integration into CS curriculum
+- AI safety courses at major universities
+- [80,000 Hours technical AI safety upskilling resources](https://80000hours.org/2025/06/technical-ai-safety-upskilling-resources/)
+- Integration into CS curriculum slowly increasing
 
 **Challenges:**
 - **Slow timelines:** Academic careers are 5-10 year investments
 - **Misaligned incentives:** Publish or perish vs. impact
 - **Capabilities research:** Universities also advance capabilities
-- **Brain drain:** Best people leave for industry/nonprofits
+- **Brain drain:** Best people leave for industry/nonprofits (frontier labs pay 2-5x academic salaries)
 
 **Benefits:**
 - **Legitimacy:** Academic credibility helps policy
@@ -295,6 +356,38 @@ Field-building programs → More capable people working on safety → More resea
 - **Geographic distribution:** Not just SF/Bay Area
 
 **Theory of change:** Academic legitimacy → more talent + more funding + political influence → field growth
+
+---
+
+## Field Growth Statistics
+
+The AI safety field has grown substantially since 2020, with acceleration around 2023 coinciding with increased public attention following ChatGPT's release.
+
+### Field Size Over Time
+
+| Year | Technical AI Safety FTEs | Non-Technical AI Safety FTEs | Total FTEs | Organizations |
+|------|--------------------------|------------------------------|------------|---------------|
+| 2015 | ~50 | ~20 | ~70 | ~15 |
+| 2020 | ~150 | ~50 | ~200 | ~30 |
+| 2022 | ~300 | ~100 | ~400 | ~50 |
+| 2024 | ~500 | ~400 | ~900 | ~65 |
+| 2025 | ~600-645 | ~500 | ~1,100 | ~70 |
+
+*Source: [AI Safety Field Growth Analysis 2025](https://forum.effectivealtruism.org/posts/7YDyziQxkWxbGmF3u/ai-safety-field-growth-analysis-2025)*
+
+**Growth rates:**
+- Technical AI safety organizations: 24% annual growth
+- Technical AI safety FTEs: 21% annual growth
+- Non-technical AI safety: approximately 30% annual growth (accelerating since 2023)
+
+**Top research areas by FTEs:**
+1. Miscellaneous technical safety (scalable oversight, adversarial robustness, jailbreaks)
+2. LLM safety
+3. Interpretability
+
+**Methodology note:** These estimates may undercount people working on AI safety since many work at organizations that don't explicitly brand themselves as AI safety organizations, particularly in technical safety in academia.
+
+---
 
 ## What Needs to Be True
 
@@ -306,6 +399,44 @@ For field-building to be high impact:
 4. **Absorptive capacity:** Ecosystem can integrate new people
 5. **Right people:** Recruiting those with high potential for contribution
 6. **Complementarity:** New people enable work that wouldn't happen otherwise
+
+## Key Bottlenecks and Challenges
+
+The AI safety field faces several structural challenges that limit the effectiveness of field-building efforts:
+
+### Pipeline Over-Optimization for Researchers
+
+According to [analysis on the EA Forum](https://forum.effectivealtruism.org/posts/m5dDrMfHjLtMu293G/ai-safety-s-talent-pipeline-is-over-optimised-for), the AI safety talent pipeline is over-optimized for researchers:
+
+- The majority of AI safety talent pipelines are optimized for selecting and producing researchers
+- Research is not the most neglected talent type in AI safety
+- This leads to research-specific talent being over-represented in the community
+- Supporting programs strongly select for research skills, missing other crucial roles
+
+**Neglected roles:** Operations, program management, communications, policy implementation, organizational leadership.
+
+### Scaling Gap
+
+There's a massive gap between awareness-level training and the expertise required for selective research fellowships:
+
+- BlueDot plans to train 100,000 people in AI safety fundamentals over 4.5 years
+- But few programs bridge from introductory courses to elite research fellowships
+- Need scalable programs for the "missing middle"
+
+### Organizational Infrastructure Deficit
+
+- Not enough talented founders are building AI safety organizations
+- [Catalyze's pilot program](https://forum.effectivealtruism.org/posts/q3rpkJGiMwdRvuZza/catalyze-is-hiring-ai-safety-incubation-program-lead-and) incubated 11 organizations, with participants reporting the program accelerated progress by an average of 11 months
+- Open positions often don't exist because organizations haven't been founded
+
+### Compensation Competition
+
+AI Safety Institutes and external research struggle to compete with frontier AI companies:
+- Frontier companies offer substantially higher compensation packages
+- AISIs must appeal to researchers' desire for public service and impact
+- Some approaches: joint university appointments, research sabbaticals, rotating fellowships
+
+---
 
 ## Risks and Considerations
 
@@ -553,4 +684,40 @@ Field-building enables and amplifies:
 - 80,000 Hours on field-building
 - Alignment Forum posts on field growth
 - MATS/ARENA/BlueDot as examples
+
+---
+
+## Sources & Further Reading
+
+### Field Growth and Statistics
+- [AI Safety Field Growth Analysis 2025](https://forum.effectivealtruism.org/posts/7YDyziQxkWxbGmF3u/ai-safety-field-growth-analysis-2025) — Comprehensive dataset of technical and non-technical AI safety organizations and FTEs
+- [AI Safety Field Growth Analysis 2025 (LessWrong)](https://www.lesswrong.com/posts/8QjAnWyuE9fktPRgS/ai-safety-field-growth-analysis-2025) — Cross-post with additional discussion
+
+### Funding
+- [An Overview of the AI Safety Funding Situation](https://forum.effectivealtruism.org/posts/XdhwXppfqrpPL2YDX/an-overview-of-the-ai-safety-funding-situation) — Detailed breakdown of philanthropic funding sources
+- [Open Philanthropy: Our Progress in 2024 and Plans for 2025](https://www.openphilanthropy.org/research/our-progress-in-2024-and-plans-for-2025/) — Self-assessment of AI safety grantmaking
+- [Open Philanthropy Technical AI Safety RFP](https://www.openphilanthropy.org/request-for-proposals-technical-ai-safety-research/) — 2025 request for proposals ($40M available)
+- [AI Safety and Security Need More Funders](https://coefficientgiving.org/research/ai-safety-and-security-need-more-funders/) — Analysis of funding gaps
+
+### Training Programs
+- [MATS Program](https://www.matsprogram.org/) — ML Alignment & Theory Scholars official site
+- [MATS Spring 2024 Extension Retrospective](https://www.lesswrong.com/posts/JPfJaXTDQKQQocc2f/mats-spring-2024-extension-retrospective) — Detailed outcomes data
+- [ARENA 5.0 Impact Report](https://www.lesswrong.com/posts/XXTanE2GeP5Lchp9G/arena-5-0-impact-report) — Program outcomes and effectiveness
+- [ARENA 4.0 Impact Report](https://www.lesswrong.com/posts/5t73TZCf5yE69HbFP/arena-4-0-impact-report-1) — Earlier cohort data
+- [BlueDot Impact: 2022 AI Alignment Course Impact](https://blog.bluedot.org/p/2022-ai-alignment-course-impact) — Detailed analysis showing 37% career conversion
+
+### Talent Pipeline
+- [AI Safety's Talent Pipeline is Over-optimised for Researchers](https://forum.effectivealtruism.org/posts/m5dDrMfHjLtMu293G/ai-safety-s-talent-pipeline-is-over-optimised-for) — Key critique of current pipeline structure
+- [Widening AI Safety's Talent Pipeline](https://forum.effectivealtruism.org/posts/p4ekwamhsw6jpKEcu/widening-ai-safety-s-talent-pipeline-by-meeting-people-where) — Proposals for improvement
+- [80,000 Hours: AI Safety Technical Research Career Review](https://80000hours.org/career-reviews/ai-safety-researcher/) — Career guidance
+- [80,000 Hours: Updates to Our Research About AI Risk and Careers](https://80000hours.org/2024/08/updates-to-our-research-about-ai-risk-and-careers/) — 2024 strategic updates
+
+### Industry Assessment
+- [FLI AI Safety Index 2024](https://futureoflife.org/document/fli-ai-safety-index-2024/) — Assessment of AI company safety practices
+- [AI Safety Index Winter 2025](https://futureoflife.org/ai-safety-index-winter-2025/) — Updated industry assessment
+- [CAIS 2024 Impact Report](https://safe.ai/work/impact-report/2024) — Center for AI Safety annual report
+
+### International Coordination
+- [International AI Safety Report 2025](https://internationalaisafetyreport.org/publication/international-ai-safety-report-2025) — Report by 96 AI experts on global safety landscape
+- [The Global Landscape of AI Safety Institutes](https://alltechishuman.org/all-tech-is-human-blog/the-global-landscape-of-ai-safety-institutes) — Overview of government AI safety efforts
 

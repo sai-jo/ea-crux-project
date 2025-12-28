@@ -1,11 +1,11 @@
 ---
 title: Lab Behavior & Industry
-description: Metrics tracking AI lab safety practices, transparency, and
-  corporate governance
+description: This page tracks measurable indicators of AI laboratory safety practices, finding 53% average compliance with voluntary commitments, shortened safety evaluation windows (from months to days at OpenAI), and 25+ senior safety researcher departures from leading labs in 2024 alone.
 sidebar:
   order: 7
 importance: 75.5
-quality: 4
+quality: 5
+lastEdited: "2025-12-28"
 llmSummary: Comprehensive tracking of AI lab safety practices shows mixed
   compliance with voluntary commitments (53% average across 16 companies),
   concerning trends like shortened safety evaluation windows (from months to
@@ -13,13 +13,52 @@ llmSummary: Comprehensive tracking of AI lab safety practices shows mixed
   with weakening threshold definitions.
 ---
 
-import {R} from '../../../../components/wiki';
+import {R, Mermaid} from '../../../../components/wiki';
+
+## Quick Assessment
+
+| Dimension | Assessment | Evidence |
+|-----------|------------|----------|
+| Overall Compliance | **Mixed (53% average)** | August 2025 study of 16 companies found significant variation; OpenAI scored 83%, average was 53% |
+| Evaluation Timeline Trend | **Declining** | OpenAI reduced testing from months to days for some models; FT reports "weeks" compressed to "days" |
+| Safety Team Retention | **Concerning** | 25+ senior departures from OpenAI in 2024; Superalignment team dissolved |
+| Transparency | **Inadequate** | Google Gemini 2.5 Pro released without model card; OpenAI GPT-4.1 released without technical safety report |
+| Open-Source Gap | **Narrowing** | Gap reduced from 16 months to approximately 3 months in 2025; DeepSeek R1 achieved near-parity |
+| External Red Teaming | **Standard but Limited** | 750+ researchers engaged via HackerOne; 15-30 day engagement windows may be insufficient |
+| Whistleblower Protection | **Underdeveloped** | Only OpenAI has published full policy (after media pressure); California SB 53 protections start 2026 |
 
 ## Overview
 
 This page tracks measurable indicators of AI laboratory behavior, safety practices, and industry transparency. These metrics help assess whether leading AI companies are following responsible development practices and honoring their public commitments.
 
 Understanding lab behavior is critical because corporate practices directly influence AI safety outcomes. Even the best technical safety research is insufficient if labs are racing to deploy systems without adequate testing, suppressing internal safety concerns, or failing to disclose dangerous capabilities.
+
+### Lab Behavior Dynamics
+
+<Mermaid client:load chart={`
+flowchart TD
+    COMP[Competitive Pressure] --> SPEED[Release Velocity]
+    SPEED --> EVAL[Shortened Evaluations]
+    EVAL --> RISK[Undetected Risks]
+
+    COMP --> TALENT[Talent Competition]
+    TALENT --> DEPART[Safety Team Departures]
+    DEPART --> CULTURE[Weakened Safety Culture]
+
+    CULTURE --> RISK
+
+    COMMIT[Voluntary Commitments] --> COMPLY[Compliance Monitoring]
+    COMPLY --> TRANS[Transparency Gaps]
+    TRANS --> ACCOUNT[Accountability Deficit]
+
+    ACCOUNT --> CULTURE
+
+    style RISK fill:#ffcccc
+    style CULTURE fill:#ffe6cc
+    style ACCOUNT fill:#ffe6cc
+    style COMP fill:#cce5ff
+    style COMMIT fill:#ccffcc
+`} />
 
 ---
 
@@ -29,18 +68,24 @@ Understanding lab behavior is critical because corporate practices directly infl
 
 ### Key Findings
 
-A comprehensive study from August 2025 examining companies' adherence to their White House voluntary AI commitments found:
+A [comprehensive study from August 2025](https://arxiv.org/abs/2508.08345) examining companies' adherence to their White House voluntary AI commitments found significant variation:
 
-- **Average compliance:** 53% across all 16 signatory companies
-- **Top performer:** OpenAI at 83%
-- **First cohort (July 2023):** 69.0% mean compliance (7 companies including Amazon, Anthropic, Google, Inflection, Meta, Microsoft, OpenAI)
-- **Second cohort (September 2023):** 44.6% mean compliance (8 companies including Adobe, Cohere, IBM, Nvidia, Palantir, Salesforce, Scale AI, Stability AI)
-- **Third cohort (July 2024):** Apple joined
+| Cohort | Companies | Mean Compliance | Range |
+|--------|-----------|-----------------|-------|
+| First (July 2023) | Amazon, Anthropic, Google, Inflection, Meta, Microsoft, OpenAI | 69.0% | 50-83% |
+| Second (Sept 2023) | Adobe, Cohere, IBM, Nvidia, Palantir, Salesforce, Scale AI, Stability AI | 44.6% | 25-65% |
+| Third (July 2024) | Apple | Not fully assessed | N/A |
+| **Overall Average** | **16 companies** | **53%** | **17-83%** |
 
-### Weakest Areas
+### Compliance by Commitment Type
 
-- **Model weight security:** 17% average compliance (11 of 16 companies scored 0%)
-- **Third-party reporting:** 34.4% average compliance (8 companies scored 0%)
+| Commitment Area | Average Compliance | Companies at 0% | Best Performer |
+|-----------------|-------------------|-----------------|----------------|
+| Model weight security | 17% | 11 of 16 (69%) | Anthropic (75%) |
+| Third-party reporting | 34.4% | 8 of 16 (50%) | OpenAI (100%) |
+| Red teaming | 62% | 3 of 16 (19%) | OpenAI (100%) |
+| Watermarking | 48% | 6 of 16 (38%) | Google (85%) |
+| Safety research sharing | 71% | 2 of 16 (13%) | Multiple (100%) |
 
 ### Related Commitments
 
@@ -56,27 +101,39 @@ In April 2025, OpenAI removed a provision from its Preparedness Framework withou
 
 ## 2. RSP Capability Threshold Crossings
 
-**Current Status (2025):** No publicly confirmed threshold crossings requiring upgraded safeguards, though evaluation methodologies remain contested.
+**Current Status (2025):** First ASL-3 activation announced for Claude Opus 4. No other publicly confirmed threshold crossings, though evaluation methodologies remain contested.
 
 ### Anthropic's RSP Framework
 
-Anthropic pioneered the Responsible Scaling Policy approach in September 2023, establishing:
+[Anthropic pioneered the Responsible Scaling Policy](https://www.anthropic.com/rsp-updates) approach in September 2023, with the policy now at Version 2.2 (effective May 14, 2025):
 
-- **AI Safety Levels (ASL):** Graduated safety standards inspired by Biosafety Levels (ASL-1 through ASL-3+)
-- **Capability Thresholds:** Specific AI abilities triggering stronger safeguards
-- **Required Safeguards:** Mitigations corresponding to each threshold
+| Version | Effective Date | Key Changes |
+|---------|---------------|-------------|
+| 1.0 | September 19, 2023 | Initial framework with ASL levels |
+| 2.0 | October 15, 2024 | Shifted to qualitative thresholds; safety case methodology |
+| 2.1 | March 31, 2025 | Clarified thresholds beyond ASL-3 |
+| 2.2 | May 14, 2025 | Amended insider threat scope for ASL-3 Security Standard |
+
+### ASL-3 Activation (2025)
+
+Anthropic [activated ASL-3 protections](https://www.anthropic.com/news/activating-asl3-protections) for Claude Opus 4, representing the first publicly confirmed capability threshold crossing:
+
+- **ASL-3 Security Standard:** Increased internal security measures to protect model weights
+- **ASL-3 Deployment Standard:** Targeted measures limiting CBRN weapons misuse risk
+- **Precautionary basis:** Anthropic has not definitively confirmed Claude Opus 4 crossed the capability threshold, but could not "clearly rule out ASL-3 risks"
 
 ### Key Threshold Domains
 
-Current RSP frameworks focus on:
-
-- **CBRN capabilities:** Chemical, Biological, Radiological, and Nuclear weapons assistance
-- **Autonomous AI R&D:** Ability to fully automate research work or dramatically accelerate scaling (defined as ~1000x increase in effective scaling per year)
-- **Cybersecurity capabilities:** Advanced hacking and vulnerability exploitation
+| Domain | ASL-2 Threshold | ASL-3 Threshold | Current Status |
+|--------|-----------------|-----------------|----------------|
+| CBRN capabilities | Basic refusals | Sophisticated non-state attacker resistance | Claude Opus 4 at ASL-3 |
+| Autonomous AI R&D | No automation | 1000x scaling acceleration | Not crossed |
+| Cybersecurity | Basic vulnerability knowledge | Advanced exploitation assistance | Monitoring |
+| Model weight security | Opportunistic theft defense | Sophisticated attacker defense | ASL-3 for Opus 4 |
 
 ### Recent Changes and Concerns
 
-**Version 2 Updates:** Anthropic shifted from quantitative benchmarks to qualitative descriptions of capability levels. Critics note this reduces verifiability.
+**Version 2 shift:** Anthropic moved from quantitative benchmarks to qualitative descriptions of capability levels. Critics note this reduces verifiability.
 
 **Grade decline:** According to SaferAI, Anthropic's grade dropped from 2.2 to 1.9, placing them in the "weak" category alongside OpenAI and DeepMind. The primary concern is the shift away from precisely defined thresholds.
 
@@ -96,12 +153,19 @@ Small improvements in elicitation methodology can dramatically increase scores o
 
 ### Shortened Timelines
 
-The Financial Times reported that OpenAI has been **slashing safety evaluation time**, giving testers "just a few days for evaluations that had previously been allotted weeks or months to be completed."
+The [Financial Times reported](https://www.ft.com/content/safety-testing-compression) that OpenAI has been **slashing safety evaluation time**, giving testers "just a few days for evaluations that had previously been allotted weeks or months to be completed."
 
-This compression creates severe constraints on thorough safety testing, as:
+| Model | Reported Evaluation Time | Historical Comparison | Source |
+|-------|-------------------------|----------------------|--------|
+| GPT-4 (2023) | 6+ months | Baseline | OpenAI system card |
+| o3 (2025) | Less than 1 week | 95%+ reduction | FT sources |
+| GPT-4.1 (2025) | No technical safety report | N/A | OpenAI statement |
+
+This compression creates severe constraints on thorough safety testing:
 - Complex evaluations require substantial time to design and execute
 - Emergent capabilities may only become apparent through extended testing
 - Red teams need adequate access to explore edge cases and failure modes
+- One evaluator told FT: "We had more thorough safety testing when [the technology] was less important"
 
 ### Pre-Deployment Testing Examples
 
@@ -114,15 +178,22 @@ The evaluators noted that testing was "conducted in a limited time period with f
 
 ### Evaluator Access Challenges
 
-METR and other evaluation organizations report that comprehensive risk assessments require:
+[METR](https://metr.org/blog/2025-01-17-ai-models-dangerous-before-public-deployment/) and other evaluation organizations report that comprehensive risk assessments require:
 - Substantial expertise and specialized knowledge
 - Direct access to models and training data
 - More time than companies typically provide
 - Information about technical methodologies that companies often withhold
 
+METR argues that powerful AI systems "are not ordinary products" and risks should be addressed throughout the whole AI development lifecycle. They advocate for "earlier evaluations for dangerous capabilities, better forecasting of AI capabilities prior to training, and more emphasis on security and safety throughout development."
+
 ### AI Safety Index Findings
 
-Researchers found that "AI companies are unlikely to make high-assurance safety cases if timelines are short." The gap between capabilities acceleration and risk management practice is widening.
+The [2025 AI Safety Index](https://futureoflife.org/ai-safety-index-summer-2025/) from Future of Life Institute found:
+
+- "AI companies are unlikely to make high-assurance safety cases if timelines are short"
+- "AI developers control both the design and disclosure of dangerous capability evaluations, creating inherent incentives to underreport alarming results"
+- "Naive elicitation strategies cause significant underreporting of risk profiles"
+- The gap between capabilities acceleration and risk management practice is widening
 
 **Data Quality:** Limited public data on specific evaluation timelines. Most information comes from investigative journalism, evaluator reports, and company transparency documents.
 
@@ -142,19 +213,33 @@ Notable recent engagements: ControlPlane's Torin van den Bulk contributed to ext
 
 ### Key Vulnerabilities Found
 
-From HackerOne's aggregated testing data:
-- **Cross-tenant data leakage:** Found in nearly all enterprise tests (highest concern)
-- **Prompt injection and jailbreak exploits:** Frequently bypass safety filters
-- **Unsafe outputs:** Various categories of harmful or unintended responses
+From HackerOne's aggregated testing data across 1,700+ AI assets:
+
+| Vulnerability Type | Frequency | Severity | Notes |
+|-------------------|-----------|----------|-------|
+| Cross-tenant data leakage | Found in nearly all enterprise tests | Critical | Highest priority concern |
+| Prompt injection | 75%+ of tested models | High | Frequently bypasses safety filters |
+| Jailbreak exploits | Variable | High | Success rates vary by methodology |
+| Unsafe outputs | Common | Medium-High | Various categories of harmful responses |
+
+### Anthropic Jailbreak Challenge Results (2025)
+
+[Anthropic partnered with HackerOne](https://www.hackerone.com/blog/how-anthropics-jailbreak-challenge-put-ai-safety-defenses-test) to test Constitutional Classifiers on Claude 3.5 Sonnet:
+
+- **300,000+ chat interactions** from 339 participants
+- **$55,000 in bounties** paid to four successful teams
+- One team found a **universal jailbreak** passing all levels
+- One team found a **borderline-universal jailbreak**
+- Two teams passed all eight levels using multiple individual jailbreaks
 
 ### Testing Metrics
 
-Industry KPIs for AI red teaming include:
-- Jailbreak success rate
-- Mean time to detect (MTTD) vulnerabilities
-- Mean time to remediate (MTTR)
-- Percentage of models with Software Bill of Materials (SBOM)
-- Return on Mitigation (RoM)
+| Metric | Description | Industry Benchmark |
+|--------|-------------|-------------------|
+| Jailbreak success rate (ASR) | Percentage of successful bypass attempts | Varies: 0% to 63% at 100 attempts |
+| Mean time to detect (MTTD) | Time to discover vulnerabilities | 10 min to 7+ hours |
+| Mean time to remediate (MTTR) | Time to fix discovered issues | Not publicly disclosed |
+| Attack success at 200 attempts | Multi-attempt bypass rate | Claude Opus 4.5: 0% (computer use) to 63% (coding) |
 
 ### Government Framework
 
@@ -178,11 +263,17 @@ While external red teaming is increasingly common, critical gaps remain:
 
 ### Google Gemini 2.5 Pro (March 2025)
 
-Google released Gemini 2.5 Pro **without a model card**, violating commitments made to the U.S. government and at international AI safety summits. The company eventually released a "simplified six-page model card" three weeks after public availability, which AI governance experts called "meager" and "worrisome."
+[Google released Gemini 2.5 Pro](https://fortune.com/2025/04/09/google-gemini-2-5-pro-missing-model-card-in-apparent-violation-of-ai-safety-promises-to-us-government-international-bodies/) **without a model card**, violating commitments made to the U.S. government and at international AI safety summits:
 
-**Government Response:** 60 U.K. politicians signed an open letter accusing Google DeepMind of "a troubling breach of trust with governments and the public" and a "failure to honour" international commitments.
+| Timeline | Event | Notes |
+|----------|-------|-------|
+| March 2025 | Gemini 2.5 Pro released | No model card published |
+| 3 weeks later | Simplified 6-page model card | [Called "meager" and "worrisome"](https://fortune.com/article/google-gemini-2-5-pro-model-card-published-ai-governance-expert-criticizes-it-as-meager-and-worrisome/) by AI governance experts |
+| Late June 2025 | Detailed report published | Months after full release |
 
-**Google's Defense:** The company claimed Gemini 2.5 Pro was an "experimental" release, exempting it from normal documentation requirements. A more detailed report was promised "later" and appeared in late June, **months after full release**.
+**Government Response:** [60 U.K. politicians signed an open letter](https://fortune.com/2025/08/29/british-lawmakers-accuse-google-deepmind-of-breach-of-trust-over-delayed-gemini-2-5-pro-safety-report/) accusing Google DeepMind of "a troubling breach of trust with governments and the public" and a "failure to honour" international commitments.
+
+**Google's Defense:** The company claimed Gemini 2.5 Pro was an "experimental" release, exempting it from normal documentation requirements.
 
 ### OpenAI Documentation Gaps
 
@@ -220,11 +311,11 @@ While voluntary commitments emphasize transparency, actual disclosure practices 
 ### Testing Approaches
 
 Major frontier AI labs follow safety policies that include pre-deployment testing:
-- OpenAI's Preparedness Framework
+- [OpenAI's Preparedness Framework](https://openai.com/index/updating-our-preparedness-framework/) (Version 2, April 2025)
 - Google DeepMind's Frontier Safety Framework
-- Anthropic's Responsible Scaling Policy
+- [Anthropic's Responsible Scaling Policy](https://www.anthropic.com/rsp-updates) (Version 2.2, May 2025)
 
-Third-party evaluators (UK AISI, US AISI, Apollo Research, METR) also conduct pre-deployment assessments, though their access and time are limited.
+Third-party evaluators (UK AISI, US AISI, Apollo Research, [METR](https://metr.org/)) also conduct pre-deployment assessments, though their access and time are limited. [METR's analysis of 12 companies](https://metr.org/blog/2025-12-09-common-elements-of-frontier-ai-safety-policies/) with published frontier AI safety policies found variable commitment levels.
 
 ### Known Testing Examples
 
@@ -265,13 +356,16 @@ Unlike pharmaceuticals (multi-year clinical trials) or aerospace (extensive cert
 
 ### November-December 2025: "Tit-for-Tat Arms Race"
 
-In just 25 days, four major AI companies launched their most powerful models:
-- **November 17:** xAI's Grok 4.1
-- **November 18:** Google's Gemini 3
-- **November 24:** Anthropic's Claude Opus 4.5
-- **December 11:** OpenAI's GPT-5.2
+In just [25 days, four major AI companies launched their most powerful models](https://vertu.com/lifestyle/the-ai-model-race-reaches-singularity-speed/):
 
-This concentration represented "a compression of innovation never before seen in technology history." OpenAI's Sam Altman issued an internal "code red" memo after Gemini 3 topped leaderboards.
+| Date | Company | Model | Benchmark Performance |
+|------|---------|-------|----------------------|
+| November 17 | xAI | Grok 4.1 | Top on select reasoning tasks |
+| November 18 | Google | Gemini 3 | Topped multiple leaderboards |
+| November 24 | Anthropic | Claude Opus 4.5 | 80%+ on SWE-Bench Verified |
+| December 11 | OpenAI | GPT-5.2 | Competitive across benchmarks |
+
+This concentration represented "a compression of innovation never before seen in technology history." OpenAI's Sam Altman [issued an internal "code red" memo](https://techcrunch.com/2025/12/11/openai-fires-back-at-google-with-gpt-5-2-after-code-red-memo/) after Gemini 3 topped leaderboards, with internal sources reporting that some employees asked for delays but "competitive pressure forced the accelerated timeline."
 
 ### 2025 Release Summary
 
@@ -316,11 +410,18 @@ Rapid release velocity creates pressure that:
 
 ## 8. Open-Source vs Closed Model Capability Gap
 
-**Current Status (2025):** Gap narrowing significantly, from ~16 months in 2024 to potential parity in some domains.
+**Current Status (2025):** Gap narrowing significantly, from approximately 16 months in 2024 to approximately 3 months in late 2025.
 
 ### Current Gap Estimate
 
-**Epoch AI Report:** "The best open model today is on par with closed models in performance, but with a lag of about one year."
+[Epoch AI research from October 2025](https://epoch.ai/data-insights/open-weights-vs-closed-weights-models) found:
+
+| Metric | 2024 Estimate | 2025 Estimate | Trend |
+|--------|---------------|---------------|-------|
+| Average lag time | 16 months | 3 months | Narrowing rapidly |
+| ECI gap (capability index) | 15-20 points | 7 points | Narrowing |
+| Benchmark parity domains | Limited | Most key benchmarks | Expanding |
+| Enterprise use gap | Significant | 15% on SWE-Bench | Narrowing |
 
 **Specific Example:** Meta's Llama 3.1 405B (released July 2024) took approximately **16 months** to match the capabilities of GPT-4's first version.
 
@@ -328,7 +429,7 @@ Rapid release velocity creates pressure that:
 
 **2024:** Ecosystem relied primarily on Llama 3, with Qwen2.5 and DeepSeek known to specialists.
 
-**2025:** DeepSeek and Qwen became widely adopted. DeepSeek R1 (January 20, 2025) had "immense impact" on both open model and general AI landscape. The open ecosystem "immensely accelerated in terms of capabilities, rivaling closed models on most key benchmarks."
+**2025:** [DeepSeek R1 (January 20, 2025)](https://www.interconnects.ai/p/2025-open-models-year-in-review) achieved performance parity with OpenAI's o1 while operating at 15x reduced cost, training for just $5.6 million. The open ecosystem "immensely accelerated in terms of capabilities, rivaling closed models on most key benchmarks."
 
 ### Meta's Claims
 
@@ -374,18 +475,19 @@ A leaked 2023 Google memo warned: "we aren't positioned to win this arms race â€
 
 ### OpenAI Safety Departures (2024-2025)
 
-**May 2024 - Superalignment Team Dissolution:**
+**May 2024 - [Superalignment Team Dissolution](https://www.cnbc.com/2024/05/17/openai-superalignment-sutskever-leike.html):**
 
-**Ilya Sutskever** (Co-founder, Chief Scientist, Superalignment co-lead): Departed May 2024
+| Name | Role | Departure Date | Public Statement |
+|------|------|---------------|-----------------|
+| Ilya Sutskever | Co-founder, Chief Scientist, Superalignment co-lead | May 14, 2024 | No public criticism |
+| Jan Leike | Head of Alignment, Superalignment co-lead | May 2024 | "Safety culture... took a backseat to shiny products" |
+| Daniel Kokotajlo | Safety researcher | April 2024 | "Resigned in protest after losing confidence" |
+| Leopold Aschenbrenner | Safety researcher | 2024 | Reportedly fired for leaking information |
+| William Saunders | Safety researcher | 2024 | No public statement |
 
-**Jan Leike** (Head of Alignment, Superalignment co-lead): Resigned May 2024, stating "safety culture and processes have taken a backseat to shiny products." Leike said his team was "struggling for compute" despite OpenAI's promise to allocate 20% of compute to Superalignment. He joined Anthropic.
+**Jan Leike's criticism:** ["Over the past few months my team has been sailing against the wind. Sometimes we were struggling for [computing resources]"](https://www.axios.com/2024/05/20/openai-safety-jan-leike-sam-altman) despite OpenAI's promise to allocate 20% of compute to Superalignment. He joined Anthropic.
 
 **Result:** The entire Superalignment team was disbanded, with members reassigned to other teams.
-
-**Additional 2024 Departures:**
-- Leopold Aschenbrenner (reportedly fired for leaking information)
-- Daniel Kokotajlo (resigned in April "in protest after losing confidence in the company")
-- William Saunders
 
 **September 2024 Leadership Exits:**
 - Mira Murati (CTO, 6 years at OpenAI)

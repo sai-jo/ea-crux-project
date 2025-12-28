@@ -1,8 +1,9 @@
 ---
 title: Governance-Focused Worldview
-description: Technical solutions need policy and coordination to work.
+description: This worldview holds that technical AI safety solutions require policy, coordination, and institutional change to be effectively adopted, estimating 10-30% existential risk by 2100. Evidence shows 85% of AI lobbyists represent industry, labs face structural racing dynamics, and governance interventions like the EU AI Act and compute export controls can meaningfully shape outcomes.
 importance: 78.5
-quality: 4
+quality: 5
+lastEdited: "2025-12-28"
 llmSummary: Presents the governance-focused worldview that technical AI safety
   solutions must be coupled with policy, coordination, and institutional changes
   to be effectively implemented, estimating 10-30% existential risk by 2100.
@@ -11,7 +12,19 @@ llmSummary: Presents the governance-focused worldview that technical AI safety
   oversight, international coordination, and regulatory frameworks.
 ---
 
-import {EstimateBox, Tags, R} from '../../../../components/wiki';
+import {EstimateBox, Tags, Mermaid, R} from '../../../../components/wiki';
+
+## Quick Assessment
+
+| Dimension | Assessment | Evidence |
+|-----------|------------|----------|
+| Core claim | Governance bottleneck exceeds technical bottleneck | 85% of DC AI lobbyists represent industry; labs face structural racing dynamics |
+| Historical precedent | Strong | Nuclear treaties prevented proliferation; Montreal Protocol phased out CFCs; FDA approval process |
+| Policy momentum | Accelerating | US federal agencies issued 59 AI regulations in 2024 (2x 2023); EU AI Act entered force August 2024 |
+| International coordination | Feasible but challenging | US-China AI dialogue began May 2024; joint UN AI resolution passed June 2024 |
+| Regulatory capture risk | Moderate to high | AI lobbying spending increased 141% in 2024; OpenAI increased lobbying 7x year-over-year |
+| Compute governance | Most concrete lever | Export controls reduced Huawei's AI chip production by 80-85% vs. capacity |
+| P(doom) range | 10-30% | Emphasis on policy and coordination as key levers for risk reduction |
 
 **Core belief**: Whether alignment is technically tractable or not, the bottleneck is getting good solutions adopted. Governance, coordination, and institutional change are the key levers.
 
@@ -31,6 +44,33 @@ The governance-focused worldview holds that the primary challenge isn't just sol
 This perspective emphasizes that AI development doesn't happen in a vacuum. It's shaped by economic incentives, regulatory frameworks, international relations, corporate culture, and political will. The path to safe AI runs through these institutions.
 
 Unlike pure technical optimism, governance-focused thinkers recognize that labs face competitive pressures that may override safety concerns. Unlike pure technical pessimism, they believe that shaping the development environment can significantly reduce risk.
+
+### The Governance Gap
+
+<Mermaid client:load chart={`
+flowchart TD
+    TECH[Technical Safety Research] --> GAP{Adoption Gap}
+    GAP --> DEPLOY[Deployed Systems]
+
+    COMP[Competitive Pressure] --> GAP
+    INTL[International Racing] --> GAP
+    ECON[Economic Incentives] --> GAP
+
+    GOV[Governance Interventions] --> BRIDGE[Bridge the Gap]
+    BRIDGE --> DEPLOY
+
+    GOV --> REG[Regulation]
+    GOV --> COORD[Coordination]
+    GOV --> STAND[Standards]
+    GOV --> COMP_GOV[Compute Governance]
+
+    style GAP fill:#ffcccc
+    style BRIDGE fill:#ccffcc
+    style GOV fill:#ccffcc
+    style DEPLOY fill:#ffffcc
+`} />
+
+The governance perspective identifies a structural gap between safety research and adoption, driven by competitive dynamics that governance interventions must bridge.
 
 ## Characteristic Beliefs
 
@@ -86,14 +126,18 @@ These aren't about individual actors being reckless - they're structural problem
 
 ### 3. Governance Has Historical Precedent
 
-Technology governance has worked before:
+Technology governance has worked before, with measurable impact:
 
-- **Nuclear weapons**: Test ban treaties, non-proliferation agreements, arms control
-- **Biotechnology**: Asilomar conference, gain-of-function research oversight
-- **Pharmaceuticals**: FDA approval process, clinical trial requirements
-- **Aviation**: Extensive safety regulations and international standards
+| Technology Domain | Key Intervention | Measurable Outcome |
+|-------------------|------------------|-------------------|
+| Nuclear weapons | NPT (1970) + IAEA verification | 9 nuclear states vs. Kennedy's predicted 25-30 by 1975 |
+| CFCs | Montreal Protocol (1987) | 99% reduction in production; ozone layer recovering |
+| Pharmaceuticals | FDA approval (1962 Kefauver-Harris) | Pre-market safety testing prevented thalidomide-scale disasters in US |
+| Aviation | FAA regulations + ICAO standards | Fatal accidents: 0.07 per million flights (2023) vs. 5+ in 1950s |
+| Biotechnology | Asilomar (1975) + NIH guidelines | No major recombinant DNA incidents in 50 years |
+| Financial regulation | Dodd-Frank (2010) | Bank capital requirements increased 2-3x; stress testing institutionalized |
 
-While imperfect, these show that governance can shape powerful technologies.
+While imperfect, these show that governance can shape powerful technologies. The common pattern: early intervention during development, international coordination, and verifiable standards.
 
 ### 4. Policy Shapes What Research Happens
 
@@ -117,6 +161,39 @@ For many challenges, we know what to do - the question is whether we'll do it:
 - **Safety training**: We can improve alignment techniques, but will cutting corners happen?
 
 Governance closes the gap between "can" and "will."
+
+## Current Governance Landscape (2024-2025)
+
+Recent developments demonstrate both momentum and challenges in AI governance:
+
+### Policy Activity
+
+According to the [2025 Stanford AI Index](https://hai.stanford.edu/ai-index/2025-ai-index-report), US federal agencies introduced 59 AI-related regulations in 2024—more than double 2023. Globally, legislative mentions of AI rose 21.3% across 75 countries since 2023, marking a ninefold increase since 2016.
+
+| Jurisdiction | Key Development | Status |
+|--------------|-----------------|--------|
+| European Union | [AI Act](https://artificialintelligenceact.eu/) | Entered force August 2024; prohibited practices effective February 2025; full application August 2026 |
+| United States | Executive Order 14110 | Issued October 2023; partially rescinded 2025; compute reporting thresholds debated |
+| United Kingdom | AI Safety Institute | Established 2023; first joint evaluation with US AISI November 2024 |
+| China | [Global AI Governance Action Plan](https://www.fmprc.gov.cn/eng./xw/zyxw/202507/t20250729_11679232.html) | Announced July 2025; 13-point roadmap for international coordination |
+
+### International Coordination Efforts
+
+The [RAND analysis on US-China AI cooperation](https://www.rand.org/pubs/perspectives/PEA4189-1.html) identifies promising areas for dialogue despite competition:
+
+- **May 2024**: First US-China intergovernmental AI dialogue in Geneva
+- **June 2024**: UN General Assembly unanimously passed China-led AI cooperation resolution (US supported)
+- **November 2024**: US-China agreement that humans, not AI, should make nuclear weapons decisions
+- **July 2025**: China proposed global AI cooperation organization at WAIC
+
+### Regulatory Capture Risk
+
+[RAND research on AI regulatory capture](https://www.rand.org/pubs/research_briefs/RBA3679-1.html) and [OpenSecrets lobbying data](https://www.opensecrets.org/news/2024/06/lobbying-on-ai-reaches-new-heights-in-2024/) reveal industry influence:
+
+- 648 companies spent on AI lobbying in 2024 (vs. 458 in 2023, 141% increase)
+- [OpenAI increased lobbying spending 7x](https://www.technologyreview.com/2025/01/21/1110260/openai-ups-its-lobbying-efforts-nearly-seven-fold/) ($1.76M in 2024 vs. $260K in 2023)
+- 85% of DC AI lobbyists work for industry organizations
+- Many former congressional tech staffers now lobby for AI companies
 
 ## Key Organizations and Proponents
 
@@ -149,17 +226,17 @@ Governance closes the gap between "can" and "will."
 
 ### Individual Voices
 
-**Allan Dafoe**: Research on international cooperation, strategic stability
+**[Allan Dafoe](https://www.allandafoe.com/)**: Founder and former Director of [GovAI](https://www.governance.ai/), now Director of Frontier Safety and Governance at Google DeepMind. Author of the foundational [AI Governance: A Research Agenda](https://www.governance.ai/research-paper/agenda) (2018).
 
 > "The challenge isn't just building safe AI - it's building institutions that ensure AI is developed safely."
 
-**Jess Whittlestone**: Research on AI ethics and governance
+**Jess Whittlestone**: Research on AI ethics and governance at the Centre for Long-Term Resilience
 
-**Markus Anderljung**: Work on compute governance and standards
+**Markus Anderljung**: Work on compute governance and standards at GovAI; co-author of influential compute governance papers
 
-**Gillian Hadfield**: Legal and institutional frameworks for AI
+**Gillian Hadfield**: Legal and institutional frameworks for AI; Professor at Johns Hopkins and Director of the Schwartz Reisman Institute
 
-**Helen Toner**: Board-level governance, international policy
+**Helen Toner**: Former OpenAI board member; Georgetown CSET research on international AI policy
 
 ## Priority Approaches
 
@@ -187,11 +264,18 @@ Given governance-focused beliefs, key priorities include:
 
 ### 2. Compute Governance
 
-Compute is a physical chokepoint that can be governed:
+Compute is a physical chokepoint that can be governed. [RAND research](https://www.rand.org/pubs/perspectives/PEA3776-1.html) and [analysis by the Council on Foreign Relations](https://www.cfr.org/article/chinas-ai-chip-deficit-why-huawei-cant-catch-nvidia-and-us-export-controls-should-remain) demonstrate measurable effects:
+
+| Intervention | Implementation | Measured Effect |
+|--------------|----------------|-----------------|
+| US chip export controls (Oct 2022) | Restricted advanced AI chips to China | Chinese stockpiling delayed impact; DeepSeek trained on pre-control chips |
+| High-bandwidth memory controls (Dec 2024) | Added HBM to controlled items | Huawei projected 200-300K chips vs. 1.5M capacity (80-85% reduction) |
+| SME equipment controls | Restricted lithography, etch, deposition | Chinese AI companies report 2-4x power consumption penalty |
+| Dutch/Japanese coordination (2023) | Aligned export controls with US | 9-month enforcement delay enabled $5B stockpiling |
 
 **Supply chain interventions**:
 - Track production and distribution of AI chips
-- Require reporting for large training runs
+- Require reporting for large training runs (thresholds around 10^26 FLOP proposed)
 - Restrict access to frontier compute
 
 **International coordination**:
@@ -200,9 +284,9 @@ Compute is a physical chokepoint that can be governed:
 - Verification of compliance
 
 **Advantages**:
-- Verifiable (can detect large training runs)
-- Implementable (chip production is concentrated)
-- Effective (compute is necessary for frontier AI)
+- Verifiable (large training runs require ~10,000+ GPUs, detectable via power consumption)
+- Implementable (chip production concentrated: TSMC produces 90%+ of advanced chips)
+- Effective (compute is necessary for frontier AI; cloud access can be revoked)
 
 ### 3. Lab Safety Culture
 
@@ -246,23 +330,25 @@ Create accountability through measurement:
 
 ### 5. International Coordination
 
-Prevent race-to-the-bottom dynamics:
+Prevent race-to-the-bottom dynamics. Research from [Oxford International Affairs](https://academic.oup.com/ia/article/100/3/1275/7641064) and [Brookings](https://www.brookings.edu/articles/strengthening-international-cooperation-on-artificial-intelligence/) analyzes pathways:
 
 **US-China cooperation**:
-- Scientist-to-scientist dialogue
-- Government working groups
-- Joint safety research
-- Mutual verification
+- Scientist-to-scientist dialogue (Track 2)
+- Government working groups (Geneva dialogue May 2024)
+- Joint safety research on shared risks
+- Mutual verification for compute thresholds
 
 **Multilateral frameworks**:
-- UN or other international body for AI
-- Treaty-style commitments
-- Verification and compliance mechanisms
+- UN High-Level Advisory Body on AI (final report August 2024)
+- [Proposal for international AI agency](https://academic.oup.com/ia/article/101/4/1483/8141294)
+- Bletchley Declaration (2023) and Seoul Frontier AI Safety Commitments (2024)
+- G7 Hiroshima AI Process
 
 **Track 2 diplomacy**:
-- Academic and NGO engagement
+- Academic and NGO engagement across borders
 - Build relationships before crisis
 - Establish communication channels
+- Former Google CEO Eric Schmidt at WAIC 2025: "The United States and China should collaborate on these issues"
 
 ## Deprioritized Approaches
 
@@ -295,7 +381,14 @@ Not that these are useless, but they're less central given governance-focused be
 
 ### 2. Market Failures in Safety
 
-AI development exhibits classic market failures:
+AI development exhibits classic market failures. [Research on the economics of AI safety investment](https://www.researchgate.net/publication/391700782_Economics_of_AI_Safety_Investment_Market_Failures_and_Policy_Responses) identifies structural barriers even when safety investment would be socially optimal:
+
+| Market Failure Type | Mechanism | Quantified Impact |
+|---------------------|-----------|-------------------|
+| Negative externalities | Individual actors bear safety costs, society bears risk | Estimated $10-100B+ in potential catastrophic externalities not priced |
+| Public goods undersupply | Safety techniques can be copied | Safety research estimated at 2-5% of AI R&D vs. 10-20% optimal |
+| Information asymmetry | Labs know more than regulators | Model cards cover less than 30% of safety-relevant properties |
+| Competitive dynamics | First-mover advantage incentivizes rushing | Average time from research to deployment: 18 months (2020) to 6 months (2024) |
 
 **Externalities**: Individual actors bear costs of safety but don't capture all benefits
 - Lab that slows down loses competitive advantage
@@ -378,14 +471,14 @@ Current moment may be critical window for establishing governance.
 
 ### "Regulatory Capture Is Inevitable"
 
-**Critique**: Industry will capture regulators, resulting in theater without substance.
+**Critique**: Industry will capture regulators, resulting in theater without substance. [Evidence from Nature](https://www.nature.com/articles/d41586-024-02988-0) shows AI companies have successfully weakened state-level AI legislation.
 
 **Response**:
-- Capture is a risk to manage, not a certainty
+- Capture is a risk to manage, not a certainty—[RAND proposes specific countermeasures](https://www.rand.org/pubs/research_briefs/RBA3679-1.html)
 - Multi-stakeholder processes reduce capture risk
-- International competition limits capture
+- International competition limits capture (EU AI Act creates pressure)
 - Public attention and advocacy create accountability
-- Design institutions with capture resistance (independent oversight, transparency)
+- Design institutions with capture resistance (independent oversight, transparency, mandatory disclosure of lobbying)
 
 ### "International Coordination Is Impossible"
 
@@ -646,7 +739,7 @@ The governance-focused worldview includes significant variation:
 ### Foundational Texts
 
 - <R id="116dcbefef9b0f01">The Governance of AI</R> - FHI Research Agenda
-- <R id="c2e15e64323078f5">AI Governance: A Research Agenda</R> - Allan Dafoe
+- <R id="c2e15e64323078f5">AI Governance: A Research Agenda</R> - [Allan Dafoe](https://cdn.governance.ai/GovAI-Research-Agenda.pdf) (2018)
 - <R id="ec57d21ec35c1d02">Computing Power and the Governance of AI</R> - Girish Sastry et al.
 
 ### Policy Analysis
@@ -654,20 +747,28 @@ The governance-focused worldview includes significant variation:
 - <R id="764f3b83cfa0cd07">Intermediate AI Governance</R> - Nick Bostrom
 - <R id="5f753eba42556d7e">Decoupling Deliberation and Deployment</R>
 - <R id="a2cde6af5436a9fb">Racing Through a Minefield</R>
+- [Global AI governance: barriers and pathways forward](https://academic.oup.com/ia/article/100/3/1275/7641064) - Oxford International Affairs (2024)
+- [AI Governance in a Complex and Rapidly Changing Regulatory Landscape](https://www.nature.com/articles/s41599-024-03560-x) - Nature (2024)
 
 ### International Coordination
 
 - <R id="2aa9514c9047ada3">US-China Cooperation on AI Safety</R>
 - <R id="ddc2adeecb01f76f">International Cooperation on AI Governance</R>
+- [Potential for U.S.-China Cooperation on Reducing AI Risks](https://www.rand.org/pubs/perspectives/PEA4189-1.html) - RAND (2024)
+- [Promising Topics for US–China Dialogues on AI Risks](https://dl.acm.org/doi/full/10.1145/3715275.3732080) - ACM FAccT (2025)
 
 ### Compute Governance
 
 - <R id="a7d8c8e501716ea2">Compute-Based Regulations</R>
 - <R id="2e8fad2698fb965b">Visibility into AI Chips</R>
+- [Understanding the AI Diffusion Framework](https://www.rand.org/pubs/perspectives/PEA3776-1.html) - RAND (2025)
+- [Understanding US Allies' Legal Authority on Export Controls](https://www.csis.org/analysis/understanding-us-allies-current-legal-authority-implement-ai-and-semiconductor-export) - CSIS (2024)
 
 ### Institutional Design
 
 - <R id="1c3727edad48f707">Auditing for Large Language Models</R>
 - <R id="490028792929073c">Model Evaluation for Extreme Risks</R>
+- [Managing Industry Influence in U.S. AI Policy](https://www.rand.org/pubs/research_briefs/RBA3679-1.html) - RAND (2024)
+- [AI Governance Profession Report 2025](https://iapp.org/resources/article/ai-governance-profession-report) - IAPP
 
 <Tags tags={['worldview', 'governance', 'coordination', 'policy', 'institutions']} />

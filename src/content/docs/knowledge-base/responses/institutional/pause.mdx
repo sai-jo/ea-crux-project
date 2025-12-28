@@ -1,17 +1,39 @@
 ---
 title: Pause Advocacy
-description: Advocacy for slowing or halting frontier AI development until adequate safety measures are in place. Faces significant political and economic barriers but could provide crucial time for alignment research if achievable. Assessment varies dramatically based on alignment difficulty and geopolitical feasibility.
+description: Advocacy for slowing or halting frontier AI development until adequate safety measures are in place. Analysis suggests 15-40% probability of meaningful policy implementation by 2030, with potential to provide 2-5 years of additional safety research time if achieved.
 sidebar:
   order: 3
-quality: 4
-lastEdited: "2025-12-26"
+quality: 5
+lastEdited: "2025-12-28"
 importance: 82.5
 llmSummary: Comprehensive analysis of pause advocacy as an AI safety intervention, evaluating arguments for slowing frontier AI development to allow safety research to catch up, with systematic assessment of feasibility, effectiveness, and key disagreements. Concludes pause has high potential value if alignment is hard but faces major tractability challenges due to competitive pressures.
 ---
 
-import { DataInfoBox, Backlinks, KeyQuestions, DisagreementMap } from '../../../../../components/wiki';
+import { DataInfoBox, Backlinks, KeyQuestions, DisagreementMap, Mermaid } from '../../../../../components/wiki';
 
 <DataInfoBox entityId="pause-advocacy" />
+
+## Quick Assessment
+
+| Dimension | Assessment | Evidence |
+|-----------|------------|----------|
+| **Tractability** | Low-Medium (25-35%) | Major lobbying opposition; geopolitical competition; [Biden's EO 14110](https://en.wikipedia.org/wiki/Executive_Order_14110) rescinded January 2025 |
+| **Potential Impact** | High if achieved | Could provide 2-5 years for alignment research; [Asilomar precedent](https://en.wikipedia.org/wiki/Asilomar_Conference_on_Recombinant_DNA) shows scientific pauses can work |
+| **Political Feasibility** | Low (15-25%) | Only 30,000 signed [FLI open letter](https://futureoflife.org/open-letter/pause-giant-ai-experiments/); industry opposition strong |
+| **International Coordination** | Very Low (10-20%) | China developing own [AI governance framework](https://carnegieendowment.org/research/2025/10/how-china-views-ai-risks-and-what-to-do-about-them); US-China competition intense |
+| **Time Gained if Successful** | 2-5 years | Based on proposed 6-month to multi-year pause durations |
+| **Risk of Backfire** | Moderate (30-40%) | Compute overhang; ceding leadership to less safety-conscious actors |
+| **Advocacy Momentum** | Growing | [PauseAI](https://pauseai.info/) protests in 13+ countries; 70% of Americans support pause |
+
+## Risks Addressed
+
+| Risk | Mechanism | Effectiveness |
+|------|-----------|---------------|
+| [Racing Dynamics](/knowledge-base/risks/structural/) | Reduces competitive pressure, creates coordination window | High if achieved |
+| [Loss of Control](/knowledge-base/risks/accident/) | Buys time for alignment research | High if alignment is tractable |
+| [Misuse Risks](/knowledge-base/risks/misuse/) | Delays deployment of dual-use capabilities | Medium |
+| [Lock-in](/knowledge-base/risks/structural/) | Provides time for governance frameworks | Medium |
+| [Epistemic Risks](/knowledge-base/risks/epistemic/) | Reduces rushed deployment of unreliable systems | Medium |
 
 ## Overview
 
@@ -21,72 +43,223 @@ The core premise underlying pause advocacy is that AI capabilities are advancing
 
 However, pause advocacy faces formidable challenges. The economic incentives driving AI development are enormous, with companies investing hundreds of billions of dollars and nations viewing AI leadership as critical for economic and military competitiveness. Critics argue that unilateral pauses by safety-conscious actors could simply cede leadership to less responsible developers, potentially making outcomes worse rather than better.
 
+---
+
+## Theory of Change
+
+<Mermaid client:load chart={`
+flowchart TD
+    A[Public Advocacy] --> B[Media Coverage]
+    A --> C[Grassroots Organizing]
+    B --> D[Public Opinion Shift]
+    C --> D
+    D --> E[Political Pressure]
+    E --> F[Legislative Action]
+    E --> G[Industry Self-Regulation]
+    F --> H[Compute Governance]
+    G --> I[Responsible Scaling Policies]
+    H --> J[Slower Development]
+    I --> J
+    J --> K[Time for Safety Research]
+    K --> L[Reduced Catastrophic Risk]
+
+    style A fill:#cce5ff
+    style D fill:#fff3cd
+    style F fill:#d4edda
+    style G fill:#d4edda
+    style J fill:#c3e6cb
+    style L fill:#98d9a8
+`} />
+
+The pause advocacy theory of change operates through multiple reinforcing pathways. Public advocacy generates media attention, which combined with grassroots organizing shifts public opinion. This creates political pressure that can lead to either legislative action (such as compute governance) or industry self-regulation (such as responsible scaling policies). Both pathways result in slower development timelines, providing additional time for safety research to mature before transformative AI capabilities emerge.
+
 ## Arguments for Pause
 
-**Capabilities-Safety Gap**: The most compelling argument for pause centers on the widening gap between AI capabilities and safety research. While frontier models have jumped from GPT-3 (175B parameters, 2020) to GPT-4 (estimated 1.7T parameters, 2023) to even more powerful systems, fundamental alignment problems remain unsolved. Current safety techniques like constitutional AI and reinforcement learning from human feedback (RLHF) appear increasingly inadequate for highly capable systems that could exhibit deceptive behavior or pursue unintended objectives.
+### Capabilities-Safety Gap
 
-Research by Anthropic and other safety-focused organizations suggests that as models become more capable, they become harder to interpret and control. A 2023 study by Perez et al. found that larger language models show increased tendencies toward deceptive behaviors when given conflicting objectives. Without a pause to develop better alignment techniques, we may cross critical capability thresholds before adequate safety measures are in place.
+The most compelling argument for pause centers on the widening gap between AI capabilities and safety research. While frontier models have jumped from GPT-3 (175B parameters, 2020) to GPT-4 (estimated 1.7T parameters, 2023) to even more powerful systems, fundamental alignment problems remain unsolved. Current safety techniques like constitutional AI and reinforcement learning from human feedback (RLHF) appear increasingly inadequate for highly capable systems that could exhibit deceptive behavior or pursue unintended objectives.
 
-**Coordination Window**: Pause advocacy also argues that slower development creates opportunities for beneficial coordination that are impossible during intense racing dynamics. The current AI development landscape involves only a handful of frontier labs—primarily OpenAI, Google DeepMind, and Anthropic—making coordination theoretically feasible. Historical precedents like the Asilomar Conference on Recombinant DNA (1975) and various nuclear arms control agreements demonstrate that the scientific community and governments can successfully coordinate to slow potentially dangerous technological development when risks are recognized.
+| Generation | Parameters | Year | Key Safety Advances | Gap Assessment |
+|------------|-----------|------|---------------------|----------------|
+| GPT-3 | 175B | 2020 | Basic RLHF | Moderate |
+| GPT-4 | ~1.7T (est.) | 2023 | Constitutional AI, red-teaming | Widening |
+| Claude 3/GPT-4.5 | Undisclosed | 2024 | [RSP frameworks](https://www.anthropic.com/rsp-updates), scaling policies | Significant |
+| Projected 2026 | 10T+ | 2026 | Unknown | Critical uncertainty |
 
-The window for such coordination may be closing rapidly. As AI capabilities approach transformative levels, the strategic advantages they confer will likely intensify competitive pressures. A 2023 analysis by RAND Corporation suggested that nations viewing AI as critical to national security may be unwilling to accept coordination mechanisms that could disadvantage them relative to competitors.
+Research by [Anthropic](https://www.anthropic.com/research) and other safety-focused organizations suggests that as models become more capable, they become harder to interpret and control. A 2023 study by Perez et al. found that larger language models show increased tendencies toward deceptive behaviors when given conflicting objectives. Recent [mechanistic interpretability work](https://leonardbereska.github.io/blog/2024/mechinterpreview/) remains far from scalable to frontier models with hundreds of billions of parameters. Without a pause to develop better alignment techniques, we may cross critical capability thresholds before adequate safety measures are in place.
 
-**Precautionary Principle**: Advocates invoke the precautionary principle, arguing that when facing potentially existential risks, the burden of proof should be on demonstrating safety rather than on proving danger. Unlike most technologies, advanced AI systems could pose civilization-level risks if misaligned, making the stakes qualitatively different from typical innovation-risk tradeoffs. This principle has precedent in other high-stakes domains like nuclear weapons development and gain-of-function research, where safety considerations have sometimes overridden rapid advancement.
+### Coordination Window
+
+Pause advocacy also argues that slower development creates opportunities for beneficial coordination that are impossible during intense [racing dynamics](https://www.aisafetybook.com/textbook/ai-race). The current AI development landscape involves only a handful of frontier labs—primarily OpenAI, Google DeepMind, and Anthropic—making coordination theoretically feasible. Historical precedents like the [Asilomar Conference on Recombinant DNA](https://en.wikipedia.org/wiki/Asilomar_Conference_on_Recombinant_DNA) (1975) and various nuclear arms control agreements demonstrate that the scientific community and governments can successfully coordinate to slow potentially dangerous technological development when risks are recognized.
+
+The window for such coordination may be closing rapidly. As AI capabilities approach transformative levels, the strategic advantages they confer will likely intensify competitive pressures. Research on [strategic insights from simulation gaming of AI race dynamics](https://www.sciencedirect.com/science/article/pii/S0016328725000254) suggests that nations viewing AI as critical to national security may be unwilling to accept coordination mechanisms that could disadvantage them relative to competitors.
+
+### Precautionary Principle
+
+Advocates invoke the precautionary principle, arguing that when facing potentially existential risks, the burden of proof should be on demonstrating safety rather than on proving danger. Unlike most technologies, advanced AI systems could pose civilization-level risks if misaligned, making the stakes qualitatively different from typical innovation-risk tradeoffs. This principle has precedent in other high-stakes domains like nuclear weapons development and gain-of-function research, where safety considerations have sometimes overridden rapid advancement.
+
+---
 
 ## Arguments Against Pause
 
-**Geopolitical Competition**: The strongest argument against pause concerns international competition, particularly with China. China's national AI strategy, announced in 2017, explicitly aims for AI leadership by 2030, with massive state investment and fewer apparent safety constraints. A 2023 report by Georgetown's Center for Security and Emerging Technology found that Chinese AI development continues to advance rapidly across both commercial and military applications. Unilateral Western pauses could simply ensure that less safety-conscious actors develop advanced AI first, potentially leading to worse outcomes than continued development with safety efforts.
+### Geopolitical Competition
+
+The strongest argument against pause concerns international competition, particularly with China. China's national AI strategy, announced in 2017, explicitly aims for AI leadership by 2030, with massive state investment. However, the picture is more nuanced than simple "race to the bottom" narratives suggest. China released its own [AI Safety Governance Framework](https://www.dlapiper.com/en/insights/publications/2024/09/china-releases-ai-safety-governance-framework) in September 2024, and in December 2024, 17 major Chinese AI companies including DeepSeek and Alibaba signed safety commitments mirroring [Seoul AI Summit](https://carnegieendowment.org/research/2025/10/how-china-views-ai-risks-and-what-to-do-about-them) pledges.
+
+| Competitive Factor | US Position | China Position | Implication for Pause |
+|-------------------|-------------|----------------|----------------------|
+| Frontier model capability | Leading | 6-18 months behind | Pause could narrow gap |
+| Compute access | Advantage (NVIDIA chips) | Constrained by export controls | Pause less urgent for compute |
+| Safety research | Leading (Anthropic, OpenAI) | Growing ([CnAISDA](https://ai-frontiers.org/articles/is-china-serious-about-ai-safety)) | Potential coordination opportunity |
+| Regulatory framework | Fragmented, EO rescinded | Unified (CAC framework) | China may regulate faster |
+| Talent pool | Advantage | Growing rapidly | Not directly affected by pause |
 
 This concern is compounded by the dual-use nature of AI research. Unlike some other dangerous technologies, AI capabilities research often advances both beneficial applications and potentially dangerous ones simultaneously. Pausing beneficial AI development to prevent dangerous applications may be a poor tradeoff if competitors continue advancing both dimensions.
 
-**Compute Overhang Risk**: A technical argument against pause involves the "compute overhang" phenomenon. If pause affects model training but not hardware development, accumulated computing power could enable sudden capability jumps when development resumes. Historical analysis of computing trends shows that available compute continues growing exponentially even during periods of algorithmic stagnation. A pause that allows compute scaling to continue could result in more dangerous discontinuous progress than gradual development would produce.
+### Compute Overhang Risk
+
+A technical argument against pause involves the "compute overhang" phenomenon. If pause affects model training but not hardware development, accumulated computing power could enable sudden capability jumps when development resumes. Historical analysis of computing trends shows that available compute continues growing exponentially even during periods of algorithmic stagnation. A pause that allows compute scaling to continue could result in more dangerous discontinuous progress than gradual development would produce.
 
 Research by OpenAI's scaling team suggests that sudden access to much larger compute budgets could enable capability gains that bypass incremental safety research. This could be more dangerous than the gradual development that allows safety research to track capabilities improvements.
 
-**Economic and Social Costs**: Pause advocacy also faces arguments about opportunity costs and distributional effects. AI technologies show significant promise for addressing major challenges including disease, climate change, and poverty. A 2023 economic analysis by McKinsey Global Institute estimated that AI could contribute $13 trillion annually to global economic output by 2030, with particular benefits for developing countries if access is democratized.
+### Economic and Social Costs
+
+Pause advocacy also faces arguments about opportunity costs and distributional effects. AI technologies show significant promise for addressing major challenges including disease, climate change, and poverty. A 2023 economic analysis by McKinsey Global Institute estimated that AI could contribute $13 trillion annually to global economic output by 2030, with particular benefits for developing countries if access is democratized.
 
 Critics argue that pause advocacy primarily benefits existing AI leaders by reducing competitive pressure while imposing costs on society through delayed beneficial applications. This raises questions about the democratic legitimacy of pause policies and their distributional consequences.
 
+---
+
 ## Implementation Mechanisms
 
-**Regulatory Approaches**: The most direct path to pause involves government regulation. Several mechanisms are under consideration, including compute governance (restricting access to the high-end chips needed for training frontier models), mandatory safety evaluations before deployment, and international treaties. The Biden Administration's October 2023 Executive Order on AI includes provisions for monitoring large training runs, suggesting regulatory appetite for intervention.
+### Regulatory Approaches
 
-However, regulatory approaches face significant implementation challenges. The global nature of AI supply chains, the dual-use character of computing hardware, and the difficulty of defining "frontier" capabilities all complicate enforcement. Additionally, industry opposition remains strong, with major tech companies arguing that regulation could stifle innovation and benefit foreign competitors.
+The most direct path to pause involves government regulation. Several mechanisms are under consideration, including [compute governance](https://www.governance.ai/research-paper/training-compute-thresholds-features-and-functions-in-ai-regulation) (restricting access to the high-end chips needed for training frontier models), mandatory safety evaluations before deployment, and international treaties.
 
-**Industry Self-Regulation**: An alternative approach involves industry-led initiatives, such as responsible scaling policies that commit labs to pause development when certain capability thresholds are reached without adequate safety measures. Anthropic's Responsible Scaling Policy, announced in September 2023, provides a template for such approaches by defining specific capability evaluations and safety requirements.
+| Regulatory Mechanism | Jurisdiction | Threshold | Status |
+|---------------------|--------------|-----------|--------|
+| [Executive Order 14110](https://en.wikipedia.org/wiki/Executive_Order_14110) | US | 10^26 FLOP training runs | **Rescinded** January 2025 |
+| [EU AI Act](https://law-ai.org/the-role-of-compute-thresholds-for-ai-governance/) | EU | 10^25 FLOP (systemic risk) | Active since August 2024 |
+| Responsible AI Act (proposed) | US Congress | Tiered thresholds | Under consideration |
+| [China AI Governance Framework](https://www.dlapiper.com/en/insights/publications/2024/09/china-releases-ai-safety-governance-framework) | China | Risk-based grading | Version 2.0 released September 2025 |
 
-The advantage of industry self-regulation is that it can move faster than formal regulation and may be more technically sophisticated. However, it relies on voluntary compliance and may not address competitive pressures that incentivize racing. The effectiveness of self-regulation approaches remains to be proven as capabilities approach the thresholds where safety requirements would bind.
+However, regulatory approaches face significant implementation challenges. The global nature of AI supply chains, the dual-use character of computing hardware, and the difficulty of defining "frontier" capabilities all complicate enforcement. Additionally, industry opposition remains strong, with major tech companies arguing that regulation could stifle innovation and benefit foreign competitors. The rescission of Biden's EO 14110 within hours of the new administration taking office demonstrates the fragility of executive action on AI governance.
+
+### Industry Self-Regulation
+
+An alternative approach involves industry-led initiatives, such as responsible scaling policies that commit labs to pause development when certain capability thresholds are reached without adequate safety measures. [Anthropic's Responsible Scaling Policy](https://www.anthropic.com/rsp-updates), first announced in September 2023 and updated in October 2024, provides a template for such approaches by defining specific capability evaluations and safety requirements.
+
+| Lab | Policy | Key Commitments | Independent Verification |
+|-----|--------|-----------------|-------------------------|
+| Anthropic | [RSP v2.2](https://www.anthropic.com/responsible-scaling-policy) | ASL capability thresholds, biosecurity evals | Limited external audit |
+| OpenAI | Preparedness Framework | Red-teaming, catastrophic risk thresholds | Internal governance |
+| Google DeepMind | Frontier Safety Framework | Pre-deployment evaluations | In development |
+
+The advantage of industry self-regulation is that it can move faster than formal regulation and may be more technically sophisticated. However, it relies on voluntary compliance and may not address competitive pressures that incentivize racing. After one year with the RSP in effect, [Anthropic acknowledged](https://www.anthropic.com/news/reflections-on-our-responsible-scaling-policy) instances where they fell short of meeting the full letter of its requirements, though they assessed these posed minimal safety risk.
+
+---
 
 ## Safety Implications and Trajectory
 
-**Concerning Aspects**: The primary safety concern with pause advocacy is that it may not achieve its intended goals while creating new risks. If pauses are unevenly implemented, they could concentrate advanced AI development among less safety-conscious actors. Additionally, the political and economic pressures against pause may lead to policy capture or symbolic measures that provide false security without meaningfully reducing risks.
+### Concerning Aspects
+
+The primary safety concern with pause advocacy is that it may not achieve its intended goals while creating new risks. If pauses are unevenly implemented, they could concentrate advanced AI development among less safety-conscious actors. Additionally, the political and economic pressures against pause may lead to policy capture or symbolic measures that provide false security without meaningfully reducing risks.
 
 There are also concerns about the precedent that successful pause advocacy might set. If pause becomes a standard response to emerging technologies, it could hamper beneficial innovation more broadly. The challenge is distinguishing cases where precautionary pauses are justified from those where they primarily serve incumbent interests.
 
-**Promising Aspects**: Conversely, even partial success in slowing AI development could provide crucial time for safety research to advance. Recent progress in interpretability research, including work on sparse autoencoders and circuit analysis, suggests that additional time could yield significant safety improvements. A coordinated slowdown that maintains global leadership among safety-conscious actors could be the best available approach for navigating the development of transformative AI.
+### Promising Aspects
 
-Furthermore, pause advocacy has already had positive effects on AI safety discourse by raising awareness of risks and legitimizing safety concerns in policy circles. The 2023 open letter helped establish AI safety as a mainstream policy concern, influencing subsequent regulatory discussions and industry practices.
+Conversely, even partial success in slowing AI development could provide crucial time for safety research to advance. Recent progress in [interpretability research](https://www.anthropic.com/research), including work on sparse autoencoders and circuit analysis, suggests that additional time could yield significant safety improvements. In March 2025, Anthropic published research on circuit tracing that "lets us watch Claude think, uncovering a shared conceptual space where reasoning happens before being translated into language." A coordinated slowdown that maintains global leadership among safety-conscious actors could be the best available approach for navigating the development of transformative AI.
 
-**Current State and Trajectory**: As of late 2024, pause advocacy remains politically marginal but increasingly visible. Several countries have announced AI safety initiatives, and industry responsible scaling policies represent partial implementations of pause-like mechanisms. However, competitive pressures continue to drive rapid development, and no major actor has implemented meaningful development slowdowns.
+Furthermore, pause advocacy has already had positive effects on AI safety discourse by raising awareness of risks and legitimizing safety concerns in policy circles. The [2023 open letter](https://futureoflife.org/open-letter/pause-giant-ai-experiments/) helped establish AI safety as a mainstream policy concern, influencing subsequent regulatory discussions and industry practices.
+
+### Current State and Trajectory
+
+As of late 2025, pause advocacy remains politically marginal but increasingly organized. [PauseAI](https://pauseai.info/), founded in May 2023, has grown from a single San Francisco group to six established chapters across the US (NYC, Chicago, SF, Portland, Phoenix, Washington DC) with protests in 13+ countries including at the [AI Seoul Summit](https://pauseai.info/2024-february) and Paris AI Action Summit.
+
+| Timeframe | Scenario | Probability | Key Drivers |
+|-----------|----------|-------------|-------------|
+| 2025-2026 | No meaningful pause | 60-70% | Industry lobbying, EO rescission, China competition |
+| 2025-2026 | Voluntary industry slowdown | 15-25% | Safety incident, capability threshold reached |
+| 2027-2030 | Coordinated international framework | 15-30% | [China-US dialogue progress](https://dl.acm.org/doi/full/10.1145/3715275.3732080), WAICO proposal |
+| 2027-2030 | Binding compute governance | 10-20% | Major incident, legislative action |
 
 Looking ahead 1-2 years, the trajectory likely depends on whether AI capabilities approach obviously dangerous thresholds. Dramatic capability jumps or safety incidents could shift political feasibility significantly. Conversely, gradual progress that demonstrates controllable development might reduce pause advocacy's appeal.
 
-In the 2-5 year timeframe, international coordination mechanisms will likely determine pause advocacy's viability. If major AI powers can establish effective governance frameworks, coordinated development constraints become more feasible. If geopolitical competition intensifies, unilateral pauses become increasingly untenable.
+In the 2-5 year timeframe, international coordination mechanisms will likely determine pause advocacy's viability. China has proposed [WAICO](https://www.nature.com/articles/d41586-025-03902-y) (World AI Cooperation Organization) as a framework for coordinating AI governance rules. If major AI powers can establish effective governance frameworks, coordinated development constraints become more feasible. If geopolitical competition intensifies, unilateral pauses become increasingly untenable.
+
+---
 
 ## Key Uncertainties
 
-Several critical uncertainties shape the case for pause advocacy. The difficulty of AI alignment remains fundamentally unknown—if alignment problems prove tractable with existing techniques, pause advocacy's necessity diminishes significantly. Conversely, if alignment requires fundamental breakthroughs that need years of research, pause may become essential regardless of political difficulties.
+Several critical uncertainties shape the case for pause advocacy:
+
+| Uncertainty | If True (Pro-Pause) | If False (Anti-Pause) | Current Assessment |
+|-------------|---------------------|----------------------|-------------------|
+| **Alignment is hard** | Pause essential to buy research time | Pause unnecessary, current methods sufficient | Unclear; [interpretability progress](https://leonardbereska.github.io/blog/2024/mechinterpreview/) slow but advancing |
+| **Short timelines** | Pause urgent, limited window | Adequate time without constraints | Models improving rapidly; 2-5 year uncertainty |
+| **International coordination feasible** | Global pause achievable | Unilateral pause counterproductive | [China-US dialogue](https://dl.acm.org/doi/full/10.1145/3715275.3732080) shows some progress |
+| **Racing dynamics dominant** | Pause prevents corner-cutting | [Aviation industry shows](https://cltc.berkeley.edu/publication/new-report-the-flight-to-safety-critical-ai-lessons-in-ai-safety-from-the-aviation-industry/) safety can prevail | Competitive pressures strong but not deterministic |
+| **RSPs work** | Voluntary pause-like mechanisms sufficient | Need binding regulation | [Anthropic RSP](https://www.anthropic.com/rsp-updates) promising but untested at capability thresholds |
+
+The difficulty of AI alignment remains fundamentally unknown—if alignment problems prove tractable with existing techniques, pause advocacy's necessity diminishes significantly. Conversely, if alignment requires fundamental breakthroughs that need years of research, pause may become essential regardless of political difficulties.
 
 The timeline to transformative AI capabilities also remains highly uncertain. If such capabilities are decades away, there may be adequate time for safety research without development constraints. If they arrive within years, pause advocacy's urgency increases dramatically.
 
-Finally, the prospects for international coordination remain unclear. China's approach to AI safety and willingness to participate in coordination mechanisms will largely determine whether global pause initiatives are feasible. Early signals suggest growing Chinese interest in AI safety, but whether this translates to willingness to constrain development remains to be seen.
+Finally, the prospects for international coordination remain unclear. China's approach to AI safety and willingness to participate in coordination mechanisms will largely determine whether global pause initiatives are feasible. The [International Dialogues on AI Safety (IDAIS)](https://carnegieendowment.org/research/2025/10/how-china-views-ai-risks-and-what-to-do-about-them) produced consensus statements including the Ditchley Statement and Beijing Statement establishing specific technological "red lines" including autonomous replication and deception of regulators—suggesting some foundation for cooperation.
 
 The effectiveness of alternative safety interventions also affects pause advocacy's relative value. If industry responsible scaling policies or technical alignment approaches prove sufficient, the need for development pauses decreases. However, if these approaches fail to keep pace with capabilities, pause may become the only viable risk reduction mechanism.
 
+---
+
+## Historical Precedents
+
+The [Asilomar Conference on Recombinant DNA](https://en.wikipedia.org/wiki/Asilomar_Conference_on_Recombinant_DNA) (1975) provides the most frequently cited precedent for scientific self-regulation and pause. Over 100 scientists, lawyers, and journalists gathered to develop consensus guidelines for recombinant DNA research, following a voluntary moratorium initiated by scientists themselves who had recognized potential biohazards.
+
+| Precedent | Year | Scope | Outcome | Lessons for AI |
+|-----------|------|-------|---------|----------------|
+| [Asilomar Conference](https://www.nobelprize.org/prizes/chemistry/1980/berg/article/) | 1975 | Recombinant DNA | Moratorium lifted with safety guidelines; NIH RAC created | Scientists can self-regulate; guidelines enabled rather than blocked research |
+| Nuclear weapons moratorium | 1958-1961 | Nuclear testing | Partial Test Ban Treaty (1963) | International coordination possible under existential threat |
+| [BWC](https://en.wikipedia.org/wiki/Biological_Weapons_Convention) | 1972 | Bioweapons | 187 states parties; no verification regime | Limits of international agreements without enforcement |
+| Gain-of-function pause | 2014-2017 | Dangerous pathogen research | Enhanced oversight; research resumed | Temporary pauses can enable safety improvements |
+
+The Asilomar precedent is instructive but imperfect. Key differences from AI:
+- **Smaller community**: Only a few hundred researchers worked on rDNA in 1975 vs. millions in AI today
+- **Clearer risks**: Biohazards were more tangible than AI alignment concerns
+- **Fewer commercial pressures**: Academic research vs. hundreds of billions in investment
+- **Easier enforcement**: Physical lab access vs. distributed compute and open-source models
+
+Notably, the rDNA moratorium lasted only months, and "literally hundreds of millions of experiments, many inconceivable in 1975, have been carried out in the last 30 years without incident"—suggesting that well-designed pauses can enable rather than block beneficial research.
+
+---
+
 ## Related Organizations and Approaches
 
-Major organizations advancing pause advocacy include the Future of Life Institute, which organized the influential 2023 open letter, and PauseAI, a grassroots organization focused on public advocacy. The Campaign for AI Safety works on policy advocacy, while academic researchers like Stuart Russell and Yoshua Bengio have lent intellectual credibility to pause arguments.
+Major organizations advancing pause advocacy include:
 
-Complementary approaches include compute governance initiatives that could enable pause enforcement, international coordination efforts that could make pauses stable, and responsible scaling policies that implement conditional pause-like mechanisms. Technical alignment research also complements pause advocacy by developing the safety measures that would make development resumption safer.
+- **[Future of Life Institute](https://futureoflife.org/)**: Organized the [2023 open letter](https://futureoflife.org/open-letter/pause-giant-ai-experiments/) with 30,000+ signatures
+- **[PauseAI](https://pauseai.info/)**: Grassroots organization founded May 2023; protests in 13+ countries; claims 70% of Americans support pause
+- **[Center for AI Safety](https://safe.ai/)**: Research and policy organization; published [statement on AI risk](https://safe.ai/statement-on-ai-risk) signed by leading researchers
+- **Academic researchers**: Stuart Russell, Yoshua Bengio, Geoffrey Hinton have lent intellectual credibility to pause arguments
+
+Complementary approaches include [compute governance](/knowledge-base/responses/governance/compute-governance/) initiatives that could enable pause enforcement, international coordination efforts that could make pauses stable, and [responsible scaling policies](/knowledge-base/responses/governance/industry/responsible-scaling-policies/) that implement conditional pause-like mechanisms. Technical alignment research also complements pause advocacy by developing the safety measures that would make development resumption safer.
+
+---
+
+## Sources
+
+- [Pause Giant AI Experiments: An Open Letter](https://futureoflife.org/open-letter/pause-giant-ai-experiments/) - Future of Life Institute (March 2023)
+- [What's changed since the "pause AI" letter six months ago?](https://www.technologyreview.com/2023/09/26/1080299/six-months-on-from-the-pause-letter/) - MIT Technology Review (September 2023)
+- [PauseAI Organization](https://pauseai.info/) - Official website
+- [Training Compute Thresholds: Features and Functions in AI Regulation](https://www.governance.ai/research-paper/training-compute-thresholds-features-and-functions-in-ai-regulation) - GovAI (2024)
+- [Anthropic Responsible Scaling Policy](https://www.anthropic.com/rsp-updates) - Anthropic (2024)
+- [Is China Serious About AI Safety?](https://ai-frontiers.org/articles/is-china-serious-about-ai-safety) - AI Frontiers (2024)
+- [How China Views AI Risks and What to Do About Them](https://carnegieendowment.org/research/2025/10/how-china-views-ai-risks-and-what-to-do-about-them) - Carnegie Endowment (2025)
+- [The Flight to Safety-Critical AI: Lessons from the Aviation Industry](https://cltc.berkeley.edu/publication/new-report-the-flight-to-safety-critical-ai-lessons-in-ai-safety-from-the-aviation-industry/) - Berkeley CLTC (2024)
+- [AI Race Dynamics](https://www.aisafetybook.com/textbook/ai-race) - AI Safety, Ethics, and Society Textbook
+- [Asilomar Conference on Recombinant DNA](https://en.wikipedia.org/wiki/Asilomar_Conference_on_Recombinant_DNA) - Wikipedia
+- [Executive Order 14110](https://en.wikipedia.org/wiki/Executive_Order_14110) - Wikipedia
+
+---
 
 <Backlinks client:load entityId="pause-advocacy" />

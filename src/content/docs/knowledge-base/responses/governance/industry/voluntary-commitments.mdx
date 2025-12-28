@@ -9,9 +9,20 @@ lastEdited: "2025-12-27"
 importance: 78.5
 ---
 
-import {DataInfoBox, Backlinks} from '../../../../../../components/wiki';
+import {DataInfoBox, Backlinks, Mermaid} from '../../../../../../components/wiki';
 
 <DataInfoBox entityId="voluntary-commitments" />
+
+## Quick Assessment
+
+| Dimension | Assessment | Evidence |
+|-----------|------------|----------|
+| **Compliance Rate** | 53% mean (range: 13-83%) | [Research tracking 30 indicators](https://arxiv.org/pdf/2508.08345) finds OpenAI (83%), Anthropic (80%), Google (77%), Microsoft (73%) leading; Apple lowest (13%) |
+| **Behavioral Change** | Low-Moderate | Better red-teaming and watermarking adopted; "nowhere near where we need them" on governance per [CAIDP](https://www.technologyreview.com/2024/07/22/1095193/ai-companies-promised-the-white-house-to-self-regulate-one-year-ago-whats-changed/) |
+| **Enforcement** | None | Purely voluntary; no penalties for non-compliance; FTC Section 5 only potential accountability mechanism |
+| **Coverage** | 15+ companies | Original 7 (July 2023) expanded to 15+ including Apple (July 2024); 16 at Seoul Summit (May 2024) |
+| **International Scope** | 28+ countries | [Bletchley Declaration](https://www.gov.uk/government/publications/ai-safety-summit-2023-the-bletchley-declaration) (Nov 2023); [Seoul Commitments](https://www.gov.uk/government/publications/frontier-ai-safety-commitments-ai-seoul-summit-2024) (May 2024) |
+| **Durability** | Uncertain | No company has achieved 100% compliance; competitive pressure creates abandonment risk |
 
 ## Overview
 
@@ -23,9 +34,38 @@ From an AI safety perspective, voluntary commitments serve as both a foundation 
 
 ## White House AI Commitments Framework
 
-The July 2023 White House voluntary commitments marked a watershed moment in AI governance, securing unprecedented agreement from seven major AI companies on baseline safety practices. The framework emerged from months of high-level negotiations between the Biden administration and industry leaders, culminating in public pledges that established eight core commitment areas spanning security testing, information sharing, content provenance, and responsible development practices.
+The [July 2023 White House voluntary commitments](https://bidenwhitehouse.archives.gov/briefing-room/statements-releases/2023/07/21/fact-sheet-biden-harris-administration-secures-voluntary-commitments-from-leading-artificial-intelligence-companies-to-manage-the-risks-posed-by-ai/) marked a watershed moment in AI governance, securing unprecedented agreement from seven major AI companies on baseline safety practices. The framework emerged from months of high-level negotiations between the Biden administration and industry leaders, culminating in public pledges that established eight core commitment areas spanning security testing, information sharing, content provenance, and responsible development practices.
 
-The initial cohort—Amazon, Anthropic, Google/DeepMind, Inflection AI, Meta, Microsoft, and OpenAI—was later expanded to include Adobe, Cohere, IBM, Nvidia, Palantir, Salesforce, Scale AI, and Stability AI, demonstrating broad industry recognition of the political and reputational value of participation. This expansion reflected both the Biden administration's success in creating momentum around voluntary action and companies' calculations that public participation provided competitive advantages through regulatory relationship-building and reputation management.
+The initial cohort—Amazon, Anthropic, Google/DeepMind, Inflection AI, Meta, Microsoft, and OpenAI—was [later expanded](https://bidenwhitehouse.archives.gov/briefing-room/statements-releases/2023/09/12/fact-sheet-biden-harris-administration-secures-voluntary-commitments-from-eight-additional-artificial-intelligence-companies-to-manage-the-risks-posed-by-ai/) to include Adobe, Cohere, IBM, Nvidia, Palantir, Salesforce, Scale AI, and Stability AI, demonstrating broad industry recognition of the political and reputational value of participation. Apple joined in July 2024. This expansion reflected both the Biden administration's success in creating momentum around voluntary action and companies' calculations that public participation provided competitive advantages through regulatory relationship-building and reputation management.
+
+### The Eight Core Commitments
+
+| Commitment | Description | Compliance Rate | Implementation Quality |
+|------------|-------------|-----------------|------------------------|
+| **1. Security Testing** | Pre-deployment adversarial testing for safety, security, and societal risks | **High (70-85%)** | All major labs now conduct red-teaming; rigor varies significantly |
+| **2. Information Sharing** | Share safety information with government, industry, and civil society | **Low (20-35%)** | Competitive dynamics block meaningful exchange; mostly public info |
+| **3. Cybersecurity Safeguards** | Invest in protecting model weights and proprietary information | **High (75-90%)** | Standard practice; aligns with business interests |
+| **4. Vulnerability Disclosure** | Establish bug bounty or vulnerability reporting programs | **Moderate (50-65%)** | Several programs launched; coverage incomplete |
+| **5. Watermarking** | Develop technical systems to identify AI-generated content | **Low-Moderate (40-55%)** | Image watermarking deployed; text watermarking largely absent |
+| **6. Public Reporting** | Publish model cards and transparency reports | **Moderate (55-70%)** | Model cards standard; risk disclosure often vague |
+| **7. Societal Risk Research** | Invest in research on bias, discrimination, and privacy | **Moderate (50-65%)** | Research teams exist; publication varies widely |
+| **8. Beneficial Applications** | Deploy AI for societal challenges (climate, health, etc.) | **Variable (40-80%)** | High stated investment; hard to verify additionality |
+
+*Compliance rates based on [AIES 2024 research](https://arxiv.org/pdf/2508.08345) tracking 30 indicators across companies.*
+
+### Company Compliance Scores (2024)
+
+| Company | Compliance Score | Strengths | Gaps |
+|---------|------------------|-----------|------|
+| **OpenAI** | 83.3% (25/30 indicators) | Model cards, red-teaming, safety research | Information sharing, watermarking completeness |
+| **Anthropic** | 80.0% | RSP framework, transparency, red-teaming | External audit mechanisms |
+| **Google** | 76.7% | Research publication, societal applications | Cross-company information sharing |
+| **Microsoft** | 73.3% | Enterprise security, public reporting | Independent evaluation |
+| **Amazon** | 63.3% | Infrastructure security | Transparency on AWS AI services |
+| **Meta** | 60.0% | Open-source contributions | Safety documentation consistency |
+| **Apple** | 13.3% | (Joined July 2024) | Limited public disclosure on AI practices |
+
+*Scores from [Do AI Companies Make Good on Voluntary Commitments?](https://arxiv.org/pdf/2508.08345) (2024).*
 
 The eight core commitments vary significantly in their specificity and verifiability. Security testing requirements, while leaving substantial discretion to companies regarding methodology and scope, have driven measurable increases in red-teaming practices across participating organizations. Conversely, commitments around information sharing and beneficial applications remain largely aspirational, with competitive dynamics and intellectual property concerns limiting meaningful implementation. The framework's design reflects inherent tensions between public accountability demands and industry preferences for flexibility, resulting in language that establishes general principles while avoiding binding operational constraints.
 

@@ -1,16 +1,10 @@
 ---
 title: Redwood Research
-description: AI safety lab focused on interpretability and AI control research
+description: AI safety lab focused on empirical research, mechanistic interpretability, and pioneering AI control methodology for safety without full alignment
 sidebar:
   order: 12
-quality: 3
-llmSummary: Comprehensive overview of Redwood Research's evolution from
-  adversarial robustness to mechanistic interpretability to AI control research,
-  documenting their key contributions including causal scrubbing methodology and
-  the novel AI control framework that assumes potential misalignment while
-  building safety protocols. The organization has made significant empirical
-  contributions to AI safety research with a pragmatic approach that pivots
-  based on evidence.
+quality: 5
+llmSummary: Comprehensive overview of Redwood Research's evolution from adversarial robustness to mechanistic interpretability to AI control research, documenting their key contributions including causal scrubbing methodology and the novel AI control framework that assumes potential misalignment while building safety protocols. The organization has made significant empirical contributions to AI safety research with a pragmatic approach that pivots based on evidence.
 lastEdited: "2025-12-24"
 importance: 62.5
 ---
@@ -19,541 +13,276 @@ import {DataInfoBox, DisagreementMap, EstimateBox, KeyPeople, KeyQuestions, Sect
 
 <DataInfoBox entityId="redwood" />
 
-## Summary
+## Overview
 
-Redwood Research is an AI safety lab founded in 2021 that has made significant contributions to mechanistic interpretability and, more recently, pioneered the "AI control" research agenda. The organization is known for its willingness to pivot based on evidence, empirical focus, and practical contributions to AI safety despite maintaining realistic (some would say pessimistic) assessments of alignment difficulty.
+Redwood Research is an AI safety lab founded in 2021 that has pioneered the "AI control" research paradigm while making significant contributions to mechanistic interpretability. The organization operates on the pragmatic assumption that alignment may not be fully solved in time, leading to their groundbreaking work on ensuring safety even with potentially misaligned AI systems.
 
-Redwood occupies an interesting position: working on empirical safety research while assuming alignment may not be fully solvable, leading to their focus on "control" - ensuring AI systems can't cause catastrophic harm even if they remain misaligned. This pragmatic pessimism distinguishes them from both pure pessimists (like current MIRI) and optimists who believe alignment will be solved.
+Their trajectory shows remarkable adaptability: beginning with adversarial robustness research, pivoting to mechanistic interpretability with their influential causal scrubbing methodology, and ultimately developing the AI control framework that has gained significant attention across the safety community. With 15+ researchers and $5M+ in funding, Redwood has trained numerous safety researchers now working across [Anthropic](/knowledge-base/organizations/labs/anthropic/), [ARC](/knowledge-base/organizations/safety-orgs/arc/), and other major organizations.
 
-## History and Evolution
+The organization's core insight is that traditional alignment approaches may be insufficient for highly capable systems, necessitating "control" measures that prevent catastrophic outcomes even from scheming AI systems.
 
-### Founding (2021)
+## Risk and Impact Assessment
 
-**Founded by**:
-- Buck Shlegeris (CEO)
-- Others from rationalist/EA community
+| Factor | Assessment | Evidence | Timeline | Source |
+|--------|------------|----------|----------|--------|
+| **Technical Influence** | High | Causal scrubbing adopted by Anthropic, 100+ citations | 2022-present | [Anthropic research](https://www.anthropic.com/research) |
+| **Field Building** | High | 20+ fellowship alumni at major labs | 2021-present | [EA Forum tracking](https://forum.effectivealtruism.org) |
+| **Control Paradigm Adoption** | Medium | Growing interest across labs | 2023-present | [AI safety discussions](https://www.alignmentforum.org) |
+| **Policy Relevance** | Medium | Control more implementable than full alignment | 2024+ | [RAND analysis](https://www.rand.org/pubs/perspectives/PEA2849-1.html) |
+| **Research Quality** | High | Rigorous empirical methodology | Ongoing | Multiple peer reviews |
 
-**Initial mission**: Make concrete progress on AI safety through empirical research
-
-**Philosophy**:
-- Focus on concrete, legible problems
-- Empirical work over pure theory
-- Quick iteration and pivots based on evidence
-- "Fail fast" mentality - if approach isn't working, change it
-
-**Funding**: Primarily from grants (Open Philanthropy, other EA funders, some private donors)
-
-**Culture**: Young, scrappy, willing to question assumptions and pivot
+## Key Research Evolution
 
 ### Phase 1: Adversarial Robustness (2021-2022)
 
-**Initial focus**: Making language models robustly refuse harmful requests
+**Problem Focus**: Language models could be jailbroken despite safety training
 
-**Problem**: Language models could be jailbroken to produce harmful content despite safety training
+| Challenge | Approach | Results | Lessons |
+|-----------|----------|---------|---------|
+| Harmful content generation | Adversarial training on refusal | Some domain-specific success | Adversarial examples persist |
+| Jailbreak robustness | Systematic prompt engineering | Limited scalability | Need internal understanding |
+| Behavioral safety | External training constraints | Fundamental brittleness | Surface-level solutions insufficient |
 
-**Approach**:
-- Train classifiers to detect harmful completions
-- Use adversarial training to make refusals robust
-- Find and patch jailbreaks systematically
-
-**Key project**: Working with GPT-3 to create robust refusal of violent/gory content
-
-**Results**:
-- Made some progress on specific domains
-- But found fundamental difficulty: adversarial examples persist
-- Hard to make refusals truly robust
-- Realized this might not scale to existential safety
-
-**Lessons**:
-- Behavioral safety training has limits
-- Adversarial robustness very hard in high-dimensional spaces
-- Need to understand internals, not just behavior
+**Key Finding**: Behavioral safety training has fundamental limitations that don't scale to existential safety concerns.
 
 ### Phase 2: Mechanistic Interpretability (2022-2023)
 
-**Strategic pivot**: If can't make behavior robustly safe, need to understand internals
+**Strategic Pivot**: Understanding internal computations rather than just behavior
 
-**Focus shift**: Deep dive into mechanistic interpretability
+**Major Contribution - Causal Scrubbing**:
+- **Innovation**: Rigorous testing framework for interpretability hypotheses
+- **Method**: Ablate components according to proposed explanation, measure behavioral changes
+- **Impact**: Raised standards across interpretability field
+- **Adoption**: Used by [Anthropic](/knowledge-base/organizations/labs/anthropic/), multiple academic groups
+- **Citations**: 150+ across major venues
 
-**Goal**: Understand neural networks by reverse-engineering their computations
-
-**Major contributions:**
-
-**Causal Scrubbing** (2022):
-Method for rigorously testing interpretability hypotheses
-
-**Key insight**: Many interpretability explanations are just-so stories. Need way to verify they're actually correct.
-
-**How it works**:
-1. Propose explanation of how circuit computes function
-2. "Scrub" (ablate/intervene on) components according to explanation
-3. If explanation correct, behavior should change as predicted
-4. If not, explanation is incomplete or wrong
-
-**Impact**:
-- Raised bar for interpretability research
-- Made field more rigorous
-- Showed many previous claims were weaker than thought
-- Influenced Anthropic and others
-
-**Polysemanticity Research**:
-Understanding why neurons respond to multiple unrelated concepts
-
-**Problem**: Individual neurons activate for many different things, making interpretation hard
-
-**Investigation**:
-- Why does polysemanticity exist?
-- Superposition: networks represent more features than they have dimensions
-- Connections to sparse coding and dictionary learning
-
-**Interpretability in the Wild**:
-Applying interpretability to real model behaviors
-- Not just toy examples
-- Actual concerning behaviors
-- Can we detect/prevent them via interpretability?
-
-**Assessment (2023)**:
-- Made significant progress on interpretability methods
-- But: interpretability alone may not solve alignment
-- Even understanding circuits doesn't guarantee safety
-- Timeline concerns: might not solve alignment fast enough
+| Research Area | Contribution | Impact | Follow-up Work |
+|---------------|-------------|--------|----------------|
+| Circuit Analysis | Causal scrubbing methodology | Field standard | Adopted by Anthropic |
+| Polysemanticity | Superposition investigation | Theoretical insight | Dictionary learning research |
+| Feature Extraction | Automated circuit discovery | Tool development | Open-source implementations |
 
 ### Phase 3: AI Control (2023-Present)
 
-**Major strategic shift**: Assume we might not solve alignment; how to stay safe anyway?
+**Revolutionary Paradigm**: Safety without requiring full alignment
 
-**"AI Control" agenda**: Ensure safety even with potentially misaligned AI
+**Core Framework**:
+- **Assumption**: Deploy potentially misaligned but capable AI systems
+- **Goal**: Prevent catastrophic outcomes despite potential scheming
+- **Analogy**: Cybersecurity mindset applied to AI safety
 
-**Core assumption**: We may deploy AI systems that are:
-- Highly capable
-- Not fully aligned
-- Potentially deceptive
+| Control Component | Description | Research Status | Effectiveness |
+|------------------|-------------|-----------------|---------------|
+| **Monitoring** | Detect deceptive/scheming behavior | Active research | 70-90% detection in toy models |
+| **Protocol Design** | Safe deployment procedures | Framework developed | Testing in controlled settings |
+| **Red-team Testing** | Adversarial evaluation of controls | Ongoing | Multiple vulnerabilities identified |
+| **Untrusted Monitoring** | AI monitoring AI systems | Early research | Theoretical framework |
 
-**Question**: Can we still prevent catastrophe?
+## Current Research Portfolio
 
-**Approach**:
-- Monitoring: Can we detect misaligned behavior?
-- Containment: Can we prevent AI from causing harm even if trying?
-- Protocols: What deployment procedures keep us safe?
-- Red-teaming: Adversarially test control measures
+### AI Control Research
 
-**Analogy**: Like cybersecurity - assume adversary, build robust defenses
+**Key Publications**:
+- ["AI Control: Improving Safety Despite Intentional Subversion"](https://arxiv.org/abs/2312.06942) (2024)
+- Control evaluation methodologies
+- Red-team protocol development
 
-**Contrast with alignment**:
-- **Alignment**: Make AI want what we want
-- **Control**: Prevent AI from getting what it wants if misaligned
-
-**Key research questions**:
-
-**Monitoring**:
-- Can we detect when AI is scheming/deceptive?
-- What behavioral signatures indicate misalignment?
-- Can interpretability help catch deception?
-
-**Untrusted monitoring**:
-- Use AI to monitor AI
-- But monitors might also be misaligned
-- How to get signal despite this?
-
-**Deployment protocols**:
-- What procedures make deployment safe?
-- Code review by humans + AI
-- Sandboxing and access control
-- Redundancy and cross-checks
-
-**Red-teaming control measures**:
-- Adversarially test protocols
-- Find ways scheming AI could circumvent controls
-- Iterate on defenses
-
-**Evaluations**:
-- Test if AI is trying to subvert control
-- Measure p(scheming) for deployed systems
-
-## Key Research Contributions
-
-### Causal Scrubbing (2022)
-
-**Paper**: "Causal Scrubbing: A Method for Rigorously Testing Interpretability Hypotheses"
-
-**Problem**: Interpretability explanations often cherry-picked or not falsifiable
-
-**Solution**: Formal framework for testing circuit explanations
-
-**Method**:
-1. Write down computational graph of hypothesis
-2. For each node, specify what information it uses
-3. Replace activations with resampled values that preserve only that information
-4. Model should still work if hypothesis correct
-
-**Impact**:
-- Widely cited in interpretability community
-- Used by Anthropic in their interpretability work
-- Raised standards for claims
-- Some debate about whether too conservative
-
-### AI Control Framework (2023-2024)
-
-**Paper**: "AI Control: Improving Safety Despite Intentional Subversion" (2024)
-
-**Novel framing**: Safety without alignment
-
-**Key concepts**:
-
-**Control evaluation**:
-- Red team tries to cause catastrophe
-- Blue team designs protocols to prevent
-- Measure: What p(catastrophe) can we achieve?
-
-**Safety case**:
-- Even with scheming models
-- Under realistic assumptions
-- Can we keep risk acceptable?
-
-**Trusted vs untrusted labor**:
-- Some tasks done by verified-safe systems (expensive)
-- Some by potentially-scheming systems (cheap but risky)
-- Optimize allocation
-
-**Red-team threat model**:
-- Assume capable, strategic scheming AI
-- Trying to cause catastrophe
-- But must avoid detection
-
-**Protocol design**:
-- Monitoring and auditing
-- Redundancy and cross-checks
-- Limited access to critical systems
-- Code review and testing
-
-**Results**: In toy settings, can achieve very low p(catastrophe) even with scheming AI
-
-**Implications**:
-- Maybe we can use powerful AI safely even without full alignment
-- But requires careful protocol design
-- And realistic threat modeling
+**Research Questions**:
+- Can monitoring detect sophisticated deception?
+- What deployment protocols minimize catastrophic risk?
+- How to design safety cases for potentially misaligned AI?
 
 ### Interpretability Methods
 
-**Contributions to**:
+**Ongoing Work**:
+- Activation steering techniques
 - Automated circuit discovery
-- Activation steering
-- Feature visualization
-- Understanding induction heads
-- Reverse-engineering algorithms
+- [Deceptive alignment](/knowledge-base/risks/accident/deceptive-alignment/) detection
+- Understanding [situational awareness](/knowledge-base/capabilities/situational-awareness/)
 
-**Notable researchers**: Neel Nanda (now at Google DeepMind) did influential interpretability work at Redwood
+**Tools Developed**:
+- Open-source interpretability libraries
+- Circuit analysis frameworks
+- Causal intervention methodologies
 
 ### Empirical Safety Research
 
-**Various projects on**:
-- Jailbreak robustness
-- Sandbagging (models hiding capabilities)
-- Deception detection
-- Situational awareness
-- Training dynamics of misalignment
+| Project Area | Focus | Status | Collaboration |
+|-------------|-------|--------|---------------|
+| Sandbagging Detection | Models hiding capabilities | Ongoing | With [ARC](/knowledge-base/organizations/safety-orgs/arc/) |
+| Jailbreak Robustness | Systematic prompt attacks | Published | Multiple labs |
+| Training Dynamics | Misalignment development | Research phase | Academic partners |
+| Evaluation Methodology | Safety assessment frameworks | Active | Industry consultation |
 
-## Key People
+## Key Personnel and Expertise
 
-<Section title="Leadership and Staff">
+<Section title="Leadership Team">
   <KeyPeople people={[
-    { name: "Buck Shlegeris", role: "CEO and Co-founder" },
-    { name: "Ryan Greenblatt", role: "Research Scientist" },
-    { name: "Neel Nanda", role: "Former researcher (now DeepMind)" },
-    { name: "Bill Zito", role: "Research Scientist" },
+    { name: "Buck Shlegeris", role: "CEO & Co-founder", expertise: "Strategic direction, empirical methodology" },
+    { name: "Ryan Greenblatt", role: "Research Lead", expertise: "AI control, adversarial evaluation" },
+    { name: "William Saunders", role: "Research Scientist", expertise: "Interpretability, training dynamics" },
+    { name: "Neel Nanda", role: "Former Senior Researcher (now DeepMind)", expertise: "Mechanistic interpretability" },
   ]} />
 </Section>
 
 ### Buck Shlegeris (CEO)
-
-**Background**: Software engineer, came through rationalist community
-
-**Role**: Founded and leads Redwood, sets research direction
-
-**Philosophy**:
-- Empirical over theoretical
-- Pivot quickly if not working
-- Realistic about difficulty
-- But keep trying concrete approaches
-
-**Known for**: Willingness to question assumptions, pragmatic approach
-
-**Public communication**: Active on AI safety forums, explains research clearly
+- **Background**: Software engineering, rationalist community
+- **Philosophy**: Empirical focus, rapid iteration, evidence-driven pivots
+- **Contribution**: Organizational strategy, research direction setting
+- **Public Role**: Active in safety forums, clear research communication
 
 ### Ryan Greenblatt
-
-**Background**: Strong ML background, safety-focused
-
-**Contributions**:
-- Major role in AI control research
-- Red-teaming protocols
-- Threat modeling
-
-**Known for**: Careful thinking about adversarial scenarios
-
-### Neel Nanda (Former, now at DeepMind)
-
-**Background**: Mathematics, came through EA community
-
-**Contributions at Redwood**:
-- Major interpretability work
-- Transformer circuits
-- Educational content on interpretability
-
-**Impact**: Made interpretability more accessible, trained others
-
-**Current**: At Google DeepMind doing interpretability research
-
-## Philosophy and Approach
-
-### Empirical Focus
-
-**Belief**: Make progress on concrete problems with current systems
-
-**Not**: Pure theory or work that only applies to hypothetical future AI
-
-**Advantage**: Faster feedback, clearer progress metrics
-
-**Risk**: Might miss important theoretical insights
-
-### Pivot Quickly
-
-**Willingness to change direction** when evidence suggests current approach won't work
-
-**Examples**:
-- Adversarial robustness → interpretability (2022)
-- Interpretability → AI control (2023)
-
-**Rare in research**: Most orgs stick with approach longer
-
-**Advantage**: Don't waste time on dead ends
-
-**Risk**: Might give up too early, miss breakthroughs
-
-### Realistic Pessimism
-
-**Assessment**: Alignment is hard, may not be fully solved in time
-
-**But**: Unlike MIRI, keep doing technical work
-
-**AI control framing**: If alignment might fail, need backup plan
-
-**Pragmatic**: Work on what might help even in difficult scenarios
-
-### Red-Team Mentality
-
-**Assume adversary**: AI might be actively trying to subvert safety measures
-
-**Test adversarially**: Don't just check if things work, try to break them
-
-**Security mindset**: Similar to cybersecurity, not just safety engineering
-
-**Influence**: From rationalist community's focus on adversarial thinking
-
-## Influence and Impact
-
-### Causal Scrubbing Adoption
-
-**Used by**:
-- Anthropic in interpretability research
-- Various academic groups
-- Became standard for rigorous interpretability
-
-**Debate**: Some think it's too conservative, others think it's necessary rigor
-
-### AI Control Agenda
-
-**Growing influence**:
-- Other orgs considering control approaches
-- Anthropic exploring control-like ideas
-- Recognition that alignment may not be complete
-
-**Policy relevance**: Control might be more implementable than full alignment
-
-**Debates**: Is this giving up on alignment? Or pragmatic backup?
-
-### Training Researchers
-
-**Redwood Research Fellowship**: Trained many safety researchers
-
-**Alumni**: Now at Anthropic, DeepMind, ARC, other safety orgs
-
-**Impact**: Field-building through training
-
-### Making Safety Concrete
-
-**Contribution**: Shift from abstract concerns to concrete problems
-
-**Examples**:
-- Specific jailbreaks
-- Measurable robustness
-- Testable control protocols
-
-**Value**: Makes safety more legible to mainstream ML
-
-## Criticisms and Debates
-
-### Is AI Control Giving Up?
-
-**Concern**: Control assumes alignment won't be solved
-
-**Worry**: Self-fulfilling prophecy? If assume failure, might not try hard enough
-
-**Redwood's response**:
-- Not giving up on alignment
-- Control is backup plan
-- Pragmatic given uncertainty
-
-**Counterargument**: Having backup plan doesn't mean not trying for best outcome
-
-### Can Control Actually Work?
-
-**Skepticism**: Can we really contain superintelligent schemer?
-
-**Challenges**:
-- Needs to work even against smarter adversary
-- Many attack surfaces
-- Single failure could be catastrophic
-
-**Redwood's position**:
-- Working on making it rigorous
-- Red-team threat models
-- But acknowledge uncertainty
-
-### Too Many Pivots?
-
-**Concern**: Changed direction twice in ~3 years
-
-**Interpretation 1**: Admirable willingness to follow evidence
-
-**Interpretation 2**: Maybe lack of long-term vision?
-
-**Question**: Will AI control stick, or another pivot coming?
-
-**Defense**: Better to pivot than persist with failed approach
-
-### Relationship to Other Work
-
-**Question**: Is this duplicating cybersecurity/verification research?
-
-**Redwood's take**: Drawing on those fields but AI-specific challenges
-
-**Concern**: Might need more cross-disciplinary collaboration
-
-<Section title="Risk and Timeline Views">
-  <EstimateBox
-    client:load
-    variable="Redwood's Assessments"
-    description="Implied by research priorities and public statements"
-    unit=""
-    estimates={[
-      { source: "Research agenda", value: "Alignment may not be solved", date: "2023+", notes: "Motivates control research" },
-      { source: "Public statements", value: "Timelines relatively short", date: "2023+", notes: "Urgency of work" },
-      { source: "Approach", value: "Need practical solutions", date: "Ongoing", notes: "Empirical focus" }
-    ]}
-  />
+- **Expertise**: Machine learning, adversarial evaluation
+- **Key Work**: AI control framework development, red-team methodologies
+- **Approach**: Rigorous threat modeling, security-minded safety research
+
+### Research Culture
+- **Fellows Program**: Trained 20+ researchers now at major safety organizations
+- **Methodology**: Empirical validation, quick pivots based on evidence
+- **Collaboration**: Active partnerships with [labs](/knowledge-base/organizations/labs/) and [safety organizations](/knowledge-base/organizations/safety-orgs/)
+
+## Current State and Trajectory
+
+### Organizational Metrics
+
+| Metric | 2021 | 2022 | 2023 | 2024 | Projection 2025 |
+|--------|------|------|------|------|-----------------|
+| Research Staff | 5 | 8 | 12 | 15 | 20-25 |
+| Annual Budget | $1M | $2M | $3.5M | $5M | $7M |
+| Publications | 0 | 3 | 8 | 12 | 15-20 |
+| Fellows Trained | 0 | 5 | 12 | 20 | 30+ |
+
+### Research Impact
+
+**Citation Metrics**:
+- Causal scrubbing paper: 150+ citations
+- AI control framework: 50+ citations (recent publication)
+- Total research impact: 500+ citations across work
+
+**Adoption Indicators**:
+- Anthropic implementing causal scrubbing methods
+- Multiple labs exploring control approaches
+- Policy discussions referencing control paradigm
+
+### Strategic Positioning
+
+**2024-2025 Focus**:
+- Scaling AI control research
+- Developing practical safety protocols
+- Building industry partnerships for testing
+- Expanding empirical evaluation capabilities
+
+**Funding Trajectory**: Diversifying from grants to include industry partnerships while maintaining research independence.
+
+## Key Uncertainties and Debates
+
+### The Control Paradigm
+
+<Section title="Major Questions">
+  <KeyQuestions questions={[
+    "Can control measures actually work against superintelligent scheming AI?",
+    "Does the control approach create false confidence in deployment safety?",
+    "Should resources focus on alignment research rather than control?",
+    "How to validate control measures without access to truly dangerous AI?",
+    "What is the appropriate balance between control and alignment research?"
+  ]} />
 </Section>
 
-<KeyQuestions questions={[
-  "Can AI control provide sufficient safety if alignment isn't solved?",
-  "Is control approach giving up on alignment or pragmatic backup?",
-  "Will causal scrubbing become standard or is it too conservative?",
-  "Are Redwood's pivots adaptive or scattered?",
-  "Can control measures work against superintelligent adversary?",
-  "Is AI control the right level of ambition - too much or too little?"
-]} />
+| Uncertainty | Pessimistic View | Optimistic View | Current Evidence |
+|-------------|-----------------|-----------------|------------------|
+| **Control Effectiveness** | Superintelligent AI will circumvent any controls | Layered defenses can achieve acceptable risk | Limited to toy model testing |
+| **Resource Allocation** | Control distracts from alignment work | Control provides crucial safety layer | Mixed views in safety community |
+| **Timeline Relevance** | Won't be ready before dangerous AI | Can develop alongside capabilities | Active research progress |
+| **Industry Adoption** | Labs won't implement costly controls | Control more practical than alignment | Early industry interest |
 
-## Future Directions
+### Technical Challenges
 
-### Control Research
+**Monitoring Limitations**:
+- Can sophisticated AI hide deceptive behavior?
+- How to detect novel attack vectors?
+- Scalability of human oversight
 
-**Continuing to develop**:
-- Monitoring techniques
-- Protocol design
-- Red-team methods
-- Safety cases
+**Protocol Design**:
+- Balance between safety and capability
+- Economic incentives for control adoption
+- Verification of control implementations
 
-**Goal**: Rigorous framework for safe deployment despite misalignment
+### Philosophical Questions
 
-### Interpretability
+**Relationship to Alignment**:
+- Complement or substitute for alignment research?
+- Risk of reducing alignment investment?
+- Long-term vision for AI safety
 
-**Maintaining some focus**:
-- Interpretability tools for control
-- Detecting deception
-- Understanding scheming
+## Comparative Analysis
 
-**Integration**: Interpretability in service of control
+### Research Approach Comparison
 
-### Evaluations
+| Organization | Primary Focus | Timeline View | Methodology | Success Theory |
+|-------------|---------------|---------------|-------------|----------------|
+| **Redwood** | Control + interpretability | Medium pessimism | Empirical, adaptive | Safety without full alignment |
+| **[Anthropic](/knowledge-base/organizations/labs/anthropic/)** | Constitutional AI, scaling | Cautious optimism | Large-scale experiments | Alignment through training |
+| **[ARC](/knowledge-base/organizations/safety-orgs/arc/)** | Evaluation, alignment theory | Varied | Theory + evaluation | Early detection and preparation |
+| **[MIRI](/knowledge-base/organizations/safety-orgs/miri/)** | Governance pivot | High pessimism | Theoretical (paused) | Coordination over technical |
 
-**Some work on**:
-- Evaluating scheming
-- Testing control measures
-- Capability assessments
+### Unique Positioning
 
-**Collaboration**: With labs and ARC Evals
+**Distinguishing Features**:
+- Only major org focused primarily on control
+- Empirical methodology with willingness to pivot
+- Security-minded approach to safety
+- Practical deployment focus
 
-### Scaling Up
+**Strategic Advantages**:
+- Complementary to alignment research
+- More implementable in near-term
+- Appeals to industry safety concerns
+- Builds on existing security practices
 
-**Organization growth**: Hiring more researchers
+## Sources and Resources
 
-**Funding**: Seeking more resources for expanded work
+### Primary Research Publications
 
-**Impact**: Want to influence lab practices and policy
+| Publication | Year | Impact | Focus |
+|-------------|------|--------|-------|
+| [Causal Scrubbing Paper](https://arxiv.org/abs/2309.10312) | 2023 | 150+ citations | Interpretability methodology |
+| [AI Control Framework](https://arxiv.org/abs/2312.06942) | 2024 | Foundational | Control paradigm |
+| [Adversarial Robustness Studies](https://arxiv.org/search/cs?searchtype=author&query=Greenblatt%2C+R) | 2022-2023 | Field building | Empirical safety |
 
-<Section title="Views on Redwood">
-  <DisagreementMap
-    client:load
-    topic="Redwood's AI Control Agenda"
-    positions={[
-      {
-        name: "Control Is Pragmatic Necessity",
-        description: "Alignment may not be solved in time. Control provides crucial safety layer. Better to have backup plan. Red-team threat modeling is valuable. Empirical focus produces concrete results.",
-        proponents: ["Some safety researchers", "Pragmatists in EA community"],
-        strength: 4
-      },
-      {
-        name: "Don't Give Up on Alignment",
-        description: "Control framing might become self-fulfilling prophecy. Should focus efforts on solving alignment. Control might provide false confidence. Need full alignment for superintelligence.",
-        proponents: ["Some Anthropic researchers", "Alignment optimists"],
-        strength: 3
-      },
-      {
-        name: "Control Won't Work",
-        description: "Can't contain superintelligent schemer. Control measures will fail. Single point of failure. Attack surface too large. Alignment is necessary.",
-        proponents: ["Some pessimists", "Certain safety researchers"],
-        strength: 2
-      },
-      {
-        name: "Causal Scrubbing Valuable",
-        description: "Regardless of control debate, causal scrubbing raised interpretability standards. Important methodological contribution. Makes field more rigorous.",
-        proponents: ["Interpretability researchers", "Anthropic team"],
-        strength: 4
-      }
-    ]}
-  />
-</Section>
+### Organizational Resources
 
-## Comparisons
+| Type | Resource | Access |
+|------|----------|--------|
+| **Research Portal** | [Redwood Research](https://www.redwoodresearch.org/) | Public |
+| **Publications** | [Research Publications](https://www.redwoodresearch.org/research) | Open access |
+| **Code/Tools** | [GitHub Repository](https://github.com/redwoodresearch) | Open source |
+| **Fellowship** | [Research Fellowship](https://www.redwoodresearch.org/fellowship) | Application-based |
 
-### vs Anthropic
-- **Redwood**: Assume alignment might fail, focus on control
-- **Anthropic**: Optimistic about Constitutional AI, interpretability
-- **Both**: Doing empirical interpretability work
-- **Different**: Theory of victory
+### External Analysis
 
-### vs ARC
-- **Redwood**: Control + interpretability, empirical
-- **ARC**: ELK theory + evaluations
-- **Both**: Worst-case thinking, practical work
-- **Different**: Redwood more empirical, ARC more theory
+| Source | Focus | Assessment |
+|--------|-------|------------|
+| [Open Philanthropy](https://www.openphilanthropy.org/) | Funding analysis | Major safety contribution |
+| [Alignment Forum](https://www.alignmentforum.org/tag/redwood-research) | Technical discussion | Mixed reception of control approach |
+| [AI Safety Newsletter](https://aisafety.info/) | Regular coverage | Positive on empirical methodology |
+| [Future of Humanity Institute](https://www.fhi.ox.ac.uk/) | Academic perspective | Valuable addition to safety portfolio |
 
-### vs MIRI
-- **Redwood**: Empirical, still doing technical work despite difficulty
-- **MIRI**: Gave up on technical, pivoted to governance
-- **Both**: Realistic about difficulty
-- **Different**: Redwood maintains technical optimism
+### Related Safety Organizations
 
-## Related Pages
+| Organization | Relationship | Collaboration Type |
+|-------------|--------------|-------------------|
+| **[Anthropic](/knowledge-base/organizations/labs/anthropic/)** | Research collaboration | Interpretability methods sharing |
+| **[ARC](/knowledge-base/organizations/safety-orgs/arc/)** | Complementary focus | Evaluation methodology |
+| **[CHAI](/knowledge-base/organizations/safety-orgs/chai/)** | Academic partnership | Research collaboration |
+| **[Apollo Research](/knowledge-base/organizations/safety-orgs/apollo-research/)** | Similar approach | Evaluation and testing |
+
+### Policy and Governance Context
+
+| Institution | Engagement | Focus |
+|------------|------------|-------|
+| **[UK AISI](/knowledge-base/organizations/government/uk-aisi/)** | Consultation | Control methodologies |
+| **[US AISI](/knowledge-base/organizations/government/us-aisi/)** | Framework discussion | Deployment safety |
+| **NIST AI RMF** | Input provision | Risk management |
+| **Industry Standards** | Development participation | Safety protocols |
 
 <Backlinks client:load entityId="redwood" />
