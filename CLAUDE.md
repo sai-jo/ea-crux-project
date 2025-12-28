@@ -8,7 +8,85 @@ This document describes available workflows for Claude Code when working with th
 
 Scripts that generate intermediate output (like grading results) should write to this directory by default. This keeps the project root clean and prevents accidental commits of temp data.
 
-## Document Enhancer CLI
+## Page Improvement Workflow (Recommended)
+
+The most effective way to improve wiki pages to quality 5 is using a Task Agent with research capabilities. This approach:
+- Uses WebSearch to find real citations from authoritative sources
+- Makes surgical Edit operations instead of full rewrites
+- References the style guide and Q5 examples for quality standards
+
+### Quick Start
+
+```bash
+# Improve a specific page
+node scripts/page-improver.mjs economic-disruption
+
+# Dry run (shows what would be done)
+node scripts/page-improver.mjs economic-disruption --dry-run
+
+# List pages that need improvement
+node scripts/page-improver.mjs --list
+```
+
+### What It Does
+
+The improver spawns a sub-agent that:
+1. Reads MODELS_STYLE_GUIDE.md and a Q5 example (bioweapons.mdx)
+2. Analyzes the target page for missing elements
+3. Uses WebSearch to find real citations (McKinsey, IMF, WEF, etc.)
+4. Adds tables, Mermaid diagrams, and quantified claims via Edit tool
+5. Updates quality rating and lastEdited date
+
+### Target Output Quality
+
+A Q5 page should have:
+- **2+ substantive tables** (Risk Assessment, Impact by Sector, Scenarios)
+- **1+ Mermaid diagrams** (flowcharts showing relationships)
+- **5+ real citations** with working URLs from authoritative sources
+- **Quantified claims** with uncertainty ranges (e.g., "30-50% probability")
+- **Dense prose** with minimal bullets (<30%)
+- **800+ words** of substantive content
+
+### Cost Estimates
+
+| Model | Input Tokens | Output Tokens | Cost per Page |
+|-------|--------------|---------------|---------------|
+| Opus | ~100K | ~30K | **$3-5** |
+| Sonnet | ~100K | ~30K | **$0.50-1.00** |
+
+The Task agent reads ~3 files (50K tokens), runs WebSearch, and makes multiple Edit operations. Using Sonnet is recommended for batch improvements.
+
+### Reference Examples
+
+- **Gold standard**: `src/content/docs/knowledge-base/risks/misuse/bioweapons.mdx` (1079 lines, 15+ tables, 30+ citations)
+- **Good example**: `src/content/docs/knowledge-base/risk-factors/racing-dynamics.mdx` (307 lines, 12+ tables)
+
+### Manual Usage (via Claude Code)
+
+If you prefer to run it manually in Claude Code:
+
+```
+Task({
+  subagent_type: 'general-purpose',
+  prompt: `Improve the page at src/content/docs/knowledge-base/[path].mdx
+
+  FIRST: Read MODELS_STYLE_GUIDE.md and bioweapons.mdx as references.
+
+  THEN: Add these improvements using Edit tool:
+  1. Risk Assessment table (Severity, Likelihood, Timeline, Trend)
+  2. Impact/Data table with real sources (use WebSearch)
+  3. Scenario comparison table with probability estimates
+  4. Mermaid diagram showing key relationships
+  5. 5+ citations from authoritative sources
+  6. Quantify vague claims with ranges
+
+  DO NOT rewrite the entire file. Make surgical edits.`
+})
+```
+
+---
+
+## Document Enhancer CLI (Legacy)
 
 Unified tool for managing and improving wiki content quality via the Claude API.
 
@@ -207,6 +285,13 @@ Available entity types (defined in `src/data/schema.ts`):
 
 ### Building Data
 
+**Important:** The data build must run before the site build. The `npm run build` and `npm run dev` commands handle this automatically, but if you're running builds manually:
+
+```bash
+npm run build:data  # Must run first - generates database.json
+npm run build       # Site build - requires database.json
+```
+
 After editing `src/data/*.yaml` files:
 ```bash
 npm run build:data
@@ -338,6 +423,15 @@ The database stores:
 - **sources**: External references (papers, blogs, reports) found in articles
 - **summaries**: AI-generated summaries with key points and claims
 - **entity_relations**: Relationships from entities.yaml
+
+### Security Note
+
+The SQLite database in `.cache/knowledge.db` is a local cache for AI-assisted content workflows only. It is:
+- Not exposed to any network
+- Not used in production builds
+- Contains only derived data from public content
+
+Standard SQL patterns are maintained for good practice, but this is not a security-critical component.
 
 ## Resource Linking
 

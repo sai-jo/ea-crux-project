@@ -1,0 +1,307 @@
+#!/usr/bin/env node
+/**
+ * Unit Tests for Validators
+ *
+ * Tests the core validation logic used by the validator scripts.
+ * Run: node scripts/lib/validators.test.mjs
+ */
+
+import { existsSync } from 'fs';
+import { extractMetrics, suggestQuality, getQualityDiscrepancy } from './metrics-extractor.mjs';
+
+let passed = 0;
+let failed = 0;
+
+function test(name, fn) {
+  try {
+    fn();
+    console.log(`✓ ${name}`);
+    passed++;
+  } catch (e) {
+    console.log(`✗ ${name}`);
+    console.log(`  ${e.message}`);
+    failed++;
+  }
+}
+
+function assert(condition, message) {
+  if (!condition) throw new Error(message || 'Assertion failed');
+}
+
+function assertEqual(actual, expected, message) {
+  if (actual !== expected) {
+    throw new Error(message || `Expected ${expected}, got ${actual}`);
+  }
+}
+
+function assertInRange(value, min, max, message) {
+  if (value < min || value > max) {
+    throw new Error(message || `Expected ${value} to be in range [${min}, ${max}]`);
+  }
+}
+
+// =============================================================================
+// Validator scripts exist
+// =============================================================================
+
+console.log('\n📁 Validator scripts exist');
+
+const validatorScripts = [
+  'scripts/validate-all.mjs',
+  'scripts/validate-data.mjs',
+  'scripts/validate-internal-links.mjs',
+  'scripts/validate-mdx-syntax.mjs',
+  'scripts/validate-style-guide.mjs',
+  'scripts/validate-consistency.mjs',
+  'scripts/check-staleness.mjs',
+  'scripts/validate-sidebar.mjs',
+];
+
+for (const script of validatorScripts) {
+  test(`${script} exists`, () => {
+    assert(existsSync(script), `Script ${script} should exist`);
+  });
+}
+
+// =============================================================================
+// metrics-extractor.mjs tests
+// =============================================================================
+
+console.log('\n📊 metrics-extractor.mjs');
+
+const sampleQ1Content = `---
+title: Stub Page
+---
+
+## Overview
+
+Brief content.
+`;
+
+const sampleQ5Content = `---
+title: Excellent Page
+quality: 5
+---
+
+## Overview
+
+This is a comprehensive page with detailed analysis of the topic. The content spans multiple paragraphs and provides thorough coverage of all relevant aspects. We examine the evidence from various perspectives and synthesize findings from multiple sources.
+
+| Category | Value | Source |
+|----------|-------|--------|
+| Impact | High | [Smith 2023](https://example.com) |
+| Likelihood | Medium | [Jones 2024](https://example.com) |
+| Timeline | 2025-2030 | Expert consensus |
+
+## Quantitative Analysis
+
+The model estimates a 30-50% probability based on the following factors:
+
+| Factor | Weight | Confidence |
+|--------|--------|------------|
+| Historical precedent | 0.3 | High |
+| Current trends | 0.4 | Medium |
+| Expert opinion | 0.3 | Medium |
+
+<Mermaid client:load chart={\`
+flowchart TD
+    A[Input] --> B[Process]
+    B --> C[Output]
+\`} />
+
+## Key References
+
+See [Research Paper](https://example.com/paper) and [Government Report](https://example.gov/report) for more details.
+
+## Limitations
+
+This analysis has several limitations that should be considered.
+
+## Conclusion
+
+Based on the evidence, we conclude that the risk is significant but manageable.
+`;
+
+test('extractMetrics returns valid structure', () => {
+  const metrics = extractMetrics(sampleQ1Content);
+  assert('wordCount' in metrics, 'Should have wordCount');
+  assert('tableCount' in metrics, 'Should have tableCount');
+  assert('diagramCount' in metrics, 'Should have diagramCount');
+  assert('structuralScore' in metrics, 'Should have structuralScore');
+});
+
+test('extractMetrics counts words correctly', () => {
+  const metrics = extractMetrics(sampleQ1Content);
+  assert(metrics.wordCount > 0, 'Should count words');
+  assert(metrics.wordCount < 20, 'Should have few words in stub');
+});
+
+test('extractMetrics detects tables', () => {
+  const metrics = extractMetrics(sampleQ5Content);
+  assertEqual(metrics.tableCount, 2, 'Should find 2 tables');
+});
+
+test('extractMetrics detects Mermaid diagrams', () => {
+  const metrics = extractMetrics(sampleQ5Content);
+  assertEqual(metrics.diagramCount, 1, 'Should find 1 diagram');
+});
+
+test('extractMetrics detects links', () => {
+  const metrics = extractMetrics(sampleQ5Content);
+  assert(metrics.externalLinks >= 4, 'Should find external links');
+});
+
+test('extractMetrics detects overview section', () => {
+  const metricsQ1 = extractMetrics(sampleQ1Content);
+  const metricsQ5 = extractMetrics(sampleQ5Content);
+  assertEqual(metricsQ1.hasOverview, true, 'Q1 should have overview');
+  assertEqual(metricsQ5.hasOverview, true, 'Q5 should have overview');
+});
+
+test('extractMetrics detects conclusion', () => {
+  const metricsQ1 = extractMetrics(sampleQ1Content);
+  const metricsQ5 = extractMetrics(sampleQ5Content);
+  assertEqual(metricsQ1.hasConclusion, false, 'Q1 should not have conclusion');
+  assertEqual(metricsQ5.hasConclusion, true, 'Q5 should have conclusion');
+});
+
+test('structuralScore is higher for better content', () => {
+  const metricsQ1 = extractMetrics(sampleQ1Content);
+  const metricsQ5 = extractMetrics(sampleQ5Content);
+  assert(metricsQ5.structuralScore > metricsQ1.structuralScore,
+    `Q5 score (${metricsQ5.structuralScore}) should be higher than Q1 (${metricsQ1.structuralScore})`);
+});
+
+test('structuralScoreNormalized is 0-50', () => {
+  const metrics = extractMetrics(sampleQ5Content);
+  assertInRange(metrics.structuralScoreNormalized, 0, 50, 'Normalized score should be 0-50');
+});
+
+// =============================================================================
+// suggestQuality tests
+// =============================================================================
+
+console.log('\n⭐ suggestQuality');
+
+test('suggestQuality returns 1-5', () => {
+  for (let score = 0; score <= 15; score++) {
+    const quality = suggestQuality(score);
+    assertInRange(quality, 1, 5, `Quality for score ${score} should be 1-5`);
+  }
+});
+
+test('suggestQuality increases with score', () => {
+  const q0 = suggestQuality(0);
+  const q6 = suggestQuality(6);
+  const q12 = suggestQuality(12);
+  assert(q12 >= q6, 'Higher scores should suggest higher quality');
+  assert(q6 >= q0, 'Higher scores should suggest higher quality');
+});
+
+test('suggestQuality with robustness', () => {
+  const withRobustness = suggestQuality(6, 4);
+  const withoutRobustness = suggestQuality(6);
+  assert(typeof withRobustness === 'number', 'Should return number');
+  assertInRange(withRobustness, 1, 5, 'Should be 1-5');
+});
+
+// =============================================================================
+// getQualityDiscrepancy tests
+// =============================================================================
+
+console.log('\n📉 getQualityDiscrepancy');
+
+test('getQualityDiscrepancy returns valid structure', () => {
+  const result = getQualityDiscrepancy(3, 6);
+  assert('current' in result, 'Should have current');
+  assert('suggested' in result, 'Should have suggested');
+  assert('discrepancy' in result, 'Should have discrepancy');
+  assert('flag' in result, 'Should have flag');
+});
+
+test('getQualityDiscrepancy calculates correctly', () => {
+  const result = getQualityDiscrepancy(5, 3); // current 5, structural score 3 -> suggested ~2
+  assertEqual(result.current, 5);
+  assert(result.discrepancy > 0, 'Should have positive discrepancy (overrated)');
+});
+
+test('getQualityDiscrepancy flags large discrepancies', () => {
+  const large = getQualityDiscrepancy(5, 0); // current 5, score 0 -> suggested 1
+  const small = getQualityDiscrepancy(3, 6); // current 3, score 6 -> suggested 3
+  assertEqual(large.flag, 'large', 'Large gap should be flagged');
+  assertEqual(small.flag, 'ok', 'Small gap should be ok');
+});
+
+// =============================================================================
+// MDX Syntax patterns (from validate-mdx-syntax)
+// =============================================================================
+
+console.log('\n🔍 MDX syntax validation patterns');
+
+function testMdxPattern(pattern, content) {
+  return pattern.test(content);
+}
+
+test('detects mermaid codeblocks', () => {
+  const pattern = /^```mermaid/m;
+  assert(testMdxPattern(pattern, '```mermaid\nflowchart TD\n```'), 'Should detect mermaid codeblock');
+  assert(!testMdxPattern(pattern, '<Mermaid chart={`...`} />'), 'Should not detect Mermaid component');
+});
+
+test('detects unescaped < in tables', () => {
+  const pattern = /\| <[0-9]/;
+  assert(testMdxPattern(pattern, '| <30% |'), 'Should detect <30% in table');
+  assert(!testMdxPattern(pattern, '| less than 30% |'), 'Should not flag "less than"');
+});
+
+// =============================================================================
+// Link validation patterns (from validate-internal-links)
+// =============================================================================
+
+console.log('\n🔗 Link validation patterns');
+
+function extractInternalLinks(content) {
+  const links = [];
+  const linkRegex = /\[([^\]]*)\]\(([^)]+)\)/g;
+  let match;
+  while ((match = linkRegex.exec(content)) !== null) {
+    const [, text, href] = match;
+    if (!href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto:')) {
+      links.push({ text, href });
+    }
+  }
+  return links;
+}
+
+test('extractInternalLinks finds internal links', () => {
+  const content = 'See [this page](/knowledge-base/risks/) for details.';
+  const links = extractInternalLinks(content);
+  assertEqual(links.length, 1);
+  assertEqual(links[0].href, '/knowledge-base/risks/');
+});
+
+test('extractInternalLinks ignores external links', () => {
+  const content = 'See [Google](https://google.com) and [internal](/path/).';
+  const links = extractInternalLinks(content);
+  assertEqual(links.length, 1);
+  assertEqual(links[0].href, '/path/');
+});
+
+test('extractInternalLinks ignores anchors', () => {
+  const content = 'Jump to [section](#overview) or [page](/page/).';
+  const links = extractInternalLinks(content);
+  assertEqual(links.length, 1);
+});
+
+// =============================================================================
+// Summary
+// =============================================================================
+
+console.log('\n' + '─'.repeat(50));
+console.log(`\n✅ Passed: ${passed}`);
+if (failed > 0) {
+  console.log(`❌ Failed: ${failed}`);
+  process.exit(1);
+} else {
+  console.log('\n🎉 All tests passed!');
+}

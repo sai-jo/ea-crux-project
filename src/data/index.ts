@@ -5,28 +5,30 @@
  * Run `node scripts/build-data.mjs` to regenerate JSON from YAML.
  */
 
-import database from './database.json';
+import databaseJson from './database.json';
 import type { Expert, Organization, Estimate, Crux, GlossaryTerm, Entity, StructuredLikelihood, StructuredTimeframe, ResearchMaturity, Resource } from './schema';
+import type { Database } from './database-types';
+import { getRiskCategory } from './risk-categories';
+
+// Type the database import
+const database = databaseJson as unknown as Database;
 
 // =============================================================================
 // DATA ACCESS
 // =============================================================================
 
-export const experts: Expert[] = database.experts as Expert[];
-export const organizations: Organization[] = database.organizations as Organization[];
-export const estimates: Estimate[] = database.estimates as Estimate[];
-export const cruxes: Crux[] = database.cruxes as Crux[];
-export const glossary: GlossaryTerm[] = database.glossary as GlossaryTerm[];
-export const entities: Entity[] = (database as any).entities as Entity[] || [];
-export const resources: Resource[] = (database as any).resources as Resource[] || [];
+export const experts: Expert[] = database.experts;
+export const organizations: Organization[] = database.organizations;
+export const estimates: Estimate[] = database.estimates;
+export const cruxes: Crux[] = database.cruxes;
+export const glossary: GlossaryTerm[] = database.glossary;
+export const entities: Entity[] = database.entities || [];
+export const resources: Resource[] = database.resources || [];
 
 // Derived data (computed at build time)
-export const backlinks: Record<string, Array<{ id: string; type: string; title: string; relationship?: string }>> =
-  (database as any).backlinks || {};
-export const tagIndex: Record<string, Array<{ id: string; type: string; title: string }>> =
-  (database as any).tagIndex || {};
-export const pathRegistry: Record<string, string> =
-  (database as any).pathRegistry || {};
+export const backlinks = database.backlinks || {};
+export const tagIndex = database.tagIndex || {};
+export const pathRegistry = database.pathRegistry || {};
 
 // Ratings for model pages
 export interface ModelRatings {
@@ -34,6 +36,19 @@ export interface ModelRatings {
   rigor?: number;
   actionability?: number;
   completeness?: number;
+}
+
+// Structural metrics for quality assessment
+export interface PageMetrics {
+  wordCount: number;
+  tableCount: number;
+  diagramCount: number;
+  internalLinks: number;
+  externalLinks: number;
+  bulletRatio: number;
+  sectionCount: number;
+  hasOverview: boolean;
+  structuralScore: number;
 }
 
 // Pages data with quality ratings from MDX frontmatter
@@ -49,27 +64,22 @@ export interface Page {
   description: string | null;
   ratings: ModelRatings | null;
   category: string;
+  // Structural metrics
+  metrics: PageMetrics;
+  suggestedQuality: number;
+  // Legacy fields
+  wordCount: number;
+  backlinkCount: number;
 }
-export const pages: Page[] = (database as any).pages || [];
-export const stats: {
-  totalEntities: number;
-  byType: Record<string, number>;
-  bySeverity: Record<string, number>;
-  byStatus: Record<string, number>;
-  recentlyUpdated: Array<{ id: string; type: string; title: string; lastUpdated: string }>;
-  mostLinked: Array<{ id: string; type: string; title: string; backlinkCount: number }>;
-  topTags: Array<{ tag: string; count: number }>;
-  totalTags: number;
-  withDescription: number;
-  lastBuilt: string;
-} = (database as any).stats || {
+export const pages: Page[] = database.pages || [];
+export const stats = database.stats || {
   totalEntities: 0,
-  byType: {},
-  bySeverity: {},
-  byStatus: {},
-  recentlyUpdated: [],
-  mostLinked: [],
-  topTags: [],
+  byType: {} as Record<string, number>,
+  bySeverity: {} as Record<string, number>,
+  byStatus: {} as Record<string, number>,
+  recentlyUpdated: [] as Array<{ id: string; type: string; title: string; lastUpdated: string }>,
+  mostLinked: [] as Array<{ id: string; type: string; title: string; backlinkCount: number }>,
+  topTags: [] as Array<{ tag: string; count: number }>,
   totalTags: 0,
   withDescription: 0,
   lastBuilt: '',
@@ -114,7 +124,7 @@ export function getPageById(id: string): Page | undefined {
 }
 
 // Literature data
-const literature = (database as any).literature || { categories: [] };
+const literature = database.literature || { categories: [] };
 
 export function getLiteratureById(paperId: string) {
   for (const category of literature.categories || []) {
@@ -371,15 +381,8 @@ export function getEntityInfoBoxData(entityId: string) {
   let relatedSolutions: RiskTableSolution[] | undefined;
 
   if (entity.type === 'risk') {
-    // Compute category from ID patterns
-    const epistemicIds = ['authentication-collapse', 'automation-bias', 'consensus-manufacturing', 'cyber-psychosis', 'epistemic-collapse', 'expertise-atrophy', 'historical-revisionism', 'institutional-capture', 'knowledge-monopoly', 'learned-helplessness', 'legal-evidence-crisis', 'preference-manipulation', 'reality-fragmentation', 'scientific-corruption', 'sycophancy-scale', 'trust-cascade', 'trust-erosion'];
-    const misuseIds = ['authoritarian-tools', 'autonomous-weapons', 'bioweapons', 'cyberweapons', 'deepfakes', 'disinformation', 'fraud', 'surveillance'];
-    const structuralIds = ['concentration-of-power', 'economic-disruption', 'enfeeblement', 'erosion-of-agency', 'flash-dynamics', 'irreversibility', 'lock-in', 'multipolar-trap', 'proliferation', 'racing-dynamics', 'winner-take-all'];
-
-    if (epistemicIds.includes(entity.id)) category = 'epistemic';
-    else if (misuseIds.includes(entity.id)) category = 'misuse';
-    else if (structuralIds.includes(entity.id)) category = 'structural';
-    else category = 'accident';
+    // Compute category from ID
+    category = getRiskCategory(entity.id);
 
     // Get maturity
     maturity = (entity as any).maturity;
@@ -509,24 +512,8 @@ export function getRisksForTable(): RiskTableRow[] {
   }
 
   return riskEntities.map(e => {
-    // Infer category from customFields or ID pattern
-    let category = 'accident'; // default
-    const typeField = e.customFields?.find(f => f.label === 'Type');
-    if (typeField) {
-      const typeValue = typeField.value.toLowerCase();
-      if (typeValue.includes('epistemic')) category = 'epistemic';
-      else if (typeValue.includes('misuse')) category = 'misuse';
-      else if (typeValue.includes('structural') || typeValue.includes('systemic')) category = 'structural';
-    }
-
-    // Also check the ID for patterns
-    const epistemicIds = ['authentication-collapse', 'automation-bias', 'consensus-manufacturing', 'cyber-psychosis', 'epistemic-collapse', 'expertise-atrophy', 'historical-revisionism', 'institutional-capture', 'knowledge-monopoly', 'learned-helplessness', 'legal-evidence-crisis', 'preference-manipulation', 'reality-fragmentation', 'scientific-corruption', 'sycophancy-scale', 'trust-cascade', 'trust-erosion'];
-    const misuseIds = ['authoritarian-tools', 'autonomous-weapons', 'bioweapons', 'cyberweapons', 'deepfakes', 'disinformation', 'fraud', 'surveillance'];
-    const structuralIds = ['concentration-of-power', 'economic-disruption', 'enfeeblement', 'erosion-of-agency', 'flash-dynamics', 'irreversibility', 'lock-in', 'multipolar-trap', 'proliferation', 'racing-dynamics', 'winner-take-all'];
-
-    if (epistemicIds.includes(e.id)) category = 'epistemic';
-    else if (misuseIds.includes(e.id)) category = 'misuse';
-    else if (structuralIds.includes(e.id)) category = 'structural';
+    // Get category from centralized config
+    const category = getRiskCategory(e.id);
 
     // Parse likelihood - handle both string and structured format
     let likelihood: RiskTableLikelihood | undefined;
