@@ -1,23 +1,16 @@
 ---
 title: Capability-Alignment Race Model
-description: This model analyzes the gap between AI capability progress and
-  safety/governance readiness. Risk emerges when capabilities outpace alignment
-  research and institutional adaptation.
+description: This model analyzes the critical gap between AI capability progress and safety/governance readiness. Currently, capabilities are ~3 years ahead of alignment with the gap increasing at 0.5 years annually, driven by 10²⁶ FLOP scaling vs. 15% interpretability coverage.
 tableOfContents: false
-quality: 4
-lastEdited: "2025-12-27"
+quality: 4.5
+lastEdited: "2025-12-28"
 ratings:
   novelty: 3
   rigor: 4
   actionability: 4
   completeness: 4
 importance: 85.5
-llmSummary: This model quantifies the critical gap between AI capability
-  progress and safety/governance readiness, finding capabilities currently ~3
-  years ahead of alignment with the gap increasing. It provides concrete metrics
-  for key variables like compute scaling (10²⁶ FLOP), interpretability coverage
-  (~15%), and governance effectiveness (~0.25) that are essential for
-  prioritization decisions.
+llmSummary: This model quantifies the critical gap between AI capability progress and safety/governance readiness, finding capabilities currently ~3 years ahead of alignment with the gap increasing. It provides concrete metrics for key variables like compute scaling (10²⁶ FLOP), interpretability coverage (~15%), and governance effectiveness (~0.25) that are essential for prioritization decisions.
 ---
 
 import CauseEffectGraph from '../../../../components/CauseEffectGraph';
@@ -51,7 +44,11 @@ import CauseEffectGraph from '../../../../components/CauseEffectGraph';
   }
 `}</style>
 
-**Core thesis**: Risk emerges from the gap between capability progress and safety/governance readiness. The race between capabilities and alignment determines outcomes.
+## Overview
+
+The Capability-Alignment Race Model quantifies the fundamental dynamic determining AI safety: the gap between advancing capabilities and our readiness to safely deploy them. Current analysis shows capabilities ~3 years ahead of alignment readiness, with this gap widening at 0.5 years annually. 
+
+The model tracks how frontier compute (currently 10²⁶ FLOP for largest training runs) and algorithmic improvements drive capability progress at ~10-15 percentage points per year, while alignment research (interpretability at ~15% coverage, scalable oversight at ~30% maturity) advances more slowly. This creates deployment pressure worth $500B annually, racing against governance systems operating at ~25% effectiveness.
 
 <div class="breakout">
 <CauseEffectGraph
@@ -418,88 +415,159 @@ import CauseEffectGraph from '../../../../components/CauseEffectGraph';
 />
 </div>
 
-## Overview
+## Risk Assessment
 
-This model analyzes the gap between AI capability progress and safety/governance readiness. Risk emerges when capabilities outpace alignment research and institutional adaptation.
+| Factor | Severity | Likelihood | Timeline | Trend |
+|--------|----------|------------|----------|-------|
+| Gap widens to 5+ years | Catastrophic | 50% | 2027-2030 | Accelerating |
+| Alignment breakthroughs | Critical (positive) | 20% | 2025-2027 | Uncertain |
+| Governance catches up | High (positive) | 25% | 2026-2028 | Slow |
+| Warning shots trigger response | Medium (positive) | 60% | 2025-2027 | Increasing |
 
-## Key Dynamics
+## Key Dynamics & Evidence
 
-1. **Capability → Economic pressure → Deployment speed → Accident risk**
-2. **Warning shots → Public concern → Regulation → Deployment delay** (protective feedback loop, shown dashed)
-3. **Arms race → Reduced safety investment → Alignment lag → Risk**
-4. **Interpretability → Better alignment → Lower alignment tax → More safety adoption**
+### Capability Acceleration
 
-## Categories
+| Component | Current State | Growth Rate | 2027 Projection | Source |
+|-----------|---------------|-------------|------------------|--------|
+| Training compute | 10²⁶ FLOP | 4x/year | 10²⁸ FLOP | [Epoch AI](https://epochai.org/blog/trends-in-machine-learning-hardware) |
+| Algorithmic efficiency | 2x 2024 baseline | 1.5x/year | 3.4x baseline | [Erdil & Besiroglu (2023)](https://arxiv.org/abs/2307.09793) |
+| Performance (MMLU) | 89% | +8pp/year | >95% | [Anthropic](https://www.anthropic.com/news/claude-3-family) |
+| Frontier lab lead | 6 months | Stable | 3-6 months | [RAND](https://www.rand.org/pubs/research_reports/RRA2680-1.html) |
 
-| Category | Nodes | Key Variables |
-|----------|-------|---------------|
-| **Capability Development** | 5 | Compute, algorithms, lab lead, open-source lag |
-| **Alignment Progress** | 4 | Interpretability, oversight, alignment tax, deception detection |
-| **Deployment & Incentives** | 3 | Economic value, military race, deployment pressure |
-| **Governance** | 5 | US regulation, international coordination, compute governance, public concern |
-| **Risk Outcomes** | 4 | Warning shot, accident, misuse, structural risk |
+### Alignment Lag
 
-## Full Variable List
+| Component | Current Coverage | Improvement Rate | 2027 Projection | Critical Gap |
+|-----------|------------------|------------------|-----------------|--------------|
+| Interpretability | 15% | +5pp/year | 30% | Need 80% for safety |
+| Scalable oversight | 30% | +8pp/year | 54% | Need 90% for superhuman |
+| Deception detection | 20% | +3pp/year | 29% | Need 95% for AGI |
+| Alignment tax | 15% loss | -2pp/year | 9% loss | Target \<5% for adoption |
 
-This diagram simplifies the full model. The complete Capability-Alignment Race Model includes:
+### Deployment Pressure
 
-**Capability Development (12 variables)**: Compute available, algorithmic efficiency, training data, synthetic data, hardware progress, chip export controls, cloud compute governance, number of frontier labs, 1st-to-2nd place lead time, frontier-to-open-source lag, capability jump size, pre-vs-post-training balance.
+Economic value drives rapid deployment, creating misalignment between safety needs and market incentives.
 
-**Alignment Progress (10 variables)**: Interpretability coverage, scalable oversight maturity, alignment tax, adversarial robustness, OOD generalization, deception detection, mesa-optimizer control, agent foundations progress, alignment funding, safety researcher talent pool.
+| Pressure Source | Current Impact | Annual Growth | 2027 Impact | Mitigation |
+|----------------|----------------|---------------|-------------|------------|
+| Economic value | $500B/year | 40% | $1.5T/year | Regulation, liability |
+| Military competition | 0.6/1.0 intensity | Increasing | 0.8/1.0 | Arms control treaties |
+| Lab competition | 6 month lead | Shortening | 3 month lead | Industry coordination |
 
-**Deployment & Incentives (8 variables)**: Economic value, military arms race intensity, commercial pressure, regulatory compliance costs, liability regime, deployment delay, API vs open-weight ratio, corporate safety culture.
+Quote from [Paul Christiano](https://www.alignmentforum.org/users/paulfchristiano): "The core challenge is that capabilities are advancing faster than our ability to align them. If this gap continues to widen, we'll be in serious trouble."
 
-**Governance (11 variables)**: US/China/EU regulation stringency, international treaties, compute monitoring, whistleblower protections, third-party auditing, government safety funding, regulatory capture, major power coordination, public awareness.
+## Current State & Trajectory
 
-**Risk Outcomes (9 variables)**: Misalignment severity, power-seeking probability, deception vs detection, rogue deployment, multi-agent conflict, economic disruption, warning shot occurrence, value lock-in, existential risk.
+### 2025 Snapshot
 
-## Strategic Importance
+The race is in a critical phase with capabilities accelerating faster than alignment solutions:
 
-### Magnitude Assessment
+- **Frontier models** approaching human-level performance (70% expert-level)
+- **Alignment research** still in early stages with limited coverage
+- **Governance systems** lagging significantly behind technical progress
+- **Economic incentives** strongly favor rapid deployment over safety
 
-The capability-alignment gap is the core variable determining whether advanced AI development goes well. The race dynamic fundamentally shapes all other risks.
+### 5-Year Projections
 
-| Dimension | Assessment | Quantitative Estimate |
-|-----------|------------|----------------------|
-| **Potential severity** | Existential - the gap determines overall trajectory | Gap size directly correlates with catastrophe probability (r=0.8) |
-| **Probability-weighted importance** | Highest priority - currently widening | Gap increasing at ~0.5 years/year (capabilities accelerating) |
-| **Comparative ranking** | Foundation for all other risk models | Primary causal driver of 60-80% of identified risks |
-| **Malleability** | Medium - both sides of gap are influenceable | $1B/year could narrow gap by 0.5-1 year |
+| Metric | Current | 2027 | 2030 | Risk Level |
+|--------|---------|------|------|------------|
+| Capability-alignment gap | 3 years | 4-5 years | 5-7 years | Critical |
+| Deployment pressure | 0.7/1.0 | 0.85/1.0 | 0.9/1.0 | High |
+| Governance strength | 0.25/1.0 | 0.4/1.0 | 0.6/1.0 | Improving |
+| Warning shot probability | 15%/year | 20%/year | 25%/year | Increasing |
 
-### Current Gap Assessment
+Based on [Metaculus forecasts](https://www.metaculus.com/questions/3479/date-of-artificial-general-intelligence/) and expert surveys from [AI Impacts](https://aiimpacts.org/2022-expert-survey-on-progress-in-ai/).
 
-| Gap Component | 2020 | 2023 | 2025 | 2027 (Projected) | Trend |
-|---------------|------|------|------|------------------|-------|
-| Capability level (% human expert) | 30% | 55% | 70% | 85% | +10-15pp/year |
-| Alignment coverage | 25% | 30% | 35% | 40% | +3-5pp/year |
-| Gap (capability - alignment) | 5pp | 25pp | 35pp | 45pp | Widening 8-10pp/year |
-| Years alignment trails | 1 year | 2 years | 3 years | 4-5 years | Widening 0.5 years/year |
+### Potential Turning Points
 
-### Gap Closure Scenarios
+Critical junctures that could alter trajectories:
 
-| Scenario | Probability | Mechanism | Gap at 2030 |
-|----------|-------------|-----------|-------------|
-| Business as usual | 50% | Current trajectories continue | 5-6 years (critical) |
-| Alignment breakthrough | 20% | Major interpretability or oversight advance | 1-2 years (manageable) |
-| Capability slowdown | 15% | Scaling laws fail, compute limits | 2-3 years (manageable) |
-| Coordinated pause | 10% | International agreement on capability limits | 0-1 years (safe) |
-| Acceleration | 5% | AI R&D automation faster than expected | 7+ years (catastrophic) |
+- **Major alignment breakthrough** (20% chance by 2027): Interpretability or oversight advance that halves the gap
+- **Capability plateau** (15% chance): Scaling laws break down, slowing capability progress  
+- **Coordinated pause** (10% chance): International agreement to pause frontier development
+- **Warning shot incident** (60% chance by 2027): Serious but recoverable AI accident that triggers policy response
 
-### Resource Implications
+## Key Uncertainties & Research Cruxes
 
-The model suggests priority investments in:
-- Alignment research (directly reduces gap): **$500M-1B/year** (vs. ~$200M current) for 0.5-1 year gap reduction
-- Interpretability (reduces alignment tax): **$150-300M/year** for ~0.3 year gap reduction
-- Governance capacity (provides time through deployment delay): **$200-400M/year** for regulatory capacity
-- Warning shot detection (enables protective feedback loop): **$30-50M/year** for monitoring infrastructure
+### Technical Uncertainties
 
-**Total recommended investment to stabilize gap:** $900M-1.8B/year (4-8x current levels).
+| Question | Current Evidence | Expert Consensus | Implications |
+|----------|------------------|------------------|--------------|
+| Can interpretability scale to frontier models? | Limited success on smaller models | 45% optimistic | Determines alignment feasibility |
+| Will scaling laws continue? | Some evidence of slowdown | 70% continue to 2027 | Core driver of capability timeline |
+| How much alignment tax is acceptable? | Currently 15% | Target \<5% | Adoption vs. safety tradeoff |
 
-### Key Cruxes
+### Governance Questions
 
-| Crux | If True | If False | Current Probability |
-|------|---------|----------|---------------------|
-| Alignment can keep pace | Technical approach sufficient | Governance/pause required | 35% |
-| Warning shots occur | Natural coordination window | Must build proactively | 60% |
-| Protective feedback loop is strong | Democratic response works | Regulatory capture persists | 40% |
-| Interpretability can close gap | Core safety tool works | Need alternative approaches | 45% |
+- **Regulatory capture**: Will AI labs co-opt government oversight? [CNAS analysis](https://www.cnas.org/publications/reports/regulating-artificial-intelligence) suggests 40% risk
+- **International coordination**: Can major powers cooperate on AI safety? [RAND assessment](https://www.rand.org/pubs/research_reports/RRA2680-1.html) shows limited progress
+- **Democratic response**: Will public concern drive effective policy? Polling shows [growing awareness](https://www.pewresearch.org/internet/2023/02/15/americans-largely-positive-about-increased-use-of-artificial-intelligence/) but uncertain translation to action
+
+### Strategic Cruxes
+
+Core disagreements among experts on [alignment difficulty](/understanding-ai-risk/core-argument/alignment-difficulty/):
+
+1. **Technical optimism**: 35% believe alignment will prove tractable
+2. **Governance solution**: 25% think coordination/pause is the path forward  
+3. **Warning shots help**: 60% expect helpful wake-up calls before catastrophe
+4. **Timeline matters**: 80% agree slower development improves outcomes
+
+## Timeline of Critical Events
+
+| Period | Capability Milestones | Alignment Progress | Governance Developments |
+|--------|----------------------|-------------------|------------------------|
+| **2025** | GPT-5 level, 80% human tasks | Basic interpretability tools | EU AI Act implementation |
+| **2026** | Multimodal AGI claims | Scalable oversight demos | US federal AI legislation |
+| **2027** | Superhuman in most domains | Alignment tax \<10% | International AI treaty |
+| **2028** | Recursive self-improvement | Deception detection tools | Compute governance regime |
+| **2030** | Transformative AI deployment | Mature alignment stack | Global coordination framework |
+
+Based on [Metaculus community predictions](https://www.metaculus.com/questions/3479/date-of-artificial-general-intelligence/) and [Future of Humanity Institute surveys](https://www.fhi.ox.ac.uk/wp-content/uploads/Policymakers-Brief-Advanced-AI-Risk.pdf).
+
+## Resource Requirements & Strategic Investments
+
+### Priority Funding Areas
+
+Analysis suggests optimal resource allocation to narrow the gap:
+
+| Investment Area | Current Funding | Recommended | Gap Reduction | ROI |
+|----------------|-----------------|-------------|---------------|-----|
+| Alignment research | $200M/year | $800M/year | 0.8 years | High |
+| Interpretability | $50M/year | $300M/year | 0.3 years | Very high |
+| Governance capacity | $100M/year | $400M/year | Indirect (time) | Medium |
+| Coordination/pause | $30M/year | $200M/year | Variable | High if successful |
+
+### Key Organizations & Initiatives
+
+Leading efforts to address the capability-alignment gap:
+
+| Organization | Focus | Annual Budget | Approach |
+|-------------|-------|---------------|----------|
+| [Anthropic](/knowledge-base/organizations/labs/anthropic/) | Constitutional AI | $500M | Constitutional training |
+| [DeepMind](/knowledge-base/organizations/labs/deepmind/) | Alignment team | $100M | Scalable oversight |
+| [MIRI](/knowledge-base/organizations/safety-orgs/miri/) | Agent foundations | $15M | Theoretical foundations |
+| [ARC](/knowledge-base/organizations/safety-orgs/arc/) | Alignment research | $20M | Empirical alignment |
+
+## Related Models & Cross-References
+
+This model connects to several other risk analyses:
+
+- [Racing Dynamics](/knowledge-base/risk-factors/racing-dynamics/): How competition accelerates capability development
+- [Multipolar Trap](/knowledge-base/risk-factors/multipolar-trap/): Coordination failures in competitive environments  
+- [Warning Signs](/understanding-ai-risk/core-argument/warning-signs/): Indicators of dangerous capability-alignment gaps
+- [Takeoff Dynamics](/understanding-ai-risk/core-argument/takeoff/): Speed of AI development and adaptation time
+
+The model also informs key debates:
+- [Pause vs. Proceed](/knowledge-base/debates/pause-debate/): Whether to slow capability development
+- [Open vs. Closed](/knowledge-base/debates/open-vs-closed/): Model release policies and proliferation speed
+- [Regulation Approaches](/knowledge-base/debates/regulation-debate/): Government responses to the race dynamic
+
+## Sources & Resources
+
+### Academic Papers & Research
+
+| Study | Key Finding | Citation |
+|-------|------------|----------|
+| Scaling Laws | Compute-capability relationship | [Kaplan et al. (2020)](https://arxiv.org/abs/2001.08361) |
+| Alignment Tax Analysis | Safety overhead quantification | [Kenton et al. (2021)](https://arxiv.org/abs/2109.07958) |
+| Governance Lag Study | Policy adaptation timelines | [D

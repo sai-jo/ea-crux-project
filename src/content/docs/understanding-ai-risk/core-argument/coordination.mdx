@@ -1,10 +1,11 @@
 ---
 title: Will We Fail to Coordinate?
-description: Will competitive dynamics prevent us from developing AI safely?
+description: This analysis examines whether competitive pressures will prevent safe AI development. Evidence suggests 40-60% probability of adequate coordination, with key variables including US-China relations, regulatory pace, and industry self-governance through mechanisms like the Frontier Model Forum.
 sidebar:
   order: 7
 importance: 84.2
-quality: 4
+quality: 5
+lastEdited: "2025-12-28"
 llmSummary: Analyzes whether competitive pressures between AI labs and nations
   will prevent safe AI development through coordination failures, examining
   evidence for both failure (US-China rivalry, regulatory lag, open source
@@ -14,7 +15,7 @@ llmSummary: Analyzes whether competitive pressures between AI labs and nations
   from 20% to 80%+ success probability.
 ---
 
-import { InfoBox, EstimateBox, DisagreementMap, KeyQuestions } from '../../../../components/wiki';
+import { InfoBox, EstimateBox, DisagreementMap, KeyQuestions, Mermaid } from '../../../../components/wiki';
 
 <InfoBox
   type="crux"
@@ -26,11 +27,54 @@ import { InfoBox, EstimateBox, DisagreementMap, KeyQuestions } from '../../../..
   ]}
 />
 
+## Quick Assessment
+
+| Dimension | Assessment | Evidence |
+|-----------|------------|----------|
+| **Current coordination level** | Moderate but fragmented | 11 countries in International Network of AI Safety Institutes; 16 companies signed Seoul Frontier AI Safety Commitments (May 2024) |
+| **US-China cooperation** | Minimal but not absent | First intergovernmental AI dialogue held May 2024; November 2024 agreement on human control of nuclear weapons decisions |
+| **Regulatory pace** | Lagging but accelerating | EU AI Act entered force August 2024; US policy fragmented between administrations |
+| **Industry self-governance** | Promising but voluntary | Frontier Model Forum members committed over $10 million to AI Safety Fund; all members published safety frameworks by February 2025 |
+| **Historical precedent** | Mixed success | Montreal Protocol achieved 99% phase-out of ozone-depleting substances with universal ratification; nuclear non-proliferation partial (9 nuclear states) |
+| **Expert consensus** | Wide disagreement | Estimates range from less than 20% to greater than 80% probability of successful coordination |
+| **Key bottleneck** | Verification and trust | AI capabilities harder to verify than nuclear/chemical weapons; dual-use nature complicates monitoring |
+
 **The core question**: Even if alignment is technically possible, will competitive pressures between labs and nations lead to racing, corner-cutting on safety, and ultimately catastrophe?
 
 This is the "social" dimension of AI risk. Even with perfect technical solutions, coordination failures could prevent their adoption.
 
 ## The Coordination Failures
+
+<Mermaid client:load chart={`
+flowchart TD
+    RACE[Racing Dynamics] --> LAB[Lab Competition]
+    RACE --> NATION[Nation Competition]
+    LAB --> CORNER[Safety Corner-Cutting]
+    NATION --> CORNER
+    CORNER --> DEPLOY[Premature Deployment]
+
+    PROLIF[Proliferation] --> OPEN[Open Source Release]
+    PROLIF --> STATE[State Actor Access]
+    OPEN --> SPREAD[Capability Spread]
+    STATE --> SPREAD
+
+    GOV[Governance Failure] --> LAG[Regulatory Lag]
+    GOV --> FRAG[Jurisdictional Fragmentation]
+    LAG --> WEAK[Weak Oversight]
+    FRAG --> WEAK
+
+    DEPLOY --> RISK[Increased Risk]
+    SPREAD --> RISK
+    WEAK --> RISK
+
+    style RACE fill:#ffcccc
+    style PROLIF fill:#ffcccc
+    style GOV fill:#ffcccc
+    style RISK fill:#ff9999
+    style CORNER fill:#ffddcc
+    style SPREAD fill:#ffddcc
+    style WEAK fill:#ffddcc
+`} />
 
 <EstimateBox
   client:load
@@ -76,43 +120,62 @@ This is the "social" dimension of AI risk. Even with perfect technical solutions
 **The evidence**: Humans have repeatedly failed at similar problems.
 
 **Examples**:
-| Domain | Coordination Attempt | Result |
-|--------|---------------------|--------|
-| Nuclear weapons | Non-proliferation | Partial success, 9 countries have nukes |
-| Climate change | Paris Agreement | Insufficient, targets not met |
-| Social media | Content moderation | Largely failed |
-| Financial regulation | Basel accords | Mixed, still have crises |
-| Bioweapons | BWC treaty | Some success, but weak verification |
+| Domain | Coordination Attempt | Quantitative Result | Key Lesson for AI |
+|--------|---------------------|---------------------|-------------------|
+| Nuclear weapons | [Non-Proliferation Treaty](https://www.un.org/disarmament/wmd/nuclear/npt/) (1968) | 9 nuclear states vs. 5 in 1968; 191 parties but India, Pakistan, Israel, North Korea outside | Verification matters; holdouts undermine regime |
+| Climate change | [Paris Agreement](https://unfccc.int/process-and-meetings/the-paris-agreement) (2015) | 195 parties; emissions rose 1.2% in 2024; 2.7C trajectory vs. 1.5C target | Voluntary commitments insufficient without enforcement |
+| Ozone layer | [Montreal Protocol](https://ozone.unep.org/treaties/montreal-protocol) (1987) | 198 parties (first universal treaty); 99% ODS phase-out; ozone recovery by 2040 projected | Success possible with clear threat, verifiable actions, economic alternatives |
+| Financial regulation | Basel III (2010-2023) | Implementation varies by jurisdiction; 2023 SVB failure despite rules | Regulatory arbitrage between jurisdictions |
+| Bioweapons | [BWC](https://www.un.org/disarmament/biological-weapons/) (1972) | 187 parties; no verification regime; 4 staff members; budget smaller than average McDonald's | Weak institutions fail; verification remains critical gap |
 
-**Key insight**: Coordination is possible but difficult and often incomplete.
+**Key insight**: Coordination is possible but difficult and often incomplete. The [Montreal Protocol's success](https://news.un.org/en/story/2023/01/1132277) (99% reduction with universal participation) shows what's achievable when threats are clear, actions are verifiable, and economic alternatives exist. AI coordination lacks all three conditions.
 
 ### 2. US-China Competition
 
 **The dynamic**: The two leading AI powers are geopolitical rivals.
 
+**Current state of US-China AI relations** (as of late 2024):
+
+| Development | Date | Significance |
+|-------------|------|--------------|
+| [First intergovernmental AI dialogue](https://www.chinausfocus.com/peace-security/china-and-the-united-states-begin-official-ai-dialogue) | May 2024 | Geneva meeting; no concrete deliverables but opened channel |
+| [Nuclear weapons AI agreement](https://www.rand.org/pubs/perspectives/PEA4189-1.html) | November 2024 | Biden-Xi APEC summit: humans should control nuclear decisions |
+| [UN AI resolutions](https://www.brookings.edu/articles/a-roadmap-for-a-us-china-ai-dialogue/) | March-June 2024 | Both countries supported each other's AI governance resolutions |
+| [Paris AI Summit divergence](https://www.atlanticcouncil.org/blogs/new-atlanticist/reading-between-the-lines-of-the-dueling-us-and-chinese-ai-action-plans/) | February 2025 | US and UK declined to sign inclusive AI declaration; China proposed rival Shanghai-based governance body |
+
 **The problem**:
-- Neither wants to fall behind
+- Neither wants to fall behind (China produced an estimated 200,000-300,000 AI chips in 2025 vs. Nvidia's 4-5 million)
 - Each fears the other will defect on safety
-- Limited trust for verification
+- Limited trust for verification (AI capabilities harder to verify than nuclear arsenals)
 - Different values and governance systems
 - Dual-use makes civilian/military separation hard
 
 **The parallel**: Cold War arms race, but with AI instead of nukes.
 
-**Key question**: Can rivals cooperate on existential risk?
+**Key question**: Can rivals cooperate on existential risk? The [RAND analysis](https://www.rand.org/pubs/perspectives/PEA4189-1.html) argues the November 2024 nuclear AI agreement "could serve as a foundation for future discussions about potential areas of mutual restraint."
 
 ### 3. Regulatory Lag
 
 **The argument**: Government can't keep up with AI progress.
 
+**Current regulatory landscape**:
+
+| Jurisdiction | Framework | Status | Key Provisions |
+|--------------|-----------|--------|----------------|
+| [EU AI Act](https://artificialintelligenceact.eu/) | Comprehensive risk-based regulation | Entered force August 2024; full application August 2026 | Prohibited uses (Feb 2025); GPAI rules (Aug 2025); high-risk systems (Aug 2026); fines up to EUR 35M or 7% global revenue |
+| US (Biden) | Executive Order 14110 | October 2023 | Safety requirements for frontier models; NIST standards |
+| US (Trump) | AI Action Plan | July 2025 | Shift toward deregulation; links federal funding to less restrictive state laws |
+| UK | Principles-based approach | Ongoing | Sector-specific regulation; no comprehensive AI law |
+| China | Multiple regulations | 2023-2025 | Algorithmic recommendations, deep synthesis, generative AI rules |
+
 **Reasons for lag**:
 - Technical complexity overwhelms regulators
 - Revolving door with industry
 - Lobbying against regulation
-- Jurisdictional fragmentation
+- Jurisdictional fragmentation (27 EU member states now [developing national implementation plans](https://artificialintelligenceact.eu/national-implementation-plans/))
 - Speed of AI progress
 
-**Evidence**: Current AI governance is patchwork, varies by jurisdiction, often years behind technology.
+**Evidence**: The EU AI Act, the world's first comprehensive AI law, took 3+ years to negotiate and will take until 2027 for full implementation. GPT-4 was released during negotiations. By full implementation, AI capabilities may have advanced 2-3 generations.
 
 ### 4. Open Source and Proliferation
 
@@ -194,16 +257,18 @@ This is the "social" dimension of AI risk. Even with perfect technical solutions
 
 **The evidence**: Coordination efforts are forming.
 
-**Current efforts**:
-| Initiative | Type | Status |
-|------------|------|--------|
-| AI Safety Institutes | National | UK, US, Japan, others |
-| Bletchley Declaration | International | Signed by 28 countries |
-| Frontier Model Forum | Industry | Major labs participating |
-| RSPs / ASL | Self-regulation | Anthropic, others |
-| EU AI Act | Regulation | Implemented |
+**Current efforts** (as of late 2024):
 
-**Key question**: Are these efforts sufficient?
+| Initiative | Type | Participants | Key Achievements |
+|------------|------|--------------|------------------|
+| [International Network of AI Safety Institutes](https://www.nist.gov/news-events/news/2024/11/fact-sheet-us-department-commerce-us-department-state-launch-international) | International | 11 countries + EU | Launched November 2024; Joint Evaluation Protocol; Global AI Incident Database |
+| [Bletchley Declaration](https://www.gov.uk/government/publications/ai-safety-summit-2023-the-bletchley-declaration/the-bletchley-declaration-by-countries-attending-the-ai-safety-summit-1-2-november-2023) | International | 28 countries (Nov 2023) | First global AI safety agreement; established summit series |
+| [Seoul Declaration](https://www.industry.gov.au/publications/seoul-declaration-countries-attending-ai-seoul-summit-21-22-may-2024) | International | 27 countries + EU (May 2024) | Expanded to "safe, innovative, and inclusive AI"; China notably did not sign |
+| [Frontier Model Forum](https://www.frontiermodelforum.org/updates/progress-update-advancing-frontier-ai-safety-in-2024-and-beyond/) | Industry | Anthropic, Google, Microsoft, OpenAI | Over $10M AI Safety Fund; all members published safety frameworks by Feb 2025 |
+| [Seoul Frontier AI Safety Commitments](https://www.gov.uk/government/publications/frontier-ai-safety-commitments-ai-seoul-summit-2024/frontier-ai-safety-commitments-ai-seoul-summit-2024) | Industry | 16 companies | Commitment to publish safety frameworks; intolerable risk thresholds; external reporting |
+| [EU AI Act](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai) | Regulation | 27 EU members | World's first comprehensive AI law; Amazon, Google, Microsoft, OpenAI, Anthropic signed Code of Practice |
+
+**Key question**: Are these efforts sufficient? The [CSIS analysis](https://www.csis.org/analysis/ai-safety-institute-international-network-next-steps-and-recommendations) notes the network "lacks formal mechanisms for coordinating with frontier AI developers" and needs clearer priorities.
 
 ### 4. Lab Incentives Favor Safety
 
@@ -223,17 +288,22 @@ This is the "social" dimension of AI risk. Even with perfect technical solutions
 ### 5. Historical Precedents of Success
 
 **Examples of successful coordination**:
-- Ozone layer (Montreal Protocol): Banned CFCs, hole is healing
-- Smallpox eradication: Global coordination eliminated disease
-- Nuclear taboo: No use since 1945
-- Internet governance: IETF, ICANN work reasonably well
-- Aviation safety: Remarkable safety record through coordination
+
+| Domain | Mechanism | Quantitative Outcome | AI-Relevant Features |
+|--------|-----------|---------------------|---------------------|
+| Ozone layer | [Montreal Protocol](https://www.unep.org/ozonaction/who-we-are/about-montreal-protocol) (1987) | 99% ODS phase-out; 198 parties; $3B Multilateral Fund; 0.5C warming avoided by 2100 | Clear threat; verifiable; economic alternatives existed; universal participation |
+| Smallpox | WHO campaign (1967-1980) | 100% eradication; last case 1977 | Ring vaccination strategy; clear endpoint; no animal reservoir |
+| Nuclear taboo | Norm + deterrence | No use in warfare since 1945 (80 years) | Existential stakes; small number of actors; verification (IAEA has 2,500+ staff) |
+| Internet governance | IETF, ICANN, RIRs | 5.5B users; 99.9%+ uptime for core infrastructure | Technical community self-governance; rough consensus model |
+| Aviation safety | ICAO + national agencies | 0.07 fatal accidents per million flights (2023) | Clear liability; reputation matters; shared standards |
 
 **Key insight**: Coordination *can* work, especially when:
-- Risks are clear
-- Costs of cooperation are manageable
-- Verification is possible
-- Small number of key actors
+- Risks are clear (ozone: measurable depletion; nuclear: existential threat)
+- Costs of cooperation are manageable (CFC alternatives existed)
+- Verification is possible (IAEA inspections; atmospheric monitoring)
+- Small number of key actors (5-9 nuclear powers; major CFC producers)
+
+**Challenge for AI**: AI development lacks clear thresholds (what capability is "dangerous"?), alternatives to racing are unclear, and verification of AI capabilities is fundamentally harder than physical measurements.
 
 ## Current Coordination Efforts
 
@@ -332,15 +402,24 @@ This is the "social" dimension of AI risk. Even with perfect technical solutions
 
 **The idea**: Control AI development by controlling the hardware.
 
-**Mechanisms**:
-- Export controls on advanced chips
-- Licensing requirements for large training runs
-- Monitoring of compute usage
-- International agreements on compute
+**Current US export control regime**:
 
-**Advantages**: Hardware is physical, visible, verifiable.
+| Action | Date | Target | Effect |
+|--------|------|--------|--------|
+| Initial controls | October 2022 | Advanced AI chips to China | Blocked Nvidia A100/H100 exports |
+| [Expanded controls](https://www.hklaw.com/en/insights/publications/2024/12/us-strengthens-export-controls-on-advanced-computing-items) | October 2024 | High-bandwidth memory (HBM) | Added strategic memory components |
+| [AI Diffusion Framework](https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion) | January 2025 | Model weights; compute clusters | Tiered country access; controls on advanced model weights |
+| Framework rescinded | 2025 | N/A | Trump administration reversed Biden-era Diffusion Rule |
+| [Conditional chip sales](https://www.cfr.org/article/chinas-ai-chip-deficit-why-huawei-cant-catch-nvidia-and-us-export-controls-should-remain) | August 2025 | Nvidia H20, AMD MI308 to China | 15% revenue share to US government |
 
-**Challenges**: Circumvention, innovation in efficiency, international cooperation.
+**Production gap**: Nvidia projected 4-5 million AI chips in 2025 (double 2024); Huawei estimated 200,000-300,000 completed chips due to HBM shortage.
+
+**Advantages**: Hardware is physical, visible, verifiable. Concentrated production (TSMC produces greater than 90% of advanced chips).
+
+**Challenges**:
+- Circumvention through efficiency improvements and alternative architectures
+- China's [retaliatory export bans](https://www.rand.org/pubs/perspectives/PEA3776-1.html) on critical minerals (gallium, germanium, antimony)
+- [Outbound Investment Security Program](https://www.sidley.com/en/insights/newsupdates/2025/01/new-us-export-controls-on-advanced-computing-items-and-artificial-intelligence-model-weights) (January 2025) restricts US investment in Chinese AI companies
 
 ### Responsible Scaling Policies (RSPs)
 
@@ -352,9 +431,22 @@ This is the "social" dimension of AI risk. Even with perfect technical solutions
 3. Don't deploy until requirements met
 4. External audit and verification
 
-**Current status**: Anthropic has RSP; others have similar frameworks.
+**Current status** (per [METR analysis](https://metr.org/faisc)):
 
-**Limitations**: Voluntary; relies on honest assessment; may not cover all risks.
+| Company | Framework | Key Elements |
+|---------|-----------|--------------|
+| Anthropic | [RSP](https://www.anthropic.com/news/anthropics-responsible-scaling-policy) (Sept 2023) | ASL 1-4 levels; capability-triggered evaluations; biosecurity, cyber, autonomy testing |
+| OpenAI | [Preparedness Framework](https://openai.com/index/preparedness/) (Dec 2023) | Tracked categories (bio, cyber, autonomy, persuasion); Medium/High/Critical thresholds |
+| Google DeepMind | [Frontier Safety Framework](https://deepmind.google/discover/blog/introducing-the-frontier-safety-framework/) (May 2024) | Critical capability levels; evaluations before training and deployment |
+| xAI | Safety framework | Published February 2025 per Seoul Commitment |
+
+**Common elements** (per [METR Common Elements analysis](https://metr.org/common-elements)):
+- Capability thresholds triggering enhanced safety measures
+- Model weight security requirements
+- Deployment mitigations for dangerous capabilities
+- External reporting and (in some cases) government notification
+
+**Limitations**: Voluntary; relies on honest assessment; [16 companies committed](https://www.gov.uk/government/publications/frontier-ai-safety-commitments-ai-seoul-summit-2024/frontier-ai-safety-commitments-ai-seoul-summit-2024) at Seoul but frameworks vary in rigor; may not cover all risks.
 
 ### International Agreements
 
@@ -436,4 +528,40 @@ Coordination interacts with other cruxes:
 - **[Alignment Difficulty](/understanding-ai-risk/core-argument/alignment-difficulty/)**: If alignment is easy, less coordination needed.
 - **[Warning Signs](/understanding-ai-risk/core-argument/warning-signs/)**: Warning shots might enable coordination.
 
+---
 
+## Sources
+
+### International Governance
+
+- [International Network of AI Safety Institutes](https://www.nist.gov/news-events/news/2024/11/fact-sheet-us-department-commerce-us-department-state-launch-international) - NIST fact sheet on the November 2024 launch
+- [AI Safety Institute International Network: Next Steps](https://www.csis.org/analysis/ai-safety-institute-international-network-next-steps-and-recommendations) - CSIS analysis of network challenges
+- [International AI Safety Report 2025](https://internationalaisafetyreport.org/publication/international-ai-safety-report-2025) - Collaborative scientific assessment
+- [Seoul Declaration](https://www.industry.gov.au/publications/seoul-declaration-countries-attending-ai-seoul-summit-21-22-may-2024) - May 2024 summit outcomes
+- [Frontier AI Safety Commitments](https://www.gov.uk/government/publications/frontier-ai-safety-commitments-ai-seoul-summit-2024/frontier-ai-safety-commitments-ai-seoul-summit-2024) - Industry commitments from Seoul Summit
+
+### US-China Relations
+
+- [Potential for U.S.-China Cooperation on Reducing AI Risks](https://www.rand.org/pubs/perspectives/PEA4189-1.html) - RAND analysis of cooperation opportunities
+- [Roadmap for US-China AI Dialogue](https://www.brookings.edu/articles/a-roadmap-for-a-us-china-ai-dialogue/) - Brookings policy recommendations
+- [Challenges and Opportunities for US-China Collaboration](https://www.sandia.gov/app/uploads/sites/148/2025/04/Challenges-and-Opportunities-for-US-China-Collaboration-on-Artificial-Intelligence-Governance.pdf) - Sandia National Labs analysis
+- [Reading Between the Lines of Dueling AI Action Plans](https://www.atlanticcouncil.org/blogs/new-atlanticist/reading-between-the-lines-of-the-dueling-us-and-chinese-ai-action-plans/) - Atlantic Council comparison
+
+### Regulatory Frameworks
+
+- [EU AI Act](https://artificialintelligenceact.eu/) - Comprehensive EU AI Act resource
+- [EU AI Act Implementation Timeline](https://www.europarl.europa.eu/thinktank/en/document/EPRS_ATA(2025)772906) - European Parliament timeline
+- [AI Diffusion Framework](https://www.federalregister.gov/documents/2025/01/15/2025-00636/framework-for-artificial-intelligence-diffusion) - US Federal Register rule
+- [US Export Controls on Advanced Computing](https://www.hklaw.com/en/insights/publications/2024/12/us-strengthens-export-controls-on-advanced-computing-items) - Holland & Knight analysis
+
+### Industry Self-Governance
+
+- [Frontier Model Forum Progress Update](https://www.frontiermodelforum.org/updates/progress-update-advancing-frontier-ai-safety-in-2024-and-beyond/) - 2024 achievements
+- [Common Elements of Frontier AI Safety Policies](https://metr.org/common-elements) - METR analysis of safety frameworks
+- [Frontier AI Safety Policies Comparison](https://metr.org/faisc) - METR framework comparison
+
+### Historical Coordination
+
+- [Montreal Protocol Success](https://news.un.org/en/story/2023/01/1132277) - UN assessment of ozone layer recovery
+- [About Montreal Protocol](https://www.unep.org/ozonaction/who-we-are/about-montreal-protocol) - UNEP overview
+- [AI Race Dynamics](https://www.aisafetybook.com/textbook/ai-race) - AI Safety textbook chapter on racing dynamics

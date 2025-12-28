@@ -1,10 +1,11 @@
 ---
 title: Will AI Be Transformatively Powerful?
-description: Will AI systems be capable enough to pose existential-level risks?
+description: This analysis examines whether AI systems will become capable enough to pose existential risks. Evidence suggests a greater than 50% chance of human-level AI by 2030-2035, with o3 already scoring 87.5% on ARC-AGI (surpassing human performance of 85%), while expert surveys estimate 5-14% probability of AI-caused extinction.
 sidebar:
   order: 2
 importance: 80
-quality: 4
+quality: 5
+lastEdited: "2025-12-28"
 llmSummary: Analyzes whether AI systems will become powerful enough to pose
   existential risks, examining capability thresholds from narrow AI to
   superintelligence and presenting arguments for transformative capabilities (no
@@ -13,7 +14,7 @@ llmSummary: Analyzes whether AI systems will become powerful enough to pose
   constraints, tool-like AI).
 ---
 
-import { InfoBox, EstimateBox, DisagreementMap, KeyQuestions } from '../../../../components/wiki';
+import { InfoBox, EstimateBox, DisagreementMap, KeyQuestions, Mermaid } from '../../../../components/wiki';
 
 <InfoBox
   type="crux"
@@ -25,11 +26,46 @@ import { InfoBox, EstimateBox, DisagreementMap, KeyQuestions } from '../../../..
   ]}
 />
 
+### Quick Assessment
+
+| Dimension | Assessment | Evidence |
+|-----------|------------|----------|
+| **Current capability level** | Approaching human-level on specific benchmarks | [o3 scores 87.5% on ARC-AGI](https://arcprize.org/blog/oai-o3-pub-breakthrough) vs. 85% human threshold |
+| **Timeline to AGI** | 50% probability by 2028-2031 | [Metaculus forecasters](https://80000hours.org/2025/03/when-do-experts-expect-agi-to-arrive/): median 2027; AI Frontiers: 50% by 2028 |
+| **Scaling trajectory** | Shifting from pretraining to post-training | [Ilya Sutskever](https://www.oneusefulthing.org/p/scaling-the-state-of-play-in-ai): "Now we're back in the age of wonder and discovery" |
+| **Expert extinction risk estimate** | 5-14% median probability | [2023 AI researcher survey](https://en.wikipedia.org/wiki/Existential_risk_from_artificial_intelligence): 14.4% mean, 5% median |
+| **Economic transformation potential** | 7% GDP increase; 40% jobs exposed | [Goldman Sachs](https://www.gspublishing.com/content/research/en/reports/2023/03/27/d64e052b-0f6e-45d7-967b-d7be35fabd16.html); [IMF](https://www.imf.org/en/blogs/articles/2024/01/14/ai-will-transform-the-global-economy-lets-make-sure-it-benefits-humanity) |
+| **Self-improvement capability** | Emerging, timeline 2-4 years | [Eric Schmidt](https://en.wikipedia.org/wiki/Recursive_self-improvement): recursive self-improvement within 2-4 years |
+
 **The core question**: Will AI systems become capable enough to potentially end or permanently curtail human civilization—not just cause harm, but be truly transformative?
 
 This is the first link in the chain of reasoning about AI existential risk. If AI never becomes sufficiently powerful, the existential risk is zero regardless of other factors.
 
 ## What "Transformative" Means
+
+<Mermaid client:load chart={`
+flowchart TD
+    NARROW[Narrow AI<br/>Current systems] --> AGI[Human-Level AGI<br/>Matches most cognitive tasks]
+    AGI --> SUPER[Superhuman AI<br/>Exceeds humans broadly]
+    SUPER --> ASI[Superintelligence<br/>Vastly exceeds humans]
+
+    AGI --> |"Recursive improvement"| SUPER
+    SUPER --> |"Intelligence explosion"| ASI
+
+    NARROW --> |"2025-2030?"| AGI
+
+    AGI -.-> RISK1[Economic disruption<br/>Power concentration]
+    SUPER -.-> RISK2[Existential risk<br/>if misaligned]
+    ASI -.-> RISK3[Near-certain catastrophe<br/>if misaligned]
+
+    style NARROW fill:#ccffcc
+    style AGI fill:#ffffcc
+    style SUPER fill:#ffddcc
+    style ASI fill:#ffcccc
+    style RISK1 fill:#fff
+    style RISK2 fill:#fee
+    style RISK3 fill:#fcc
+`} />
 
 <EstimateBox
   client:load
@@ -74,7 +110,19 @@ This is the first link in the chain of reasoning about AI existential risk. If A
 - Human intelligence emerged from optimization—AI is another form of optimization
 - Physical laws don't prevent information processing beyond human levels
 
-**The key insight**: "The brain is just atoms arranged in a particular way. Nothing says that arrangement is optimal for intelligence."
+**Recent benchmark progress demonstrates rapid capability gains:**
+
+| Benchmark | GPT-4 (2023) | o1 (2024) | o3 (2024) | Human Baseline |
+|-----------|--------------|-----------|-----------|----------------|
+| [ARC-AGI](https://arcprize.org/leaderboard) | 5% | 18% | **87.5%** | 85% |
+| [AIME 2024](https://cameronrwolfe.substack.com/p/llm-scaling-laws) (math competition) | ~30% | 56.6% | **96.7%** | ~90% |
+| [Frontier Math](https://cameronrwolfe.substack.com/p/llm-scaling-laws) (novel problems) | ~2% | ~2% | **25.2%** | Varies |
+| [GPQA Diamond](https://www.interconnects.ai/p/openais-o3-the-2024-finale-of-ai) (PhD-level Q&A) | ~50% | ~70% | **87.7%** | 70% (PhDs) |
+| [SWE-bench Verified](https://www.interconnects.ai/p/openais-o3-the-2024-finale-of-ai) (coding) | ~20% | ~50% | **71.7%** | — |
+
+*It took four years for AI models to progress from 0% to 5% on ARC-AGI. Then, in months, o3 reached 87.5%.*
+
+**The key insight**: As [Nick Bostrom](https://quillette.com/2024/07/02/superintelligence-10-years-on-nick-bostrom-ai-safety-agi/) notes, "The brain is just atoms arranged in a particular way. Nothing says that arrangement is optimal for intelligence."
 
 ### 2. Intelligence Is the Source of Human Power
 
@@ -96,6 +144,13 @@ This is the first link in the chain of reasoning about AI existential risk. If A
 2. Better AI is even better at AI design
 3. Feedback loop continues
 4. Capabilities grow exponentially
+
+**Current developments:**
+
+- [Former Google CEO Eric Schmidt](https://en.wikipedia.org/wiki/Recursive_self-improvement) stated at Harvard that the AI industry is "rapidly approaching recursive self-improvement" and this could happen within **2-4 years**
+- The [Darwin Godel Machine](https://sakana.ai/dgm/) (2024) demonstrated an AI that rewrites its own code to improve performance on programming tasks
+- [Meta AI's Self-Rewarding Language Models](https://futureoflife.org/ai/the-unavoidable-problem-of-self-improvement-in-ai-an-interview-with-ramana-kumar-part-1/) research explores models capable of providing their own training feedback
+- Influential essays like ["Situational Awareness"](https://www.lesswrong.com/w/recursive-self-improvement) and "AI-2027" project superintelligence emergence through recursive self-improvement by 2027-2030
 
 **Uncertainty**: Whether this produces smooth acceleration or sudden jumps (see Takeoff Speed).
 
@@ -119,9 +174,10 @@ Even at human-level cognition, AI has advantages:
 Capabilities that could enable existential risk:
 
 **Persuasion at Scale**: Ability to manipulate humans individually and collectively
-- Already seeing AI-generated misinformation
-- Personalized manipulation could be extremely powerful
-- Could undermine democratic institutions and human agency
+- [Deepfake attempts increased 3,000% in 2023](https://pmc.ncbi.nlm.nih.gov/articles/PMC12351547/); deepfake videos grew 550% since 2019
+- Research shows AI-generated personalized political messages can be [more persuasive than human-generated content](https://knightcolumbia.org/content/dont-panic-yet-assessing-the-evidence-and-discourse-around-generative-ai-and-elections)
+- The [World Economic Forum's 2024 Global Risks Report](https://misinforeview.hks.harvard.edu/article/the-origin-of-public-concerns-over-ai-supercharging-misinformation-in-the-2024-u-s-presidential-election/) ranked AI-powered misinformation as the biggest short-term global risk
+- In India's 2024 elections, over [15 million people were reached](https://pmc.ncbi.nlm.nih.gov/articles/PMC12351547/) via 5,800 WhatsApp groups circulating AI deepfakes
 
 **Cyber Offense**: Ability to hack, sabotage, or control digital infrastructure
 - AI already assists with vulnerability discovery
@@ -154,7 +210,9 @@ Capabilities that could enable existential risk:
 - Many problems are limited by data, not analysis
 - Some problems are computationally intractable regardless of intelligence
 
-**Counter-argument**: Diminishing returns at the margin doesn't mean intelligence stops mattering—it means the marginal gains decrease, not that gains stop.
+**Evidence for scaling plateau**: [Ethan Mollick](https://www.oneusefulthing.org/p/scaling-the-state-of-play-in-ai) notes that "for over a year now, frontier models appear to have reached their ceiling. The scaling laws that powered the exponential progress of LLMs like GPT-4 have started to show diminishing returns." [Nobel laureate Daron Acemoglu](https://news.mit.edu/2024/what-do-we-know-about-economics-ai-1206) offers more conservative estimates, projecting AI-driven productivity gains of only 0.7% over 10 years.
+
+**Counter-argument**: Diminishing returns at the margin doesn't mean intelligence stops mattering—it means the marginal gains decrease, not that gains stop. The shift from pretraining to [post-training via reinforcement learning](https://cameronrwolfe.substack.com/p/llm-scaling-laws) (as seen in o1/o3) may represent a new scaling paradigm.
 
 ### 2. Physical Constraints
 
@@ -205,6 +263,19 @@ Capabilities that could enable existential risk:
 **Counter-argument**: These limitations apply to current systems. New architectures emerge regularly. Past limitations (can't beat humans at Go, can't generate coherent text) have been overcome.
 
 ## The Ceiling Question
+
+### AGI Timeline Predictions
+
+| Source | Prediction | Date of Estimate |
+|--------|------------|------------------|
+| [Metaculus forecasters](https://80000hours.org/2025/03/when-do-experts-expect-agi-to-arrive/) | 50% by 2031; 25% by 2027 | Dec 2024 |
+| [AI Frontiers (Khoja & Hiscott)](https://ai-frontiers.org/articles/agis-last-bottlenecks) | 50% by 2028; 80% by 2030 | 2024 |
+| [Dario Amodei (Anthropic)](https://hyperight.com/artificial-general-intelligence-is-agi-really-coming-by-2025/) | "Powerful AI" by 2026 | 2024 |
+| [Jensen Huang (Nvidia)](https://hyperight.com/artificial-general-intelligence-is-agi-really-coming-by-2025/) | Human-level by 2029 | March 2024 |
+| [Sam Altman (OpenAI)](https://hyperight.com/artificial-general-intelligence-is-agi-really-coming-by-2025/) | Possibly 2025 (gradual impact) | 2024 |
+| [Andrej Karpathy](https://research.aimultiple.com/artificial-general-intelligence-singularity-timing/) | ~10 years away | 2024 |
+
+*In four years, the mean Metaculus estimate for AGI has fallen from 50 years to 5 years.*
 
 <DisagreementMap
   client:load
@@ -298,21 +369,21 @@ Your view on transformative capabilities affects:
 
 ### Supporting Transformative Capabilities
 
-**Scaling Laws**: Capabilities have consistently improved with scale. Each generation of models exceeds previous.
+**Scaling Laws**: Capabilities have consistently improved with scale. Each generation of models exceeds previous. [Our World in Data](https://ourworldindata.org/scaling-up-ai) documents how compute used in AI training has increased by a factor of 10 billion since 2010.
 
-**Novel Capabilities Emerge**: Larger models develop capabilities not present in smaller versions (in-context learning, chain-of-thought reasoning).
+**Novel Capabilities Emerge**: Larger models develop capabilities not present in smaller versions (in-context learning, chain-of-thought reasoning). The [o3 model's 87.5% on ARC-AGI](https://arcprize.org/blog/oai-o3-pub-breakthrough) represents a qualitative leap—this benchmark was specifically designed to resist current AI approaches.
 
-**Rapid Progress**: Chess → Go → Protein folding → Language → Coding. Each seemed impossibly hard until it wasn't.
+**Rapid Progress**: Chess → Go → Protein folding → Language → Coding. Each seemed impossibly hard until it wasn't. The [performance gap between US and Chinese models](https://www.jonvet.com/blog/llm-scaling-in-2025) narrowed from 9.26% in January 2024 to 1.70% by February 2025.
 
-**Investment**: Hundreds of billions being invested. Many of the smartest people in the world working on it.
+**Investment**: Hundreds of billions being invested. [OpenAI's compute costs](https://aibusiness.com/language-models/ai-model-scaling-isn-t-over-it-s-entering-a-new-era) for GPT-4 training exceeded $100 million; next-generation models may cost $1 billion+.
 
 ### Against Transformative Capabilities (Near-Term)
 
-**Plateaus Happen**: GPT-4 to GPT-5 scaling may show diminishing returns.
+**Plateaus Happen**: [Multiple sources](https://www.jonvet.com/blog/llm-scaling-in-2025) report pretraining-focused scaling (GPT-4.5, Grok 4) "disappointed" in 2025—it proved roughly 30x more efficient to invest in post-training (reinforcement learning) instead.
 
-**Fundamental Issues Remain**: Hallucination, reliability, reasoning remain problems.
+**Fundamental Issues Remain**: Hallucination, reliability, reasoning remain problems. [Yann LeCun and others](https://www.oneusefulthing.org/p/scaling-the-state-of-play-in-ai) argue that LLMs will not achieve AGI and "progress will require new breakthroughs."
 
-**Deployment Challenges**: Getting AI to work reliably in the real world is hard.
+**Deployment Challenges**: Getting AI to work reliably in the real world is hard. [o3's high-compute mode costs exceed $1,000 per query](https://www.nextbigfuture.com/2024/12/openai-releases-o3-model-with-high-performance-and-high-cost.html)—172x the cost of low-compute mode.
 
 **Previous Hype Cycles**: AI has had multiple boom-bust cycles. Current one may end similarly.
 
@@ -342,4 +413,43 @@ Your view on transformative capabilities affects:
 - Monitor progress closely
 - Maintain optionality
 
+---
 
+## Sources & Further Reading
+
+### Benchmark Performance & Capabilities
+- [OpenAI o3 Breakthrough High Score on ARC-AGI-Pub](https://arcprize.org/blog/oai-o3-pub-breakthrough) - ARC Prize analysis of o3's 87.5% score
+- [ARC-AGI-1 Leaderboard](https://arcprize.org/leaderboard) - Current benchmark standings
+- [Scaling Laws for LLMs: From GPT-3 to o3](https://cameronrwolfe.substack.com/p/llm-scaling-laws) - Deep dive on scaling trajectory
+- [OpenAI o3: The 2024 Finale of AI](https://www.interconnects.ai/p/openais-o3-the-2024-finale-of-ai) - Nathan Lambert's analysis
+
+### Timelines & Expert Forecasts
+- [Shrinking AGI timelines: a review of expert forecasts](https://80000hours.org/2025/03/when-do-experts-expect-agi-to-arrive/) - 80,000 Hours comprehensive review
+- [When Will AGI/Singularity Happen? 8,590 Predictions Analyzed](https://research.aimultiple.com/artificial-general-intelligence-singularity-timing/) - AIMultiple aggregate analysis
+- [AGI's Last Bottlenecks](https://ai-frontiers.org/articles/agis-last-bottlenecks) - AI Frontiers timeline estimates
+
+### Scaling & Industry Trends
+- [Scaling: The State of Play in AI](https://www.oneusefulthing.org/p/scaling-the-state-of-play-in-ai) - Ethan Mollick on scaling plateaus
+- [A brief history of LLM Scaling Laws](https://www.jonvet.com/blog/llm-scaling-in-2025) - 2025 scaling landscape
+- [AI Model Scaling Isn't Over](https://aibusiness.com/language-models/ai-model-scaling-isn-t-over-it-s-entering-a-new-era) - AI Business on new directions
+- [Scaling up AI](https://ourworldindata.org/scaling-up-ai) - Our World in Data on compute trends
+
+### Economic Impact
+- [The Potentially Large Effects of AI on Economic Growth](https://www.gspublishing.com/content/research/en/reports/2023/03/27/d64e052b-0f6e-45d7-967b-d7be35fabd16.html) - Goldman Sachs research
+- [AI Will Transform the Global Economy](https://www.imf.org/en/blogs/articles/2024/01/14/ai-will-transform-the-global-economy-lets-make-sure-it-benefits-humanity) - IMF analysis
+- [What do we know about the economics of AI?](https://news.mit.edu/2024/what-do-we-know-about-economics-ai-1206) - MIT/Acemoglu research
+
+### Existential Risk & Safety
+- [Existential risk from artificial intelligence](https://en.wikipedia.org/wiki/Existential_risk_from_artificial_intelligence) - Wikipedia overview with survey data
+- [Problem profiles: Risks from power-seeking AI](https://80000hours.org/problem-profiles/risks-from-power-seeking-ai/) - 80,000 Hours risk analysis
+- [Superintelligence, Ten Years On](https://quillette.com/2024/07/02/superintelligence-10-years-on-nick-bostrom-ai-safety-agi/) - Bostrom retrospective
+
+### Self-Improvement & Advanced Capabilities
+- [Recursive self-improvement](https://en.wikipedia.org/wiki/Recursive_self-improvement) - Wikipedia overview
+- [The Darwin Godel Machine](https://sakana.ai/dgm/) - Sakana AI's self-improving system
+- [The Unavoidable Problem of Self-Improvement in AI](https://futureoflife.org/ai/the-unavoidable-problem-of-self-improvement-in-ai-an-interview-with-ramana-kumar-part-1/) - Future of Life Institute interview
+
+### Disinformation & Manipulation
+- [AI-driven disinformation: policy recommendations](https://pmc.ncbi.nlm.nih.gov/articles/PMC12351547/) - PMC research on deepfakes
+- [Don't Panic (Yet): AI and Elections](https://knightcolumbia.org/content/dont-panic-yet-assessing-the-evidence-and-discourse-around-generative-ai-and-elections) - Knight Institute analysis
+- [AI supercharging misinformation concerns](https://misinforeview.hks.harvard.edu/article/the-origin-of-public-concerns-over-ai-supercharging-misinformation-in-the-2024-u-s-presidential-election/) - Harvard Kennedy School

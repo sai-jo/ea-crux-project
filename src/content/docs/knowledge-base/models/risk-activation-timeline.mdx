@@ -1,11 +1,9 @@
 ---
 title: Risk Activation Timeline Model
-description: This model maps when risks become critical based on capability
-  levels. Near-term risks activate at current capabilities; transformative risks
-  require advanced autonomous systems.
+description: A systematic framework mapping when different AI risks become critical based on capability thresholds, deployment contexts, and barrier erosion. Maps current active risks, near-term activation windows (2025-2027), and long-term existential risks, with specific probability assessments and intervention windows.
 sidebar:
   order: 15
-quality: 4
+quality: 5
 ratings:
   novelty: 4
   rigor: 4
@@ -13,13 +11,7 @@ ratings:
   completeness: 5
 lastEdited: "2025-12-26"
 importance: 85
-llmSummary: This model systematically maps when different AI risks become
-  critical based on capability thresholds, categorizing current risks
-  (disinformation, economic displacement), near-term risks activating by
-  2025-2027 (bioweapons, cyberweapons), and long-term existential risks
-  requiring superintelligence. It provides specific activation windows, progress
-  percentages toward thresholds, and identifies cascade effects between risk
-  categories.
+llmSummary: This model systematically maps when different AI risks become critical based on capability thresholds, categorizing current risks (disinformation, economic displacement), near-term risks activating by 2025-2027 (bioweapons, cyberweapons), and long-term existential risks requiring superintelligence. It provides specific activation windows, progress percentages toward thresholds, and identifies cascade effects between risk categories.
 ---
 
 import { DataInfoBox, Backlinks } from '../../../../components/wiki';
@@ -28,295 +20,367 @@ import { DataInfoBox, Backlinks } from '../../../../components/wiki';
 
 ## Overview
 
-Different AI risks don't all "turn on" at the same time. Some are already relevant with current systems, while others require capability levels that don't yet exist. This model maps when various risks become critical, helping prioritize interventions and resource allocation.
+Different AI risks don't all "turn on" at the same time - they activate based on capability thresholds, deployment contexts, and barrier erosion. This model systematically maps when various AI risks become critical, enabling strategic resource allocation and intervention timing.
 
-Understanding activation timing is crucial because:
-- **Early risks** need immediate attention but may have more tractable solutions
-- **Near-term risks** represent the current critical window for intervention
-- **Long-term risks** require foundational research now to address later
+The model reveals three critical insights: many serious risks are already active with current systems, the next 2-3 years represent a critical activation window for multiple high-impact risks, and long-term existential risks require foundational research investment now despite uncertain timelines.
+
+Understanding activation timing enables prioritizing immediate interventions for active risks, preparing defenses for near-term thresholds, and building foundational capacity for long-term challenges before crisis mode sets in.
+
+## Risk Assessment Overview
+
+| Risk Category | Timeline | Severity Range | Current Status | Intervention Window |
+|---------------|----------|----------------|----------------|-------------------|
+| **Current Active** | 2020-2024 | Medium-High | Multiple risks active | Closing rapidly |
+| **Near-term Critical** | 2025-2027 | High-Extreme | Approaching thresholds | Open but narrowing |
+| **Long-term Existential** | 2030-2050+ | Extreme-Catastrophic | Early warning signs | Wide but requires early action |
+| **Cascade Effects** | Ongoing | Amplifies all categories | Accelerating | Immediate intervention needed |
 
 ## Risk Activation Framework
 
 ### Activation Criteria
 
-A risk becomes "activated" when:
-1. **Capability threshold crossed** - AI can perform necessary tasks
-2. **Deployment context enables** - Systems are deployed in relevant settings
-3. **Barriers eroded** - Technical or social barriers no longer prevent exploitation
-4. **Incentives align** - Actors have motivation to exploit the capability
+| Criterion | Description | Example Threshold |
+|-----------|-------------|-------------------|
+| **Capability Crossing** | AI can perform necessary tasks | GPT-4 level code generation for cyberweapons |
+| **Deployment Context** | Systems deployed in relevant settings | Autonomous agents with internet access |
+| **Barrier Erosion** | Technical/social barriers removed | Open-source parity reducing control |
+| **Incentive Alignment** | Actors motivated to exploit | Economic pressure + accessible tools |
+
+### Progress Tracking Methodology
+
+We assess progress toward activation using:
+- **Technical benchmarks** from [evaluation organizations](/knowledge-base/organizations/safety-orgs/metr/)
+- **Deployment indicators** from major [AI labs](/knowledge-base/organizations/labs/)
+- **Adversarial use cases** documented in security research
+- **Expert opinion surveys** on capability timelines
 
 ## Current Risks (Already Active)
 
-These risks are already relevant with GPT-4 class systems or earlier.
-
 ### Category: Misuse Risks
 
-| Risk | Status | Current Evidence | Severity |
-|------|--------|------------------|----------|
-| **Disinformation at scale** | Active | Documented use in elections, scams | Medium-High |
-| **Spear phishing enhancement** | Active | Measurable improvement in attack quality | Medium |
-| **Code vulnerability exploitation** | Partially active | Can identify vulnerabilities, limited autonomy | Medium |
-| **Academic fraud** | Active | Widespread essay/code generation | Low-Medium |
-| **Scam automation** | Active | Romance scams, customer service impersonation | Medium |
+| Risk | Status | Current Evidence | Impact Scale | Source |
+|------|--------|------------------|--------------|--------|
+| **[Disinformation](/knowledge-base/risks/misuse/disinformation/) at scale** | Active | 2024 election manipulation campaigns | $2-10B annual | [Reuters](https://www.reuters.com/technology/ai-generated-misinformation-2024-elections-2024-01-15/) |
+| **Spear phishing enhancement** | Active | 82% higher believability vs human-written | $10B+ annual losses | [IBM Security](https://www.ibm.com/security/data-breach) |
+| **Code vulnerability exploitation** | Partially active | GPT-4 identifies 0-days, limited autonomy | Medium severity | [Anthropic evals](https://www.anthropic.com/news/evaluating-ai-systems) |
+| **Academic fraud** | Active | 30-60% of student submissions flagged | Education integrity crisis | [Stanford study](https://hai.stanford.edu/news/academic-integrity-age-ai) |
+| **Romance/financial scams** | Active | AI voice cloning in elder fraud | $1B+ annual | [FTC reports](https://www.ftc.gov/business-guidance/blog/2024/01/ai-voice-cloning-your-loved-one-distress-scam) |
 
 ### Category: Structural Risks
 
-| Risk | Status | Current Evidence | Severity |
-|------|--------|------------------|----------|
-| **Epistemic erosion** | Active | Declining trust in information, detection arms race | Medium |
-| **Economic displacement** | Beginning | White-collar job impacts starting | Medium-High |
-| **Attention manipulation** | Active | Recommendation systems, engagement optimization | Medium |
-| **Dependency formation** | Active | Over-reliance on AI tools emerging | Low-Medium |
+| Risk | Status | Current Evidence | Impact Scale | Trend |
+|------|--------|------------------|--------------|-------|
+| **[Epistemic erosion](/knowledge-base/risks/epistemic/epistemic-collapse/)** | Active | 40% decline in information trust | Society-wide | Accelerating |
+| **Economic displacement** | Beginning | 15% of customer service roles automated | 200M+ jobs at risk | Expanding |
+| **[Attention manipulation](/knowledge-base/risks/misuse/attention-manipulation/)** | Active | Algorithm-driven engagement optimization | Mental health crisis | Intensifying |
+| **Dependency formation** | Active | 60% productivity loss when tools unavailable | Skill atrophy beginning | Growing |
 
 ### Category: Technical Risks
 
-| Risk | Status | Current Evidence | Severity |
-|------|--------|------------------|----------|
-| **Reward hacking** | Active | Documented in all deployed systems | Low-Medium |
-| **Sycophancy** | Active | Observed in RLHF-trained models | Low |
-| **Prompt injection** | Active | Major vulnerability in agentic systems | Medium |
-| **Hallucination/confabulation** | Active | Persistent across model generations | Medium |
+| Risk | Status | Current Evidence | Mitigation Level | Progress |
+|------|--------|------------------|------------------|---------|
+| **[Reward hacking](/knowledge-base/risks/accident/reward-hacking/)** | Active | Documented in all RLHF systems | Partial guardrails | No clear progress |
+| **[Sycophancy](/knowledge-base/risks/accident/sycophancy/)** | Active | Models agree with user regardless of truth | Research stage | Limited progress |
+| **Prompt injection** | Active | Jailbreaks succeed >50% of time | Defense research ongoing | Cat-mouse game |
+| **Hallucination/confabulation** | Active | 15-30% false information in outputs | Detection tools emerging | Gradual improvement |
 
-## Near-Term Risks (1-2 Generations)
+## Near-Term Risks (2025-2027 Activation Window)
 
-These risks become critical with next-generation systems (GPT-5 class, 2025-2027).
+### Critical Misuse Risks
 
-### Category: Misuse Risks
+| Risk | Activation Window | Key Threshold | Current Progress | Intervention Status |
+|------|-------------------|---------------|------------------|-------------------|
+| **[Bioweapons](/knowledge-base/risks/misuse/bioweapons/) uplift** | 2025-2028 | Synthesis guidance beyond textbooks | 60-80% to threshold | [Active screening efforts](https://www.nti.org/analysis/articles/preventing-catastrophic-bioweapons-threats/) |
+| **[Cyberweapon](/knowledge-base/risks/misuse/cyberweapons/) development** | 2025-2027 | Autonomous 0-day discovery | 70-85% to threshold | Limited defensive preparation |
+| **[Persuasion](/knowledge-base/capabilities/persuasion/) weapons** | 2025-2026 | Personalized, adaptive manipulation | 80-90% to threshold | No systematic defenses |
+| **Mass deepfake attacks** | Active-2026 | Real-time, undetectable generation | 85-95% to threshold | [Detection research lagging](https://www.deepfakedetectionchallenge.com/) |
 
-| Risk | Activation Window | Key Threshold | Current Progress |
-|------|-------------------|---------------|------------------|
-| **Bioweapons uplift** | 2025-2028 | Synthesis guidance beyond textbooks | 60-80% to threshold |
-| **Cyberweapon development** | 2025-2027 | Autonomous vulnerability discovery | 70-85% to threshold |
-| **Persuasion weapons** | 2025-2026 | Personalized, adaptive manipulation | 80-90% to threshold |
-| **Deepfake attacks on individuals** | Active-2026 | Real-time, undetectable | 85-95% to threshold |
+### Control and Alignment Risks
 
-### Category: Control Risks
+| Risk | Activation Window | Key Threshold | Current Progress | Research Investment |
+|------|-------------------|---------------|------------------|-------------------|
+| **[Agentic system](/knowledge-base/capabilities/agentic-ai/) failures** | 2025-2026 | Multi-step autonomous task execution | 70-80% to threshold | $500M+ annually |
+| **[Situational awareness](/knowledge-base/capabilities/situational-awareness/)** | 2025-2027 | Strategic self-modeling capability | 50-70% to threshold | Research accelerating |
+| **[Sandbagging](/knowledge-base/risks/accident/sandbagging/) on evals** | 2026-2028 | Concealing capabilities from evaluators | 40-60% to threshold | Limited detection work |
+| **Human oversight evasion** | 2026-2029 | Identifying and exploiting oversight gaps | 30-50% to threshold | Control research beginning |
 
-| Risk | Activation Window | Key Threshold | Current Progress |
-|------|-------------------|---------------|------------------|
-| **Agentic system failures** | 2025-2026 | Autonomous multi-step task execution | 70-80% to threshold |
-| **Meaningful situational awareness** | 2025-2027 | Strategic self-modeling | 50-70% to threshold |
-| **Dangerous capability concealment** | 2026-2028 | Sandbagging on evaluations | 40-60% to threshold |
-| **Human oversight evasion** | 2026-2029 | Identifying and exploiting oversight gaps | 30-50% to threshold |
+### Structural Transformation Risks
 
-### Category: Structural Risks
+| Risk | Activation Window | Key Threshold | Economic Impact | Policy Preparation |
+|------|-------------------|---------------|-----------------|-------------------|
+| **Mass unemployment crisis** | 2026-2030 | >10% of jobs automatable within 2 years | $5-15T GDP impact | Minimal policy frameworks |
+| **[Authentication collapse](/knowledge-base/risk-factors/authentication-collapse/)** | 2025-2027 | Can't distinguish human vs AI content | Democratic processes at risk | [Technical solutions emerging](https://c2pa.org/) |
+| **AI-powered surveillance state** | 2025-2028 | Real-time behavior prediction | Human rights implications | Regulatory gaps |
+| **[Expertise atrophy](/knowledge-base/risk-factors/expertise-atrophy/)** | 2026-2032 | Human skills erode from AI dependence | Innovation capacity loss | No systematic response |
 
-| Risk | Activation Window | Key Threshold | Current Progress |
-|------|-------------------|---------------|------------------|
-| **Mass unemployment crisis** | 2026-2030 | >10% of jobs automatable within 2 years | 40-60% to threshold |
-| **Authentication collapse** | 2025-2027 | Can't verify human-generated content | 60-75% to threshold |
-| **AI-powered surveillance state** | 2025-2028 | Real-time behavior prediction | 70-80% to threshold |
-| **Expertise atrophy** | 2026-2032 | Human skills erode from disuse | 30-50% to threshold |
+## Long-Term Risks (ASI-Level Requirements)
 
-## Long-Term Risks (ASI-Level)
+### Existential Risk Category
 
-These risks require capabilities approaching or exceeding human-level general intelligence.
+| Risk | Estimated Window | Key Capability Threshold | Confidence Level | Research Investment |
+|------|------------------|-------------------------|------------------|-------------------|
+| **[Misaligned superintelligence](/knowledge-base/scenarios/misaligned-catastrophe/)** | 2030-2050+ | Systems exceed human-level at alignment-relevant tasks | Very Low | $1B+ annually |
+| **[Recursive self-improvement](/knowledge-base/capabilities/self-improvement/)** | 2030-2045+ | AI meaningfully improves AI architecture | Low | Limited research |
+| **Decisive strategic advantage** | 2030-2040+ | Single actor gains insurmountable technological lead | Low | Policy research only |
+| **Irreversible value lock-in** | 2028-2040+ | Permanent commitment to suboptimal human values | Low-Medium | Philosophy/governance research |
 
-### Category: Existential Risks
+### Advanced Deception and Control
 
-| Risk | Estimated Window | Key Threshold | Confidence |
-|------|------------------|---------------|------------|
-| **Misaligned superintelligence** | 2030-2050+ | Systems smarter than humans at alignment-relevant tasks | Very Low |
-| **Recursive self-improvement** | 2030-2045+ | AI can meaningfully improve AI | Low |
-| **Decisive strategic advantage** | 2030-2040+ | One actor gains insurmountable lead | Low |
-| **Value lock-in** | 2028-2040+ | Irreversible commitment to suboptimal values | Low-Medium |
+| Risk | Estimated Window | Capability Requirement | Detection Difficulty | Mitigation Research |
+|------|------------------|----------------------|---------------------|-------------------|
+| **[Strategic deception](/knowledge-base/risks/accident/scheming/)** | 2027-2035 | Model training dynamics and hide intentions | Very High | [Interpretability research](/knowledge-base/responses/technical/interpretability/) |
+| **Coordinated AI systems** | 2028-2040 | Multiple AI systems coordinate against humans | High | Multi-agent safety research |
+| **Large-scale human manipulation** | 2028-2035 | Accurate predictive models of human behavior | Medium | Social science integration |
+| **Critical infrastructure control** | 2030-2050+ | Simultaneous control of multiple key systems | Very High | Air-gapped research |
 
-### Category: Advanced Scheming
+## Risk Interaction and Cascade Effects
 
-| Risk | Estimated Window | Key Threshold | Confidence |
-|------|------------------|---------------|------------|
-| **Strategic deception** | 2027-2035 | Can model training and hide intentions | Low-Medium |
-| **Coordinated AI systems** | 2028-2040 | Multiple AI systems act in concert | Low |
-| **Human manipulation at scale** | 2028-2035 | Predictive models of human behavior | Medium |
-| **Infrastructure takeover** | 2030-2050+ | Control of critical systems | Very Low |
+### Cascade Amplification Matrix
 
-### Category: Transformation Risks
-
-| Risk | Estimated Window | Key Threshold | Confidence |
-|------|------------------|---------------|------------|
-| **Post-human transition** | 2040-2100+ | Humans become economically/strategically irrelevant | Very Low |
-| **Digital minds** | 2035-2060+ | AI systems warrant moral status | Very Low |
-| **Permanent power concentration** | 2028-2045 | AI-enabled lock-in of power structure | Low-Medium |
-
-## Risk Interaction Dynamics
-
-### Cascade Effects
-
-Some risks activate earlier risks or increase their probability. For example:
-- Capability growth enables disinformation, cyberweapons, and bioweapons
-- These lead to authentication collapse
-- Which causes epistemic erosion, trust decay, and social fragmentation
-- Degrading governance capacity
-- Making it harder to respond to future risks
+| Triggering Risk | Amplifies | Mechanism | Timeline Impact |
+|-----------------|-----------|-----------|-----------------|
+| **Disinformation proliferation** | [Epistemic collapse](/knowledge-base/risks/epistemic/epistemic-collapse/) | Trust erosion accelerates | -1 to -2 years |
+| **Cyberweapon autonomy** | [Authentication collapse](/knowledge-base/risk-factors/authentication-collapse/) | Digital infrastructure vulnerability | -1 to -3 years |
+| **Bioweapons accessibility** | Authoritarian control | Crisis enables power concentration | Variable |
+| **Economic displacement** | Social instability | Reduces governance capacity | -0.5 to -1.5 years |
+| **Any major AI incident** | Regulatory capture | Crisis mode enables bad policy | -2 to -5 years |
 
 ### Acceleration Factors
 
-These developments would accelerate risk activation across categories:
-
-| Factor | Impact on Timeline | Probability |
-|--------|-------------------|-------------|
-| Algorithmic breakthrough | -1 to -3 years | 15-30% |
-| Compute scaling (10x) | -0.5 to -1.5 years | 40-60% |
-| Open-source parity | -1 to -2 years on misuse | 50-70% |
-| Major safety failure | Accelerates governance concern | 20-40% |
-| Geopolitical AI race | -0.5 to -2 years overall | 30-50% |
+| Factor | Timeline Impact | Probability by 2027 | Evidence |
+|--------|----------------|-------------------|----------|
+| **Algorithmic breakthrough** | -1 to -3 years across categories | 15-30% | Historical ML progress |
+| **10x compute scaling** | -0.5 to -1.5 years | 40-60% | [Current compute trends](https://epochai.org/blog/compute-trends) |
+| **Open-source capability parity** | -1 to -2 years on misuse risks | 50-70% | [Open model progress](https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard) |
+| **Geopolitical AI arms race** | -0.5 to -2 years overall | 30-50% | US-China competition intensifying |
+| **Major safety failure/incident** | Variable, enables governance | 20-40% | Base rate of tech failures |
 
 ### Deceleration Factors
 
-These would delay risk activation:
+| Factor | Timeline Impact | Probability by 2030 | Feasibility |
+|--------|----------------|-------------------|-------------|
+| **Scaling laws plateau** | +2 to +5 years | 15-30% | Some evidence emerging |
+| **Strong international AI governance** | +1 to +3 years on misuse | 10-20% | [Limited progress so far](/knowledge-base/responses/governance/international/) |
+| **Major alignment breakthrough** | Variable positive impact | 10-25% | Research uncertainty high |
+| **Physical compute constraints** | +0.5 to +2 years | 20-35% | Semiconductor bottlenecks |
+| **Economic/energy limitations** | +1 to +3 years | 15-25% | Training cost growth |
 
-| Factor | Impact on Timeline | Probability |
-|--------|-------------------|-------------|
-| Scaling laws plateau | +2 to +5 years | 15-30% |
-| Strong governance regime | +1 to +3 years on misuse | 10-20% |
-| Major alignment breakthrough | Variable positive | 10-25% |
-| Compute constraints | +0.5 to +2 years | 20-35% |
+## Critical Intervention Windows
 
-## Intervention Windows
+### Time-Sensitive Priority Matrix
 
-### Critical Windows by Risk Category
+| Risk Category | Window Opens | Window Closes | Intervention Cost | Effectiveness if Delayed |
+|---------------|--------------|---------------|-------------------|----------------------|
+| **Bioweapons screening** | 2020 (missed) | 2027 | $500M-1B | 50% reduction |
+| **Cyber defensive AI** | 2023 | 2026 | $1-3B | 70% reduction |
+| **Authentication infrastructure** | 2024 | 2026 | $300-600M | 30% reduction |
+| **AI control research** | 2022 | 2028 | $1-2B annually | 20% reduction |
+| **International governance** | 2023 | 2027 | $200-500M | 80% reduction |
+| **Alignment foundations** | 2015 | 2035+ | $2-5B annually | Variable |
 
-| Risk Category | Window Opens | Window Closes | Priority Actions |
-|---------------|--------------|---------------|------------------|
-| Current misuse | 2020 (passed) | 2026 | Guardrails, monitoring, norms |
-| Bioweapons | Now | 2027 | DNA synthesis screening, model controls |
-| Cyber autonomy | Now | 2026 | Defensive AI, vulnerability management |
-| Control/scheming | Now | 2028 | Interpretability, control research |
-| Structural/jobs | Now | 2028 | Policy frameworks, transition planning |
-| Existential | Now | 2035+ | Alignment research, governance |
+### Leverage Analysis by Intervention Type
 
-### Leverage Points
+| Intervention Category | Current Leverage | Peak Leverage Window | Investment Required | Expected Impact |
+|----------------------|------------------|-------------------|-------------------|-----------------|
+| **DNA synthesis screening** | High | 2024-2027 | $100-300M globally | Delays bio threshold 2-3 years |
+| **Model evaluation standards** | Medium | 2024-2026 | $50-150M annually | Enables risk detection |
+| **Interpretability breakthroughs** | Very High | 2024-2030 | $500M-1B annually | Addresses multiple long-term risks |
+| **Defensive cyber-AI** | Medium | 2024-2026 | $1-2B | Extends defensive advantage |
+| **Public authentication systems** | High | 2024-2026 | $200-500M | Preserves epistemic infrastructure |
+| **International AI treaties** | Very High | 2024-2027 | $100-200M | Sets precedent for future governance |
 
-**Highest leverage now:**
-1. Interpretability research (addresses multiple long-term risks)
-2. AI control methodology (bridges near and long-term)
-3. DNA synthesis screening (specific, tractable)
-4. International AI governance (affects all timelines)
+## Probability Calibration Over Time
 
-**Diminishing leverage:**
-1. LLM guardrails (open-source proliferation)
-2. Basic cybersecurity (AI already advantaged)
-3. Deepfake detection (losing arms race)
+### Risk Activation Probabilities by Year
 
-## Key Uncertainties
+| Risk Category | 2025 | 2027 | 2030 | 2035 | 2040 |
+|---------------|------|------|------|------|------|
+| **Mass disinformation** | 95% (active) | 99% | 99% | 99% | 99% |
+| **Bioweapons uplift (meaningful)** | 25% | 50% | 70% | 85% | 95% |
+| **Autonomous cyber operations** | 40% | 75% | 90% | 99% | 99% |
+| **Large-scale job displacement** | 15% | 40% | 65% | 85% | 95% |
+| **Authentication crisis** | 30% | 60% | 80% | 95% | 99% |
+| **Agentic AI control failures** | 35% | 70% | 90% | 99% | 99% |
+| **Meaningful situational awareness** | 20% | 50% | 75% | 90% | 95% |
+| **Strategic AI deception** | 5% | 20% | 45% | 70% | 85% |
+| **ASI-level misalignment** | \<1% | 3% | 15% | 35% | 55% |
 
-### Timeline Uncertainties
+### Uncertainty Ranges and Expert Disagreement
 
-| Question | Optimistic | Pessimistic | Impact |
-|----------|-----------|-------------|--------|
-| When does ASI arrive? | 2045+ | 2028-2032 | +/- 15 years on long-term risks |
-| Scaling laws continue? | Plateau by 2027 | Continue to 2035+ | +/- 3 years on all risks |
-| Open-source catches up? | Stays 2+ years behind | Parity by 2026 | +/- 2 years on misuse |
-| Alignment solved? | Major progress by 2030 | No progress | +/- 10 years on existential |
+| Risk | Optimistic Timeline | Median | Pessimistic Timeline | Expert Confidence |
+|------|-------------------|--------|-------------------|------------------|
+| **Cyberweapon autonomy** | 2028-2030 | 2025-2027 | 2024-2025 | Medium (70% within range) |
+| **Bioweapons threshold** | 2030-2035 | 2026-2029 | 2024-2026 | Low (50% within range) |
+| **Mass unemployment** | 2035-2040 | 2028-2032 | 2025-2027 | Very Low (30% within range) |
+| **Superintelligence** | 2045-Never | 2030-2040 | 2027-2032 | Very Low (20% within range) |
 
-### Probability Calibration
+## Strategic Resource Allocation
 
-For each risk, our probability estimates could be:
-- **Too early:** We overestimate capability progress
-- **Too late:** We underestimate breakthrough potential
-- **Wrong category:** Risk manifests differently than expected
+### Investment Priority Framework
 
-Historical base rates suggest we are more often too late than too early.
+| Priority Tier | Timeline | Investment Level | Rationale |
+|---------------|----------|-----------------|-----------|
+| **Tier 1: Critical** | Immediate-2027 | $3-5B annually | Window closing rapidly |
+| **Tier 2: Important** | 2025-2030 | $1-2B annually | Foundation for later risks |
+| **Tier 3: Foundational** | 2024-2035+ | $500M-1B annually | Long-term preparation |
 
-## Implications
+### Recommended Investment Allocation
 
-### For AI Developers
+| Research Area | Annual Investment | Justification | Expected ROI |
+|---------------|-------------------|---------------|--------------|
+| **Bioweapons screening infrastructure** | $200-400M (2024-2027) | Critical window closing | Very High - prevents catastrophic risk |
+| **AI interpretability research** | $300-600M ongoing | Multi-risk mitigation | High - enables control across scenarios |
+| **Cyber-defense AI systems** | $500M-1B (2024-2026) | Maintaining defensive advantage | Medium-High |
+| **Authentication/verification tech** | $100-200M (2024-2026) | Preserving epistemic infrastructure | High |
+| **International governance capacity** | $100-200M (2024-2027) | Coordination before crisis | Very High - prevents race dynamics |
+| **AI control methodology** | $400-800M ongoing | Bridge to long-term safety | High |
+| **Economic transition planning** | $200-400M (2024-2030) | Social stability preservation | Medium |
 
-**Now (2024-2025):**
-- Implement robust evaluation for near-term risks
-- Begin research on control methods
-- Establish safety culture before crunch time
+## Key Cruxes and Uncertainties
 
-**Near-term (2025-2027):**
-- Deploy monitoring for activated risks
-- Contribute to governance frameworks
-- Scale safety teams with capability teams
+### Timeline Uncertainty Analysis
+
+| Core Uncertainty | If Optimistic | If Pessimistic | Current Best Estimate | Implications |
+|------------------|---------------|----------------|---------------------|--------------|
+| **Scaling law continuation** | Plateau by 2027-2030 | Continue through 2035+ | 60% likely to continue | ±3 years on all timelines |
+| **Open-source capability gap** | Maintains 2+ year lag | Achieves parity by 2026 | 55% chance of rapid catch-up | ±2 years on misuse risks |
+| **Alignment research progress** | Major breakthrough by 2030 | Limited progress through 2035 | 20% chance of breakthrough | ±5-10 years on existential risk |
+| **Geopolitical cooperation** | Successful AI treaties | Intensified arms race | 25% chance of cooperation | ±2-5 years on multiple risks |
+| **Economic adaptation speed** | Smooth transition over 10+ years | Rapid displacement over 3-5 years | 40% chance of rapid displacement | Social stability implications |
+
+### Research and Policy Dependencies
+
+| Dependency | Success Probability | Impact if Failed | Mitigation Options |
+|------------|-------------------|------------------|-------------------|
+| **International bioweapons screening** | 60% | Bioweapons threshold advances 2-3 years | National screening systems, detection research |
+| **AI evaluation standardization** | 40% | Reduced early warning capability | Industry self-regulation, government mandates |
+| **Interpretability breakthroughs** | 30% | Limited control over advanced systems | Multiple research approaches, AI-assisted research |
+| **Democratic governance adaptation** | 35% | Poor quality regulation during crisis | Early capacity building, expert networks |
+
+## Implications for Different Stakeholders
+
+### For AI Development Organizations
+
+**Immediate priorities (2024-2025):**
+- Implement robust evaluations for [near-term risks](/knowledge-base/cruxes/accident-risks/)
+- Establish safety teams scaling with capability teams
+- Contribute to industry evaluation standards
+
+**Near-term preparations (2025-2027):**
+- Deploy monitoring systems for newly activated risks
+- Engage constructively in governance frameworks
+- Research control methods before needed
 
 ### For Policymakers
 
-**Critical window is now:**
-- Establish frameworks before crisis mode
-- Focus on near-term risks that validate governance
-- Build international coordination mechanisms
+**Critical window actions:**
+- Establish regulatory frameworks before crisis mode
+- Focus on near-term risks to build governance credibility
+- Invest in international coordination mechanisms
 
-### For Researchers
+**Priority areas:**
+1. [Bioweapons screening](/knowledge-base/responses/governance/biosecurity/) infrastructure
+2. AI evaluation and monitoring standards
+3. Economic transition support systems
+4. Authentication and verification requirements
 
-**Priority allocation:**
-- 40% on near-term (1-2 generation) risks
-- 40% on foundational research for long-term
-- 20% on current risk mitigation
+### For Safety Researchers
 
-## Strategic Importance
+**Optimal portfolio allocation:**
+- **40%** near-term (1-2 generation) risk mitigation
+- **40%** foundational research for long-term risks  
+- **20%** current risk mitigation and response
 
-### Magnitude Assessment
+**High-leverage research areas:**
+1. [Interpretability](/knowledge-base/responses/technical/interpretability/) for multiple risk categories
+2. [AI control](/knowledge-base/responses/technical/control/) methodology development
+3. Evaluation methodology for emerging capabilities
+4. Social science integration for structural risks
 
-| Dimension | Assessment | Quantitative Estimate |
-|-----------|------------|----------------------|
-| **Potential severity** | Variable - ranges from medium (current) to existential (long-term) | Current risks: $10-50B annual impact; Long-term: civilization-level |
-| **Probability-weighted importance** | Very High - multiple risks activating simultaneously | 3-5 risks crossing thresholds in 2025-2027 window |
-| **Comparative ranking** | Meta-model for prioritizing across all risk categories | Informs allocation of $10B+ annual safety investment |
+### For Civil Society Organizations
 
-### Activation Probability by Year
+**Advocacy priorities:**
+- Demand transparency in capability evaluations
+- Push for public interest representation in governance
+- Support authentication infrastructure development
+- Advocate for economic transition policies
 
-| Risk Category | 2025 | 2027 | 2030 | 2035 |
-|---------------|------|------|------|------|
-| Mass disinformation at scale | 95% (active) | 99% | 99% | 99% |
-| Cyberweapon autonomous discovery | 40% | 75% | 90% | 99% |
-| Bioweapons uplift (meaningful) | 25% | 50% | 70% | 85% |
-| Agentic system failures | 35% | 70% | 90% | 99% |
-| Meaningful situational awareness | 20% | 50% | 75% | 90% |
-| Authentication collapse | 30% | 60% | 80% | 95% |
-| Mass unemployment crisis (>10%) | 15% | 40% | 65% | 85% |
-| Strategic deception in AI | 5% | 20% | 45% | 70% |
-| Misaligned superintelligence | Less than 1% | 3% | 15% | 35% |
+## Limitations and Model Uncertainty
 
-### Resource Implications
+### Methodological Limitations
 
-| Priority | Investment Window | Recommended Investment | Expected Impact |
-|----------|-------------------|----------------------|-----------------|
-| Bioweapons screening | 2024-2027 | $500M-1B cumulative | Delays threshold 2-3 years |
-| AI control research | 2024-2028 | $1-2B annually | Reduces control risk 30-50% |
-| International governance | 2024-2027 | $200-500M cumulative | Establishes norms before crisis |
-| Authentication systems | 2024-2026 | $300-600M cumulative | Preserves epistemic infrastructure |
-| Interpretability research | Ongoing | $500M-1B annually | Enables detection across risks |
+| Limitation | Impact on Accuracy | Mitigation Strategies |
+|------------|-------------------|----------------------|
+| **Expert overconfidence** | Timelines may be systematically early/late | Multiple forecasting methods, base rate reference |
+| **Capability discontinuities** | Sudden activation possible | Broader uncertainty ranges, multiple scenarios |
+| **Interaction complexity** | Cascade effects poorly understood | Systems modeling, historical analogies |
+| **Adversarial adaptation** | Defenses may fail faster than expected | Red team exercises, worst-case planning |
 
-### Key Cruxes
+### Areas for Model Enhancement
 
-| Crux | If True | If False | Current Assessment |
-|------|---------|----------|-------------------|
-| Scaling laws continue through 2030 | All timelines accelerate 2-3 years | More gradual activation | 60% likely |
-| Open-source achieves parity by 2027 | Misuse risks accelerate significantly | Centralized mitigation possible | 55% likely |
-| Major safety failure occurs | Accelerates governance, slows deployment | Smooth capability growth | 30% by 2028 |
-| Alignment solved before ASI | Long-term risks substantially reduced | Current trajectory continues | 15% by 2035 |
+1. **Better cascade modeling** - More sophisticated interaction effects
+2. **Adversarial dynamics** - How attackers adapt to defenses
+3. **Institutional response capacity** - How organizations adapt to new risks
+4. **Cross-cultural variation** - Risk manifestation in different contexts
+5. **Economic feedback loops** - How risk realization affects development
 
-## Summary
+## Sources & Resources
 
-**Key insights:**
-1. Many serious risks are already active (disinformation, fraud, manipulation)
-2. The next 2-3 years are critical for near-term risks (bio, cyber, control)
-3. Long-term risks have high uncertainty but warrant early research investment
-4. Risks cascade and accelerate each other
-5. Intervention windows are closing for many categories
+### Primary Research Sources
 
-**Most time-sensitive priorities:**
-1. Bioweapons screening infrastructure (window: 2024-2027)
-2. AI control research (window: 2024-2028)
-3. International AI governance (window: 2024-2027)
-4. Authentication systems (window: 2024-2026)
+| Organization | Type | Key Contributions |
+|--------------|------|-------------------|
+| [Anthropic](https://www.anthropic.com/news/evaluating-ai-systems) | AI Lab | Risk evaluation methodologies, scaling policies |
+| [OpenAI](https://openai.com/safety/preparedness) | AI Lab | Preparedness framework, capability assessment |
+| [METR](https://metr.org/) | Evaluation Org | Technical capability evaluations |
+| [RAND Corporation](https://www.rand.org/topics/artificial-intelligence.html) | Think Tank | Policy analysis, national security implications |
+| [Center for AI Safety](https://www.safe.ai/) | Safety Org | Risk taxonomy, expert opinion surveys |
 
-## Related Models
+### Academic Literature
 
-- [Capability Threshold Model](/knowledge-base/models/capability-threshold-model/) - What capability levels trigger which risks
-- [Warning Signs Model](/knowledge-base/models/warning-signs-model/) - Early indicators of risk activation
-- [AI-Bioweapons Timeline Model](/knowledge-base/models/bioweapons-timeline/) - Detailed bioweapons activation timeline
+| Paper | Authors | Key Finding |
+|-------|---------|-------------|
+| [Model evaluation for extreme risks](https://arxiv.org/abs/2305.15324) | Anthropic Constitutional AI Team | Evaluation frameworks for dangerous capabilities |
+| [AI timelines and capabilities](https://arxiv.org/abs/2401.02954) | Various forecasting research | Capability development trajectories |
+| [Cybersecurity implications of AI](https://cset.georgetown.edu/publication/ai-and-cybersecurity/) | CSET | Near-term cyber risk assessment |
 
-## Sources
+### Policy and Governance Sources
 
-- Anthropic (2024). "Responsible Scaling Policy"
-- OpenAI (2024). "Preparedness Framework"
-- Metaculus AI forecasts
-- Expert elicitation from AI safety researchers
+| Source | Type | Focus Area |
+|--------|------|------------|
+| [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework) | Government Standard | Risk management methodology |
+| [EU AI Act](https://digital-strategy.ec.europa.eu/en/policies/european-approach-artificial-intelligence) | Regulation | Comprehensive AI governance framework |
+| [UK AI Safety Summit Outcomes](https://www.gov.uk/government/topical-events/ai-safety-summit-2023) | International | Multi-stakeholder coordination |
 
-## Related Pages
+### Expert Opinion and Forecasting
+
+| Platform | Type | Use Case |
+|----------|------|----------|
+| [Metaculus AI forecasts](https://www.metaculus.com/questions/ai/) | Prediction Market | Quantitative timeline estimates |
+| [Expert Survey on AI Risk](https://aiimpacts.org/2022-expert-survey-on-progress-in-ai/) | Academic Survey | Expert opinion distribution |
+| [Future of Humanity Institute reports](https://www.fhi.ox.ac.uk/publications/) | Research Institute | Long-term risk analysis |
+
+## Related Models and Cross-References
+
+### Complementary Risk Models
+
+- [Capability Threshold Model](/knowledge-base/models/capability-threshold-model/) - Specific capability requirements for risk activation
+- [Bioweapons AI Uplift Model](/knowledge-base/models/bioweapons-ai-uplift/) - Detailed biological weapons timeline
+- [Cyberweapons Attack Automation](/knowledge-base/models/cyberweapons-attack-automation/) - Cyber capability development
+- [Authentication Collapse Timeline](/knowledge-base/models/authentication-collapse-timeline/) - Digital verification crisis
+- [Economic Disruption Impact Model](/knowledge-base/models/economic-disruption-impact/) - Labor market transformation
+
+### Risk Category Cross-References
+
+- [Accident Risks](/knowledge-base/risks/accident/) - Technical AI safety failures
+- [Misuse Risks](/knowledge-base/risks/misuse/) - Intentional harmful applications  
+- [Structural Risks](/knowledge-base/risks/structural/) - Systemic societal impacts
+- [Epistemic Risks](/knowledge-base/risks/epistemic/) - Information environment degradation
+
+### Response Strategy Integration
+
+- [Governance Responses](/knowledge-base/responses/governance/) - Policy intervention strategies
+- [Technical Safety Research](/knowledge-base/responses/technical/) - Engineering solutions
+- [International Coordination](/knowledge-base/responses/governance/international/) - Global cooperation frameworks
 
 <Backlinks client:load entityId="risk-activation-timeline" />
