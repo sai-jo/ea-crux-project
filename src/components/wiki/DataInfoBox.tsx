@@ -10,7 +10,6 @@
 
 import React from 'react';
 import { InfoBox, type EntityType, type ModelRatingsData } from './InfoBox';
-import { Sources } from './Sources';
 import { getExpertInfoBoxData, getOrgInfoBoxData, getEntityInfoBoxData } from '../../data';
 
 interface RelatedEntry {
@@ -82,27 +81,22 @@ export function DataInfoBox({
       );
     }
 
-    const sources = data.sources || inlineProps.sources;
-
     return (
-      <>
-        <InfoBox
-          type={data.type as EntityType}
-          title={data.title}
-          severity={data.severity as any}
-          likelihood={data.likelihood}
-          timeframe={data.timeframe}
-          category={data.category}
-          maturity={data.maturity}
-          relatedSolutions={data.relatedSolutions as RelatedSolution[]}
-          website={data.website}
-          customFields={data.customFields}
-          relatedTopics={data.relatedTopics}
-          relatedEntries={data.relatedEntries as RelatedEntry[]}
-          {...inlineProps} // Allow overrides
-        />
-        {sources && sources.length > 0 && <Sources sources={sources} />}
-      </>
+      <InfoBox
+        type={data.type as EntityType}
+        title={data.title}
+        severity={data.severity as any}
+        likelihood={data.likelihood}
+        timeframe={data.timeframe}
+        category={data.category}
+        maturity={data.maturity}
+        relatedSolutions={data.relatedSolutions as RelatedSolution[]}
+        website={data.website}
+        customFields={data.customFields}
+        relatedTopics={data.relatedTopics}
+        relatedEntries={data.relatedEntries as RelatedEntry[]}
+        {...inlineProps} // Allow overrides
+      />
     );
   }
 
