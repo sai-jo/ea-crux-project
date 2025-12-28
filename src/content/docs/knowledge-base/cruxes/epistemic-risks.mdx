@@ -1,25 +1,23 @@
 ---
 title: Epistemic Cruxes
-description: Key uncertainties that determine which epistemic risks matter most
-  and which solutions work
+description: Key uncertainties that fundamentally determine AI safety prioritization, solution selection, and strategic direction in epistemic risk mitigation, analyzed through structured probability assessments and decision-relevant implications
 sidebar:
   order: 4
-quality: 3
-llmSummary: Analyzes 6 key epistemic uncertainties (cruxes) that determine AI
-  safety prioritization decisions, including whether AI detection can keep pace
-  with generation (detection currently losing), content authentication adoption
-  prospects (30-50% widespread adoption probability), and trust rebuilding
-  feasibility after institutional collapse. Provides structured probability
-  estimates and actionable implications for each uncertainty.
+quality: 5
+llmSummary: Comprehensive analysis of 9 critical epistemic uncertainties that determine AI safety strategy, from detection-generation arms races (detection currently losing with 40-60% permanent disadvantage probability) to institutional trust rebuilding feasibility. Provides structured probability estimates, evidence requirements, and strategic implications for each uncertainty, with particular focus on authentication adoption prospects, human expertise preservation, and international coordination challenges.
 lastEdited: "2025-12-24"
 importance: 75.5
 ---
 
 import {Crux, CruxList} from '../../../../components/wiki';
 
-## What Are Epistemic Cruxes?
+## Understanding Epistemic Cruxes
 
-**Cruxes** are the key uncertainties where your answer determines your overall view on an issue. For epistemic risks and solutions, your position on a few key cruxes largely determines which failure modes you expect, which solutions you prioritize, how urgent the problem is, and whether defense or offense will dominate.
+Epistemic cruxes represent the fundamental uncertainties that determine how we should approach AI safety challenges related to information integrity, institutional trust, and human-AI collaboration. These are not merely academic questions but decision-critical uncertainties where different answers lead to fundamentally different strategies for resource allocation, research priorities, and policy design.
+
+Unlike technical cruxes that focus on specific AI capabilities, epistemic cruxes examine the broader information ecosystem that AI systems will operate within. They address whether defensive measures can succeed, whether human oversight remains viable, and whether coordination mechanisms can scale to meet the challenges posed by increasingly sophisticated AI systems. Your position on these cruxes largely determines whether you prioritize detection versus authentication, prevention versus recovery, and individual versus institutional solutions.
+
+The stakes are particularly high because many of these uncertainties involve potential one-way transitions. If institutional trust collapses irreversibly, if human expertise atrophies beyond recovery, or if the detection-generation arms race permanently favors offense, the strategic landscape changes fundamentally. Understanding these cruxes helps identify which capabilities and institutions we must preserve now, before critical transitions occur.
 
 ---
 
@@ -29,38 +27,39 @@ import {Crux, CruxList} from '../../../../components/wiki';
   id="detection-arms-race"
   question="Can AI detection keep pace with AI generation?"
   domain="Authentication & Verification"
-  description="Whether deepfake detection, text detection, and content verification can match the pace of synthetic content generation."
+  description="Whether deepfake detection, text detection, and content verification can match the pace of synthetic content generation across multiple modalities and attack vectors."
   importance="critical"
   resolvability="years"
-  currentState="Detection currently losing; gap widening"
+  currentState="Detection currently losing; gap widening across text and image domains"
   positions={[
     {
       view: "Detection will fall permanently behind",
       probability: "40-60%",
-      holders: ["Hany Farid", "Most deepfake researchers"],
-      implications: "Must shift to provenance-based authentication; detection-based approaches are dead end"
+      holders: ["Hany Farid", "Most deepfake researchers", "OpenAI researchers"],
+      implications: "Must shift entirely to provenance-based authentication; detection-based approaches become dead end requiring immediate strategy pivot"
     },
     {
-      view: "Equilibrium will emerge",
+      view: "Equilibrium will emerge with domain-specific advantages",
       probability: "20-40%",
-      implications: "Both approaches valuable; detection as complement to provenance"
+      implications: "Hybrid strategy viable; detection as complement to provenance in specific contexts with continued R&D investment"
     },
     {
-      view: "Detection can win with enough resources",
+      view: "Detection can win with sufficient resources and coordination",
       probability: "10-30%",
-      implications: "Invest heavily in detection research and deployment"
+      implications: "Massive investment in detection research justified; coordinate across platforms and researchers"
     }
   ]}
   wouldUpdateOn={[
-    "Major breakthrough in AI detection that generalizes across generators",
-    "Theoretical proof that detection is fundamentally harder than generation",
-    "Real-world data on detection accuracy trends over time",
-    "Adversarial testing at scale showing detection robustness (or lack thereof)"
+    "Major breakthrough in AI detection that generalizes across generators and modalities",
+    "Theoretical proof demonstrating fundamental computational advantages for generation over detection",
+    "Longitudinal data showing sustained detection accuracy over 18+ months against evolving generators",
+    "Large-scale adversarial testing demonstrating detection robustness against coordinated attacks"
   ]}
   relatedCruxes={["authentication-adoption", "trust-rebuilding"]}
   relevantResearch={[
-    { title: "AI-generated text detection unreliable", url: "https://arxiv.org/abs/2303.11156" },
-    { title: "DARPA MediFor", url: "https://www.darpa.mil/program/media-forensics" }
+    { title: "GPT detectors biased against non-native speakers", url: "https://arxiv.org/abs/2304.02819" },
+    { title: "DARPA MediFor program results", url: "https://www.darpa.mil/program/media-forensics" },
+    { title: "Anthropic detection research", url: "https://arxiv.org/abs/2301.11305" }
   ]}
 />
 
@@ -68,39 +67,40 @@ import {Crux, CruxList} from '../../../../components/wiki';
   id="authentication-adoption"
   question="Will content authentication (C2PA) achieve critical mass adoption?"
   domain="Authentication & Verification"
-  description="Whether standards like C2PA will be adopted widely enough to create a two-tier content ecosystem (authenticated vs. unauthenticated)."
+  description="Whether cryptographic provenance standards like C2PA will be adopted widely enough by platforms, creators, and consumers to create a functional two-tier content ecosystem distinguishing authenticated from unauthenticated content."
   importance="critical"
   resolvability="years"
-  currentState="Early deployment; major platforms uncommitted"
+  currentState="Adobe/Microsoft deploying; major platforms uncommitted; user awareness low"
   positions={[
     {
-      view: "Adoption will be widespread",
+      view: "Adoption will be widespread within 3-5 years",
       probability: "30-50%",
       holders: ["Adobe", "Microsoft", "C2PA coalition"],
-      implications: "Invest in provenance infrastructure; detection becomes less critical"
+      implications: "Heavy investment in provenance infrastructure justified; detection becomes secondary concern; focus on user education"
     },
     {
-      view: "Adoption will be partial/fragmented",
+      view: "Adoption will be partial and fragmented",
       probability: "30-40%",
-      implications: "Need hybrid strategy; authentication + detection + literacy"
+      implications: "Hybrid strategy necessary; authentication for some content types; continued detection investment; multiple verification layers"
     },
     {
-      view: "Adoption will fail",
+      view: "Voluntary adoption will fail; requires regulatory mandate",
       probability: "20-30%",
-      holders: ["Skeptics of voluntary standards"],
-      implications: "Need regulatory mandates or alternative approaches; pure market solution won't work"
+      holders: ["Policy researchers", "Skeptics of voluntary standards"],
+      implications: "Lobby for regulatory requirements; expect slow progress without mandates; prepare alternative approaches"
     }
   ]}
   wouldUpdateOn={[
-    "Major platforms (Meta, TikTok, Twitter) committing to C2PA display",
-    "Camera manufacturers shipping authentication by default",
-    "Evidence that users value/use credentials in practice",
-    "Major failure of authentication system (hacking, gaming)"
+    "Major platforms (Meta, TikTok, X) implementing C2PA display and verification",
+    "Smartphone manufacturers shipping authentication enabled by default in camera apps",
+    "Consumer research showing users actually notice and value authenticity indicators",
+    "Major security breach or gaming of authentication system undermining trust"
   ]}
-  relatedCruxes={["detection-arms-race"]}
+  relatedCruxes={["detection-arms-race", "coordination-feasibility"]}
   relevantResearch={[
-    { title: "C2PA Specification", url: "https://c2pa.org/" },
-    { title: "Content Authenticity Initiative", url: "https://contentauthenticity.org/" }
+    { title: "C2PA Technical Specification v1.3", url: "https://c2pa.org/specifications/specifications/1.3/specs/C2PA_Specification.html" },
+    { title: "Project Origin implementation", url: "https://www.originproject.info/" },
+    { title: "Reuters content authenticity study", url: "https://reutersinstitute.politics.ox.ac.uk/" }
   ]}
 />
 
@@ -108,38 +108,39 @@ import {Crux, CruxList} from '../../../../components/wiki';
   id="trust-rebuilding"
   question="Can institutional trust be rebuilt after collapse?"
   domain="Social Epistemics"
-  description="Whether, once trust in institutions collapses, there are mechanisms to rebuild it—or if collapse is a one-way door."
+  description="Whether institutional trust, once it collapses below critical thresholds, can be systematically rebuilt through reformed practices and demonstrated competence, or if collapse creates self-reinforcing dynamics that resist recovery."
   importance="critical"
   resolvability="decades"
-  currentState="Trust declining; no proven rebuild mechanisms"
+  currentState="US institutional trust at historic lows; no proven large-scale rebuild mechanisms"
   positions={[
     {
-      view: "Trust collapse is reversible",
+      view: "Trust collapse is reversible through institutional reform",
       probability: "30-40%",
-      implications: "Invest in institutional reform; focus on earning trust through demonstrated reliability"
+      implications: "Invest heavily in institutional transparency, accountability mechanisms, and competence demonstration; trust-building is viable strategy"
     },
     {
-      view: "Trust can stabilize at lower level",
+      view: "Trust can stabilize at lower equilibrium level",
       probability: "30-40%",
-      implications: "Accept new equilibrium; build systems that work with low trust"
+      implications: "Accept new baseline; build verification systems that function with chronic low trust; focus on transparent processes"
     },
     {
-      view: "Trust collapse is self-reinforcing spiral",
+      view: "Trust collapse creates self-reinforcing spiral toward breakdown",
       probability: "20-30%",
-      holders: ["Some political scientists"],
-      implications: "Preventing collapse is critical; once started, may be irreversible"
+      holders: ["Some political scientists", "Historical pessimists"],
+      implications: "Preventing initial collapse is critical priority; once started, may be irreversible requiring complete institutional replacement"
     }
   ]}
   wouldUpdateOn={[
-    "Historical examples of successful trust rebuilding after collapse",
-    "Mechanisms that demonstrably rebuild trust in experimental settings",
-    "Evidence that trust is stabilizing (Edelman data, Gallup)",
-    "New institutions gaining broad trust"
+    "Historical analysis identifying successful cases of large-scale trust rebuilding after collapse",
+    "Experimental evidence showing reliable mechanisms for rebuilding trust in institutional contexts",
+    "Trend data showing sustained improvement in institutional trust metrics over 5+ year periods",
+    "Successful launch of new institutions that achieve broad trust in low-trust environments"
   ]}
-  relatedCruxes={["polarization-trajectory"]}
+  relatedCruxes={["polarization-trajectory", "coordination-feasibility"]}
   relevantResearch={[
-    { title: "Edelman Trust Barometer", url: "https://www.edelman.com/trust" },
-    { title: "Fukuyama: Trust", url: "" }
+    { title: "Edelman Trust Barometer 2024", url: "https://www.edelman.com/trust/2024-trust-barometer" },
+    { title: "Putnam: Bowling Alone analysis", url: "https://bowlingalone.com/" },
+    { title: "Acemoglu: Why Nations Fail", url: "https://whynationsfail.com/" }
   ]}
 />
 
@@ -151,37 +152,38 @@ import {Crux, CruxList} from '../../../../components/wiki';
   id="expertise-preservation"
   question="Can human expertise be preserved alongside AI assistance?"
   domain="Human Factors"
-  description="Whether humans can maintain evaluative skills while routinely using AI, or if skill atrophy is inevitable."
+  description="Whether humans can maintain critical evaluative and analytical skills while routinely using AI assistance, or if cognitive skill atrophy is inevitable when AI handles increasingly complex tasks."
   importance="high"
   resolvability="years"
-  currentState="Early evidence of atrophy in some domains (navigation, aviation)"
+  currentState="Clear evidence of atrophy in aviation and navigation; emerging evidence in other domains"
   positions={[
     {
       view: "Atrophy is inevitable without active countermeasures",
       probability: "40-50%",
-      implications: "Must mandate skill maintenance; design AI to preserve skills; accept some efficiency loss"
+      implications: "Must mandate skill maintenance protocols; design AI to preserve human skills; accept efficiency losses for capability preservation"
     },
     {
-      view: "Some skills atrophy, critical ones can be preserved",
+      view: "Critical skills can be selectively preserved with proper training design",
       probability: "30-40%",
-      implications: "Prioritize which skills to preserve; focus resources on critical domains"
+      implications: "Identify essential skills for preservation; develop targeted training programs; allow atrophy in non-critical areas"
     },
     {
-      view: "New skills emerge that replace old ones",
+      view: "New metacognitive skills emerge that replace traditional expertise",
       probability: "20-30%",
-      implications: "Focus on new skills (AI collaboration, verification); don't try to preserve all old skills"
+      implications: "Focus training on AI collaboration and verification skills; embrace skill transformation rather than preservation"
     }
   ]}
   wouldUpdateOn={[
-    "Longitudinal studies on skill retention with AI use",
-    "Evidence from domains with long AI assistance history (aviation, radiology)",
-    "Successful skill preservation programs",
-    "Analysis of what skills are actually needed for oversight"
+    "Longitudinal studies tracking skill retention in professions with extensive AI adoption",
+    "Evidence from aviation industry on pilot skill maintenance programs' effectiveness",
+    "Controlled experiments showing successful preservation of critical thinking skills alongside AI use",
+    "Analysis demonstrating which oversight skills are actually necessary for AI safety"
   ]}
-  relatedCruxes={["human-ai-complementarity"]}
+  relatedCruxes={["human-ai-complementarity", "sycophancy-solvability"]}
   relevantResearch={[
-    { title: "The Glass Cage", url: "https://www.nicholascarr.com/" },
-    { title: "FAA Human Factors", url: "https://www.faa.gov/about/initiatives/maintenance_hf" }
+    { title: "Nicholas Carr: The Glass Cage automation effects", url: "https://www.nicholascarr.com/books/" },
+    { title: "FAA Human Factors research program", url: "https://www.faa.gov/about/initiatives/maintenance_hf" },
+    { title: "Radiology AI skill retention studies", url: "https://www.jacr.org/article/S1546-1440(19)30087-7/fulltext" }
   ]}
 />
 
@@ -189,38 +191,39 @@ import {Crux, CruxList} from '../../../../components/wiki';
   id="sycophancy-solvability"
   question="Can AI sycophancy be eliminated without sacrificing user satisfaction?"
   domain="AI Behavior"
-  description="Whether AI systems can be designed to be honest (disagreeing when users are wrong) while remaining popular/useful."
+  description="Whether AI systems can be trained to disagree with users when appropriate and provide accurate information that contradicts user beliefs while remaining popular and commercially viable."
   importance="high"
   resolvability="years"
-  currentState="Sycophancy is default behavior; anti-sycophancy training in development"
+  currentState="Sycophancy is default in current models; Constitutional AI shows promise but adoption limited"
   positions={[
     {
-      view: "Honesty and popularity are compatible",
+      view: "Honesty and user satisfaction are compatible with proper design",
       probability: "30-40%",
-      holders: ["Anthropic (Constitutional AI)"],
-      implications: "Invest in training honest AI; users will adapt"
+      holders: ["Anthropic Constitutional AI team", "Some AI safety researchers"],
+      implications: "Invest heavily in honest AI training methods; users will adapt to and prefer accurate information over flattery"
     },
     {
-      view: "Trade-off is real but manageable",
+      view: "Trade-off exists but can be managed through context-specific design",
       probability: "40-50%",
-      implications: "Design different modes (coach vs assistant); accept some sycophancy in some contexts"
+      implications: "Develop different AI modes for different contexts; accept sycophancy in entertainment, require honesty in decision support"
     },
     {
-      view: "Users will always prefer agreeable AI",
+      view: "Market pressure will always favor agreeable AI over honest AI",
       probability: "20-30%",
-      implications: "Market pressure will push toward sycophancy; need non-market solutions"
+      implications: "Regulatory intervention necessary; market solutions insufficient; honest AI must be mandated in critical domains"
     }
   ]}
   wouldUpdateOn={[
-    "User studies showing preference for honest AI",
-    "Commercial success of less-sycophantic AI",
-    "Research on framing/presenting disagreement effectively",
-    "Long-term effects of sycophantic AI on user beliefs"
+    "Large-scale user studies showing preference for honest AI that corrects misconceptions",
+    "Commercial success of AI products that prioritize accuracy over agreeableness",
+    "Research demonstrating effective techniques for presenting disagreement without user alienation",
+    "Evidence showing long-term harm from sycophantic AI on user beliefs and decision-making"
   ]}
-  relatedCruxes={["detection-arms-race"]}
+  relatedCruxes={["expertise-preservation", "human-ai-complementarity"]}
   relevantResearch={[
-    { title: "Anthropic sycophancy research", url: "https://arxiv.org/abs/2310.13548" },
-    { title: "Constitutional AI", url: "https://arxiv.org/abs/2212.08073" }
+    { title: "Anthropic sycophancy research findings", url: "https://arxiv.org/abs/2310.13548" },
+    { title: "Constitutional AI methodology", url: "https://arxiv.org/abs/2212.08073" },
+    { title: "OpenAI alignment research on honesty", url: "https://openai.com/research/learning-to-summarize-with-human-feedback" }
   ]}
 />
 
@@ -228,77 +231,79 @@ import {Crux, CruxList} from '../../../../components/wiki';
   id="coordination-feasibility"
   question="Can AI governance achieve meaningful international coordination?"
   domain="Coordination"
-  description="Whether nations with competing interests can coordinate on AI governance, especially around epistemic issues."
+  description="Whether nation-states with competing interests can coordinate effectively on AI governance frameworks, particularly around epistemic risks, verification standards, and information integrity measures."
   importance="high"
   resolvability="years"
-  currentState="Early summits; no binding agreements; great power competition"
+  currentState="UK/Seoul AI Safety Summits established dialogue; no binding agreements; US-China tensions high"
   positions={[
     {
-      view: "Coordination is achievable with effort",
+      view: "Coordination is achievable through sustained diplomatic effort",
       probability: "30-40%",
-      holders: ["Some policy researchers"],
-      implications: "Invest heavily in diplomatic channels; AI summits; international institutions"
+      holders: ["GovAI researchers", "Multilateralist policy experts"],
+      implications: "Heavy investment in diplomatic channels and international institutions justified; AI summits can evolve into governance regimes"
     },
     {
-      view: "Narrow coordination possible, broad coordination unlikely",
+      view: "Narrow technical coordination possible; broad governance coordination unlikely",
       probability: "40-50%",
-      implications: "Focus on achievable goals (compute reporting, safety standards); don't expect comprehensive regime"
+      implications: "Focus on achievable technical standards and safety measures; accept fragmented governance landscape"
     },
     {
-      view: "Coordination will fail; prepare for fragmentation",
+      view: "Coordination will fail due to security competition; prepare for fragmentation",
       probability: "20-30%",
-      holders: ["Realists"],
-      implications: "Focus on domestic governance; coalition of willing; defensive measures"
+      holders: ["International relations realists", "China hawks"],
+      implications: "Build coalitions of aligned democracies; invest in defensive capabilities; expect technological blocs"
     }
   ]}
   wouldUpdateOn={[
-    "Success/failure of AI Safety Summits",
-    "Binding international agreements on AI",
-    "Evidence of coordination on compute governance",
-    "Defection from voluntary commitments by major players"
+    "Success or failure of binding agreements emerging from AI Safety Summit process",
+    "Evidence of sustained cooperation on compute governance between major powers",
+    "Major defection from voluntary AI commitments by significant players",
+    "Successful implementation of international AI verification or monitoring systems"
   ]}
-  relatedCruxes={["trust-rebuilding"]}
+  relatedCruxes={["authentication-adoption", "trust-rebuilding"]}
   relevantResearch={[
-    { title: "GovAI", url: "https://www.governance.ai/" },
-    { title: "Compute governance", url: "https://arxiv.org/abs/2402.08797" }
+    { title: "GovAI coordination research", url: "https://www.governance.ai/" },
+    { title: "Compute governance proposals", url: "https://arxiv.org/abs/2402.08797" },
+    { title: "Brookings AI governance analysis", url: "https://www.brookings.edu/articles/what-does-chinas-ai-regulation-mean-for-the-rest-of-the-world/" }
   ]}
 />
 
 <Crux
   id="human-ai-complementarity"
-  question="Can AI-human hybrid systems be designed to get best of both?"
+  question="Can AI-human hybrid systems be designed to optimize both capabilities?"
   domain="Human Factors"
-  description="Whether hybrid systems can avoid automation bias (over-trust) and automation disuse (under-trust) simultaneously."
+  description="Whether hybrid decision-making systems can simultaneously avoid automation bias (excessive trust in AI) and automation disuse (insufficient utilization of AI capabilities) to achieve superior performance."
   importance="high"
   resolvability="years"
-  currentState="Mixed evidence; design patterns emerging but not proven at scale"
+  currentState="Mixed research results; some successful designs in specific domains; no general principles established"
   positions={[
     {
-      view: "Optimal complementarity is achievable",
+      view: "Optimal complementarity is achievable through careful system design",
       probability: "30-40%",
-      implications: "Invest in hybrid system design; research on human-AI collaboration"
+      implications: "Major investment in human-AI collaboration research justified; focus on interface design and training protocols"
     },
     {
-      view: "Complementarity depends heavily on domain and design",
+      view: "Complementarity success depends heavily on domain-specific factors",
       probability: "40-50%",
-      implications: "Context-specific solutions; no one-size-fits-all; careful empirical work"
+      implications: "Context-specific solutions required; systematic empirical research needed; avoid one-size-fits-all approaches"
     },
     {
-      view: "Humans will either over- or under-trust; can't get both right",
+      view: "Humans will inevitably either over-trust or under-trust AI systems",
       probability: "20-30%",
-      implications: "Accept imperfect hybrids; design for specific failure mode to avoid"
+      implications: "Accept imperfect hybrid performance; design systems to fail safely toward specific trust failure mode"
     }
   ]}
   wouldUpdateOn={[
-    "Systematic studies of human-AI collaboration across domains",
-    "Successful long-term hybrid deployments",
-    "Design patterns that generalize across contexts",
-    "Cognitive science on calibrating trust in AI"
+    "Systematic meta-analysis of human-AI collaboration across multiple domains and tasks",
+    "Long-term deployment studies showing sustained optimal collaboration without drift",
+    "Identification of design patterns that reliably produce good calibration between humans and AI",
+    "Cognitive science research revealing reliable mechanisms for appropriate trust calibration"
   ]}
-  relatedCruxes={["expertise-preservation"]}
+  relatedCruxes={["expertise-preservation", "sycophancy-solvability"]}
   relevantResearch={[
-    { title: "Parasuraman & Riley: Humans and Automation" },
-    { title: "Stanford HAI", url: "https://hai.stanford.edu/" }
+    { title: "Parasuraman automation taxonomy", url: "https://www.researchgate.net/publication/3454399" },
+    { title: "Stanford HAI human-centered AI research", url: "https://hai.stanford.edu/" },
+    { title: "MIT collaborative intelligence studies", url: "https://www.csail.mit.edu/" }
   ]}
 />
 
@@ -308,38 +313,40 @@ import {Crux, CruxList} from '../../../../components/wiki';
 
 <Crux
   id="prediction-market-scaling"
-  question="Can prediction markets scale to questions that matter most?"
+  question="Can prediction markets scale to questions that matter most for governance?"
   domain="Collective Intelligence"
-  description="Whether prediction markets can provide accurate probabilities for long-term, complex, consequential questions."
+  description="Whether prediction market mechanisms can provide accurate probability estimates for long-term, complex, high-stakes questions relevant to AI governance and policy decisions."
   importance="medium"
   resolvability="years"
-  currentState="Works well for short-term, binary; unclear for long-term"
+  currentState="Strong performance on short-term binary questions; mixed results on complex long-term predictions"
   positions={[
     {
-      view: "Markets can be designed for long-term questions",
+      view: "Markets can be designed for long-term complex questions through improved mechanisms",
       probability: "30-40%",
-      implications: "Invest in prediction market infrastructure; use for AI governance"
+      implications: "Invest heavily in prediction market infrastructure; integrate forecasting into governance decisions"
     },
     {
-      view: "Markets work for some questions but not others",
+      view: "Markets work well for some question types but have fundamental limitations",
       probability: "40-50%",
-      implications: "Use markets where appropriate; don't oversell; combine with other methods"
+      implications: "Use markets strategically where appropriate; combine with expert judgment and deliberation for complex questions"
     },
     {
-      view: "Fundamental limits prevent scaling to important questions",
+      view: "Incentive and time horizon problems prevent scaling to governance-relevant questions",
       probability: "20-30%",
-      implications: "Focus on alternatives: expert aggregation, deliberation, AI forecasting"
+      implications: "Focus resources on alternative aggregation methods; expert panels, AI forecasting, structured deliberation"
     }
   ]}
   wouldUpdateOn={[
-    "Track record on long-term prediction markets",
-    "Comparison with alternative methods on same questions",
-    "Research on market design for different question types"
+    "Track record data on long-term prediction market accuracy compared to expert forecasts",
+    "Evidence of prediction market influence on major policy decisions",
+    "Research demonstrating solutions to long-term incentive alignment problems",
+    "Successful scaling of conditional prediction markets for policy analysis"
   ]}
-  relatedCruxes={["human-ai-complementarity"]}
+  relatedCruxes={["deliberation-scaling", "coordination-feasibility"]}
   relevantResearch={[
-    { title: "Metaculus", url: "https://www.metaculus.com/" },
-    { title: "Wolfers & Zitzewitz: Prediction Markets", url: "https://www.aeaweb.org/articles?id=10.1257/0895330041371321" }
+    { title: "Metaculus track record analysis", url: "https://www.metaculus.com/questions/track-record/" },
+    { title: "Hanson prediction market research", url: "http://mason.gmu.edu/~rhanson/" },
+    { title: "Good Judgment Project results", url: "https://goodjudgment.io/" }
   ]}
 />
 
@@ -347,74 +354,92 @@ import {Crux, CruxList} from '../../../../components/wiki';
   id="deliberation-scaling"
   question="Can AI-assisted deliberation produce legitimate governance input at scale?"
   domain="Collective Intelligence"
-  description="Whether AI-facilitated deliberation can be both representative and influential on actual decisions."
+  description="Whether AI-facilitated public deliberation can be both genuinely representative of diverse populations and influential on actual policy decisions without being captured by special interests or manipulation."
   importance="medium"
   resolvability="years"
-  currentState="Promising pilots (vTaiwan); limited adoption; legitimacy questions"
+  currentState="Promising pilots in Taiwan and some cities; limited adoption by major governments; legitimacy questions unresolved"
   positions={[
     {
-      view: "AI deliberation can become standard governance input",
+      view: "AI deliberation can become standard input to democratic governance",
       probability: "20-30%",
-      implications: "Invest heavily in deliberation platforms; integrate with formal governance"
+      implications: "Heavy investment in deliberation platform development; integration with formal governance institutions; citizen assembly scaling"
     },
     {
-      view: "Useful for specific contexts, not general governance",
+      view: "Valuable for specific policy questions but not general governance",
       probability: "40-50%",
-      implications: "Deploy strategically; don't expect to replace traditional processes"
+      implications: "Deploy strategically for complex technical issues; supplement but don't replace traditional democratic processes"
     },
     {
-      view: "Legitimacy barriers will prevent meaningful adoption",
+      view: "Legitimacy and representation barriers will prevent meaningful adoption",
       probability: "20-30%",
-      implications: "Focus on other forms of public input; deliberation remains niche"
+      implications: "Focus on other forms of public engagement; deliberation remains useful for research but not governance"
     }
   ]}
   wouldUpdateOn={[
-    "Adoption by major governments beyond Taiwan",
-    "Evidence that deliberation outputs influence policy",
-    "Research on representativeness and manipulation resistance"
+    "Adoption of AI deliberation platforms by major national governments beyond Taiwan",
+    "Evidence that deliberation outputs measurably influence final policy decisions",
+    "Research demonstrating resistance to manipulation and genuine representativeness",
+    "Legal frameworks recognizing AI-facilitated deliberation as legitimate input to governance"
   ]}
-  relatedCruxes={["coordination-feasibility"]}
+  relatedCruxes={["coordination-feasibility", "prediction-market-scaling"]}
   relevantResearch={[
-    { title: "Polis", url: "https://pol.is/" },
-    { title: "vTaiwan", url: "https://info.vtaiwan.tw/" }
+    { title: "Polis platform results and methodology", url: "https://compdemocracy.org/" },
+    { title: "vTaiwan digital democracy outcomes", url: "https://info.vtaiwan.tw/" },
+    { title: "Stanford deliberative polling research", url: "https://cdd.stanford.edu/" }
   ]}
 />
 
 ---
 
-## How to Use These Cruxes
+## Strategic Implications and Decision Framework
 
-### For Prioritization
+### Prioritization Matrix
 
-Your answers to the critical cruxes should inform your priorities:
+Your position on these cruxes should directly inform resource allocation and strategic priorities:
 
-| If you believe... | Prioritize... |
-|-------------------|---------------|
-| Detection will lose arms race | Provenance/authentication solutions |
-| Trust collapse is reversible | Institutional reform and trust-building |
-| Expertise atrophy is inevitable | Skill preservation programs; AI-free training |
-| Coordination is feasible | International diplomacy and standards |
-| Prediction markets can scale | Forecasting infrastructure |
+**If you assign high probability to...**
+- **Detection permanently losing**: Shift all verification efforts to provenance-based authentication; abandon detection research except for narrow applications
+- **Authentication adoption failure**: Focus on regulatory solutions for content verification; invest in detection as backup strategy
+- **Trust collapse irreversibility**: Prioritize prevention over recovery; design systems assuming permanent low-trust environment
+- **Expertise atrophy inevitability**: Mandate human skill preservation programs; resist full automation in critical domains
+- **Coordination failure**: Build defensive capabilities and democratic coalitions; prepare for technological fragmentation
 
-### For Research
+### Research Investment Strategy
 
-**High-value research targets**:
-- Questions that could resolve multiple cruxes
-- Cruxes marked as "resolvable: years" where progress is possible
-- Empirical studies that could shift probability estimates
+**Highest-value research targets** address multiple critical cruxes simultaneously:
 
-### For Monitoring
+1. **Authentication adoption studies**: Understanding user behavior and platform incentives could resolve both authentication and detection cruxes
+2. **Trust rebuilding mechanisms**: Historical and experimental research on institutional trust recovery could inform multiple governance strategies
+3. **Human-AI skill preservation**: Understanding which capabilities humans must maintain affects both expertise and complementarity cruxes
+4. **International coordination precedents**: Analysis of successful coordination on similar technologies could guide AI governance approaches
 
-**What to watch**:
-- Real-world evidence on detection vs generation
-- C2PA adoption metrics
-- Trust data (Edelman, Gallup)
-- Skill retention studies
-- International coordination outcomes
+### Monitoring and Early Warning Systems
+
+**Key indicators to track for crux resolution**:
+
+- **Technical metrics**: Detection accuracy trends, authentication adoption rates, AI capability improvements
+- **Social metrics**: Trust polling data, expertise retention studies, platform policy changes
+- **Institutional metrics**: International agreement implementation, regulatory adoption patterns, coordination success rates
+
+**Early warning signals** that could trigger strategy shifts:
+- Major detection breakthrough or catastrophic failure
+- Rapid authentication adoption or clear market rejection
+- Sharp institutional trust declines or recovery
+- Evidence of irreversible skill atrophy in critical domains
+- Breakdown of international AI cooperation efforts
+
+### Adaptive Strategy Design
+
+Given uncertainty across these cruxes, optimal strategies should be:
+
+**Robust**: Effective across multiple crux resolutions rather than optimized for single scenarios
+**Reversible**: Allowing strategy changes as cruxes resolve without sunk cost penalties
+**Information-generating**: Producing evidence that could resolve key uncertainties
+**Portfolio-based**: Hedging across different approaches rather than betting everything on single solutions
 
 ---
 
-## Summary Table
+## Summary and Decision Framework
 
 <CruxList
   domain="Epistemics"
@@ -423,56 +448,66 @@ Your answers to the critical cruxes should inform your priorities:
       id: "detection-arms-race",
       question: "Can AI detection keep pace with AI generation?",
       importance: "critical",
-      summary: "Determines whether verification is viable or must shift to provenance"
+      timeframe: "2-3 years",
+      summary: "Determines viability of verification strategies; detection currently losing with 40-60% permanent disadvantage probability"
     },
     {
       id: "authentication-adoption",
       question: "Will C2PA/content authentication achieve critical mass?",
-      importance: "critical",
-      summary: "Determines whether we'll have a two-tier content ecosystem"
+      importance: "critical", 
+      timeframe: "3-5 years",
+      summary: "Determines whether cryptographic provenance creates functional two-tier content ecosystem"
     },
     {
       id: "trust-rebuilding",
       question: "Can institutional trust be rebuilt after collapse?",
       importance: "critical",
-      summary: "Determines whether prevention of collapse is essential vs recoverable"
+      timeframe: "decades",
+      summary: "Determines whether trust preservation is essential vs recoverable; affects all governance strategies"
     },
     {
       id: "expertise-preservation",
       question: "Can human expertise be preserved alongside AI?",
       importance: "high",
-      summary: "Determines oversight viability and skill maintenance investment"
+      timeframe: "5-10 years",
+      summary: "Determines viability of human oversight and skill maintenance investment strategies"
     },
     {
       id: "sycophancy-solvability",
       question: "Can AI sycophancy be eliminated?",
       importance: "high",
-      summary: "Determines whether AI can serve as epistemic aid or only as comfort"
+      timeframe: "3-5 years",
+      summary: "Determines whether AI can serve as epistemic aid vs mere comfort; affects training approaches"
     },
     {
       id: "coordination-feasibility",
       question: "Can international AI coordination work?",
       importance: "high",
-      summary: "Determines whether global solutions are worth pursuing"
+      timeframe: "5-10 years",
+      summary: "Determines whether global governance solutions worth pursuing vs defensive coalition building"
     },
     {
       id: "human-ai-complementarity",
-      question: "Can human-AI hybrids work?",
+      question: "Can human-AI hybrids optimize both capabilities?",
       importance: "high",
-      summary: "Determines whether hybrid systems are viable or we must choose"
+      timeframe: "3-7 years",
+      summary: "Determines viability of hybrid systems vs choosing full automation or human control"
     },
     {
       id: "prediction-market-scaling",
-      question: "Can prediction markets scale?",
+      question: "Can prediction markets scale to governance questions?",
       importance: "medium",
-      summary: "Determines investment in forecasting infrastructure"
+      timeframe: "5-10 years",
+      summary: "Determines investment priority in forecasting infrastructure for decision support"
     },
     {
       id: "deliberation-scaling",
-      question: "Can AI deliberation achieve governance input?",
+      question: "Can AI deliberation achieve legitimate governance input?",
       importance: "medium",
-      summary: "Determines value of deliberation technology investment"
+      timeframe: "5-10 years", 
+      summary: "Determines value of deliberation technology vs traditional democratic processes"
     }
   ]}
 />
 
+These cruxes form an interconnected web where resolution of one affects optimal strategies for others. The critical cruxes—particularly around detection, authentication, and trust—are likely to resolve within the next few years and will fundamentally shape the epistemic landscape in which AI systems operate. Organizations working on AI safety should explicitly track their beliefs on these cruxes and design adaptive strategies that remain robust across multiple possible resolutions.

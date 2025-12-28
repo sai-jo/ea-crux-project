@@ -2,6 +2,64 @@
 
 This document describes available workflows for Claude Code when working with this project.
 
+## Temp Files Convention
+
+**All temporary/intermediate files should go in `.claude/temp/`** (gitignored).
+
+Scripts that generate intermediate output (like grading results) should write to this directory by default. This keeps the project root clean and prevents accidental commits of temp data.
+
+## Document Enhancer CLI
+
+Unified tool for managing and improving wiki content quality via the Claude API.
+
+### Commands
+
+```bash
+node scripts/document-enhancer.mjs list --sort gap --limit 10   # List priority pages
+node scripts/document-enhancer.mjs show scheming                 # Show page details
+node scripts/document-enhancer.mjs grade --limit 5 --dry-run     # Grade pages
+node scripts/document-enhancer.mjs enhance --limit 3             # Enhance pages
+```
+
+### List Command
+
+List pages sorted by importance, quality, or gap (importance - quality × 20):
+```bash
+node scripts/document-enhancer.mjs list --sort gap --limit 20
+node scripts/document-enhancer.mjs list --min-imp 80 --max-qual 2
+```
+
+### Grade Command
+
+Grade pages using Claude API (importance 0-100, quality 1-5, llmSummary):
+```bash
+node scripts/document-enhancer.mjs grade --limit 10 --dry-run    # Preview
+node scripts/document-enhancer.mjs grade --apply                  # Apply to frontmatter
+```
+
+### Enhance Command
+
+Enhance low-quality high-importance pages to quality 4-5:
+```bash
+node scripts/document-enhancer.mjs enhance --min-imp 70 --max-qual 2 --dry-run
+node scripts/document-enhancer.mjs enhance --page language-models  # Specific page
+node scripts/document-enhancer.mjs enhance --apply                  # Apply directly
+```
+
+Without `--apply`, enhanced pages are saved to `.claude/temp/enhanced/` for review.
+
+### Options
+
+| Option | Description |
+|--------|-------------|
+| `--dry-run` | Preview without API calls |
+| `--limit N` | Process only N pages |
+| `--apply` | Apply changes directly to files |
+| `--model X` | Use specific Claude model |
+| `--min-imp N` | Minimum importance (enhance) |
+| `--max-qual N` | Maximum quality (enhance) |
+| `--page ID` | Target specific page |
+
 ## Content Quality System
 
 ### Available Validators
@@ -280,3 +338,64 @@ The database stores:
 - **sources**: External references (papers, blogs, reports) found in articles
 - **summaries**: AI-generated summaries with key points and claims
 - **entity_relations**: Relationships from entities.yaml
+
+## Resource Linking
+
+Use the `<R>` component to link to external resources with hover tooltips and bidirectional tracking.
+
+### Usage in MDX
+
+```mdx
+import {R} from '../../../../components/wiki';
+
+<!-- Basic usage - auto-fetches title from resource database -->
+<R id="11ac11c30d3ab901" />
+
+<!-- With custom label -->
+<R id="11ac11c30d3ab901">Accident reports</R>
+
+<!-- In tables -->
+| Finding | Source |
+|---------|--------|
+| Pilots struggle | <R id="a9d7143ed49b479f">FAA studies</R> |
+```
+
+### Benefits
+
+- **Hover tooltips**: Shows title, authors, summary on hover
+- **Bidirectional links**: Resource pages show "Cited By" articles
+- **Stable IDs**: Links don't break when URLs change
+- **View details link**: Each resource has a detail page at `/browse/resources/{id}/`
+
+### Finding Resource IDs
+
+Run the mapping script to find which URLs in an MDX file have matching resource IDs:
+
+```bash
+node scripts/map-urls-to-resources.mjs expertise-atrophy  # Specific file
+node scripts/map-urls-to-resources.mjs                     # All files
+node scripts/map-urls-to-resources.mjs --stats             # Statistics only
+```
+
+Output shows convertible links:
+```
+✓ [Accident reports](https://www.bea.aero/)
+  → <R id="11ac11c30d3ab901">Accident reports</R>
+```
+
+### Adding Article Sources Section
+
+To show all resources cited by an article, add at the end of the MDX:
+
+```mdx
+import {ArticleSources} from '../../../../components/wiki';
+
+<ArticleSources entityId="expertise-atrophy" client:load />
+```
+
+### Workflow for AI Content Generation
+
+1. When citing an external source, check if URL exists in `resources.yaml`
+2. If yes, use `<R id="{hash}">Label</R>` instead of markdown link
+3. If no, use standard markdown link `[Label](url)` — it will be tracked by the scan script
+4. Add `<ArticleSources entityId="..." />` at end of articles to show all cited resources

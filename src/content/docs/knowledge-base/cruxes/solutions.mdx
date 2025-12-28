@@ -1,34 +1,27 @@
 ---
 title: Solution Cruxes
-description: Key uncertainties that determine which epistemic and coordination
-  solutions to prioritize
+description: Key uncertainties that determine which technical, coordination, and epistemic solutions to prioritize for AI safety and governance. Maps decision-relevant uncertainties across verification scaling, international cooperation, and infrastructure funding with specific probability estimates and strategic implications.
 sidebar:
   order: 5
-quality: 3
-llmSummary: Systematically maps key uncertainties across technical solutions
-  (verification scaling, provenance vs detection, watermark robustness),
-  collective intelligence (AI-human forecasting combinations), and coordination
-  (lab cooperation, international governance) with specific probability
-  estimates and actionable implications for each position. Provides concrete
-  decision frameworks for prioritizing interventions across verification
-  infrastructure (25-40% chance of scaling), governance approaches (voluntary
-  coordination 20-35% vs regulatory enforcement 40-50%), and US-China
-  cooperation (15-30% for meaningful coordination).
+quality: 4
+llmSummary: Systematically maps key uncertainties across technical solutions (verification scaling, provenance vs detection, watermark robustness), collective intelligence (AI-human forecasting combinations), and coordination (lab cooperation, international governance) with specific probability estimates and actionable implications for each position. Provides concrete decision frameworks for prioritizing interventions across verification infrastructure (25-40% chance of scaling), governance approaches (voluntary coordination 20-35% vs regulatory enforcement 40-50%), and US-China cooperation (15-30% for meaningful coordination).
 lastEdited: "2025-12-24"
 importance: 85
 ---
 
 import {Crux, CruxList} from '../../../../components/wiki';
 
-## What Are Solution Cruxes?
+## Overview
 
-Different views on **key uncertainties** lead to different solution priorities. Your answers to these cruxes should inform what you work on, fund, or advocate for.
+Solution cruxes are the key uncertainties that determine which interventions we should prioritize in AI safety and governance. Unlike risk cruxes that focus on the nature and magnitude of threats, solution cruxes examine the tractability and effectiveness of different approaches to addressing those threats. Your position on these cruxes should fundamentally shape what you work on, fund, or advocate for.
 
-These cruxes focus on **solution tractability and effectiveness**—not the underlying problems (covered in [Risk Cruxes](/knowledge-base/cruxes/)/).
+The landscape of AI safety solutions spans three critical domains: technical approaches that use AI systems themselves to verify and authenticate content; coordination mechanisms that align incentives across labs, nations, and institutions; and infrastructure investments that create sustainable epistemic institutions. Within each domain, fundamental uncertainties about feasibility, cost-effectiveness, and adoption timelines create genuine disagreements among experts about optimal resource allocation.
 
----
+These disagreements matter enormously for strategic decision-making. Whether AI-based verification can keep pace with AI-based generation determines if we should invest billions in detection infrastructure or pivot to provenance-based approaches. Whether frontier AI labs can coordinate without regulatory compulsion shapes the balance between industry engagement and government intervention. Whether credible commitment mechanisms can be designed determines if international AI governance is achievable or if we should prepare for an uncoordinated race.
 
 ## Technical Solution Cruxes
+
+The technical domain centers on whether AI systems can be effectively turned against themselves—using artificial intelligence to verify, detect, and authenticate AI-generated content. This offensive-defensive dynamics question has profound implications for billions of dollars in research investment and infrastructure development.
 
 <Crux
   id="ai-verification-scaling"
@@ -69,6 +62,10 @@ These cruxes focus on **solution tractability and effectiveness**—not the unde
   ]}
 />
 
+The current evidence presents a mixed picture. DARPA's SemaFor program, launched in 2021 with $26 million in funding, has demonstrated some success in semantic forensics for manipulated media, but primarily on specific types of synthetic content rather than the broad spectrum of AI-generated material now emerging. Meanwhile, commercial detection tools like GPTZero report accuracy rates of 85-95% on academic writing, but these drop significantly when generators are specifically designed to evade detection.
+
+The fundamental challenge lies in the asymmetric nature of the problem. Content generators need only produce plausible outputs, while detectors must distinguish between authentic and synthetic content across all possible generation techniques. This asymmetry may prove insurmountable, particularly as generation models become more sophisticated and numerous. However, optimists point to potential advantages for verification systems: they can be specialized for detection tasks, leverage multiple modalities simultaneously, and benefit from centralized training on comprehensive datasets of known synthetic content.
+
 <Crux
   id="provenance-vs-detection"
   question="Should we prioritize content provenance or detection?"
@@ -108,6 +105,10 @@ These cruxes focus on **solution tractability and effectiveness**—not the unde
   ]}
 />
 
+The Coalition for Content Provenance and Authenticity (C2PA), backed by Adobe, Microsoft, Intel, and BBC, has gained significant momentum since 2021, with over 50 member organizations and initial implementations in Adobe Creative Cloud and Microsoft products. The provenance approach embeds cryptographic metadata proving content's origin and modification history, creating an "immune system" for authentic content rather than trying to identify synthetic material.
+
+However, provenance faces substantial adoption challenges. Early data from C2PA implementations shows less than 1% of users actively check provenance credentials, and the system requires widespread adoption across platforms and devices to be effective. The approach also cannot address legacy content or situations where authentic content is captured without provenance systems. Detection remains necessary for the vast majority of existing content and will likely be required for years even if provenance adoption succeeds.
+
 <Crux
   id="watermark-robustness"
   question="Can AI watermarks be made robust against removal?"
@@ -145,87 +146,13 @@ These cruxes focus on **solution tractability and effectiveness**—not the unde
   ]}
 />
 
----
+Google DeepMind's SynthID, launched in August 2023, represents the most advanced publicly available watermarking system, using statistical patterns imperceptible to humans but detectable by specialized algorithms. However, academic research consistently demonstrates that current watermarking approaches can be defeated through various attack vectors including adversarial perturbations, model fine-tuning, and regeneration techniques.
 
-## Collective Intelligence Cruxes
+The theoretical foundations suggest fundamental limits to watermark robustness. Any watermark that preserves content quality enough to be usable can potentially be removed by sufficiently sophisticated adversaries. However, the practical question is whether watermarks can raise the cost and complexity of removal enough to deter most bad actors while preserving utility for detection systems.
 
-<Crux
-  id="forecasting-ai-combo"
-  question="Can AI + human forecasting substantially outperform either alone?"
-  domain="Collective Intelligence"
-  description="Whether combining AI forecasting with human judgment produces significantly better predictions than either approach separately."
-  importance="high"
-  resolvability="soon"
-  currentState="Early experiments promising; limited systematic comparison"
-  positions={[
-    {
-      view: "Combination is significantly better",
-      probability: "35-50%",
-      holders: ["Metaculus (testing)"],
-      implications: "Invest in hybrid forecasting systems; deploy widely"
-    },
-    {
-      view: "Benefits are modest and context-dependent",
-      probability: "35-45%",
-      implications: "Use combination where marginal gain justifies cost; domain-specific"
-    },
-    {
-      view: "One will dominate (AI or human); combination adds noise",
-      probability: "15-25%",
-      implications: "Figure out which is better for which questions; don't force combination"
-    }
-  ]}
-  wouldUpdateOn={[
-    "Systematic comparison studies",
-    "Metaculus AI forecasting results",
-    "Domain-specific performance data"
-  ]}
-  relatedCruxes={["human-ai-complementarity"]}
-  relevantResearch={[
-    { title: "Metaculus AI", url: "https://www.metaculus.com/project/ai-forecasting/" },
-    { title: "Superforecasting", url: "https://goodjudgment.com/" }
-  ]}
-/>
+## Coordination Solution Cruxes
 
-<Crux
-  id="market-manipulation"
-  question="Can prediction markets be made manipulation-resistant?"
-  domain="Collective Intelligence"
-  description="Whether prediction markets can resist well-funded manipulation attempts while remaining useful."
-  importance="medium"
-  resolvability="years"
-  currentState="Some manipulation observed; effects often temporary; design improvements possible"
-  positions={[
-    {
-      view: "Manipulation resistance is achievable",
-      probability: "30-45%",
-      implications: "Invest in market design; use markets for high-stakes questions"
-    },
-    {
-      view: "Can deter casual manipulation; not determined actors",
-      probability: "35-45%",
-      implications: "Use markets but interpret carefully; don't treat as ground truth"
-    },
-    {
-      view: "Markets on important questions will be manipulated",
-      probability: "20-30%",
-      implications: "Limit market use to questions where manipulation incentives are low"
-    }
-  ]}
-  wouldUpdateOn={[
-    "Documented manipulation attempts and outcomes",
-    "Market design research on manipulation resistance",
-    "Comparison of market accuracy in high vs low manipulation contexts"
-  ]}
-  relatedCruxes={["forecasting-ai-combo"]}
-  relevantResearch={[
-    { title: "Prediction market research", url: "https://www.aeaweb.org/articles?id=10.1257/0895330041371321" }
-  ]}
-/>
-
----
-
-## Coordination Cruxes
+Coordination cruxes address whether different actors—from AI labs to nation-states—can align their behavior around safety measures without sacrificing competitive advantages or national interests. These questions determine the feasibility of governance approaches ranging from industry self-regulation to international treaties.
 
 <Crux
   id="lab-coordination"
@@ -266,6 +193,12 @@ These cruxes focus on **solution tractability and effectiveness**—not the unde
   ]}
 />
 
+The emergence of Responsible Scaling Policies (RSPs) in 2023-2024, adopted by Anthropic, OpenAI, and Google DeepMind, represents the most significant attempt at voluntary lab coordination to date. These policies outline safety evaluations and deployment standards that labs commit to follow as their models become more capable. However, early implementation has revealed significant limitations: evaluation standards remain vague, triggering thresholds are subjective, and competitive pressures create incentives to interpret requirements leniently.
+
+Historical precedent suggests mixed prospects for voluntary coordination in high-stakes competitive environments. The semiconductor industry's successful coordination on safety standards through SEMATECH offers some optimism, but occurred under different competitive dynamics and with explicit government support. The pharmaceutical industry's mixed record on drug safety—with some successful self-regulation but also notable failures requiring regulatory intervention—may be more analogous to AI development.
+
+The fundamental challenge is that safety measures often impose costs or delays that can disadvantage individual labs in the race for AI capabilities. Game-theoretic analysis suggests this creates a collective action problem where all labs prefer coordination but each has incentives to defect. External enforcement through regulation, auditing, or legal liability may be necessary to make coordination stable, though this raises questions about regulatory capture and the technical expertise of government agencies.
+
 <Crux
   id="international-coordination"
   question="Can US-China coordination on AI governance succeed?"
@@ -302,6 +235,12 @@ These cruxes focus on **solution tractability and effectiveness**—not the unde
     { title: "RAND on AI and great power competition", url: "https://www.rand.org/" }
   ]}
 />
+
+Current US-China AI relations are characterized by strategic competition rather than cooperation. Export controls on semiconductors, restrictions on Chinese AI companies, and national security framings dominate the policy landscape. However, some limited dialogue continues through academic conferences, multilateral forums like the G20, and informal diplomatic channels.
+
+The precedent of nuclear arms control offers both hope and caution. The US and Soviet Union managed to negotiate meaningful arms control agreements despite existential competition, particularly on risks that threatened both parties equally. However, nuclear weapons had clearer technical parameters and more obvious mutual destruction scenarios than AI risks, which are often diffuse and delayed.
+
+The most promising path may involve narrow cooperation on specific risks where interests clearly align, such as preventing AI-enabled bioweapons or nuclear command-and-control accidents. The UK AI Safety Institute and South Korea's leadership on AI governance provide potential multilateral venues for engagement that could evolve into broader coordination mechanisms.
 
 <Crux
   id="commitment-credibility"
@@ -340,9 +279,55 @@ These cruxes focus on **solution tractability and effectiveness**—not the unde
   ]}
 />
 
----
+The emerging field of compute governance offers the most promising avenue for credible commitment mechanisms. Unlike software or model parameters, computational resources are physical and potentially observable. Research by organizations like the Centre for the Governance of AI has outlined monitoring systems that could track large-scale training runs, creating verifiable bounds on certain types of AI development.
 
-## Infrastructure Cruxes
+However, the feasibility of comprehensive compute monitoring remains unclear. Cloud computing, distributed training, and algorithm efficiency improvements create multiple pathways for evading monitoring systems. International variation in monitoring capabilities and willingness could create safe havens for actors seeking to avoid commitments.
+
+## Collective Intelligence and Infrastructure Cruxes
+
+The final domain addresses whether we can build sustainable systems for truth, knowledge, and collective decision-making that can withstand both market pressures and technological disruption. These questions determine the viability of epistemic institutions as a foundation for AI governance.
+
+<Crux
+  id="forecasting-ai-combo"
+  question="Can AI + human forecasting substantially outperform either alone?"
+  domain="Collective Intelligence"
+  description="Whether combining AI forecasting with human judgment produces significantly better predictions than either approach separately."
+  importance="high"
+  resolvability="soon"
+  currentState="Early experiments promising; limited systematic comparison"
+  positions={[
+    {
+      view: "Combination is significantly better",
+      probability: "35-50%",
+      holders: ["Metaculus (testing)"],
+      implications: "Invest in hybrid forecasting systems; deploy widely"
+    },
+    {
+      view: "Benefits are modest and context-dependent",
+      probability: "35-45%",
+      implications: "Use combination where marginal gain justifies cost; domain-specific"
+    },
+    {
+      view: "One will dominate (AI or human); combination adds noise",
+      probability: "15-25%",
+      implications: "Figure out which is better for which questions; don't force combination"
+    }
+  ]}
+  wouldUpdateOn={[
+    "Systematic comparison studies",
+    "Metaculus AI forecasting results",
+    "Domain-specific performance data"
+  ]}
+  relatedCruxes={["human-ai-complementarity"]}
+  relevantResearch={[
+    { title: "Metaculus AI", url: "https://www.metaculus.com/project/ai-forecasting/" },
+    { title: "Superforecasting", url: "https://goodjudgment.com/" }
+  ]}
+/>
+
+Metaculus has been conducting systematic experiments with AI forecasting since 2023, with early results suggesting that AI systems can match or exceed human forecasters on certain types of questions, particularly those involving quantitative trends or pattern recognition from large datasets. However, humans continue to outperform on questions requiring contextual judgment, novel reasoning, or understanding of political and social dynamics.
+
+The combination approaches show promise but remain under-tested. Initial experiments suggest that human forecasters can improve their performance by consulting AI predictions, while AI systems benefit from human-provided context and reasoning. However, the optimal architectures for human-AI collaboration remain unclear, and the cost-effectiveness compared to scaling either approach independently has not been established.
 
 <Crux
   id="epistemic-public-good"
@@ -378,62 +363,25 @@ These cruxes focus on **solution tractability and effectiveness**—not the unde
   relatedCruxes={["platform-incentives"]}
 />
 
-<Crux
-  id="platform-incentives"
-  question="Can platform incentives be aligned with epistemic quality?"
-  domain="Infrastructure"
-  description="Whether major platforms can be incentivized (through regulation, competition, or design) to prioritize truth over engagement."
-  importance="high"
-  resolvability="years"
-  currentState="Engagement still dominates; some regulatory pressure; limited success"
-  positions={[
-    {
-      view: "Incentive alignment is achievable",
-      probability: "20-35%",
-      implications: "Focus on regulation; antitrust; liability; user tools"
-    },
-    {
-      view: "Partial alignment possible; engagement will always matter",
-      probability: "40-50%",
-      implications: "Work within constraints; design for harm reduction; build alternatives"
-    },
-    {
-      view: "Business model is incompatible with truth optimization",
-      probability: "25-35%",
-      implications: "Build non-commercial alternatives; accept platform limitations; focus elsewhere"
-    }
-  ]}
-  wouldUpdateOn={[
-    "Platform policy changes and their effects",
-    "Regulatory enforcement outcomes (DSA, etc.)",
-    "User migration to alternative platforms",
-    "Research on engagement vs truth tradeoffs"
-  ]}
-  relatedCruxes={["epistemic-public-good"]}
-  relevantResearch={[
-    { title: "EU Digital Services Act", url: "https://digital-strategy.ec.europa.eu/en/policies/digital-services-act-package" }
-  ]}
-/>
+Current epistemic infrastructure suffers from chronic underfunding relative to content generation systems. Fact-checking organizations operate on annual budgets of millions while misinformation spreads through platforms with budgets in the billions. Wikipedia, one of the most successful epistemic public goods, operates on approximately $150 million annually while supporting hundreds of millions of users.
+
+Government funding for epistemic infrastructure varies dramatically by country and political system. The EU's Digital Services Act includes provisions for funding fact-checking and verification systems, while the US has been more reluctant to fund what could be perceived as content moderation. Philanthropic support, led by foundations like Omidyar Network and Craig Newmark Philanthropies, has provided crucial early-stage funding but may be insufficient for the scale required.
+
+## Safety Implications and Trajectory
+
+The resolution of these solution cruxes will fundamentally shape the AI safety landscape over the next decade. If technical verification approaches prove viable, we may see an arms race between generation and detection systems, with implications for platform architecture, regulatory frameworks, and international competition. If coordination mechanisms succeed, we could see the emergence of global AI governance institutions resembling nuclear non-proliferation regimes. If they fail, we may face an uncoordinated race with significant safety risks.
+
+The near-term trajectory (1-2 years) will likely provide initial evidence on several critical cruxes. Commercial deployment of verification systems will test their real-world effectiveness. The track record of voluntary lab commitments will reveal whether self-regulation is sustainable. International forums like the UK AI Safety Institute and Seoul AI summit will indicate whether meaningful global coordination is possible.
+
+The medium-term trajectory (2-5 years) should resolve most technical cruxes as AI capabilities advance and verification systems mature. The effectiveness of early regulatory interventions will become clear, and the stability of various coordination mechanisms will be tested under competitive pressure. The funding sustainability of epistemic infrastructure will determine whether society can build verification systems at the scale required.
+
+## Key Uncertainties and Research Priorities
+
+The highest-priority uncertainties for research and experimentation include: systematic testing of verification approaches across different attack scenarios; controlled studies of human-AI collaboration in forecasting and decision-making; game-theoretic analysis of commitment mechanisms under different competitive dynamics; and economic analysis of the costs and benefits of different coordination approaches.
+
+These cruxes are interconnected in complex ways. Technical feasibility affects coordination incentives—if verification systems work well, labs may be more willing to adopt them voluntarily. Coordination success affects infrastructure funding—successful international cooperation could unlock government investment in epistemic public goods. Understanding these dependencies will be crucial for developing comprehensive solution strategies.
 
 ---
-
-## Summary: Solution Prioritization by Crux Answers
-
-| If you believe... | Prioritize... |
-|-------------------|---------------|
-| AI verification can match generation | AI verification R&D |
-| Provenance beats detection | C2PA adoption; provenance infrastructure |
-| Robust watermarks achievable | Watermark research and mandates |
-| AI + human forecasting is superior | Hybrid forecasting platforms |
-| Lab coordination can work | Industry coordination; voluntary standards |
-| International coordination is feasible | Diplomacy; international institutions |
-| Credible commitments designable | Mechanism design; compute governance |
-| Epistemic goods can be funded | Advocacy for public funding |
-| Platform incentives alignable | Regulation; liability; competition |
-
----
-
-## Summary Table
 
 <CruxList
   domain="Solutions"
@@ -485,19 +433,6 @@ These cruxes focus on **solution tractability and effectiveness**—not the unde
       question: "Can epistemic infrastructure be funded?",
       importance: "high",
       summary: "Determines sustainability of verification systems"
-    },
-    {
-      id: "platform-incentives",
-      question: "Can platform incentives be aligned?",
-      importance: "high",
-      summary: "Determines feasibility of platform-based solutions"
-    },
-    {
-      id: "market-manipulation",
-      question: "Can prediction markets resist manipulation?",
-      importance: "medium",
-      summary: "Determines scope of prediction market applications"
     }
   ]}
 />
-

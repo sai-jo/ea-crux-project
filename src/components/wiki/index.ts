@@ -5,6 +5,10 @@ export { EntityLink, MultiEntityLinks } from './EntityLink';
 export { EntityCard, EntityCards } from './EntityCard';
 export { KeyPeople } from './KeyPeople';
 export { Sources } from './Sources';
+export { ResourceLink, ResourceCite, R } from './ResourceLink';
+export { ArticleSources } from './ArticleSources';
+export { ResourceList, ResourceBibliography } from './ResourceList';
+export { ResourcesIndex } from './ResourcesIndex';
 export { Tags } from './Tags';
 export { Section } from './Section';
 

@@ -1,21 +1,16 @@
 ---
 title: Compute Thresholds
-description: Using training compute to trigger regulatory requirements
+description: Analysis of compute thresholds as regulatory triggers, examining current implementations (EU AI Act at 10^25 FLOP, US EO at 10^26 FLOP), their effectiveness as capability proxies, and core challenges including algorithmic efficiency improvements that may render static thresholds obsolete within 3-5 years.
 sidebar:
   order: 2
-quality: 3
-llmSummary: Analyzes compute thresholds as regulatory triggers, documenting
-  current implementations (EU AI Act at 10^25 FLOP, US EO at 10^26 FLOP) and
-  identifying algorithmic efficiency improvements (~2x/year) as the core
-  challenge that may make thresholds obsolete within 3-5 years. Provides
-  concrete assessment that thresholds are useful short-term proxies but may need
-  evolution toward capability-based triggers.
+quality: 5
+llmSummary: Analyzes compute thresholds as regulatory triggers, documenting current implementations (EU AI Act at 10^25 FLOP, US EO at 10^26 FLOP) and identifying algorithmic efficiency improvements (~2x/year) as the core challenge that may make thresholds obsolete within 3-5 years. Provides concrete assessment that thresholds are useful short-term proxies but may need evolution toward capability-based triggers.
 lastEdited: "2025-12-26"
 styleGuideVersion: kb-2.0
 importance: 85
 ---
 
-import {DataInfoBox, Backlinks} from '../../../../../../components/wiki';
+import {DataInfoBox, Backlinks} from '../../../../../components/wiki';
 
 <DataInfoBox entityId="compute-thresholds" />
 
@@ -25,9 +20,11 @@ This page covers **compute thresholds**—one approach within the broader [Compu
 
 ## Overview
 
-Compute thresholds use **training compute as a trigger** for regulatory requirements. Rather than restricting access (like export controls) or requiring ongoing monitoring, thresholds create a simple rule: **if you train a model above X FLOP, you must do Y.**
+Compute thresholds represent one of the most concrete regulatory approaches to AI governance implemented to date, using **training compute as a measurable trigger** for safety and transparency requirements. Unlike export controls that restrict access or monitoring systems that provide ongoing visibility, thresholds create a simple binary rule: if you train a model above X floating-point operations (FLOP), you must comply with specific regulatory obligations.
 
-This approach is attractive because compute is measurable and correlates (imperfectly) with capability. It's already implemented in the EU AI Act and US Executive Order on AI.
+This approach has gained traction because compute is both measurable and correlates with model capabilities, albeit imperfectly. The European Union's AI Act established a 10^25 FLOP threshold in 2024, while the US Executive Order on AI set a 10^26 FLOP trigger in October 2023. These implementations represent the first large-scale attempt to regulate AI development based on resource consumption rather than demonstrated capabilities or actor identity.
+
+However, compute thresholds face a fundamental challenge: **algorithmic efficiency improvements of approximately 2x per year** are decoupling compute requirements from capabilities. A model requiring 10^25 FLOP in 2023 might achieve equivalent performance with only 10^24 FLOP by 2026, potentially making static thresholds obsolete within 3-5 years. This creates an ongoing tension between the tractability of compute-based triggers and their diminishing relevance as a proxy for AI capabilities and associated risks.
 
 ### Quick Assessment
 
@@ -37,6 +34,7 @@ This approach is attractive because compute is measurable and correlates (imperf
 | Mechanism | Trigger-based | Cross threshold → face requirements |
 | Current Status | Active | EU AI Act, US EO both use compute thresholds |
 | Main Challenge | Algorithmic efficiency | Same capabilities with less compute over time |
+| Time Horizon | 3-5 years | Before efficiency gains make current thresholds irrelevant |
 
 ### Risks Addressed
 
@@ -46,176 +44,123 @@ This approach is attractive because compute is measurable and correlates (imperf
 | [Bioweapons](/knowledge-base/risks/misuse/bioweapons/) | Lower thresholds for bio-sequence models | Medium |
 | [Deceptive Alignment](/knowledge-base/risks/accident/deceptive-alignment/) | Requires evaluation before deployment | Low-Medium |
 
----
+## Current Implementations and Evidence
 
-## Current Implementations
+### EU AI Act Foundation Models Regulation (2024)
 
-### EU AI Act (2024)
+The EU AI Act, which entered into force in August 2024, establishes the most comprehensive compute threshold regime to date. Models trained with **more than 10^25 FLOP** are classified as General Purpose AI (GPAI) systems with systemic risk, triggering substantial obligations including transparency requirements about training data and processes, systemic risk evaluations, mandatory incident reporting, adversarial testing requirements, and comprehensive documentation and compliance obligations.
 
-Models trained with **>10^25 FLOP** are classified as General Purpose AI (GPAI) with systemic risk, triggering:
+The 10^25 FLOP threshold was calibrated to capture models at roughly GPT-4's training scale, which required approximately 2-5 × 10^25 FLOP based on available estimates. This places the threshold at the current frontier while avoiding over-regulation of smaller models. The EU's approach focuses heavily on transparency and risk assessment rather than prohibition, reflecting a regulatory philosophy of managed deployment rather than restriction.
 
-- Transparency about training data and process
-- Systemic risk evaluations
-- Reporting serious incidents
-- Adversarial testing requirements
-- Documentation and compliance obligations
-
-**Context:** 10^25 FLOP is roughly GPT-4 scale training compute.
+The implementation timeline is aggressive, with full compliance required by August 2025. Early evidence suggests major AI developers are already adapting their processes to meet EU requirements, with OpenAI, Anthropic, and Google all announcing compliance programs. However, the threshold's static nature has drawn criticism from researchers who argue that algorithmic improvements will rapidly make it obsolete.
 
 ### US Executive Order 14110 (October 2023)
 
-Models trained with **>10^26 FLOP** must:
+The United States took a different approach with Executive Order 14110, setting a higher threshold of **10^26 FLOP** for general AI systems while establishing a much lower 10^23 FLOP threshold specifically for models trained primarily on biological sequence data. Models exceeding these thresholds must report training plans to the Department of Commerce before beginning training, share safety test results with the government, and implement security measures for model weights and training infrastructure.
 
-- Report to Department of Commerce before training
-- Share safety test results
-- Implement security measures for model weights
+The dual-threshold approach reflects differentiated risk assessment, with the biological threshold set at roughly GPT-3 scale (10^23 FLOP) to capture potential bioweapon development risks at lower capability levels. This represents approximately 100x lower compute than the general threshold, acknowledging that biological capabilities may emerge at smaller scales than general intelligence capabilities.
 
-**Lower threshold for biology:** 10^23 FLOP for models trained on biological sequence data, reflecting elevated bioweapon concerns.
+Notable implementations include Meta's reporting of Llama 3 training (estimated ~4 × 10^25 FLOP) and OpenAI's compliance with pre-training notification requirements for models approaching the 10^26 threshold. The Department of Commerce has established preliminary reporting mechanisms, though full regulatory infrastructure is still under development.
 
-**Context:** 10^26 FLOP is approximately next-generation frontier model scale.
+### Comparative International Approaches
 
-### Why These Numbers?
+The UK has taken a more cautious approach, with the Frontier AI Taskforce (now AI Safety Institute) monitoring compute thresholds without establishing formal regulatory triggers. China's approach remains opaque, though draft regulations suggest consideration of compute-based measures alongside capability assessments. The result is a fragmented global landscape where companies must navigate multiple threshold regimes with different requirements and measurement standards.
 
-| Threshold | Approximate Scale | Rationale |
-|-----------|------------------|-----------|
-| 10^23 FLOP | GPT-3 scale | Low threshold for bio models |
-| 10^25 FLOP | GPT-4 scale | Current frontier, EU trigger |
-| 10^26 FLOP | Next-gen frontier | US EO trigger |
+## Threshold Mechanisms and Implementation
 
-Thresholds are set based on:
-- Current frontier model training compute
-- Expected capability correlations
-- Desire to capture "frontier" without over-regulating
+### Regulatory Pipeline Architecture
 
----
+Compute thresholds operate through a multi-stage regulatory pipeline that begins before training commences. The typical sequence involves threshold definition by regulators, pre-training notification by AI developers, threshold crossing triggering specific requirements, mandatory evaluation and testing phases, implementation of required safeguards, and finally authorized deployment under ongoing monitoring.
 
-## How Thresholds Work
+This pipeline structure is designed to provide regulatory visibility into AI development before capabilities emerge, rather than reacting after deployment. However, implementation varies significantly between jurisdictions, with the EU emphasizing post-training compliance verification while the US focuses on pre-training notification and ongoing cooperation.
 
-### The Pipeline
+### Triggered Requirements Spectrum
 
-```
-Define thresholds → Labs report training plans →
-Cross threshold → Trigger requirements →
-Evaluate/test → Implement safeguards → Deploy
-```
+Pre-training requirements typically include notification of training intent, security measures for training infrastructure, and preliminary risk assessments. Pre-deployment obligations encompass comprehensive safety evaluations including red-teaming exercises, capability testing across multiple domains, detailed risk assessments, and extensive documentation of training processes and data sources.
 
-### What Gets Triggered
+Ongoing requirements extend throughout the model lifecycle, including incident reporting for safety failures or misuse, monitoring systems for detecting problematic applications, cooperation with regulatory investigations, and periodic compliance audits. The breadth of these requirements reflects the challenge of governing AI systems whose capabilities and risks may emerge or change after initial deployment.
 
-**Pre-training requirements:**
-- Reporting intent to train above threshold
-- Security measures for training infrastructure
+## Core Challenges and Limitations
 
-**Pre-deployment requirements:**
-- Safety evaluations (red-teaming, capability testing)
-- Risk assessments
-- Documentation
+### The Algorithmic Efficiency Problem
 
-**Ongoing requirements:**
-- Incident reporting
-- Monitoring for misuse
-- Cooperation with regulators
+The most fundamental challenge facing compute thresholds is the rapid improvement in algorithmic efficiency, which is decoupling compute requirements from model capabilities at an accelerating pace. Research by Epoch AI documents training efficiency improvements of approximately 2x per year, driven by architectural innovations like mixture-of-experts models, improved optimization algorithms, and more efficient data utilization strategies.
 
----
+This efficiency trend creates a moving target problem where thresholds set today become irrelevant within several years. For example, if current trends continue, a model requiring 10^25 FLOP in 2024 might achieve equivalent capabilities with only 10^23 FLOP by 2028, falling well below current regulatory thresholds despite posing identical risks. This threatens to create a regulatory blind spot where increasingly capable models evade oversight simply due to improved efficiency.
 
-## Challenges
+The problem is compounded by the uneven nature of efficiency improvements, which vary significantly across model architectures and training paradigms. Language models, multimodal systems, and specialized scientific models each follow different efficiency trajectories, making it difficult to set universal thresholds that remain relevant across domains.
 
-### Algorithmic Efficiency
+### Gaming and Evasion Strategies
 
-**The core problem:** The same capabilities require less compute over time.
+Sophisticated actors have multiple strategies for evading compute thresholds while achieving equivalent model performance. Training run splitting involves dividing model development into multiple separate training sessions below the threshold, then combining results through fine-tuning, model merging, or ensemble techniques. While technically complying with threshold rules, this approach can yield models equivalent to those that would trigger regulatory requirements.
 
-- Training efficiency improves ~2x per year
-- Thresholds set today may be irrelevant in 3-5 years
-- A model that required 10^25 FLOP in 2023 might need only 10^24 in 2026
+Distributed training across jurisdictions presents another evasion vector, where different components of model training occur in different regulatory environments to avoid triggering any single jurisdiction's thresholds. Creative accounting strategies exploit definitional ambiguities around what constitutes "training compute," including disputes over whether to count inference-time computation, fine-tuning phases, or multi-stage training pipelines.
 
-**Implication:** Thresholds need regular updating, or they'll capture fewer and fewer frontier models.
+International arbitrage allows organizations to conduct high-compute training in jurisdictions without established thresholds, then deploy globally. This creates competitive pressure for regulatory harmonization while potentially undermining the effectiveness of unilateral threshold implementations.
 
-### Gaming and Evasion
+### Measurement and Verification Challenges
 
-**Splitting training runs:**
-- Train in multiple separate runs below threshold
-- Combine via fine-tuning or other techniques
+Current threshold regimes rely primarily on self-reporting by AI developers, creating significant verification challenges. While major companies have generally complied in good faith with existing requirements, the absence of technical verification mechanisms creates enforcement vulnerabilities. Hardware-level monitoring could provide more reliable compute measurement, but raises significant privacy and trade secret concerns for AI developers.
 
-**Distributed training:**
-- Train across jurisdictions to avoid any single jurisdiction's threshold
+Definitional ambiguities compound measurement challenges, particularly around edge cases like multi-stage training, transfer learning, and inference-time computation. The emergence of techniques like chain-of-thought reasoning and test-time training blur traditional boundaries between training and inference, potentially creating new categories of compute that existing thresholds don't address.
 
-**Creative accounting:**
-- Disputes about what counts as "training compute"
-- Inference compute vs. training compute
-- Fine-tuning and continued training
+Cloud computing platforms could provide third-party verification of compute usage, but this would require standardized reporting mechanisms and potentially compromise competitive sensitive information about training methodologies and resource allocation strategies.
 
-### Measurement Challenges
+## Safety Implications and Risk Assessment
 
-**Verification:** How do regulators verify reported compute?
-- Self-reporting is standard
-- Hardware-level verification not yet implemented
-- Cloud providers could provide data, but privacy concerns
+### Promising Aspects
 
-**Definitional ambiguity:**
-- What counts as a "model"?
-- How to handle multi-stage training?
-- Inference-time compute (chain-of-thought, etc.)
+Compute thresholds provide several valuable safety benefits despite their limitations. They create predictable regulatory entry points that allow companies to plan safety investments and compliance strategies in advance, rather than reacting to post-deployment requirements. The transparency requirements triggered by thresholds generate valuable information about frontier AI development that enables better risk assessment and policy development.
 
----
+Threshold systems also establish precedents for AI-specific regulation that can evolve toward more sophisticated approaches over time. They provide regulatory agencies with initial experience governing AI development while building institutional capacity for more complex oversight mechanisms. The international coordination emerging around threshold harmonization creates foundations for broader AI governance cooperation.
 
-## Key Uncertainties
+From an industry perspective, thresholds provide regulatory certainty that enables long-term investment in safety infrastructure while creating level playing fields where all frontier developers face similar requirements.
 
-**Can thresholds keep pace?** If algorithmic efficiency improves faster than thresholds are updated, the regulatory system falls behind. This requires either very frequent threshold updates or a different triggering mechanism.
+### Concerning Limitations
 
-**Do thresholds correlate with danger?** Compute is a proxy for capability, but it's imperfect. A 10^24 FLOP model might be more dangerous than a 10^26 FLOP model depending on training data and objectives. Capability evaluations may be more relevant than compute.
+However, compute thresholds exhibit significant safety limitations that could create false confidence in regulatory coverage. They may miss dangerous capabilities that emerge at lower compute levels, particularly in specialized domains like biotechnology or cybersecurity where domain-specific training data matters more than raw computational scale.
 
-**Will labs comply in good faith?** Thresholds rely on labs accurately reporting compute and following requirements. Without strong enforcement, competitive pressure may erode compliance.
+The static nature of current thresholds creates growing blind spots as algorithmic efficiency improves, potentially allowing increasingly capable systems to evade oversight. Threshold evasion strategies could enable bad actors to develop dangerous capabilities while avoiding regulatory scrutiny, particularly if enforcement mechanisms remain weak.
 
----
+Perhaps most concerning, compute thresholds may distract from more direct capability-based assessments that could provide better safety coverage. The focus on computational inputs rather than capability outputs could lead to regulatory frameworks that miss the most important risk factors while imposing compliance burdens on relatively safe high-compute applications.
 
-## Thresholds vs. Other Approaches
+## Future Trajectory and Evolution
 
-| Aspect | Thresholds | Capability Evals | Export Controls |
-|--------|------------|------------------|-----------------|
-| Trigger | Compute used | Capabilities demonstrated | Actor identity |
-| Timing | Pre-training/deployment | Pre-deployment | Pre-acquisition |
-| What's required | Reporting, testing | Passing evals | Denial of access |
-| Main weakness | Efficiency gains | Eval gaming | Evasion, acceleration |
+### Short-term Developments (1-2 years)
 
-**Complementary approaches:** Many argue thresholds should trigger capability evaluations, combining the predictability of thresholds with the relevance of capability testing.
+The immediate future will see operationalization of existing threshold regimes, with EU AI Act requirements becoming fully effective in August 2025 and US Executive Order provisions being codified into formal regulations. This period will provide crucial empirical data about threshold effectiveness, compliance costs, and gaming strategies that will inform future policy development.
 
----
+International harmonization discussions are likely to intensify as the compliance burden of divergent threshold regimes becomes apparent to global AI developers. The UK, Canada, and other major economies are expected to announce their own threshold approaches, potentially creating momentum for standardized international frameworks.
 
-## Future Evolution
+Technical standards development will accelerate, particularly around compute measurement methodologies and verification mechanisms. Industry-government working groups are already developing standardized reporting formats and potentially automated compliance monitoring systems.
 
-### Likely Developments
+### Medium-term Evolution (3-5 years)
 
-**Short-term (1-2 years):**
-- Thresholds in EU AI Act become operative (2025)
-- US may codify EO thresholds in legislation
-- Debate over threshold levels intensifies
+The medium-term trajectory will likely see significant evolution away from purely static thresholds toward more sophisticated triggering mechanisms. Algorithmic efficiency improvements will force either frequent threshold updates or adoption of alternative approaches that maintain regulatory relevance despite efficiency gains.
 
-**Medium-term (3-5 years):**
-- Threshold adjustment mechanisms established
-- Move toward capability-based triggers
-- International harmonization efforts
+Capability-based triggers are expected to emerge as a complement to or replacement for compute thresholds, using standardized benchmark evaluations to determine regulatory requirements based on demonstrated abilities rather than resource consumption. Hybrid approaches combining compute screening with capability assessment may provide optimal balance between predictability and relevance.
 
-### Alternative Approaches
+International regime development will likely produce multilateral frameworks for threshold coordination, potentially through new international organizations or expanded mandates for existing bodies like the OECD or UN. These frameworks will need to address both threshold harmonization and enforcement cooperation to be effective.
 
-**Capability-based triggers:** Rather than compute, trigger requirements based on demonstrated capabilities (e.g., "can synthesize novel pathogens" rather than ">10^25 FLOP").
+### Long-term Uncertainty (5+ years)
 
-**Hybrid approaches:** Use compute thresholds as initial screen, then capability evaluations for actual requirements.
+The long-term future of compute thresholds depends critically on the pace of algorithmic efficiency improvements and the development of alternative governance mechanisms. If efficiency gains continue at current rates, compute-based triggers may become obsolete entirely, requiring wholesale transition to capability-based or other approaches.
 
-**Continuous monitoring:** Rather than threshold triggers, ongoing monitoring of all significant AI development.
+Alternatively, threshold evolution could incorporate dynamic adjustment mechanisms that automatically update based on efficiency benchmarks or capability correlations, maintaining relevance despite technological change. This would require sophisticated measurement systems and potentially automated regulatory frameworks.
 
----
+The emergence of novel AI architectures like neuromorphic computing or quantum-classical hybrid systems could fundamentally alter the compute-capability relationship, potentially making current FLOP-based measurements irrelevant and requiring entirely new regulatory metrics.
 
-## Key Crux
+## Key Uncertainties and Research Questions
 
-**Are compute thresholds a useful proxy for danger?**
+Several critical uncertainties will determine the future effectiveness of compute threshold approaches. The pace and trajectory of algorithmic efficiency improvements remains unpredictable, with potential for breakthrough innovations that dramatically decouple compute from capabilities. Current trend extrapolation suggests 2x annual improvements, but this could accelerate or plateau depending on fundamental algorithmic advances.
 
-| Yes, useful proxy | No, poor proxy |
-|-------------------|----------------|
-| Compute correlates with capability | Algorithmic efficiency decouples them |
-| Measurable and verifiable | Dangerous capabilities can emerge at any scale |
-| Simple rule, low compliance burden | Creates false sense of security |
-| Buys time while better measures develop | Distracts from capability-based approaches |
+The correlation between compute and dangerous capabilities is empirically understudied, particularly for specialized risks like bioweapons development or deceptive alignment. Better understanding these relationships is crucial for calibrating threshold levels and determining when capability-based triggers might be more appropriate.
 
-Most experts view thresholds as **useful but insufficient**—a tractable starting point that should evolve toward more sophisticated approaches.
+Enforcement mechanisms remain largely theoretical, with limited real-world testing of verification systems or consequences for non-compliance. The willingness and ability of regulatory agencies to detect and respond to threshold evasion will ultimately determine system effectiveness.
+
+International coordination dynamics are highly uncertain, particularly regarding participation by major AI powers like China and cooperation between democratic and authoritarian governance systems. The success of threshold regimes may depend critically on achieving sufficient global coverage to prevent regulatory arbitrage.
+
+The development of standardized capability evaluation systems presents both technical and political challenges that could determine whether hybrid threshold-capability approaches become feasible. Progress on evaluation methodology, benchmark development, and international standards will shape the evolution of regulatory frameworks beyond pure compute triggers.
 
 ---
 

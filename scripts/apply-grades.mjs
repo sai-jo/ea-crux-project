@@ -18,7 +18,7 @@ import { join } from 'path';
 import { parse as parseYaml, stringify as stringifyYaml } from 'yaml';
 
 const CONTENT_DIR = 'src/content/docs';
-const DEFAULT_GRADES_FILE = 'grades-all.json';
+const DEFAULT_GRADES_FILE = '.claude/temp/grades-output.json';
 
 // Parse args
 const args = process.argv.slice(2);

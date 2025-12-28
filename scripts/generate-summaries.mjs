@@ -10,13 +10,18 @@
  *   node scripts/generate-summaries.mjs [options]
  *
  * Options:
- *   --type <type>     Entity type to summarize: 'articles' or 'sources' (default: articles)
- *   --batch <n>       Number of items to process (default: 10)
- *   --model <model>   Model to use: 'haiku', 'sonnet', 'opus' (default: haiku)
- *   --resummary       Re-summarize items that have changed since last summary
- *   --id <id>         Summarize a specific entity by ID
- *   --dry-run         Show what would be summarized without making API calls
- *   --verbose         Show detailed output
+ *   --type <type>        Entity type to summarize: 'articles' or 'sources' (default: articles)
+ *   --batch <n>          Number of items to process (default: 10)
+ *   --concurrency <n>    Number of parallel API calls (default: 3)
+ *   --model <model>      Model to use: 'haiku', 'sonnet', 'opus' (default: haiku)
+ *   --resummary          Re-summarize items that have changed since last summary
+ *   --id <id>            Summarize a specific entity by ID
+ *   --dry-run            Show what would be summarized without making API calls
+ *   --verbose            Show detailed output
+ *
+ * Examples:
+ *   node scripts/generate-summaries.mjs --batch 100 --concurrency 5
+ *   node scripts/generate-summaries.mjs --type sources --batch 50 --concurrency 10
  *
  * Environment:
  *   ANTHROPIC_API_KEY - Required API key (from .env file)
@@ -41,6 +46,7 @@ function getArg(name, defaultValue) {
 const TYPE = getArg('type', 'articles');
 const BATCH_SIZE = parseInt(getArg('batch', '10'));
 const MODEL_NAME = getArg('model', 'haiku');
+const CONCURRENCY = parseInt(getArg('concurrency', '3'));
 const RESUMMARY = args.includes('--resummary');
 const SPECIFIC_ID = getArg('id', null);
 const DRY_RUN = args.includes('--dry-run');
@@ -103,17 +109,21 @@ const SOURCE_SUMMARY_PROMPT = `You are summarizing a source document referenced 
 Analyze the following source and provide:
 
 1. ONE_LINER: A single sentence (max 25 words) capturing the main contribution
-2. SUMMARY: A 1-2 paragraph summary (100-150 words) covering:
-   - What the source is about
-   - Key findings or arguments
-   - Relevance to AI safety
-3. KEY_POINTS: 2-4 bullet points of the most important takeaways
-4. KEY_CLAIMS: Extract any specific claims with numbers, probabilities, or timelines. Format as JSON array.
+2. SUMMARY: A 1-2 sentence brief summary for display in tables/lists
+3. REVIEW: A {{REVIEW_LENGTH}} in-depth review covering:
+   - Main argument or contribution
+   - Methodology and key findings
+   - Strengths and limitations
+   - Implications for AI safety
+   - How it relates to other work in the field
+4. KEY_POINTS: 2-4 bullet points of the most important takeaways
+5. KEY_CLAIMS: Extract any specific claims with numbers, probabilities, or timelines. Format as JSON array.
 
 Respond in this exact JSON format:
 {
   "oneLiner": "...",
   "summary": "...",
+  "review": "...",
   "keyPoints": ["...", "..."],
   "keyClaims": [{"claim": "...", "value": "..."}, ...]
 }
@@ -125,6 +135,19 @@ YEAR: {{YEAR}}
 
 CONTENT:
 {{CONTENT}}`;
+
+/**
+ * Get review length instruction based on importance
+ */
+function getReviewLengthInstruction(importance) {
+  if (importance >= 70) {
+    return '3-4 paragraph (400-600 words)';
+  } else if (importance >= 40) {
+    return '2 paragraph (200-300 words)';
+  } else {
+    return '1 paragraph (100-150 words)';
+  }
+}
 
 // =============================================================================
 // SUMMARY GENERATION
@@ -213,11 +236,16 @@ async function summarizeSource(source) {
     ? source.content.slice(0, maxContentLength) + '\n\n[Content truncated...]'
     : source.content;
 
+  // Get review length based on importance (default to medium if not set)
+  const importance = source.importance || 50;
+  const reviewLength = getReviewLengthInstruction(importance);
+
   const prompt = SOURCE_SUMMARY_PROMPT
     .replace('{{TITLE}}', source.title || 'Unknown')
     .replace('{{TYPE}}', source.source_type || 'unknown')
     .replace('{{AUTHORS}}', Array.isArray(source.authors) ? source.authors.join(', ') : (source.authors || 'Unknown'))
     .replace('{{YEAR}}', source.year || 'Unknown')
+    .replace('{{REVIEW_LENGTH}}', reviewLength)
     .replace('{{CONTENT}}', content);
 
   const result = await generateSummary(prompt);
@@ -231,6 +259,48 @@ async function summarizeSource(source) {
 }
 
 // =============================================================================
+// PARALLEL PROCESSING
+// =============================================================================
+
+/**
+ * Process items in parallel batches with rate limiting
+ */
+async function processInParallel(items, processor, concurrency, onProgress) {
+  const results = [];
+  let completed = 0;
+  let failed = 0;
+  let totalTokens = 0;
+
+  for (let i = 0; i < items.length; i += concurrency) {
+    const batch = items.slice(i, i + concurrency);
+    const batchPromises = batch.map(async (item, batchIndex) => {
+      const globalIndex = i + batchIndex;
+      try {
+        const result = await processor(item);
+        completed++;
+        totalTokens += result.tokensUsed || 0;
+        onProgress?.(globalIndex, item, result, null);
+        return { status: 'fulfilled', item, result };
+      } catch (err) {
+        failed++;
+        onProgress?.(globalIndex, item, null, err);
+        return { status: 'rejected', item, error: err };
+      }
+    });
+
+    const batchResults = await Promise.all(batchPromises);
+    results.push(...batchResults);
+
+    // Small delay between batches to avoid rate limits
+    if (i + concurrency < items.length) {
+      await new Promise(resolve => setTimeout(resolve, 200));
+    }
+  }
+
+  return { results, completed, failed, totalTokens };
+}
+
+// =============================================================================
 // MAIN
 // =============================================================================
 
@@ -239,6 +309,7 @@ async function main() {
   console.log(`   Model: ${MODEL_NAME} (${MODEL_ID})`);
   console.log(`   Type: ${TYPE}`);
   console.log(`   Batch size: ${BATCH_SIZE}`);
+  console.log(`   Concurrency: ${CONCURRENCY}`);
   if (DRY_RUN) console.log(`   ${colors.yellow}DRY RUN - no API calls${colors.reset}`);
   console.log();
 
@@ -289,46 +360,35 @@ async function main() {
     process.exit(0);
   }
 
-  // Process items
-  let success = 0;
-  let failed = 0;
-  let totalTokens = 0;
-
-  for (let i = 0; i < items.length; i++) {
-    const item = items[i];
-    const progress = `[${i + 1}/${items.length}]`;
-
-    try {
-      console.log(`${colors.cyan}${progress}${colors.reset} Summarizing: ${item.title || item.id}`);
-
-      const result = TYPE === 'articles'
-        ? await summarizeArticle(item)
-        : await summarizeSource(item);
-
-      totalTokens += result.tokensUsed || 0;
-      success++;
-
-      if (VERBOSE) {
+  // Progress callback
+  const onProgress = (index, item, result, error) => {
+    const progress = `[${index + 1}/${items.length}]`;
+    if (error) {
+      console.log(`${colors.cyan}${progress}${colors.reset} ${item.title || item.id}`);
+      console.log(`   ${colors.red}✗ Error: ${error.message}${colors.reset}`);
+    } else {
+      console.log(`${colors.cyan}${progress}${colors.reset} ${item.title || item.id}`);
+      if (VERBOSE && result) {
         console.log(`   ${colors.dim}One-liner: ${result.oneLiner}${colors.reset}`);
         console.log(`   ${colors.dim}Tokens: ${result.tokensUsed}${colors.reset}`);
       }
-
       console.log(`   ${colors.green}✓ Done${colors.reset}`);
-
-      // Rate limiting - be nice to the API
-      if (i < items.length - 1) {
-        await new Promise(resolve => setTimeout(resolve, 500));
-      }
-    } catch (err) {
-      failed++;
-      console.log(`   ${colors.red}✗ Error: ${err.message}${colors.reset}`);
     }
-  }
+  };
+
+  // Process items in parallel
+  const processor = TYPE === 'articles' ? summarizeArticle : summarizeSource;
+  const { completed, failed, totalTokens } = await processInParallel(
+    items,
+    processor,
+    CONCURRENCY,
+    onProgress
+  );
 
   // Summary
   console.log(`\n${'─'.repeat(50)}`);
   console.log(`${colors.green}✅ Summary generation complete${colors.reset}\n`);
-  console.log(`  Successful: ${success}`);
+  console.log(`  Successful: ${completed}`);
   console.log(`  Failed: ${failed}`);
   console.log(`  Total tokens used: ${totalTokens.toLocaleString()}`);
 

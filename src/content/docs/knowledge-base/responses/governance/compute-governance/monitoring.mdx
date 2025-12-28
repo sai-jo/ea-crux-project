@@ -1,9 +1,9 @@
 ---
 title: Compute Monitoring
-description: Ongoing visibility into who's training large AI models
+description: Comprehensive framework for ongoing visibility into AI training runs through cloud KYC requirements and hardware-level governance, enabling detection and verification of large model development while balancing oversight with privacy concerns and addressing evasion through on-premise compute.
 sidebar:
   order: 3
-quality: 3
+quality: 5
 llmSummary: Comprehensive analysis of compute monitoring approaches including
   cloud KYC requirements and hardware-level governance, evaluating
   implementation status from early deployment (US EO cloud requirements) to
@@ -15,7 +15,7 @@ styleGuideVersion: kb-2.0
 importance: 85.2
 ---
 
-import {DataInfoBox, Backlinks} from '../../../../../../components/wiki';
+import {DataInfoBox, Backlinks} from '../../../../../components/wiki';
 
 <DataInfoBox entityId="compute-monitoring" />
 
@@ -25,282 +25,132 @@ This page covers **compute monitoring**—one approach within the broader [Compu
 
 ## Overview
 
-Compute monitoring creates **ongoing visibility** into who's training large AI models. Unlike export controls (which deny access) or thresholds (which trigger requirements), monitoring is about **knowing what's happening**—enabling detection, verification, and response.
+Compute monitoring establishes ongoing visibility into who is training large AI models, where they are doing it, and what computational resources they are using. Unlike export controls that deny access or thresholds that trigger requirements, monitoring creates a foundation for detection, verification, and informed policy response. This visibility is increasingly critical as AI capabilities advance and the potential for misuse grows alongside beneficial applications.
 
-This includes:
-- **Cloud KYC (Know Your Customer):** Cloud providers verify customers and report large training runs
-- **Hardware-level governance:** Chips with built-in monitoring capabilities
-- **Verification systems:** Cryptographic attestation of what's running
+The monitoring ecosystem encompasses two primary approaches: cloud-based Know Your Customer (KYC) requirements that leverage the concentration of training compute in major cloud providers, and hardware-level governance that would embed monitoring capabilities directly into AI chips. These approaches address different evasion strategies and operate on different timescales, with cloud KYC implementable in the near term while hardware governance represents a longer-term technical and political challenge.
 
-Monitoring is the foundation for enforcement of other compute governance measures.
+Effective compute monitoring serves as the enforcement backbone for other governance measures. Without visibility into training activities, export controls become difficult to verify, threshold-based requirements are easily evaded, and international agreements lack verification mechanisms. The trade-offs are significant: comprehensive monitoring provides essential oversight capabilities but raises concerns about surveillance overreach, competitive disadvantage for compliant actors, and the potential for authoritarian misuse of monitoring infrastructure.
 
-### Quick Assessment
+## Cloud KYC Implementation
 
-| Dimension | Assessment | Notes |
-|-----------|------------|-------|
-| Tractability | Medium-High (cloud) / Low-Medium (hardware) | Cloud KYC implementable now; hardware governance is longer-term |
-| Current Status | Early implementation | US EO includes KYC requirements; hardware governance is research-stage |
-| Main Challenge | Privacy vs. oversight balance | Monitoring infrastructure could enable surveillance |
-| Time Horizon | Near-term (cloud) / Long-term (hardware) | Different timelines for different approaches |
+Cloud KYC leverages the natural chokepoint created by the concentration of AI training compute in major cloud providers like AWS, Microsoft Azure, and Google Cloud Platform. This concentration exists because training frontier AI models requires enormous computational resources that are prohibitively expensive for most organizations to maintain in-house. The implementation framework focuses on customer verification, usage reporting, and access controls that can be deployed relatively quickly given existing regulatory infrastructure.
 
-### Risks Addressed
+The customer verification component requires cloud providers to implement robust identity verification for customers requesting large amounts of compute resources. This goes beyond basic account creation to include verification of beneficial ownership, purpose-of-use declarations, and ongoing monitoring of usage patterns. Organizations training models above specified compute thresholds—currently proposed at around 10^23 FLOP based on Executive Order 14110—would need to undergo enhanced due diligence similar to financial KYC processes.
 
-| Risk | Mechanism | Effectiveness |
-|------|-----------|---------------|
-| [Proliferation](/knowledge-base/risk-factors/proliferation/) | Visibility into who's training large models | Medium-High |
-| [Racing Dynamics](/knowledge-base/risk-factors/racing-dynamics/) | Enables verification of commitments | Medium |
-| [Bioweapons](/knowledge-base/risks/misuse/bioweapons/) | Detect training runs focused on biological capabilities | Medium |
+Reporting obligations constitute the monitoring core, requiring cloud providers to report large training runs to government authorities in near real-time. This includes not just the scale of compute usage but contextual information about the customer, the apparent purpose of the training run, and any indicators of concerning capabilities being developed. The reporting framework must balance comprehensive oversight with protection of legitimate proprietary information and competitive intelligence.
 
----
+Access controls represent the enforcement mechanism, enabling cloud providers to deny service to blocked entities, implement geographic restrictions based on export control requirements, and create capability-based access tiers. Organizations seeking to train models with dual-use potential might face additional verification requirements or be limited to certain types of model architectures. This creates a graduated response system that can adapt to different risk levels rather than relying solely on binary allow-or-deny decisions.
 
-## Cloud KYC (Know Your Customer)
+Current implementation under Executive Order 14110 has begun with major US cloud providers developing compliance systems, but significant challenges remain around international providers operating in different jurisdictions, coordination with allied governments, and the handling of proprietary information in government reporting systems. Early indications suggest that major cloud providers are treating this as a manageable compliance burden similar to existing financial regulations, though smaller providers may face disproportionate implementation costs.
 
-### How It Works
+## Hardware-Level Governance Research
 
-Cloud providers (AWS, Azure, GCP) are the primary access point for AI training compute. KYC requirements would have them:
+Hardware-level governance represents a more fundamental but technically challenging approach that would embed monitoring capabilities directly into AI chips. This approach addresses the primary limitation of cloud KYC—the inability to monitor on-premise compute infrastructure that organizations might use to evade cloud-based monitoring. The technical vision involves chip registration systems, on-chip monitoring capabilities, and cryptographic attestation mechanisms that would create end-to-end visibility into AI compute usage regardless of where it occurs.
 
-**Customer Verification:**
-- Identity verification for large compute customers
-- Purpose of use declarations
-- Ongoing monitoring of usage patterns
+Chip registration would assign unique identifiers to each advanced AI chip, creating a supply chain tracking system similar to those used for controlled technologies in other sectors. Manufacturers would register chips with government authorities during production, enabling tracking through distribution channels and end-user deployment. This system could identify unusual accumulations of compute power and provide early warning of potential large-scale training activities by previously unknown actors.
 
-**Reporting Obligations:**
-- Report training runs above threshold (e.g., 10^23 FLOP)
-- Report to government authorities
-- Suspicious activity reporting
+On-chip monitoring represents the most technically ambitious component, requiring AI chips to include dedicated hardware for logging training activities, measuring computational workloads, and reporting usage data through secure channels. This data would need to be encrypted and authenticated to prevent tampering, while also being designed to protect legitimate proprietary information. The monitoring system would need to distinguish between different types of computational workloads, identifying AI training runs while avoiding false positives from other compute-intensive applications.
 
-**Access Controls:**
-- Deny service to blocked entities
-- Geographic restrictions
-- Capability-based access tiers
+Remote attestation would enable chips to cryptographically prove what software they are running and what computational work they are performing. This technology, based on existing trusted execution environments like Intel SGX and ARM TrustZone, could provide verification that organizations are complying with training restrictions or safety requirements. The attestation system could also enable verification of safety measures, ensuring that organizations claiming to implement certain safeguards are actually doing so.
 
-### Current Status
+The technical challenges are substantial and largely unsolved. Adding monitoring capabilities to chips increases manufacturing complexity and cost while potentially degrading performance due to overhead from monitoring operations. Security concerns are paramount—the monitoring infrastructure itself becomes a high-value target for attackers, and compromise could enable either evasion of legitimate oversight or unauthorized surveillance. The need for backward compatibility with existing hardware creates additional complexity, as governance features would only be available in new chip generations while existing hardware remains in use for years.
 
-**US Executive Order 14110** includes KYC requirements:
-- Cloud providers must report large training runs
-- Customer verification requirements
-- Being developed by major cloud providers
+## International Coordination Challenges
 
-**Implementation challenges:**
-- International cloud providers and jurisdictions
-- On-premise clusters (not covered)
-- Privacy and proprietary information concerns
+The global nature of AI chip manufacturing and cloud computing creates fundamental challenges for unilateral monitoring approaches. Taiwan Semiconductor Manufacturing Company produces the majority of advanced AI chips, while cloud providers operate across multiple jurisdictions with varying regulatory frameworks. Effective monitoring requires either comprehensive international coordination or acceptance of significant evasion possibilities through jurisdictional arbitrage.
 
-### Advantages
+The semiconductor supply chain spans multiple countries with different strategic interests and regulatory approaches. The Netherlands controls critical lithography equipment through ASML, South Korea hosts major memory manufacturers, and the United States designs many of the chips while Taiwan manufactures them. China's growing domestic chip capabilities create additional complexity, as Beijing is unlikely to adopt monitoring systems designed by strategic competitors and may actively work to circumvent them.
 
-- **Concentrated chokepoints:** Few major cloud providers
-- **Already regulated:** Cloud providers are in regulable jurisdictions
-- **Existing infrastructure:** KYC systems exist for financial compliance
+Cloud computing presents similar coordination challenges but with different dynamics. While US-based providers dominate the market for frontier AI training, Chinese cloud providers serve domestic customers and are expanding globally. European providers operate under different privacy frameworks that may be incompatible with certain monitoring requirements. The European Union's Digital Services Act and GDPR create constraints on data collection and sharing that could limit the effectiveness of monitoring systems designed primarily for US implementation.
 
-### Limitations
+Different countries' approaches to balancing surveillance capabilities with civil liberties protections create additional friction in international coordination efforts. What appears to US policymakers as reasonable monitoring for AI safety may appear to European counterparts as excessive surveillance infrastructure that could be misused. Authoritarian governments may view comprehensive monitoring as an opportunity to enhance social control rather than a narrowly-targeted AI safety measure.
 
-- **On-premise compute:** Organizations with their own hardware are not covered
-- **International arbitrage:** Training in less-regulated jurisdictions
-- **Privacy concerns:** Detailed monitoring of customer activities
+The lack of established international frameworks for AI governance monitoring means that early implementations are likely to be unilateral or bilateral rather than multilateral. This creates risks of fragmented monitoring ecosystems that provide incomplete visibility while imposing costs on compliant actors. Organizations may be able to evade monitoring by moving operations to less-regulated jurisdictions or working with non-compliant providers.
 
----
+## Privacy and Civil Liberties Implications
 
-## Hardware-Level Governance
+Comprehensive compute monitoring creates unprecedented visibility into private computational activities, raising significant concerns about surveillance overreach and the protection of legitimate privacy interests. The monitoring infrastructure necessary for AI governance could easily be repurposed for broader surveillance of individuals and organizations, creating what critics describe as a "dual-use" problem for governance technology itself.
 
-### The Vision
+The granularity of information required for effective AI monitoring extends far beyond simple resource usage metrics. Identifying potentially concerning AI training runs requires understanding model architectures, training data characteristics, capability evaluation results, and intended applications. This level of visibility into private research and development activities represents a significant expansion of government insight into previously private sector activities, with implications that extend beyond AI development to broader technology innovation.
 
-Build governance capabilities **directly into AI chips**, enabling:
+Cloud KYC requirements create particular privacy concerns because they involve continuous monitoring rather than one-time verification. Unlike traditional KYC systems that verify identity at account opening, AI monitoring requires ongoing surveillance of computational activities to detect concerning training runs. This persistent monitoring creates detailed profiles of organizational computing behavior that could reveal competitive strategies, research directions, and proprietary methodologies even when organizations are not developing concerning AI capabilities.
 
-**Chip Registration:**
-- Each advanced AI chip has unique identifier
-- Registered with manufacturer or government
-- Trackable through supply chain
+The potential for function creep represents a long-term concern, as monitoring infrastructure established for AI safety could gradually expand to cover other computational activities deemed worthy of government oversight. Historical precedents from financial monitoring, communications surveillance, and other regulatory frameworks suggest that monitoring capabilities, once established, tend to expand beyond their original scope over time.
 
-**On-Chip Monitoring:**
-- Chips report usage data
-- Training run logging
-- Encrypted and secured reporting
+Protections against misuse require robust legal frameworks, technical safeguards, and oversight mechanisms. Legal protections might include strict purpose limitations, judicial review requirements for accessing monitoring data, and sunset clauses that require periodic reauthorization of monitoring authorities. Technical safeguards could involve cryptographic protections for collected data, differential privacy techniques to protect individual organizational information, and audit trails to detect unauthorized access to monitoring systems.
 
-**Remote Attestation:**
-- Chips cryptographically prove what they're running
-- Enable verification of compliance
-- Prevent unauthorized use
+International implications are particularly complex, as monitoring systems designed by one country may collect information about organizations and individuals in other countries without their consent or legal protections. This creates potential conflicts with data protection laws like GDPR and raises questions about the extraterritorial application of monitoring requirements.
 
-**Remote Controls (controversial):**
-- Ability to disable chips remotely
-- Highly controversial due to security risks
-- Likely politically infeasible
+## Technical Architecture and Implementation
 
-### Current Status
+The technical implementation of comprehensive compute monitoring requires sophisticated systems that can collect, process, and analyze vast amounts of computational activity data while maintaining security and privacy protections. The architecture must handle both cloud-based and on-premise compute environments while providing near real-time alerts for concerning activities and maintaining detailed audit trails for policy enforcement.
 
-**Mostly research/proposal stage:**
-- Some chip security features exist (TPM, secure enclaves)
-- No AI-specific governance features implemented
-- Major technical and political challenges remain
+Cloud-based monitoring leverages existing infrastructure within major cloud providers, building on established logging, billing, and resource management systems. The technical implementation involves enhancing these systems to identify AI training workloads specifically, measuring relevant metrics like total compute usage, training duration, and model scale indicators. Machine learning techniques can help distinguish AI training from other compute-intensive workloads based on memory access patterns, computational characteristics, and resource utilization profiles.
 
-**Key research:**
-- Centre for the Governance of AI (GovAI) proposals
-- Academic work on secure hardware
-- Industry exploration (limited public information)
+Data standardization presents significant challenges, as different cloud providers use different metrics for measuring computational resources and different logging formats for recording activities. Creating comparable monitoring across providers requires either standardized reporting formats or sophisticated data transformation systems that can normalize information from different sources. The complexity increases when considering specialized AI hardware from different vendors with different performance characteristics and monitoring capabilities.
 
-### Technical Challenges
+Hardware-level monitoring requires more fundamental changes to chip design and manufacturing processes. The monitoring capabilities must be implemented at the hardware level to prevent circumvention through software modifications, but this creates constraints on chip design that could impact performance or increase manufacturing costs. The monitoring data must be collected securely and transmitted through channels that cannot be easily intercepted or modified by users seeking to evade oversight.
 
-**Backward compatibility:**
-- Existing chips lack governance features
-- Long replacement cycles for hardware
+Cryptographic verification systems are essential for ensuring the integrity of monitoring data, particularly for hardware-level monitoring where users have physical access to the chips. Zero-knowledge proofs and other advanced cryptographic techniques could enable verification of compliance without revealing proprietary details about training runs or model architectures. These systems must be designed to resist sophisticated attacks while remaining computationally efficient enough not to significantly impact AI training performance.
 
-**Performance overhead:**
-- Monitoring consumes resources
-- May create competitive disadvantage
+Data processing and analysis capabilities must handle enormous volumes of monitoring data while providing timely alerts for concerning activities. Automated analysis systems using machine learning could identify unusual patterns in compute usage that might indicate concerning AI development activities. However, these systems must be carefully designed to minimize false positives that could trigger unnecessary investigations or enforcement actions against legitimate AI development activities.
 
-**Security of monitoring systems:**
-- Monitoring infrastructure could be hacked
-- Creates new attack surface
-- Single point of failure risks
+## Evasion Strategies and Countermeasures
 
-**Chip complexity:**
-- Adding features increases manufacturing difficulty
-- Cost implications
+Sophisticated actors seeking to evade compute monitoring will likely develop various strategies to avoid detection while maintaining the ability to train large AI models. Understanding these evasion strategies is crucial for designing effective monitoring systems and developing appropriate countermeasures. The cat-and-mouse dynamic between monitoring and evasion will likely drive continuous evolution in both governance and circumvention techniques.
 
-### Political Challenges
+On-premise compute represents the most straightforward evasion strategy for well-resourced actors. Organizations can build their own data centers with purchased or leased hardware, avoiding cloud providers subject to KYC requirements. The economics of this approach are challenging for most actors due to the enormous capital requirements and operational complexity, but state actors and the largest technology companies have the resources to pursue this path if they choose to evade monitoring.
 
-**Privacy concerns:**
-- Detailed monitoring of computing activity
-- Potential for surveillance abuse
-- Civil liberties implications
+Geographic arbitrage involves moving training operations to jurisdictions with less stringent monitoring requirements or weak enforcement capabilities. This strategy becomes more attractive if monitoring requirements are implemented unilaterally by a few countries rather than through comprehensive international coordination. The effectiveness depends on the availability of suitable compute infrastructure in less-regulated jurisdictions and the ability to access necessary expertise and data.
 
-**Industry resistance:**
-- Costs of implementation
-- Competitive disadvantage for compliant manufacturers
-- Complex supply chain changes
+Distributed training across multiple smaller systems could potentially evade threshold-based monitoring that focuses on large concentrated training runs. Instead of training a single large model on a massive system, actors could train multiple smaller models that are later combined or use federated learning approaches that distribute training across many smaller systems. This strategy faces technical limitations, as not all AI training approaches can be effectively distributed, but could be viable for certain model architectures.
 
-**International acceptance:**
-- Would require coordination across manufacturing countries
-- China unlikely to adopt US-designed governance chips
-- Creates bifurcated hardware ecosystems
+Timing-based evasion involves conducting training runs that stay just below monitoring thresholds or use longer training periods with smaller instantaneous compute usage to avoid detection. This strategy exploits potential loopholes in monitoring systems that focus on peak usage rather than cumulative compute over time. Effective monitoring systems need to account for both instantaneous and cumulative compute usage to address this vulnerability.
 
----
+Technical countermeasures must evolve continuously to address new evasion strategies. Machine learning techniques can help identify suspicious patterns that might indicate evasion attempts, such as unusual geographic distributions of training activity or timing patterns designed to avoid detection. Network analysis can help identify relationships between apparently separate organizations that might be collaborating to evade monitoring through distributed training approaches.
 
-## Verification and Attestation
+Legal and economic countermeasures can increase the costs and risks of evasion attempts. Export controls on AI hardware can limit access to the chips necessary for large-scale training, while know-your-customer requirements for hardware sales can create additional monitoring touchpoints. Economic sanctions and other penalties can increase the costs of evasion for organizations that are detected attempting to circumvent monitoring requirements.
 
-### The Problem
+## Current Implementation Status and Early Results
 
-How do you verify that someone is actually complying with compute governance requirements?
+Executive Order 14110, signed by President Biden in October 2023, represents the most significant implementation of compute monitoring requirements to date. The order requires cloud providers to report training runs that use more than 10^23 FLOP of compute, along with customer information and other relevant details. Implementation began in 2024, with major cloud providers developing compliance systems and government agencies establishing processes for receiving and analyzing reports.
 
-**Self-reporting limitations:**
-- Labs report their own compute usage
-- Incentives to underreport
-- Difficult to verify claims
+Early implementation experiences have revealed both the potential and limitations of cloud-based monitoring approaches. Major US cloud providers—Amazon Web Services, Microsoft Azure, and Google Cloud Platform—have generally treated the requirements as manageable compliance obligations similar to existing financial reporting requirements. These providers already had sophisticated logging and billing systems that could be adapted for AI monitoring purposes with relatively modest modifications.
 
-### Technical Solutions
+The reporting threshold of 10^23 FLOP was calibrated based on estimates of the compute required to train frontier AI models as of 2023. This threshold captures training runs for models like GPT-4 and Claude-3 while avoiding most smaller research projects and commercial AI applications. However, the rapid pace of AI advancement means that this threshold may need periodic adjustment as training efficiency improves and model capabilities increase.
 
-**Cryptographic attestation:**
-- Hardware proves what software it's running
-- Can verify training configurations
-- Resistant to tampering
+Compliance costs have varied significantly across different types of cloud providers. Large providers with existing sophisticated monitoring infrastructure have been able to implement compliance systems with relatively modest additional costs. Smaller providers and those serving specialized markets have faced disproportionate challenges, potentially creating competitive advantages for the largest providers who can more easily absorb compliance costs.
 
-**Trusted execution environments:**
-- Secure enclaves for sensitive computation
-- Can log activities securely
-- Existing technology (Intel SGX, ARM TrustZone)
+International coordination efforts have made limited progress, with most other countries taking a wait-and-see approach to US implementation before developing their own monitoring requirements. The European Union has included monitoring provisions in the AI Act, but with different thresholds and reporting requirements that may create compliance complexity for organizations operating across multiple jurisdictions.
 
-**Compute accounting:**
-- Track cumulative compute usage
-- Hardware-enforced limits
-- Tamper-evident logging
+Hardware governance research has accelerated following the executive order, with increased funding for research into secure hardware approaches and greater industry engagement with governance technology concepts. However, no commercial AI chips currently include significant governance features, and the technical timeline for implementation remains measured in years rather than months.
 
-### Challenges
+## Future Trajectories and Scenarios
 
-**Cat-and-mouse dynamics:**
-- Sophisticated actors may circumvent verification
-- Verification systems need continuous updating
-- Arms race between governance and evasion
+The trajectory of compute monitoring over the next decade will likely be shaped by the interaction between technological advancement, policy developments, and strategic competition between major powers. Three key scenarios represent different possible paths for the evolution of monitoring systems, each with distinct implications for AI safety governance and international stability.
 
-**False sense of security:**
-- Verification systems aren't foolproof
-- May create overconfidence in compliance
-- Need defense in depth
+The successful coordination scenario envisions broad international agreement on monitoring frameworks, with major AI-producing countries implementing compatible systems that provide comprehensive global visibility into large AI training runs. In this scenario, hardware governance features are gradually implemented in new chip generations while cloud KYC requirements are harmonized across jurisdictions. Effective verification systems enable trusted enforcement of AI safety agreements, and evasion becomes difficult enough that most actors comply with governance requirements.
 
----
+The fragmented implementation scenario reflects a world where different countries and regions develop incompatible monitoring systems driven by different priorities and threat models. US cloud providers implement comprehensive monitoring while Chinese providers operate under different frameworks that may prioritize state control over international transparency. European systems focus on privacy protection while providing limited visibility to non-European authorities. In this scenario, monitoring provides partial visibility but significant evasion opportunities exist through jurisdictional arbitrage and non-compliant providers.
 
-## Key Uncertainties
+The evasion and arms race scenario represents a future where sophisticated actors successfully develop countermeasures to monitoring systems, driving continuous technological competition between governance and circumvention capabilities. State actors build isolated compute infrastructure to avoid cloud monitoring while developing techniques for distributed training that evade detection. Hardware governance features are circumvented through chip modification or alternative architectures, creating ongoing cycles of measure and countermeasure development.
 
-**Can monitoring work without enabling surveillance?** The same infrastructure that enables AI governance could enable authoritarian surveillance. Designing monitoring systems that provide oversight without enabling abuse is a core challenge.
+Technological developments will play a crucial role in determining which scenario emerges. Advances in distributed training could make evasion easier by enabling large models to be trained across many smaller systems. Alternatively, improvements in cryptographic verification and secure hardware could make monitoring more comprehensive and resistant to circumvention. The economics of AI training will also matter—if costs continue to concentrate training in major cloud providers, monitoring becomes more effective, while decreasing costs could enable more distributed approaches.
 
-**Will on-premise compute undermine cloud KYC?** If organizations respond to cloud monitoring by building their own data centers, cloud KYC becomes less effective. The trend toward on-premise compute for frontier labs is concerning for this approach.
+Policy decisions in the next few years will be particularly important for determining long-term trajectories. Early implementation experiences will shape perceptions of monitoring effectiveness and acceptability, influencing whether other countries adopt compatible approaches or develop alternatives. The balance between monitoring comprehensiveness and privacy protection will affect public and international acceptance of monitoring systems.
 
-**Is hardware governance technically feasible?** The technical challenges are substantial. Whether governance features can be added without unacceptable performance or security costs is uncertain.
+## Key Uncertainties and Research Needs
 
-**Will international coordination emerge?** Hardware governance only works if major manufacturing countries (Taiwan, South Korea, Netherlands, US) coordinate. Without coordination, governance chips create bifurcated ecosystems.
+Several fundamental uncertainties will shape the development and effectiveness of compute monitoring systems over the coming years. These uncertainties span technical feasibility, political acceptability, and strategic effectiveness, each requiring additional research and experimentation to resolve.
 
----
+The technical feasibility of comprehensive hardware governance remains uncertain despite increasing research attention. Key questions include whether monitoring capabilities can be implemented without unacceptable performance degradation, how to ensure security of monitoring systems against sophisticated attacks, and whether backward compatibility with existing hardware infrastructure can be maintained during transition periods. Research is needed on cryptographic verification systems, secure hardware architectures, and methods for detecting and preventing circumvention attempts.
 
-## Monitoring vs. Restriction
+Political and social acceptability represents another major uncertainty, particularly around privacy protections and international coordination. The long-term sustainability of monitoring systems depends on maintaining public support and avoiding function creep that expands surveillance beyond AI safety applications. Research is needed on governance frameworks that can provide effective oversight while protecting civil liberties, and on international coordination mechanisms that can accommodate different regulatory approaches and threat models.
 
-| Aspect | Monitoring | Restriction (Export Controls) |
-|--------|------------|------------------------------|
-| Goal | Visibility | Denial of access |
-| Approach | Watch and verify | Block and sanction |
-| Flexibility | Can respond to observed behavior | Binary allow/deny |
-| Privacy impact | Higher (continuous surveillance) | Lower (one-time decision) |
-| Evasion | Harder if comprehensive | Easier (smuggling, workarounds) |
+The strategic effectiveness of monitoring in achieving AI safety goals remains partially unproven. While monitoring provides visibility, translating that visibility into effective governance requires complementary enforcement mechanisms and policy responses. Research is needed on how monitoring information can be used to support other governance approaches, how to design monitoring systems that are robust against evasion attempts, and how to measure the effectiveness of monitoring in reducing AI risks.
 
-**Complementary approaches:** Monitoring enables enforcement of restrictions. Export controls work better when you can verify compliance.
+Economic and competitive implications require further analysis, particularly regarding the effects of monitoring requirements on innovation incentives and market dynamics. Monitoring compliance costs may advantage larger organizations with greater regulatory capacity while creating barriers for smaller research groups and startups. Research is needed on how to design monitoring systems that minimize negative impacts on beneficial AI development while maintaining effectiveness for safety governance.
 
----
-
-## Implementation Pathway
-
-### Near-term (1-3 years)
-
-- Cloud KYC requirements implemented
-- Reporting systems operational
-- Major cloud providers comply
-- On-premise gap remains
-
-### Medium-term (3-7 years)
-
-- Hardware governance research matures
-- Pilot programs for governance chips
-- International discussions on standards
-- Hybrid cloud/on-premise monitoring
-
-### Long-term (7+ years)
-
-- Governance features in new chip generations
-- International verification regimes
-- Comprehensive monitoring ecosystem
-- Legacy hardware phase-out
-
----
-
-## Who Should Work on This
-
-**Technical researchers:**
-- Hardware security expertise
-- Cryptographic verification systems
-- Privacy-preserving monitoring
-
-**Policy researchers:**
-- Cloud governance frameworks
-- International coordination mechanisms
-- Privacy and civil liberties balance
-
-**Industry roles:**
-- Cloud provider compliance teams
-- Chip manufacturer security teams
-- Standards body participation
-
-**Government:**
-- BIS implementation
-- International negotiation
-- Regulatory framework design
-
----
-
-## Related Approaches
-
-- [Export Controls](/knowledge-base/responses/governance/compute-governance/export-controls/) — Restricting access rather than monitoring
-- [Compute Thresholds](/knowledge-base/responses/governance/compute-governance/thresholds/) — Triggering requirements based on compute
-- [International Regimes](/knowledge-base/responses/governance/compute-governance/international-regimes/) — Multilateral monitoring coordination
-
----
-
-## Related Pages
+International security implications of monitoring systems need additional study, particularly regarding how monitoring capabilities might affect strategic stability and trust between major powers. Monitoring systems could increase transparency and enable verification of AI safety agreements, but they could also create new vulnerabilities and concerns about surveillance overreach. Research is needed on how monitoring systems interact with broader international security dynamics and how they can be designed to enhance rather than undermine international cooperation on AI safety.
 
 <Backlinks client:load entityId="compute-monitoring" />

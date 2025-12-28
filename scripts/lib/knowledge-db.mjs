@@ -92,6 +92,7 @@ db.exec(`
     entity_type TEXT NOT NULL,
     one_liner TEXT,
     summary TEXT,
+    review TEXT,
     key_points TEXT,
     key_claims TEXT,
     model TEXT,
@@ -123,6 +124,17 @@ db.exec(`
   CREATE INDEX IF NOT EXISTS idx_entity_relations_from ON entity_relations(from_id);
   CREATE INDEX IF NOT EXISTS idx_entity_relations_to ON entity_relations(to_id);
 `);
+
+// =============================================================================
+// MIGRATIONS (for schema updates)
+// =============================================================================
+
+// Add review column to summaries table if it doesn't exist
+try {
+  db.exec('ALTER TABLE summaries ADD COLUMN review TEXT');
+} catch (e) {
+  // Column already exists, ignore error
+}
 
 // =============================================================================
 // UTILITY FUNCTIONS
@@ -332,6 +344,44 @@ export const sources = {
   },
 
   /**
+   * Update source metadata (authors, year)
+   */
+  updateMetadata(id, metadata) {
+    const updates = [];
+    const values = [];
+
+    if (metadata.authors) {
+      updates.push('authors = ?');
+      values.push(JSON.stringify(metadata.authors));
+    }
+    if (metadata.year) {
+      updates.push('year = ?');
+      values.push(metadata.year);
+    }
+
+    if (updates.length === 0) return;
+
+    values.push(id);
+    return db.prepare(`
+      UPDATE sources
+      SET ${updates.join(', ')}
+      WHERE id = ?
+    `).run(...values);
+  },
+
+  /**
+   * Get failed sources (for retry)
+   */
+  getFailed(limit = 100) {
+    return db.prepare(`
+      SELECT * FROM sources
+      WHERE fetch_status = 'failed'
+      ORDER BY fetched_at DESC
+      LIMIT ?
+    `).all(limit);
+  },
+
+  /**
    * Get sources for an article
    */
   getForArticle(articleId) {
@@ -460,11 +510,12 @@ export const summaries = {
    */
   upsert(entityId, entityType, data) {
     const stmt = db.prepare(`
-      INSERT INTO summaries (entity_id, entity_type, one_liner, summary, key_points, key_claims, model, tokens_used, generated_at)
-      VALUES (@entityId, @entityType, @oneLiner, @summary, @keyPoints, @keyClaims, @model, @tokensUsed, datetime('now'))
+      INSERT INTO summaries (entity_id, entity_type, one_liner, summary, review, key_points, key_claims, model, tokens_used, generated_at)
+      VALUES (@entityId, @entityType, @oneLiner, @summary, @review, @keyPoints, @keyClaims, @model, @tokensUsed, datetime('now'))
       ON CONFLICT(entity_id) DO UPDATE SET
         one_liner = @oneLiner,
         summary = @summary,
+        review = @review,
         key_points = @keyPoints,
         key_claims = @keyClaims,
         model = @model,
@@ -476,6 +527,7 @@ export const summaries = {
       entityType,
       oneLiner: data.oneLiner,
       summary: data.summary,
+      review: data.review || null,
       keyPoints: JSON.stringify(data.keyPoints || []),
       keyClaims: JSON.stringify(data.keyClaims || []),
       model: data.model,

@@ -93,6 +93,7 @@ export default defineConfig({
                   items: [
                       { label: 'All Entities', slug: 'browse' },
                       { label: 'By Tag', slug: 'browse/tags' },
+                      { label: 'External Resources', slug: 'browse/resources' },
                   ],
               },
               {

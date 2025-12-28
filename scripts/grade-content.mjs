@@ -28,7 +28,7 @@ import { join, relative, basename } from 'path';
 import { parse as parseYaml, stringify as stringifyYaml } from 'yaml';
 
 const CONTENT_DIR = 'src/content/docs';
-const OUTPUT_FILE = 'grades-output.json';
+const OUTPUT_FILE = '.claude/temp/grades-output.json';
 
 // Parse command line args
 const args = process.argv.slice(2);

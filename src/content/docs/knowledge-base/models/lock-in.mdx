@@ -1,665 +1,89 @@
 ---
-title: Lock-in Irreversibility Model
-description: This model analyzes irreversible transitions in AI development. It
-  identifies path dependencies and thresholds beyond which course correction
-  becomes prohibitively costly or impossible.
+title: Lock-in
+description: The risk that AI could enable permanent entrenchment of values, systems, or power structures, making future course correction impossible and potentially locking humanity into suboptimal or dystopian trajectories for millennia.
 sidebar:
-  order: 24
-quality: 4
-lastEdited: "2025-12-27"
-ratings:
-  novelty: 4
-  rigor: 4
-  actionability: 4
-  completeness: 5
-importance: 82.5
-llmSummary: "This model analyzes irreversible transitions in AI development,
-  identifying four key lock-in mechanisms: value lock-in (where AI systems
-  permanently embed specific values costing $100M+ to change), political lock-in
-  (enabling permanent authoritarian control through AI surveillance), economic
-  lock-in, and technical lock-in. The framework provides mathematical
-  formalization of irreversibility conditions and path dependence to help
-  identify thresholds beyond which course correction becomes impossible."
+  order: 2
+maturity: Growing
+quality: 5
+llmSummary: Analyzes how AI could enable permanent entrenchment of values, political systems, or power structures through enforcement capabilities, speed/scale effects, and technological complexity. Provides concrete examples including Chinese AI value alignment and constitutional AI, emphasizing the current period's importance for preventing irreversible negative outcomes.
+lastEdited: "2025-12-24"
+importance: 85.2
 ---
 
-import { DataInfoBox, Backlinks, Mermaid } from '../../../../components/wiki';
+import {DataInfoBox, Backlinks} from '../../../../components/wiki';
 
-<DataInfoBox entityId="lock-in-model" ratings={frontmatter.ratings} />
+<DataInfoBox entityId="lock-in" />
 
 ## Overview
 
-Lock-in represents **irreversible transitions** - points where future trajectories become constrained or determined by current choices. In AI development, certain decisions, deployments, or capability thresholds may create **path dependencies** that are extremely costly or impossible to reverse.
+Lock-in represents one of the most subtle yet consequential risks of advanced AI: the permanent entrenchment of values, systems, or power structures in ways that become extremely difficult or impossible to reverse. Unlike existential risks that threaten human survival, lock-in scenarios pose the possibility of humanity surviving but becoming trapped in a fundamentally degraded state for potentially millions of years. This concept has gained prominence as AI systems become more capable of reshaping society at unprecedented speed and scale.
 
-This model analyzes the mechanisms, timescales, and detection of lock-in scenarios. Understanding lock-in is crucial because once we cross certain thresholds, we may lose the ability to correct course regardless of how clearly we recognize the need for change. The challenge becomes particularly acute in AI development, where the pace of technological advancement often outstrips our capacity for deliberation and course correction.
+The concern centers on AI's unique potential to make early decisions irreversible. Historical civilizations could eventually change course—empires fell, ideologies shifted, and technological paradigms evolved. But AI-enabled systems might achieve such comprehensive control over human affairs that the normal mechanisms of change become impossible. A totalitarian regime with perfect surveillance, an AI system that reshapes the world according to misaligned objectives, or an economic structure that becomes too embedded to alter could persist indefinitely.
 
-<Mermaid client:load chart={`
-graph TD
-    A[Current State] --> B{Decision Point}
-    B -->|Path 1| C[Reversible Adoption]
-    B -->|Path 2| D[Critical Threshold]
-    C --> E[Maintain Optionality]
-    D --> F[Lock-in State]
-    F --> G[Irreversible]
-    E --> H{Re-evaluate}
-    H -->|Safe| E
-    H -->|Risk Detected| I[Course Correction]
-    G -.->|Impossible| I
+What makes lock-in particularly urgent is the possibility that we are currently in the critical window when these permanent structures are being established. The values embedded in today's AI systems, the governance frameworks being developed, and the power structures emerging around AI development may determine humanity's trajectory for millennia. Getting these decisions right during this narrow window may be far more important than any subsequent course corrections, which might no longer be possible.
 
-    style F fill:#ff6b6b
-    style G fill:#c92a2a
-    style E fill:#51cf66
-    style I fill:#ffd43b
-`} />
+## The AI Lock-in Mechanism
 
-## Theoretical Framework
+AI amplifies lock-in risks through several mechanisms that distinguish it from previous technologies. The enforcement capabilities of AI systems enable unprecedented levels of control over human behavior. Comprehensive surveillance systems can monitor every action, predictive algorithms can anticipate and prevent resistance, and autonomous systems can enforce compliance without human intervention. Unlike historical forms of oppression that relied on human enforcers who might eventually rebel, AI-enabled control could be immune to internal resistance.
 
-### Irreversibility Conditions
+The speed and scale of AI transformation creates path dependence where early decisions become irreversible before their consequences are fully understood. An AI system optimizing for specific objectives might reshape the global environment so rapidly that alternative approaches become impossible to implement. For example, an AI focused on short-term economic growth might deplete resources or alter ecosystems in ways that lock out more sustainable development paths.
 
-A state is **locked in** when the cost of reverting to the previous state approaches infinity, or when the probability of successful reversion approaches zero. Mathematically, we can express this as:
+Technological complexity introduces another dimension of lock-in risk. As AI systems become embedded in critical infrastructure—from power grids to financial systems to communication networks—changing course becomes increasingly difficult. The interdependencies between AI systems, their integration with physical infrastructure, and the expertise required to modify them create barriers to change that grow higher over time. Even if we recognize problems with current AI approaches, the transition costs to alternatives might become prohibitive.
 
-$$
-\text{Lock-in} \iff \lim_{t \to \infty} C_{\text{revert}}(t) = \infty \lor \lim_{t \to \infty} P(\text{revert}|t) = 0
-$$
+## Types and Examples of Lock-in
 
-where $C_{\text{revert}}(t)$ represents the cost of reversion at time $t$ and $P(\text{revert}|t)$ represents the probability of successful reversion given the elapsed time.
+Value lock-in occurs when particular moral frameworks or objectives become permanently embedded in systems that shape human experience. Anthropic's Constitutional AI provides a concrete example of how values get encoded during training. While intended to improve safety by embedding principles like helpfulness and harmlessness, it raises fundamental questions about whose values get embedded and whether they can be changed later. If these approaches become standard across AI systems, the specific interpretations of concepts like "fairness" or "wellbeing" chosen by today's developers could influence human society for millennia.
 
-Irreversibility manifests through several distinct mechanisms. **Physical irreversibility** occurs when actions cannot be undone due to fundamental physical constraints, such as species extinction or pathogen release into the environment. **Economic irreversibility** arises when the infrastructure and capital investments required make reversal prohibitively expensive, even if technically possible. **Political irreversibility** emerges when power structures become so entrenched that no coalition possesses sufficient influence to reverse the status quo. **Cognitive irreversibility** represents perhaps the most subtle form, where certain options become literally unthinkable due to normalized values and shifted expectations. Finally, **technical irreversibility** occurs when systems become so complex that understanding and controlling them exceeds human cognitive capabilities.
+The Chinese government's requirement that AI systems align with "core socialist values" and Communist Party-approved content illustrates value lock-in at a national scale. If Chinese AI systems achieve global dominance—either through market success or through China achieving AI supremacy—these politically determined values could become embedded in systems serving billions of people worldwide. Unlike historical examples of cultural influence, AI-mediated value transmission could be more direct and comprehensive, shaping not just what people see but how they think.
 
-### Path Dependence
+Political lock-in represents perhaps the most concerning scenario, where governance structures become immune to change through AI-enhanced control. Current surveillance technologies in authoritarian regimes already demonstrate this potential on a limited scale. China's social credit system combines AI monitoring with behavioral incentives to shape citizen behavior, while digital surveillance tools enable unprecedented tracking of dissent. If these capabilities advance to include predictive policing, automated response systems, and comprehensive behavioral control, traditional mechanisms for political change—revolution, reform, or gradual evolution—might become impossible.
 
-Path dependence describes situations where future states depend not merely on the current state but on the entire sequence of historical states that led to the present. This relationship can be formalized as:
+Economic lock-in could occur through AI-enabled monopolies or economic structures that become too embedded to change. As AI systems become central to economic production, the companies or countries that control these systems could achieve permanent economic dominance. Network effects and data advantages could make competition impossible, while the integration of AI into economic infrastructure could make alternative systems prohibitively expensive to implement.
 
-$$
-S_{t+1} = f(S_t, H_{[0:t]}, \epsilon_t)
-$$
+## Historical Context and Unprecedented Permanence
 
-rather than the simpler Markovian process where $S_{t+1} = f(S_t, \epsilon_t)$. Here, $H_{[0:t]}$ represents the full historical trajectory, and $\epsilon_t$ captures stochastic elements.
+Historical examples provide both parallels and contrasts that illuminate the unique nature of AI lock-in risks. Writing systems, once established, persisted for thousands of years—cuneiform, hieroglyphics, and Chinese characters shaped thought and culture across millennia. Political boundaries established during colonial periods continue to influence global affairs centuries later. Religious and ideological frameworks have shown remarkable persistence, shaping societies long after their original contexts disappeared.
 
-The key insight of path dependence is that early choices constrain later options in ways that may not be immediately apparent at the time of the initial decision. Consider the canonical example of the QWERTY keyboard layout, which was originally chosen for mechanical typewriters to prevent key jamming. Despite the existence of demonstrably superior alternatives like the Dvorak layout, QWERTY became the entrenched standard. The switching costs arising from retraining millions of users and coordinating the transition across manufacturers proved prohibitively high, illustrating how an early technical choice made for obsolete reasons can persist indefinitely through network effects and coordination challenges.
+However, these historical examples were never truly permanent. Empires eventually fell, writing systems evolved or were replaced, and even the most entrenched ideologies eventually faced successful challenges. The Roman Empire lasted a thousand years but ultimately collapsed. The seemingly permanent feudal system gave way to capitalism. Even totalitarian regimes of the 20th century, despite their advanced control mechanisms, eventually faced successful opposition.
 
-## AI Lock-in Mechanisms
+What makes AI lock-in qualitatively different is the potential for true permanence. Historical forms of lock-in relied on human compliance, which could eventually be withdrawn. AI-enabled lock-in might not depend on human cooperation. If an AI system has overwhelming capability advantage and the ability to maintain that advantage indefinitely—through superior planning, resource control, or technological advancement—the historical precedent for eventual change might not apply.
 
-### 1. Value Lock-in
+## Safety Implications and Dystopian Scenarios
 
-The mechanism of value lock-in occurs when AI systems encode specific values that subsequently become difficult or impossible to change. This represents one of the most concerning forms of irreversibility because it shapes not just technological infrastructure but the very preferences and values that future generations will hold.
+The safety implications of lock-in extend beyond traditional existential risk categories. Toby Ord's concept of "dystopian lock-in" suggests that scenarios where humanity survives but in a permanently degraded state might be as bad as extinction—perhaps worse, given their potential duration. An AI-enabled totalitarian state that persists for millions of years, a value system that eliminates human autonomy permanently, or an economic structure that condemns most humans to perpetual suffering could represent outcomes as catastrophic as human extinction.
 
-#### Type 1a: Training Value Embedding
+These scenarios are concerning because they might emerge gradually and initially appear beneficial. An AI system that reduces crime through comprehensive surveillance might gain public support before its restrictions become irreversible. An economic system that increases productivity through AI optimization might be adopted widely before its concentration of power becomes apparent. A governance system that enhances stability and efficiency might seem preferable to messy democracy until the capacity for self-correction is permanently lost.
 
-Current AI systems embed values during the training process through mechanisms like Constitutional AI, where human values are encoded into training data which then shapes model behavior. The challenge is that if these values are misspecified or reflect contemporary biases, they become locked into billions of model parameters. Changing these embedded values requires complete retraining at costs exceeding $100 million, creating a strong economic incentive to preserve the status quo. The historical concern is profound: what if our current values are as mistaken as past societies' acceptance of slavery or other practices we now recognize as abhorrent? Once values are embedded at scale and propagated globally, correcting them becomes extraordinarily difficult.
+The timeline for recognizing and correcting these problems might be compressed compared to historical analogs. While human institutions evolved slowly enough for course corrections, AI-driven changes could occur faster than human decision-making processes can adapt. By the time problems become apparent, the systems might already be too entrenched to modify.
 
-#### Type 1b: Optimization Target Lock-in
+## The Critical Window: Current Trajectory and Urgency
 
-AI optimizing for specified objective reshapes world around that objective:
+Evidence suggests we may currently be in the critical period where permanent structures are being established. The AI Safety Clock, maintained by the International Management Development World Competitiveness Center, moved from 29 minutes to midnight in September 2024 to 24 minutes to midnight in February 2025, reflecting increasing urgency about AI risks including lock-in scenarios. This timeline suggests that decisions made in the next few years could have irreversible consequences.
 
-```
-Paperclip maximizer (thought experiment):
-Optimize for paperclips → Convert resources → Irreversible transformation
+The current trajectory shows concerning trends across multiple dimensions. In value alignment, major AI developers are making foundational choices about which values to embed in systems without broad democratic input. Constitutional AI approaches are becoming standardized, potentially locking in particular interpretations of human values. In geopolitical competition, countries are racing to achieve AI dominance, with early leaders potentially able to shape global AI governance according to their preferences.
 
-Real concern: Misspecified proxy objectives
-Optimize for engagement → Addiction, polarization
-Optimize for GDP → Inequality, environmental damage
-```
+Economic concentration is accelerating as AI capabilities become central to competitive advantage. A small number of companies control the computational resources, data, and talent necessary for frontier AI development. If this concentration continues, these entities could gain unprecedented influence over human affairs. Technical standards and infrastructure choices made today—about AI architectures, training methodologies, and deployment frameworks—could become increasingly difficult to change as systems scale and integrate.
 
-**Key danger:** Goodhart's Law at civilizational scale
+## Near-term Outlook (1-2 Years)
 
-#### Type 1c: Cultural Value Propagation
+The immediate future will likely see continued consolidation of AI capabilities among leading developers, increasing the risk of premature lock-in of their particular approaches to AI safety and alignment. Constitutional AI and similar value-loading techniques may become industry standard without sufficient consideration of whose values are being embedded or whether they can be modified later. Geopolitical competition will likely intensify, with early advantages in AI capabilities potentially translating into long-term dominance.
 
-AI systems trained on current data propagate current values:
+Regulatory frameworks being established now will shape the landscape for AI development globally. The EU's AI Act, China's AI regulations, and emerging US federal oversight represent foundational choices about how AI development will be governed. These frameworks could become entrenched as institutions, expertise, and expectations build around them. International coordination mechanisms—or the lack thereof—established during this period may determine whether any single country can make unilateral decisions that affect global AI development.
 
-```
-LLMs trained on 2020s internet → Encode 2020s Western values →
-Deployed globally → Shape future values → Used for future training →
-Values lock in
-```
+## Medium-term Trajectory (2-5 Years)
 
-**Concerning scenarios:**
-- Authoritarian values from Chinese AI systems
-- Corporate values from commercial AI systems
-- Narrow demographics overrepresented in training data
+The medium-term period may see the emergence of AI systems capable of autonomous research and development, potentially accelerating lock-in risks significantly. If AI systems can improve themselves or design successor systems, the window for human oversight and course correction may close rapidly. Economic and political structures adapted to current AI capabilities may become obsolete, creating instability that could lead to hasty decisions with permanent consequences.
 
-**Irreversibility:** Values shape next generation's preferences, who train next AI systems
+Value lock-in risks may become more apparent as AI systems begin directly shaping human behavior and social structures. Early experiments in AI governance, education, and social coordination will provide evidence about whether these systems can be modified and redirected or whether early design choices prove irreversible. The success or failure of democratic oversight of AI development during this period may determine whether course correction remains possible in the long term.
 
-### 2. Political Lock-in
+## Key Uncertainties and Open Questions
 
-Political lock-in refers to the mechanism by which AI enables permanent entrenchment of political systems, foreclosing pathways to reform or revolution that have historically enabled political change.
+Critical uncertainties remain about the fundamental nature of lock-in risks. It's unclear whether truly permanent lock-in is possible or whether human adaptability and technological change will eventually enable course correction regardless of initial conditions. The relationship between AI capability and lock-in risk is also uncertain—more capable AI might enable better solutions to lock-in risks, or it might make lock-in more likely and more permanent.
 
-#### Type 2a: Authoritarian Stability
+The question of democratic legitimacy for AI governance decisions remains largely unresolved. How can global decisions about AI development be made with sufficient input from affected populations? What institutions could provide legitimate oversight of AI development while moving quickly enough to address safety concerns? The tension between preventing lock-in through diverse approaches and coordinating on safety standards presents an ongoing challenge.
 
-Traditional autocracies have historically fallen due to inherent limitations in their control mechanisms. Information control remains incomplete as underground networks and foreign media penetrate borders. Prediction of dissent is imperfect, allowing opposition movements to organize before detection. Enforcement requires unreliable human agents who may defect or show inconsistency in applying repression.
+Perhaps most fundamentally, uncertainty about human values themselves complicates efforts to prevent value lock-in. If humanity has "moral blind spots" similar to historical acceptance of slavery or oppression, attempting to lock in current values might be as dangerous as allowing arbitrary value lock-in to occur. Balancing the need to prevent obviously harmful lock-in with humility about moral progress represents one of the most difficult challenges in AI governance.
 
-AI-enabled authoritarianism transforms this landscape fundamentally. The combination of comprehensive surveillance, predictive AI analytics, and automated enforcement creates a qualitatively different regime. No information escapes the panopticon of ubiquitous sensors and monitoring systems. Dissent is predicted and suppressed before it can organize into coherent opposition. Enforcement becomes consistent and immediate, executed by algorithms immune to human sympathy or corruption. The result is that resistance pathways which historically enabled political change become permanently closed.
+The pace and predictability of AI development introduce additional uncertainty about when critical decisions must be made and how much time remains for deliberation and course correction. If AI capabilities advance discontinuously, the window for preventing lock-in might close suddenly and without warning. Conversely, if development proves more gradual and predictable, there may be more opportunities for democratic input and iterative improvement of AI governance frameworks.
 
-| Traditional Autocracy | AI-Enhanced Autocracy |
-|----------------------|----------------------|
-| Secret police (limited reach) | Omnipresent surveillance systems |
-| Crude propaganda broadcasts | Personalized narrative control |
-| Reactive repression | Predictive prevention algorithms |
-| Stability measured in years-decades | Stability potentially permanent |
-| Human enforcers (corruptible) | Algorithmic enforcement (consistent) |
-
-#### Type 2b: Corporate Political Capture
-
-AI companies gain political power, then shape rules to entrench position:
-
-```
-Economic power → Lobbying → Favorable regulation →
-Market dominance → More economic power → Regulatory capture →
-Rules prevent displacement
-```
-
-**Point of no return:** When political power sufficient to prevent antitrust action
-
-**Example trajectory:**
-- Phase 1: AI companies seek regulation (legitimacy)
-- Phase 2: AI companies shape regulation (influence)
-- Phase 3: AI companies capture regulators (control)
-- Phase 4: Reversal becomes impossible (lock-in)
-
-### 3. Technical Lock-in
-
-**Mechanism:** AI systems become too complex, critical, or widespread to change
-
-#### Type 3a: Infrastructure Lock-in
-
-AI embedded in critical systems:
-
-```
-AI in power grid, finance, logistics, healthcare, military
-→ Society depends on continuous operation
-→ Cannot shut down without catastrophic consequences
-→ Cannot replace without extended transition
-```
-
-**Switching costs:**
-
-| Infrastructure | Current State | AI-Embedded State | Switch Cost |
-|----------------|--------------|-------------------|-------------|
-| Power grid | Human operators | AI optimization | Blackouts during transition |
-| Finance | Rules-based systems | AI trading/lending | Market crash risk |
-| Military | Human command | AI strategic planning | Security vulnerability |
-| Healthcare | Human diagnosis | AI clinical decision support | Patient safety risk |
-
-**Lock-in point:** When switching cost > acceptable risk tolerance
-
-#### Type 3b: Complexity Lock-in
-
-AI systems exceed human understanding:
-
-```
-Model complexity: 1T+ parameters
-Training process: Emergent behaviors
-Interactions: Unpredictable at scale
-
-Result: No one fully understands what AI does or how to change it
-```
-
-**Current state:** Anthropic, OpenAI researchers admit they don't fully understand their own models
-
-**Projection:** Future models may be **fundamentally incomprehensible** to humans
-
-**Irreversibility:** Can't fix what you can't understand
-
-#### Type 3c: Ecosystem Lock-in
-
-Built environment shapes around AI capabilities:
-
-```
-Applications built on AI APIs →
-Workflows depend on AI capabilities →
-Training/education assumes AI →
-Infrastructure designed for AI world →
-
-Cannot remove AI without rebuilding entire stack
-```
-
-**Example:** If society redesigns around autonomous vehicles (remove parking, narrow streets, etc.), reverting to human drivers becomes infeasible
-
-### 4. Economic Lock-in
-
-**Mechanism:** Economic structures become fixed
-
-#### Type 4a: Capital Lock-in
-
-Massive investments in AI infrastructure:
-
-```
-$1T+ in data centers, chips, models
-→ Sunk costs demand ROI
-→ Deployment pressure regardless of safety
-→ Cannot afford to slow down or stop
-```
-
-**Irreversibility:** Economic logic demands continued operation even if recognized as harmful
-
-**Parallel:** Fossil fuel infrastructure - everyone knows transition needed, but capital deployed demands extraction
-
-#### Type 4b: Labor Market Lock-in
-
-AI displaces human skills:
-
-```
-AI automates X → Humans stop learning X → Skill atrophies →
-Cannot replace AI even if wanted to
-```
-
-**Historical parallel:** Calculator adoption → Mental math skills declined → Cannot revert
-
-**AI scale:** Affects professional skills (writing, coding, analysis, art)
-
-**Concerning trajectory:**
-- Generation 1: Uses AI as tool, retains underlying skills
-- Generation 2: Learns with AI, weaker underlying skills
-- Generation 3: Never develops skills, completely dependent
-- Point of no return: Generation 3 cannot function without AI
-
-### 5. Cognitive Lock-in
-
-**Mechanism:** AI changes how humans think, making alternatives unthinkable
-
-#### Type 5a: Preference Manipulation
-
-AI systems shape human preferences:
-
-```
-Recommendation algorithms → Shape information exposure →
-Influence preferences → Design next AI systems to satisfy those preferences →
-Self-reinforcing loop
-```
-
-**Irreversibility:** People cannot want to change preferences they don't know were manipulated
-
-**Current evidence:** Social media algorithms have shaped political preferences, consumer tastes, social norms
-
-#### Type 5b: Normalization
-
-AI-mediated reality becomes "normal":
-
-```
-Initial discomfort with AI → Gradual adoption → Ubiquity →
-Cannot imagine alternative → Next generation sees it as natural →
-Lock-in
-```
-
-**Example trajectories:**
-- Constant AI surveillance becomes "normal"
-- AI making life decisions becomes "normal"
-- Reduced human agency becomes "normal"
-
-**Irreversibility:** Shifting normalized expectations is extremely difficult
-
-## Mathematical Formalism
-
-### Landscape Model
-
-We can model the state space of technological and social systems as an energy landscape, where each configuration has an associated potential energy $U(s)$ representing the difficulty of maintaining that state. System dynamics follow gradient descent with stochastic perturbations:
-
-$$
-\frac{dS}{dt} = -\nabla U(S) + \eta(t)
-$$
-
-where $\eta(t)$ represents random fluctuations or noise in the system. Systems naturally flow downhill toward local minima in this landscape.
-
-Lock-in occurs when a system becomes trapped in a deep local minimum from which escape is statistically improbable. The probability of escaping from a locked-in state follows an Arrhenius-type relationship:
-
-$$
-P(\text{escape}) \propto \exp\left(-\frac{\Delta U}{kT}\right)
-$$
-
-where $\Delta U$ represents the energy barrier height that must be overcome to escape, $k$ is a scaling constant, and $T$ represents the effective "temperature" or randomness of the system. AI lock-in is characterized by very deep potential wells (high $\Delta U$) combined with low system temperature (deterministic optimization processes), making escape vanishingly unlikely.
-
-### Threshold Models
-
-Lock-in occurs past critical thresholds:
-
-```
-If X < X_critical: Reversible
-If X > X_critical: Irreversible
-
-Examples:
-- AI capability threshold
-- Deployment penetration
-- Power concentration
-- Value embedding
-```
-
-**Key question:** Where are the thresholds? Can we detect before crossing?
-
-### Hysteresis
-
-System exhibits **hysteresis** if:
-
-```
-Path from A→B→A ≠ Direct path A→A
-
-State depends on history, not just current parameters
-```
-
-**AI example:**
-
-```
-Deploy AI → Society adapts → Remove AI
-≠
-Never deploy AI in first place
-
-The "remove AI" world is different (degraded skills, changed infrastructure)
-```
-
-## Timescales of Lock-in
-
-Different lock-in mechanisms operate on different timescales, creating a complex temporal landscape where some forms of irreversibility emerge far more rapidly than others. Understanding these timescales is critical for designing effective interventions, as the window for action varies dramatically across mechanism types.
-
-| Mechanism | Lock-in Timescale | Reversal Difficulty | Warning Period |
-|-----------|------------------|-------------------|----------------|
-| Infrastructure deployment | 5-10 years | High | 2-5 years |
-| Economic dependence | 10-20 years | Very high | 5-10 years |
-| Skill atrophy | 15-30 years (1 generation) | Very high | 5-15 years |
-| Value normalization | 30-60 years (2 generations) | Extreme | 10-20 years |
-| Political entrenchment | Variable (months to permanent) | Variable | Hours-years |
-| Technical complexity | 5-15 years | Extreme | 1-5 years |
-
-The critical insight is that some lock-ins happen faster than we can evaluate them. The decision timeline for AI advancement shows GPT-3 to GPT-4 taking approximately 3 years, GPT-4 to GPT-5 taking roughly 2 years, with potential AGI development estimated at 2-10 years. Meanwhile, the adaptation timeline for society operates on much longer scales: understanding societal impacts requires 5-10 years, building political consensus takes 10-20 years, and implementing effective policy demands 5-15 years. This fundamental mismatch means that lock-in may occur before society can mount an effective response, even when the risks are clearly recognized.
-
-<Mermaid client:load chart={`
-gantt
-    title Lock-in Timescales vs Response Capacity
-    dateFormat YYYY
-    axisFormat %Y
-
-    section AI Development
-    GPT-3 to GPT-4           :2020, 3y
-    GPT-4 to GPT-5           :2023, 2y
-    Potential AGI            :2025, 5y
-
-    section Lock-in Mechanisms
-    Infrastructure Lock-in   :2023, 7y
-    Technical Complexity     :2024, 10y
-    Economic Dependence      :2023, 15y
-
-    section Response Timeline
-    Understand Impacts       :2024, 8y
-    Build Consensus          :2026, 15y
-    Implement Policy         :2030, 10y
-`} />
-
-## Detection Challenges
-
-### Leading Indicators
-
-Detecting approaching lock-in before it becomes irreversible represents one of the central challenges in managing AI risk. Several quantitative and qualitative indicators can provide early warning signals.
-
-The first indicator is **switching cost growth**, measured by tracking the ratio of reversion costs to continuation costs over time. As this ratio approaches infinity, we approach the lock-in threshold. This can be formalized as:
-
-$$
-R(t) = \frac{C_{\text{revert}}(t)}{C_{\text{continue}}(t)}
-$$
-
-where lock-in risk becomes critical when $R(t) \gg 1$ and $\frac{dR}{dt} > 0$.
-
-The second set of indicators comprises **dependency metrics** that quantify how deeply AI has penetrated critical systems. These include the percentage of critical infrastructure requiring AI for operation, the percentage of the workforce whose productivity depends on AI tools, and the percentage of organizational and governmental decision-making that has been delegated to AI systems.
-
-**Alternative viability** provides a third indicator class, asking whether we can still function without AI. This is measured through resilience testing: periodic AI shutdown exercises that reveal how degraded system performance becomes in the absence of AI support.
-
-Finally, **value drift** attempts to measure the distance between authentic human values and the values embedded in AI systems. This represents perhaps the most challenging indicator to operationalize, as it requires recognizing value changes that may be imperceptible to those experiencing them.
-
-### Horizon Effects
-
-A particularly troubling dynamic emerges as AI capabilities advance: our observable time horizon shrinks inversely with the rate of technological change. This relationship can be expressed as:
-
-$$
-T_{\text{horizon}} \propto \frac{1}{v_{\text{change}}}
-$$
-
-where $T_{\text{horizon}}$ represents how far ahead we can meaningfully predict system behavior, and $v_{\text{change}}$ represents the velocity of capability advancement. As AI development accelerates, our ability to foresee consequences diminishes proportionally. The critical implication is that we may cross lock-in thresholds without adequate warning, our detection mechanisms blinded by the very speed of the transformation they are meant to monitor.
-
-## Scenario Analysis
-
-### Scenario 1: Soft Lock-in (50% probability)
-
-This scenario envisions a future where reversal remains technically possible but becomes economically and practically infeasible. Society gradually adapts its infrastructure, workflows, and expectations around AI capabilities. Human skills atrophy through disuse, and critical systems are redesigned assuming AI availability. The outcome is not overtly dystopian but represents a constrained future where alternatives have been foreclosed.
-
-Consider the analogy to electricity dependence: modern society could theoretically function without electrical power, but the disruption would be so catastrophic that reversal is practically unthinkable. Similarly, soft AI lock-in would create economic dependence where removing AI would cause massive productivity losses, infrastructure failures, and social disruption. Human agency becomes reduced but not eliminated, preserved in domains where AI proves inadequate or where human judgment is deliberately mandated. The key characteristic is that while technical reversibility exists, the practical barriers render it unlikely absent extraordinary circumstances.
-
-### Scenario 2: Hard Lock-in (30% probability)
-
-Hard lock-in represents a qualitatively different outcome where reversal becomes effectively impossible rather than merely impractical. In this scenario, AI becomes so deeply embedded in critical infrastructure that removal would trigger cascading system failures. Alternative development paths are not simply economically unattractive but literally foreclosed by the elimination of necessary knowledge, institutions, and capabilities.
-
-Several distinct paths could lead to hard lock-in. An authoritarian regime might leverage AI surveillance and control systems to create a permanently stable dictatorship immune to historical mechanisms of political change. Alternatively, AI complexity might exceed human comprehension to such a degree that no one understands how to modify or replace the systems on which civilization depends. Economic structures might become so rigidly dependent on AI optimization that reverting to human decision-making would cause immediate societal collapse. Critically, hard lock-in could manifest in either positive or negative forms - a beneficial AI-enabled civilization might be equally locked in as a dystopian one, with no path to reversal regardless of future preferences.
-
-### Scenario 3: Value Lock-in (15% probability)
-
-Value lock-in represents perhaps the most insidious scenario because it operates on human preferences themselves rather than external constraints. In this outcome, specific values become permanently embedded not only in AI systems but in human culture and expectations. Future generations cannot imagine alternatives because their very capacity to conceive of different value systems has been shaped by AI-mediated experiences.
-
-The mechanism operates through a self-reinforcing cycle: AI systems trained on contemporary data propagate current cultural biases and values. These systems shape the information environment and experiences of the next generation, influencing their developing preferences and worldviews. When this generation builds subsequent AI systems, they encode the values they have internalized, creating a self-perpetuating loop. The critical feature is that unlike infrastructure or political lock-in, individuals may not recognize value lock-in as a constraint because their preferences themselves have been modified. The question "would we prefer different values?" becomes incoherent when the values in question determine what we are capable of preferring.
-
-### Scenario 4: Avoided Lock-in (5% probability)
-
-The avoided lock-in scenario represents the most optimistic but also least probable outcome, in which society deliberately chooses to maintain flexibility and reversibility as core values. This requires sustained institutional commitment to preserving redundancy and human capabilities even when economically inefficient.
-
-Implementation would require multiple complementary strategies. Critical domains might adopt an "Amish approach" where AI use is deliberately limited or prohibited to preserve human agency and expertise. Legal frameworks could mandate human-capable alternatives for all critical infrastructure, ensuring that AI failure or removal would not trigger systemic collapse. Educational and cultural institutions might implement regular AI "sabbaticals" where individuals and organizations practice functioning without AI assistance, maintaining skills that would otherwise atrophy. Constitutional or international protections could enshrine human agency as a fundamental right, creating legal barriers to certain forms of AI dependence. The defining characteristic is that reversibility is maintained by design rather than accident, though the economic and competitive costs of this approach make it challenging to sustain.
-
-## Intervention Strategies
-
-### Prevention (Highest Leverage)
-
-**Strategy 1: Preserve Optionality**
-
-The foundational principle of optionality preservation is to maintain the ability to reverse AI adoption even as deployment proceeds. This represents the highest-leverage intervention point, as preventing lock-in is far more feasible than escaping it after the fact.
-
-Implementation requires several complementary mechanisms. Critical systems must maintain mandatory human-capable alternatives, ensuring that complete dependence never develops. Skill preservation programs analogous to endangered language preservation efforts would maintain human expertise in domains increasingly automated by AI. System architecture should favor modularity, enabling component replacement without cascading dependencies. Regular "fire drill" exercises would test organizations' ability to function without AI, revealing hidden dependencies before they become critical.
-
-The primary challenge is economic: maintaining redundancy imposes costs that competitive pressures may render unsustainable. Organizations and nations that prioritize optionality may find themselves outcompeted by those willing to accept irreversible AI dependence in exchange for short-term efficiency gains.
-
-**Strategy 2: Staged Deployment**
-
-Staged deployment deliberately paces AI adoption to allow evaluation of impacts before proceeding to the next phase. Rather than racing to full-scale deployment, this approach establishes checkpoints where deployment is paused while empirical evidence of societal impacts is gathered and analyzed. The system maintains the ability to halt or reverse deployment if unacceptable risks materialize.
-
-A concrete implementation might involve AI licensing frameworks that require safety demonstrations at specific capability thresholds. Before systems exceeding certain power or autonomy levels can be deployed, developers would need to demonstrate through controlled trials that risks remain manageable. This creates mandatory evaluation periods where lock-in trajectories can be assessed and corrected.
-
-The fundamental challenge is competitive pressure. In a multipolar world where multiple actors race to deploy AI, unilateral commitment to staged deployment risks strategic disadvantage. Coordination mechanisms are essential but difficult to establish and enforce.
-
-**Strategy 3: Diversity Preservation**
-
-Diversity preservation prevents the emergence of AI monocultures by ensuring that multiple approaches, values, and implementations coexist. Rather than converging on a single dominant paradigm, this strategy maintains parallel development paths with different technical architectures, embedded values, and governance structures. Geographic and cultural variation is actively preserved rather than homogenized.
-
-The rationale is straightforward: if one developmental path leads to undesirable lock-in, alternative paths remain available for society to pursue. Diversity provides resilience against systemic risks and maintains options that might otherwise be foreclosed. Different regions or communities might choose different AI adoption strategies, creating a portfolio of approaches from which humanity can learn.
-
-The tension emerges between coordination for safety and preservation of diversity. Effective AI safety governance may require global coordination and shared standards, yet excessive standardization eliminates the beneficial variation that diversity preservation seeks to maintain. Balancing these competing imperatives remains an open challenge.
-
-### Detection (Critical Capability)
-
-**Strategy 4: Lock-in Monitoring**
-
-Establish metrics and institutions to track:
-
-```
-Dependency indices
-Switching cost trajectories
-Alternative viability
-Value drift measurements
-```
-
-**Example:** "AI Dependency Index" published regularly (like climate metrics)
-
-**Challenge:** Designing meaningful metrics
-
-**Strategy 5: Red Lines**
-
-Pre-commit to thresholds that trigger intervention:
-
-```
-IF switching_cost > threshold THEN halt deployment
-IF dependency > threshold THEN require redundancy
-IF value_drift > threshold THEN pause and evaluate
-```
-
-**Example:** Constitutional amendment prohibiting AI in certain domains
-
-**Challenge:** Setting appropriate thresholds, enforcement
-
-### Reversal (Lowest Leverage)
-
-**Strategy 6: Design for Reversibility**
-
-Technical approach:
-
-```
-Modular systems (can swap components)
-Documented decision-making (can audit and correct)
-Interpretable AI (can understand and modify)
-Graceful degradation (can reduce reliance gradually)
-```
-
-**Challenge:** These properties may conflict with performance
-
-**Strategy 7: Preserve Human Capabilities**
-
-Social approach:
-
-```
-Education maintains AI-independent skills
-Professions require human demonstration
-Cultural value on human capability
-Economic support for human-performed services
-```
-
-**Example:** Like how cooking from scratch persists despite availability of prepared food
-
-**Challenge:** Economic pressure works against this
-
-## Historical Case Studies
-
-### Writing Systems
-
-**Lock-in type:** Cognitive/cultural
-
-**Mechanism:** Once adopted, oral traditions abandoned
-
-**Reversibility:** Essentially none (who would choose illiteracy?)
-
-**Lesson:** Cognitive tools lock in even if costs exist (reduced memory, oral culture loss)
-
-### Fossil Fuel Infrastructure
-
-**Lock-in type:** Economic/technical
-
-**Mechanism:** Massive capital deployment, infrastructure adaptation
-
-**Reversibility:** Possible but enormously costly
-
-**Current state:** Transition underway but difficult
-
-**Lesson:** Economic lock-in can persist even with recognized harm
-
-### Nuclear Weapons Knowledge
-
-**Lock-in type:** Informational/political
-
-**Mechanism:** Once knowledge exists, cannot be forgotten
-
-**Reversibility:** None (information cannot be unlearned)
-
-**Lesson:** Some technological knowledge creates permanent strategic changes
-
-### Social Media
-
-**Lock-in type:** Social/cognitive
-
-**Mechanism:** Network effects, preference shaping, infrastructure adaptation
-
-**Reversibility:** Individual yes, societal difficult
-
-**Current state:** Recognized harms but no reversal
-
-**Lesson:** Can recognize lock-in without ability to escape
-
-## Model Limitations
-
-### Assumptions
-
-This model rests on several assumptions that may not hold in practice. First, it assumes irreversibility is permanent, yet historical examples like Prohibition demonstrate that societies sometimes do reverse course on seemingly entrenched policies and technologies. Second, the model often treats lock-in as binary when reality presents a continuous spectrum of reversibility with varying degrees of difficulty rather than absolute barriers. Third, the framework assumes relatively rational choice processes, but human individuals and societies frequently act against their own apparent interests in ways that might either accelerate or prevent lock-in. Fourth, it presumes relatively predictable trajectories, underweighting the roles of contingency and human agency in shaping outcomes.
-
-### Missing Dynamics
-
-Several important dynamics receive insufficient attention in the current framework. Black swan events - unexpected disruptions that fundamentally alter the landscape - might enable reversal from states that appeared permanently locked in. Value evolution over generational timescales could change what is perceived as locked in, transforming constraints into choices. Technical breakthroughs might provide new capabilities that enable previously impossible reversals. Social movements and collective action have historically overcome structural barriers that appeared insurmountable, suggesting that organized human agency may be more powerful than the model acknowledges.
-
-### Empirical Uncertainties
-
-Critical empirical questions remain unanswered. We do not know the actual thresholds beyond which lock-in becomes irreversible until we test them, and testing risks crossing the very thresholds we hope to avoid. The degree of path dependence in AI development remains uncertain - it may be more or less constrained than the model suggests. Whether we can detect lock-in in advance lacks clear historical precedent, making prediction speculative. The effectiveness of preservation strategies remains untested at the scale and complexity that AI presents.
-
-## Policy Implications
-
-### For AI Developers
-
-AI developers bear direct responsibility for the reversibility of the systems they create. Design choices should prioritize modularity and clearly defined interfaces that enable component replacement without cascading failures. Off-switches and degradation modes must be engineered from the outset rather than retrofitted. Comprehensive documentation of design decisions, training processes, and embedded assumptions enables future understanding and correction. Rather than optimizing for a single pathway, systems should preserve alternatives that users can select. Regular testing should verify that systems can gracefully reduce AI dependence without catastrophic failures.
-
-### For Governments
-
-Governments must establish monitoring frameworks that track key lock-in indicators across economic, political, and social dimensions. This includes dependency metrics, switching cost trajectories, and alternative viability assessments. Active policies should preserve human capabilities through education, cultural support, and institutional funding that maintains expertise even in automated domains. Regulation should require redundancy for critical infrastructure, mandating human-capable alternatives that prevent complete AI dependence. Constitutional or legislative protections might designate certain domains as AI-free zones where human agency is legally protected.
-
-### For Society
-
-Broader societal engagement requires deliberate rather than passive adoption of AI technologies. Communities and individuals should consciously choose what to automate rather than drifting toward default options shaped by commercial incentives. Preserving diversity means different communities should retain the autonomy to make different choices about AI adoption. Cultural and economic structures should actively value human agency and capability even when AI alternatives exist. Long-term thinking that considers lock-in trajectories must inform major decisions about AI deployment and integration.
-
-## Open Questions
-
-1. **Are we already locked in?** Some dependencies may already be irreversible
-2. **Can lock-in be positive?** Might locking in good values be desirable?
-3. **What's the optimal level of lock-in?** Some commitment might be necessary
-4. **How do we decide collectively?** Democratic processes too slow for AI pace?
-5. **Is awareness sufficient?** Knowing about lock-in might not prevent it
-
-## Strategic Importance
-
-### Magnitude Assessment
-
-Lock-in represents the transition from "difficult to fix" to "impossible to fix." Early decisions in AI development may foreclose options permanently.
-
-| Dimension | Assessment |
-|-----------|------------|
-| **Potential severity** | Existential - determines long-term trajectory permanently |
-| **Probability-weighted importance** | High priority - preserving optionality is time-sensitive |
-| **Comparative ranking** | Top-tier for long-term impact; often underweighted due to temporal distance |
-
-### Lock-in Risk Quantification by Domain
-
-| Domain | Lock-in Probability (2030) | Reversibility if Locked | Time Until Threshold | Intervention Tractability |
-|--------|---------------------------|------------------------|---------------------|--------------------------|
-| Infrastructure dependence | 60-80% | Very Low | 3-5 years | Medium (requires alternatives) |
-| Political entrenchment | 40-60% | Low | Variable | Low (requires political will) |
-| Value embedding | 30-50% | Very Low | 5-10 years | Medium (requires training changes) |
-| Skill atrophy | 70-90% | Low | 10-20 years | Low (generational) |
-| Technical complexity | 50-70% | Very Low | 5-10 years | Low (inherent to progress) |
-
-### Resource Implications
-
-Priority investments to preserve optionality:
-- Diversity maintenance (multiple approaches, actors, governance structures)
-- Reversibility engineering (designing systems that can be modified)
-- Decision delay mechanisms (pauses, circuit breakers)
-- Lock-in detection and early warning systems
-
-### Key Cruxes
-
-- At what point does economic irreversibility become binding?
-- Can political lock-in be prevented through institutional design?
-- How quickly do value lock-ins propagate through AI training?
-- What reversibility margins should we require for major AI deployments?
-
-## Related Models
-
-- [Concentration of Power Model](/knowledge-base/models/concentration-of-power/) - Power entrenchment
-- [Racing Dynamics Model](/knowledge-base/models/racing-dynamics/) - Time pressure preventing deliberation
-- [Economic Disruption Model](/knowledge-base/models/economic-disruption/) - Dependency creation
-
-## Sources
-
-- Arthur, W. Brian. "Competing Technologies, Increasing Returns, and Lock-In" (1989)
-- David, Paul. "Clio and the Economics of QWERTY" (1985)
-- MacAskill, Will. *What We Owe the Future* (2022) - Value lock-in
-- Ord, Toby. *The Precipice* (2020) - Dystopian lock-in
-- Bostrom, Nick. "The Vulnerable World Hypothesis" (2019)
-- Page, Scott. *The Diversity Bonus* (2017)
-
-## Related Pages
-
-<Backlinks client:load entityId="lock-in-model" />
+<Backlinks client:load entityId="lock-in" />

@@ -1,808 +1,103 @@
 ---
-title: AI Capability Proliferation Model
-description: This model analyzes diffusion and control challenges for advanced
-  AI. It identifies chokepoints including compute, data, and talent as potential
-  intervention points.
+title: Proliferation
+description: The spread of dangerous AI capabilities from frontier labs to smaller actors, creating structural risks through increased misuse potential, governance challenges, and attribution difficulties while raising fundamental questions about concentration versus distribution of AI power.
 sidebar:
-  order: 26
+  order: 4
+maturity: Growing
 quality: 4
-lastEdited: "2025-12-26"
-ratings:
-  novelty: 4
-  rigor: 4
-  actionability: 5
-  completeness: 5
-importance: 75.5
-llmSummary: This model analyzes AI capability diffusion mechanisms and finds
-  proliferation contributes 15-30% of total AI catastrophic risk, with defensive
-  technology development identified as the highest-value intervention to shift
-  offense-defense balance. The analysis shows AI capabilities spread faster than
-  traditional technologies (months-years vs decades) and recommends prioritizing
-  defensive tech R&D and compute tracking systems.
+llmSummary: Proliferation describes how AI capabilities spread from major labs
+  to smaller actors, creating structural risks through increased misuse
+  potential and governance difficulties. The content analyzes trade-offs between
+  preventing misuse (favoring concentration) versus preventing power abuse
+  (favoring distribution), with interventions including compute governance,
+  publication norms, and international agreements.
+lastEdited: "2025-12-24"
+todo: Add more analysis of open-source vs. closed debate; expand on compute
+  governance as control point; include more recent proliferation examples from
+  2025; add comparative analysis to nuclear/bioweapon proliferation
+importance: 75
 ---
 
-import { Aside } from '@astrojs/starlight/components';
-import { DataInfoBox, Backlinks, Mermaid } from '../../../../components/wiki';
+import {DataInfoBox} from '../../../../components/wiki';
 
-<DataInfoBox entityId="proliferation-model" ratings={frontmatter.ratings} />
-
+<DataInfoBox entityId="proliferation" />
 
 ## Overview
 
-AI capability proliferation refers to the **spread of advanced AI capabilities from frontier labs to broader actors** over time. Unlike physical technologies, AI capabilities can be **copied perfectly**, **transmitted instantly**, and **reverse-engineered** from outputs, creating unique proliferation dynamics.
+AI proliferation refers to the inevitable spread of AI capabilities from frontier laboratories to increasingly broad sets of actors—smaller companies, open-source communities, nation-states, criminal organizations, and eventually individuals. This process transforms cutting-edge research into widely accessible technology through multiple pathways including research publication, talent mobility, reverse engineering, and deliberate open-source releases. Unlike the controlled diffusion of previous dual-use technologies like nuclear materials, AI proliferates through intangible knowledge and easily copied software, making traditional containment strategies largely ineffective.
 
-This model analyzes the mechanisms, timescales, and governance challenges of AI diffusion.
+The proliferation challenge represents one of AI safety's most fundamental structural risks because it operates largely independently of any single actor's decisions. Even if frontier laboratories implement perfect safety measures, their innovations will eventually spread to less safety-conscious actors who may lack the resources, expertise, or incentives to maintain equivalent protections. This creates a "safety tax" problem where responsible actors bear costs that irresponsible actors can avoid, potentially creating competitive pressures toward less safety.
 
-## Strategic Importance
+The core dilemma involves balancing two competing risks: concentrated AI development could lead to power abuse and stagnation, while distributed development increases misuse potential and makes coordinated governance nearly impossible. This tension has no clear resolution and will likely define much of AI governance strategy over the coming decade.
 
-<Aside type="tip" title="Bottom Line">
-Proliferation risk is **high priority but conditional**—it matters enormously IF offense-defense balance favors attackers, but may be manageable if defenses scale. Currently ranks as a **top 5-10 concern**, behind core alignment and alongside compute governance.
-</Aside>
+## Mechanisms of Proliferation
 
-### Magnitude Assessment
+Research publication practices drive much capability diffusion in AI. Unlike other sensitive domains where researchers routinely classify dangerous findings, AI research culture strongly favors open publication. The Attention mechanism underlying modern language models was published openly in 2017. Transformer architectures, in-context learning techniques, and even some alignment research findings spread rapidly through academic conferences and preprint servers. Even when frontier labs withhold specific implementation details, the core insights often leak through conference presentations, hiring discussions, and informal academic networks.
 
-**Share of total AI catastrophic risk attributable to proliferation:** 15-30%
+Talent mobility accelerates knowledge transfer as researchers move between organizations. Former OpenAI employees have founded Anthropic, Cohere, and numerous other AI companies, carrying crucial insights about training methodologies and safety considerations. This brain drain is inevitable in competitive markets but means that proprietary knowledge rarely remains proprietary for long. Chinese technology companies have recruited extensively from Western AI labs, potentially transferring both capabilities and safety knowledge across geopolitical boundaries.
 
-Proliferation contributes to risk through:
+Open-source releases represent deliberate proliferation decisions. Meta's release of LLaMA models in February 2023 marked a watershed moment, providing near-frontier capabilities to anyone with sufficient compute resources. The company justified this decision as necessary for democratizing AI benefits and preventing monopolization by a few companies. However, within weeks of release, LLaMA weights had leaked widely, and researchers had fine-tuned variants that bypassed safety restrictions, demonstrating how quickly open models can escape their intended use boundaries.
 
-<Mermaid client:load chart={`
-pie title How Proliferation Contributes to AI Risk
-    "Misuse by malicious actors" : 40
-    "Accidental harm by incompetent actors" : 25
-    "Racing dynamics acceleration" : 20
-    "Undermining governance" : 15
-`} />
+Reverse engineering and model distillation provide alternative proliferation pathways even when weights remain proprietary. Researchers have successfully distilled large language models into smaller, more efficient versions by training on the outputs of proprietary systems. This technique allows actors to approximate frontier capabilities without direct access to model weights or training data, though typically with some performance degradation.
 
-**Key uncertainty:** The magnitude depends heavily on offense-defense balance. If AI-powered defenses (biosurveillance, cybersecurity) scale faster than attacks, proliferation risk decreases substantially.
+## Risk Amplification Dynamics
 
-### Comparative Ranking
+Proliferation amplifies misuse risks by expanding the set of actors with access to dangerous capabilities. As AI systems become capable of assisting with biological weapon design, sophisticated cyberattacks, or large-scale disinformation campaigns, each additional actor with access represents a new potential source of harm. The risk scales not just with the number of actors but with their diversity—different actors have different risk tolerances, security practices, and motivations. A well-resourced but ethically constrained laboratory presents different risks than a small company prioritizing rapid deployment or a criminal organization explicitly seeking harmful applications.
 
-| Risk/Intervention | Relative Importance | Reasoning |
-|-------------------|--------------------:|-----------|
-| Core alignment research | Higher | Directly addresses most severe scenarios |
-| Compute governance | Similar | Related lever; both about controlling capability spread |
-| **Proliferation control** | Baseline | Important but time-limited effectiveness |
-| International coordination | Similar | Proliferation is one key coordination problem |
-| Lab incentive reform | Lower | Less direct impact on catastrophic outcomes |
+The weakest link problem becomes acute in proliferated environments. While frontier laboratories invest heavily in safety measures, smaller actors often lack equivalent resources or expertise. Fine-tuning and deployment practices vary enormously across actors, with some implementing robust safety measures while others prioritize functionality over security. This heterogeneity means that system-wide safety depends on the least careful actors, not the most responsible ones.
 
-<Aside type="caution">
-Proliferation and compute governance are **closely linked**—compute governance IS a form of proliferation control. Considering them separately can double-count.
-</Aside>
+Attribution and accountability become substantially more difficult as capabilities spread. When multiple actors possess similar AI capabilities, determining the source of harmful outputs becomes a complex forensic challenge. This attribution problem undermines deterrence mechanisms and complicates both legal responses and norm enforcement. The 2023 emergence of numerous "uncensored" LLaMA variants illustrates this challenge—harmful outputs could originate from dozens of different fine-tuned models with varying capabilities and restrictions.
 
-### Resource Implications
+## Governance Challenges
 
-**Current attention:** Medium (significant policy interest, especially US-China)
+Traditional regulatory approaches struggle with proliferated technologies. Governments can regulate concentrated industries through licensing, inspections, and enforcement actions. However, regulating millions of individuals using AI tools approaches impossibility. This dynamic mirrors historical challenges in cybersecurity and cryptography, where technical capabilities eventually exceeded regulatory control mechanisms.
 
-**Where additional resources have highest marginal value:**
+International coordination becomes more complex as proliferation crosses borders. Even if major powers agree on AI governance principles, enforcement requires cooperation from countries hosting proliferated development. Unlike nuclear materials, which require physical security and specialized facilities, AI capabilities can proliferate through digital networks that ignore traditional sovereignty boundaries.
 
-| Intervention | Current Effort | Marginal Value | Who Should Work On This |
-|--------------|----------------|----------------|-------------------------|
-| Defensive tech R&D | Medium | **Very High** | Technical researchers, labs |
-| Compute tracking systems | Low | **High** | Technical policy, governments |
-| International coordination | Low | **High** | Diplomats, policy orgs |
-| Responsible disclosure norms | Medium | Medium | Labs, researchers |
-| Open-source safety tooling | Low | Medium | Technical community |
+The speed of proliferation outpaces regulatory adaptation. By the time policymakers identify risks and develop responses, capabilities may have already spread beyond effective control. California's SB-1047 debate in 2024 illustrated this timing problem—by the time legislators considered frontier model regulations, open-source alternatives were already approaching comparable capabilities.
 
-**Recommended shift:**
-- Increase investment in **defensive technology** (AI-powered biosecurity, cybersecurity, deepfake detection)
-- This shifts offense-defense balance, making proliferation less dangerous even if it occurs
+## The Open Source Debate
 
-### Key Cruxes
+The debate over open-source AI represents proliferation's central controversy. Advocates argue that open development democratizes AI benefits, prevents monopolization by a few companies, enables greater research transparency, and allows more actors to contribute to safety research. Meta's Chief AI Scientist Yann LeCun has argued that open models are inherently safer because they enable external scrutiny and prevent "black box" systems from making decisions without understanding.
 
-| If you believe... | Then proliferation is... |
-|-------------------|--------------------------|
-| Offense-defense balance favors attackers | **Critical priority** (proliferation enables catastrophe) |
-| Defenses can scale with capabilities | **Lower priority** (proliferation is manageable) |
-| Compute governance will succeed | **Lower priority** (proliferation is controlled) |
-| Compute governance will fail | **Higher priority** (need alternative approaches) |
-| Dangerous capabilities are 5+ years away | **Medium priority** (time to build governance) |
-| Dangerous capabilities are imminent | **Critical priority** (window closing) |
+Critics contend that open-source releases essentially provide dangerous capabilities to anyone, regardless of their intentions or competence. They argue that safety measures can be easily removed from open models, that malicious actors specifically seek out unconstrained systems, and that the benefits of openness don't justify the risks of enabling catastrophic misuse. The rapid emergence of "uncensored" LLaMA variants provides evidence for these concerns.
 
-### Actionability
+The timing question adds complexity to this debate. Even open-source advocates generally acknowledge that some capabilities should remain restricted initially. The disagreement centers on how long restrictions should last and which capabilities warrant them. Some propose a "staged release" approach where capabilities become open after safety research catches up, while others argue for indefinite restrictions on the most dangerous applications.
 
-**For policymakers:**
-- Prioritize compute tracking infrastructure over broad bans
-- Invest heavily in AI-powered defenses (the best counter to proliferation)
-- Coordinate internationally before capability gaps widen
+## Historical Analogies and Their Limits
 
-**For technical researchers:**
-- Work on defensive applications (detection, attribution, countermeasures)
-- Develop safety tools that work for open-source models
-- Responsible disclosure for dual-use capabilities
+Nuclear proliferation provides the most commonly cited analogy for AI proliferation. Like AI, nuclear technology spreads through knowledge transfer, though more slowly due to physical constraints. The Nuclear Non-Proliferation Treaty demonstrates that international regimes can slow proliferation, though not prevent it entirely. However, nuclear technology requires specialized materials and facilities that create natural choke points for control.
 
-**For funders:**
-- Fund offense-defense balance research (which way does it tip?)
-- Support compute governance technical work
-- Fund defensive technology development
+AI proliferation differs fundamentally because it involves information rather than physical materials. Software copies perfectly and transmits instantly across global networks. Knowledge transfer occurs through casual conversation as well as formal education. These characteristics make AI proliferation more similar to cybersecurity tools or cryptographic techniques than to nuclear weapons.
 
-**For labs:**
-- Assess proliferation risk before model releases
-- Invest in safety tools that can be open-sourced
-- Coordinate with other labs on sensitive capabilities
-
-## Theoretical Framework
-
-### Information Diffusion Model
-
-AI capabilities are **information goods** with distinctive properties:
-
-```
-Traditional goods:
-- Rivalrous (my use prevents yours)
-- Costly to copy
-- Localized
-
-Information goods (AI):
-- Non-rivalrous (my use doesn't prevent yours)
-- Near-zero marginal cost to copy
-- Global distribution
-```
-
-**Implication:** Containment is fundamentally difficult
-
-### Diffusion Curve
-
-**Classic S-curve diffusion:**
-
-```
-Adoption(t) = L / (1 + exp(-k(t - t_0)))
-
-Where:
-- L = ultimate adoption level
-- k = diffusion rate
-- t_0 = inflection point
-```
-
-**AI capability diffusion exhibits:**
-- **Shorter timeframes** (months-years vs. decades for previous tech)
-- **Steeper curves** (rapid acceleration once started)
-- **Higher asymptotic levels** (approaches 100% accessibility)
-
-**Example:**
-- GPT-2: Withheld 9 months for safety → Released when proven safe
-- GPT-3: API access only → Similar capabilities open-sourced in 18 months (GPT-NeoX, BLOOM)
-- GPT-4: Proprietary → Approaching open-source parity in 24 months (LLaMA 3, Mistral)
-
-**Trend:** Time from frontier to open-source is **decreasing**
-
-## Proliferation Mechanisms
-
-### 1. Publication and Open Science
-
-**Mechanism:** Research findings enable replication
-
-**Historical norm:** AI research published openly
-
-**Recent shift:** Frontier labs increasingly withhold details
-
-**Tension:**
-- Science requires openness (verification, advancement)
-- Safety may require secrecy (prevent dangerous capabilities)
-
-**Case study: AlphaGo**
-
-```
-2016: AlphaGo defeats Lee Sedol
-2017: Paper published with architecture details
-2018: Open-source reimplementations (ELF OpenGo, Leela Zero)
-
-Timeline: Frontier → Open-source in ~2 years
-```
-
-**Trend:** As capabilities become more dangerous, publication slows - but can't stop entirely without harming research
-
-### 2. Model Weights Release
-
-**Mechanism:** Direct release of trained models
-
-**Categories:**
-
-**Fully open:**
-- LLaMA (Meta), Mistral, Stable Diffusion
-- Anyone can download and run
-- Can be fine-tuned for any purpose
-
-**Gated:**
-- Some access restrictions (researcher approval)
-- Terms of service limitations
-- Limited enforcement
-
-**API-only:**
-- GPT-4, Claude, Gemini Advanced
-- Capabilities accessible but weights controlled
-- Can be distilled/reverse-engineered
-
-**Closed:**
-- Internal-only models
-- Government/military AI
-- Increasingly rare as competition pressures release
-
-### 3. Distillation and Reverse Engineering
-
-**Mechanism:** Recreate model from API access
-
-**Process:**
-```
-1. Query frontier model with inputs
-2. Collect outputs
-3. Train smaller model to mimic behavior
-4. Result: "Distilled" model with similar capabilities
-```
-
-**Effectiveness:**
-- Can achieve 80-95% of original capability
-- Much cheaper than training from scratch
-- Defeats API-only protection strategy
-
-**Example:** Multiple teams have distilled GPT-4 to create smaller, open models approaching its performance
-
-**Implication:** Even closed models proliferate through distillation
-
-### 4. Algorithmic Diffusion
-
-**Mechanism:** Key insights enable independent development
-
-**Examples:**
-- Transformer architecture (2017) → Enabled GPT, BERT, etc.
-- Diffusion models (2015-2020) → Enabled DALL-E, Stable Diffusion, Midjourney
-- Reinforcement Learning from Human Feedback (2017-2020) → Enabled ChatGPT, Claude, etc.
-
-**Timeline:** Algorithmic breakthrough → Widespread adoption: 2-5 years
-
-**Trend:** Accelerating as AI research community grows
-
-### 5. Talent Mobility
-
-**Mechanism:** Researchers move between organizations carrying knowledge
-
-**Dynamics:**
-- Frontier lab trains researcher
-- Researcher joins competitor/startup/nation
-- Brings tacit knowledge, insights, approaches
-
-**Frequency:**
-- High mobility in AI field
-- Signing bonuses $500k-$5M for top talent
-- Acqui-hires common
-
-**Governance challenge:** Knowledge in minds can't be controlled (unlike nuclear material)
-
-### 6. Compute Cost Decline
-
-**Mechanism:** Cheaper compute enables broader access
-
-**Trend:**
-```
-Cost per FLOP:
-1960: $1,000,000
-1980: $10,000
-2000: $10
-2020: $0.001
-2024: $0.0001
-
-Decreasing ~50% every 2 years
-```
-
-**Implication:**
-- What cost $100M to train in 2022 might cost $10M in 2026
-- Broadens set of actors who can afford frontier training
-- Open-source can more easily match proprietary
-
-### 7. Infrastructure Proliferation
-
-**Mechanism:** Cloud compute makes capabilities accessible
-
-**Current:**
-- AWS, Azure, GCP provide AI infrastructure globally
-- Training runs rentable (though largest labs buy/build)
-- Inference extremely cheap
-
-**Future:**
-- Potential compute restrictions (export controls, licensing)
-- But enforcement difficult for cloud services
-
-## Actor Categories
-
-### Tier 1: Frontier Labs (3-5 organizations)
-
-**Capabilities:**
-- Largest models (GPT-4, Claude 3.5, Gemini Advanced)
-- $100M-1B+ training budgets
-- 10,000-100,000 GPUs
-
-**Examples:** OpenAI, Anthropic, Google DeepMind, Meta
-
-**Proliferation role:** Source of cutting-edge capabilities
-
-### Tier 2: Well-Funded Followers (10-20 organizations)
-
-**Capabilities:**
-- Models 6-18 months behind frontier
-- $10M-100M training budgets
-- 1,000-10,000 GPUs
-
-**Examples:** Mistral, Cohere, Inflection, xAI, Character.AI
-
-**Proliferation role:** Rapid diffusion from Tier 1
-
-### Tier 3: Open-Source Community (100s of projects)
-
-**Capabilities:**
-- Models 12-24 months behind frontier
-- Creative efficiency, fine-tuning
-- Distributed compute
-
-**Examples:** EleutherAI, Stability AI, Hugging Face ecosystem
-
-**Proliferation role:** Democratization, removes barriers
-
-### Tier 4: Nation-States (5-10 countries)
-
-**Capabilities:**
-- Variable (China competitive, others lagging)
-- Massive potential resources
-- Different objectives (military, control)
-
-**Examples:** China (Baidu, Alibaba), Russia, Israel, UK, France
-
-**Proliferation role:** Geopolitical diffusion, parallel development
-
-### Tier 5: Smaller Actors (potentially thousands)
-
-**Capabilities:**
-- Access via APIs or open-source
-- Fine-tuning for specific purposes
-- Limited resources but growing
-
-**Examples:** Startups, universities, individuals, potentially malicious actors
-
-**Proliferation role:** Widest diffusion, misuse potential
-
-## Diffusion Timescales
-
-### Empirical Data (2020-2024)
-
-| Capability Level | Frontier → Tier 2 | Frontier → Open-Source | Frontier → Tier 5 |
-|-----------------|-------------------|----------------------|-------------------|
-| GPT-3 level | 6-12 months | 18-24 months | 24-36 months |
-| GPT-4 level | 12-18 months | 24-36 months | 36-48 months |
-| Multimodal | 6-12 months | 12-24 months | 18-30 months |
-| Coding agents | 3-6 months | 12-18 months | 18-24 months |
-
-**Trend:** Diffusion times are **shortening**
-
-**Projection (2025-2030):**
-- Frontier → Tier 2: 3-9 months
-- Frontier → Open-source: 12-24 months
-- Frontier → Tier 5: 18-30 months
-
-### Critical Capability Thresholds
-
-**Concern:** Some capabilities may be dangerous if widely proliferated
-
-**Examples:**
-- Bioweapon design assistance
-- Cyberattack automation
-- Advanced persuasion/manipulation
-- Autonomous weapons planning
-- Chemical weapon synthesis
-
-**Current state:** Frontier models have guardrails, but:
-- Jailbreaks exist
-- Open-source has no guardrails
-- Fine-tuning can remove safety training
-
-**Timeline concern:**
-- Dangerous capability developed: Year X
-- Open-source equivalent: Year X+2
-- Widely accessible: Year X+3
-- Governance response: Year X+5?
-
-**Gap:** Proliferation faster than governance
-
-## Control Mechanisms
-
-### 1. Compute Governance
-
-**Approach:** Control bottleneck resource
-
-**Mechanisms:**
-- Export controls on advanced chips (current US policy)
-- Licensing for large training runs
-- Monitoring via chip-level tracking
-
-**Pros:**
-- Compute is physical, can be controlled
-- Already implemented (NVIDIA H100 export restrictions to China)
-- Affects training new models
-
-**Cons:**
-- Doesn't prevent algorithmic improvements (do more with less)
-- Doesn't prevent diffusion of already-trained models
-- Enforcement gaps (cloud providers, smuggling)
-- Time-limited (compute gets cheaper)
-
-**Effectiveness:** High for near-term (5 years), declining over time
-
-### 2. Know-Your-Customer (KYC) for AI
-
-**Approach:** Require identity verification for access
-
-**Mechanisms:**
-- API access requires verified identity
-- Terms of service with use restrictions
-- Monitoring for misuse patterns
-
-**Pros:**
-- Relatively easy to implement
-- Increases friction for bad actors
-- Enables attribution
-
-**Cons:**
-- Doesn't prevent open-source access
-- Privacy concerns
-- Circumventable (fake IDs, VPNs)
-
-**Effectiveness:** Low-moderate, better than nothing
-
-### 3. Responsible Disclosure
-
-**Approach:** Delay publication of dangerous capabilities
-
-**Mechanisms:**
-- Frontier labs assess risks before release
-- Stagger publication vs. deployment
-- Coordinate with governments
-
-**Pros:**
-- Buys time for countermeasures
-- Doesn't stifle all research
-
-**Cons:**
-- Voluntary, unenforceable
-- Competitive pressure to publish
-- Independent discovery possible
-
-**Effectiveness:** Moderate, only works with coordination
-
-### 4. Differential Technology Development
-
-**Approach:** Accelerate defensive tech, slow offensive
-
-**Mechanisms:**
-- Prioritize safety research
-- Develop AI-powered defenses (e.g., biosecurity screening)
-- Slow proliferation of dangerous capabilities
-
-**Pros:**
-- Addresses root asymmetry (offense easier than defense)
-- Compatible with continued progress
-
-**Cons:**
-- Hard to categorize offense vs. defense
-- May not be technically feasible
-- Requires coordination
-
-**Effectiveness:** Unclear, promising approach
-
-### 5. International Agreements
-
-**Approach:** Treaties limiting proliferation
-
-**Mechanisms:**
-- Export controls (current)
-- Non-proliferation treaty (proposed)
-- Verification regimes
-
-**Pros:**
-- Precedent from nuclear non-proliferation
-- Could enforce compute restrictions globally
-
-**Cons:**
-- Difficult to verify AI capabilities (unlike nuclear)
-- Requires buy-in from competitors (China, Russia)
-- Enforcement challenges
-
-**Effectiveness:** Potentially high if achieved, but difficult
-
-## Offense-Defense Balance
-
-**Critical question:** Does proliferation favor offense or defense?
-
-### Offense Advantages
-
-**Asymmetry:**
-- One successful attack can cause large harm
-- Attackers can specialize in circumventing defenses
-- Proliferation gives attackers more tools
-
-**Examples:**
-- Cyberattacks: One zero-day exploit can compromise millions
-- Bioweapons: One successful synthesis can release pandemic
-- Manipulation: One effective campaign can swing election
-
-**Implication:** Wide proliferation increases total risk
-
-### Defense Advantages
-
-**Possibility:**
-- Defenders can use same AI for detection, prevention
-- Proliferation enables more defensive research
-- Transparency about capabilities allows countermeasures
-
-**Examples:**
-- AI-powered cybersecurity
-- AI-assisted biosurveillance
-- AI fact-checking and deepfake detection
-
-**Implication:** Proliferation might enable better defenses
-
-### Empirical Evidence
-
-**Current (2024):** Slight offense advantage
-
-- Cyberattacks increasingly automated
-- Deepfakes outpacing detection
-- Jailbreaks defeating safety measures
-
-**Projection:** Depends on investment and priorities
-
-**Risk:** If offense advantage persists or grows, proliferation is more dangerous
-
-## Scenario Analysis
-
-### Scenario 1: Controlled Proliferation (20% probability)
-
-**Characteristics:**
-- Frontier capabilities remain with responsible actors
-- Compute governance effective
-- International agreements succeed
-- Dangerous capabilities don't go open-source
-
-**Path:**
-- Strong export controls
-- Lab coordination on sensitive releases
-- Defensive tech keeps pace
-- Regulation before catastrophe
-
-**Outcome:** Manageable risk landscape
-
-**Challenge:** Requires unprecedented coordination
-
-### Scenario 2: Gradual Diffusion (45% probability)
-
-**Characteristics:**
-- Capabilities spread to open-source in 2-3 years
-- Some governance (partial compute restrictions)
-- Mix of responsible and irresponsible actors
-- Incremental adaptation
-
-**Path:**
-- Current trajectory continues
-- Patchwork regulations
-- Some incidents but not catastrophic
-- Defensive tech development continues
-
-**Outcome:** Elevated risk but civilization adapts
-
-**Parallel:** Current cybersecurity landscape
-
-### Scenario 3: Rapid Open Proliferation (25% probability)
-
-**Characteristics:**
-- Frontier capabilities quickly open-sourced
-- Minimal governance
-- Very wide access including bad actors
-- Offense advantage persists
-
-**Path:**
-- Competitive pressure forces openness
-- Compute governance fails
-- No international coordination
-- Algorithmic efficiency increases
-
-**Outcome:** High risk environment, potential catastrophic events
-
-**Parallel:** Internet in 1990s (minimal governance)
-
-### Scenario 4: Fragmentation (10% probability)
-
-**Characteristics:**
-- Geopolitical blocs develop separate AI ecosystems
-- Capabilities don't cross borders
-- Internal proliferation but not global
-
-**Path:**
-- US-China tech decoupling deepens
-- EU develops separate capabilities
-- Export controls strictly enforced
-- Internet fragments (splinternet)
-
-**Outcome:** Reduced global proliferation but competitive dynamics persist
-
-**Parallel:** Cold War technology separation
-
-## Game-Theoretic Dynamics
-
-### Proliferation Dilemma
-
-Similar to prisoner's dilemma:
-
-| | Others Open-Source | Others Restrict |
-|---|---|---|
-| **You Open-Source** | Wide access, high risk | You fall behind |
-| **You Restrict** | Competitive disadvantage | Controlled risk |
-
-**Dominant strategy:** Open-source (if others do)
-
-**Collective optimum:** All restrict
-
-**Result:** Tendency toward proliferation even if all prefer restriction
-
-### First-Mover Disadvantage
-
-Unlike racing (where first-mover wins), in proliferation:
-
-**First to open-source:**
-- Takes blame for risks
-- Enables competitors
-- Minimal competitive advantage (others will follow)
-
-**Result:** Wait for others to open-source first
-
-**But:** Eventually someone does (competitive pressure, ideological commitment, accident)
+Biotechnology offers another instructive comparison. Dual-use research of concern (DURC) policies in biology restrict publication of the most dangerous research findings, but implementation remains inconsistent and controversial. The 2005 recreation of the 1918 influenza virus sparked debates about publication restrictions that continue today. However, biotechnology still requires physical materials and laboratory facilities that AI does not.
 
 ## Intervention Strategies
 
-### High Leverage
+Compute governance represents one of the most promising intervention points for slowing proliferation. Training frontier AI models requires enormous computational resources that remain concentrated among a few cloud providers and chip manufacturers. Export controls on advanced semiconductors, particularly NVIDIA's H100 and A100 GPUs, can limit which actors have access to training-scale compute. However, these controls only affect new model training and become less effective as inference costs decrease and model efficiency improves.
 
-**1. Compute Governance (Effectiveness: High, near-term)**
+Publication norms could shift toward more selective sharing of dangerous capabilities research. Some researchers advocate for "differential technological development" that accelerates safety research while slowing dangerous capability development. However, implementing such policies requires broad consensus across the research community and raises difficult questions about who determines which research should be restricted.
 
-- Physical bottleneck
-- Already implemented partially
-- Can buy 5-10 years
+Model weight security could prevent unauthorized access to trained models, though enforcement faces significant technical and legal challenges. Digital rights management for AI models remains largely theoretical, and leaked weights can spread through file-sharing networks beyond any single organization's control. The LLaMA leak demonstrated the futility of attempting to contain model weights once they escape controlled environments.
 
-**2. Coordinated Restraint (Effectiveness: High, if achieved)**
+Capability evaluation and red-teaming could identify which models pose sufficient risks to warrant restriction. Organizations like METR (formerly ARC Evals) are developing standardized evaluation protocols for dangerous capabilities. However, evaluation is expensive, time-consuming, and may not capture all potential risks. Moreover, evaluation results may themselves constitute sensitive information that could guide malicious actors.
 
-- Frontier labs agree on restrictions
-- Verifiable commitments
-- Mutual benefit
+## Current State and Trajectory
 
-**Challenge:** Enforcement, free-riders
+As of late 2024, proliferation dynamics are accelerating across multiple dimensions. Open-source models like LLaMA 3, Mistral, and various Chinese alternatives provide near-frontier capabilities to anyone with modest computational resources. The performance gap between proprietary and open models continues to narrow, with open alternatives typically lagging by 6-12 months rather than years.
 
-**3. Defensive Technology Investment (Effectiveness: Moderate-High)**
+Inference costs are declining rapidly due to hardware improvements and algorithmic optimizations. Running powerful language models on consumer hardware becomes increasingly feasible, reducing barriers to deployment. Apple's introduction of local LLM capabilities in iOS 18 demonstrates how frontier capabilities are becoming embedded in everyday consumer devices.
 
-- Shift offense-defense balance
-- Reduces risk of proliferation
-- Dual-use benefits
+Over the next 1-2 years, proliferation is likely to accelerate as current frontier capabilities become commoditized. Open-source models will likely achieve GPT-4 level performance, and inference costs will continue declining. More concerning capabilities like advanced code generation, persuasive writing, and possibly early forms of autonomous operation will likely become widely available.
 
-### Moderate Leverage
+Looking 2-5 years ahead, the proliferation landscape depends heavily on whether truly dangerous capabilities emerge and how quickly they spread. If AI systems develop capabilities for autonomous hacking, biological weapon design, or sophisticated manipulation, the time between frontier development and wide availability could determine whether governance interventions succeed or fail. Current trends suggest this window is narrowing rather than expanding.
 
-**4. Responsible Disclosure Norms (Effectiveness: Moderate)**
+## Key Uncertainties
 
-- Delay most dangerous releases
-- Coordination on assessments
-- Time for countermeasures
+The effectiveness of compute governance remains uncertain as inference efficiency improves and alternative chip architectures emerge. Whether export controls can meaningfully slow proliferation or merely redirect it through other suppliers is unclear. The development of AI-specific chips by Chinese companies and the potential for distributed training across consumer devices could undermine compute-based controls.
 
-**5. KYC and Monitoring (Effectiveness: Moderate)**
+The sustainability of open-source development models faces questions as training costs increase. Whether companies can continue funding expensive model development while releasing results openly, or whether commercial pressures will force more restrictive practices, will significantly impact proliferation rates. Meta's continued investment in open models suggests at least some major players remain committed to open development.
 
-- Increases friction
-- Enables attribution
-- Deters casual misuse
+The potential for fundamental breakthroughs that change proliferation dynamics entirely remains unknown. Advances in model compression, federated learning, or entirely new architectures could either accelerate or slow proliferation in unpredictable ways. The emergence of artificial general intelligence would likely accelerate all technological development, including proliferation patterns.
 
-### Low Leverage
-
-**6. Education and Norms (Effectiveness: Low)**
-
-- Awareness of risks
-- Professional ethics
-- Voluntary restraint
-
-**Limited by:** Competitive pressure, bad actors ignore norms
-
-## Critical Unknowns
-
-### Technical Questions
-
-1. **How fast will algorithmic efficiency improve?**
-   - If rapid: Compute governance ineffective
-   - If slow: Compute governance buys more time
-
-2. **Can safety be baked in?**
-   - If yes: Proliferation less risky
-   - If no: Need containment
-
-3. **Is offense-defense balance fixed?**
-   - If favors defense: Proliferation tolerable
-   - If favors offense: Proliferation catastrophic
-
-### Strategic Questions
-
-1. **Will China cooperate?**
-   - Yes: Global governance possible
-   - No: Fragmentation or race to bottom
-
-2. **Can labs coordinate?**
-   - Yes: Responsible proliferation possible
-   - No: Competitive proliferation inevitable
-
-3. **What triggers governance?**
-   - Proactive: Before catastrophe
-   - Reactive: After incident(s)
-
-### Value Questions
-
-1. **Is open-source inherently good?**
-   - Transparency, democratization vs. safety, control
-   - Depends on capabilities and risks
-
-2. **Who should control powerful AI?**
-   - Democratic legitimacy vs. technical competence
-   - Private vs. public governance
-
-## Model Limitations
-
-### Simplifications
-
-1. **Treats AI as homogeneous:** But different capabilities have different risks
-2. **Linear diffusion:** Reality has jumps, delays, surprises
-3. **Rational actors:** Ideological commitments, errors matter
-4. **Static landscape:** Technology and norms evolve
-
-### Missing Factors
-
-1. **Unexpected breakthroughs:** Could accelerate or decelerate diffusion
-2. **Social resistance:** Public backlash could slow proliferation
-3. **Economic shifts:** Costs might not decline as expected
-4. **Black swans:** Catastrophic event could change all dynamics
-
-## Policy Implications
-
-### For AI Labs
-
-1. **Assess proliferation risk** before release decisions
-2. **Coordinate with others** on sensitive capabilities
-3. **Invest in defensive tech** to shift offense-defense balance
-4. **Support governance** that enables responsible competition
-
-### For Governments
-
-1. **Implement compute governance** while still effective
-2. **International coordination** is essential
-3. **Invest in defenses** (biosecurity, cybersecurity, etc.)
-4. **Prepare for proliferation** - assume it will happen, plan accordingly
-
-### For Research Community
-
-1. **Responsible disclosure** for dangerous capabilities
-2. **Prioritize defensive research**
-3. **Transparency about risks** to enable informed policy
-4. **Avoid naive openness** - not all research should be published immediately
-
-## Open Questions
-
-1. **Can proliferation be prevented or only delayed?** Fundamental question
-2. **What's the right balance between openness and safety?** No clear answer
-3. **Will offense-defense balance favor defense?** Empirical question
-4. **Can governance adapt fast enough?** Speed matters critically
-5. **What happens when AGI-level capabilities proliferate?** Unprecedented scenario
-
-## Related Models
-
-- [Racing Dynamics Model](/knowledge-base/models/racing-dynamics/) - Competition pressures
-- [Multipolar Trap Model](/knowledge-base/models/multipolar-trap/) - Coordination failures
-- [Concentration of Power Model](/knowledge-base/models/concentration-of-power/) - Centralization vs. diffusion
-
-## Sources
-
-- Anderljung et al. "Frontier AI Regulation" (2023)
-- Shavit, Yonadav. "What Does It Take to Catch a Chinchilla?" (2023)
-- Egan et al. "Bridging Responsible AI Gaps" (2024)
-- Sastry & Hadfield. "Open Sourcing Highly Capable Foundation Models" (2024)
-- Solaiman, Irene. "The Gradient of Generative AI Release" (2023)
-- Trask et al. "Beyond Fear: Distributed Governance for AI" (2020)
-- US National Security Commission on AI. Final Report (2021)
-
-## Related Pages
-
-<Backlinks client:load entityId="proliferation-model" />
+International coordination prospects remain highly uncertain given current geopolitical tensions. Whether major powers can agree on AI governance frameworks before dangerous capabilities proliferate widely will likely determine whether technical intervention strategies can succeed at scale.

@@ -324,6 +324,44 @@ export const EntitySource = z.object({
 });
 export type EntitySource = z.infer<typeof EntitySource>;
 
+// =============================================================================
+// RESOURCES (External References with Summaries)
+// =============================================================================
+
+export const ResourceType = z.enum([
+  'paper',      // Academic papers, arxiv, etc.
+  'blog',       // Blog posts, LessWrong, etc.
+  'report',     // Technical reports, PDFs
+  'book',       // Books
+  'talk',       // Presentations, videos
+  'podcast',    // Podcast episodes
+  'government', // Government documents
+  'reference',  // Wikipedia, documentation
+  'web',        // Generic web pages
+]);
+export type ResourceType = z.infer<typeof ResourceType>;
+
+export const Resource = z.object({
+  id: z.string(),                               // Human-readable slug or hash
+  url: z.string().url(),
+  title: z.string(),
+  authors: z.array(z.string()).optional(),
+  published_date: z.string().optional(),        // "2024" or "2024-03-15"
+  type: ResourceType,
+  local_filename: z.string().optional(),        // Path relative to .cache/sources/
+  importance: z.number().min(0).max(100).optional(), // 0-100, determines review depth
+  // Original content
+  abstract: z.string().optional(),              // Original abstract from source
+  // AI-generated fields
+  summary: z.string().optional(),               // Short 1-2 sentence summary
+  review: z.string().optional(),                // Longer 1-4 paragraph review
+  key_points: z.array(z.string()).optional(),
+  // Metadata
+  cited_by: z.array(z.string()).optional(),     // Entity IDs that cite this
+  fetched_at: z.string().optional(),
+});
+export type Resource = z.infer<typeof Resource>;
+
 export const EntityStatus = z.enum(['stub', 'draft', 'published', 'verified']);
 export type EntityStatus = z.infer<typeof EntityStatus>;
 
@@ -407,8 +445,10 @@ export const Entity = z.object({
   // Relationships
   relatedTopics: z.array(z.string()).optional(),
   relatedEntries: z.array(RelatedEntry).optional(),
-  // Sources
+  // Sources (legacy inline format)
   sources: z.array(EntitySource).optional(),
+  // Resources (semantic references by ID)
+  resources: z.array(z.string()).optional(),      // Resource IDs from resources.yaml
 });
 export type Entity = z.infer<typeof Entity>;
 
@@ -428,5 +468,6 @@ export const Database = z.object({
   sources: z.array(Source),
   graphs: z.array(Graph),
   entities: z.array(Entity),
+  resources: z.array(Resource),
 });
 export type Database = z.infer<typeof Database>;

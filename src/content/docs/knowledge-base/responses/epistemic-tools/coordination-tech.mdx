@@ -1,309 +1,116 @@
 ---
 title: Coordination Technologies
-description: Tools and mechanisms for enabling large-scale cooperation on AI and
-  epistemic challenges
+description: Tools and mechanisms that enable actors to find and maintain cooperative solutions to AI safety and epistemic challenges, addressing racing dynamics, verification problems, and collective action failures through commitment devices, monitoring infrastructure, and incentive alignment.
 sidebar:
   order: 5
-quality: 3
-llmSummary: Provides a comprehensive framework for coordination technologies
-  addressing AI racing dynamics and epistemic challenges, categorizing
-  mechanisms like commitment tools, verification infrastructure, and incentive
-  alignment with concrete examples. Maps current initiatives across AI
-  governance and epistemic defense while outlining design principles for
-  effective coordination starting with willing actors and graduated enforcement.
+quality: 4
+llmSummary: Provides a comprehensive framework for coordination technologies addressing AI racing dynamics and epistemic challenges, categorizing mechanisms like commitment tools, verification infrastructure, and incentive alignment with concrete examples. Maps current initiatives across AI governance and epistemic defense while outlining design principles for effective coordination starting with willing actors and graduated enforcement.
 lastEdited: "2025-12-24"
-todo: Add more concrete case studies of successful/failed coordination; expand
-  technical verification mechanisms section with specific cryptographic
-  approaches
+todo: Add more concrete case studies of successful/failed coordination; expand technical verification mechanisms section with specific cryptographic approaches
 importance: 85.2
 ---
 
-import {DataInfoBox, KeyQuestions} from '../../../../../components/wiki';
+import {DataInfoBox, KeyQuestions} from '../../../../components/wiki';
 
 <DataInfoBox entityId="coordination-tech" />
 
-## Why Coordination Technology?
+## Overview
 
-Many AI and epistemic challenges are **coordination problems**: outcomes would be better if actors cooperated, but individual incentives lead to defection.
+Many of the most pressing challenges in AI safety and information integrity are fundamentally coordination problems. Individual actors face incentives to defect from collectively optimal behaviors—racing to deploy potentially dangerous AI systems, failing to invest in costly verification infrastructure, or prioritizing engagement over truth in information systems. Coordination technologies represent a crucial class of tools designed to overcome these collective action failures by enabling actors to find, commit to, and maintain cooperative equilibria.
 
-**Examples**:
-- **AI racing**: Labs would be safer if all slowed down, but each has incentive to race
-- **Misinformation defense**: Effective if everyone verified, but individually costly
-- **Standard setting**: Everyone benefits from standards, but no one wants to move first
+The urgency of developing effective coordination mechanisms has intensified with the rapid advancement of AI capabilities. As AI systems approach and potentially exceed human-level performance in critical domains, the stakes of coordination failure—from catastrophic safety incidents to widespread epistemic collapse—continue to rise. Unlike traditional regulatory approaches that rely primarily on top-down enforcement, coordination technologies often work by changing the strategic structure of interactions themselves, making cooperation individually rational rather than merely collectively beneficial. This approach is particularly valuable in domains where traditional governance mechanisms face limitations due to technical complexity, jurisdictional challenges, or the speed of technological change.
 
-**Coordination technologies** are tools, mechanisms, and platforms that help actors:
-- Find and commit to cooperative equilibria
-- Verify that others are cooperating
-- Punish defection credibly
-- Build trust over time
+The field encompasses diverse mechanisms ranging from technical solutions like cryptographic verification systems to institutional innovations like graduated commitment schemes. Success in coordination technology development could determine whether humanity can navigate the transition to advanced AI systems safely, making this one of the most critical areas for research and implementation in the coming decade.
 
----
+## The AI Safety Coordination Challenge
 
-## Key Coordination Challenges
+The development of increasingly capable AI systems has created unprecedented coordination challenges that traditional governance mechanisms struggle to address. The fundamental problem stems from a misalignment between individual incentives and collective safety outcomes. While all major AI developers would theoretically benefit from a world where everyone prioritizes safety over speed, each faces powerful incentives to race ahead of competitors, leading to what researchers call "racing dynamics."
 
-### The AI Safety Coordination Problem
+This coordination failure manifests across multiple dimensions. Labs invest less in safety research than would be socially optimal because safety improvements primarily benefit competitors and society broadly rather than the investing organization. Verification and transparency measures that could help coordinate safety efforts remain underinvested because they impose costs on implementers while providing public benefits. International cooperation on AI governance remains limited because nations fear falling behind in what many view as a strategic technology race.
 
-| Challenge | Why It's Hard |
-|-----------|---------------|
-| **Racing dynamics** | Labs fear falling behind competitors |
-| **Verification** | Hard to confirm safety practices |
-| **First-mover disadvantage** | Safety investments cost in competitive market |
-| **International scope** | No global authority |
-| **Misaligned incentives** | Profit vs safety tension |
+The challenge is compounded by the technical characteristics of AI development. Unlike nuclear weapons, where verification relies on well-understood physical signatures, AI capabilities emerge from complex software systems whose properties are difficult to verify externally. The rapid pace of development means that coordination agreements can quickly become obsolete, and the dual-use nature of many AI technologies makes it difficult to separate legitimate research from potentially dangerous applications. These factors create what game theorists recognize as a particularly challenging coordination environment—one where the stakes are high, verification is difficult, and the window for establishing cooperative norms may be closing rapidly.
 
-### The Epistemic Defense Problem
+## Current State of Coordination Initiatives
 
-| Challenge | Why It's Hard |
-|-----------|---------------|
-| **Public good** | Verification benefits everyone; hard to monetize |
-| **Scale mismatch** | Attack is cheap; defense is expensive |
-| **Attribution** | Hard to identify bad actors |
-| **Platform incentives** | Engagement > truth |
-| **Global information** | No jurisdiction covers everything |
+The landscape of AI coordination efforts has evolved significantly since 2022, driven by growing awareness of the risks posed by rapidly advancing capabilities. The most prominent early success has been the adoption of Responsible Scaling Policies (RSPs) by major labs including Anthropic, OpenAI, and Google DeepMind. These voluntary commitments represent a form of graduated coordination, where labs commit to implementing specific safety measures as their systems reach certain capability thresholds. While RSPs vary in specifics, they share a common structure of tying safety investments to measurable capability benchmarks, creating a coordination mechanism that scales with the potential risks.
 
----
+The UK AI Safety Summit series, beginning with the Bletchley Park summit in November 2023, represents the most significant attempt at international coordination to date. The resulting Bletchley Declaration, signed by 28 countries including the US, UK, China, and EU members, established unprecedented international consensus on AI safety principles. However, the declaration remained largely aspirational, with limited binding commitments or enforcement mechanisms. Subsequent summits in Seoul and Paris have focused on building implementation capacity and addressing more specific technical challenges.
 
-## Categories of Coordination Technology
+Industry coordination has advanced through initiatives like the Frontier Model Forum, established by leading AI companies to promote best practices and safety research. The forum has focused on developing common safety benchmarks, sharing threat intelligence, and coordinating on responsible disclosure of capabilities. However, these efforts remain largely voluntary and lack the verification mechanisms necessary to ensure consistent implementation across competitive environments.
 
-### 1. Commitment Mechanisms
+## Verification Infrastructure and Technical Mechanisms
 
-**Purpose**: Enable credible pre-commitment to cooperative behavior.
+The development of robust verification infrastructure represents one of the most technically challenging aspects of AI coordination. Current approaches span multiple domains, from hardware-level monitoring to cryptographic verification systems. Compute governance proposals, developed by researchers including Lennart Heim and others, offer perhaps the most concrete near-term verification mechanism. These proposals leverage the centralized nature of advanced chip production to create monitoring systems for large-scale AI training runs.
 
-| Mechanism | How It Works | AI Application |
-|-----------|--------------|----------------|
-| **Escrow/deposits** | Put money at risk; forfeit if defect | Labs deposit funds; forfeit if violate agreement |
-| **Smart contracts** | Automated enforcement | Compute governance contracts |
-| **Gradual commitment** | Start small; build trust | RSP-style escalating commitments |
-| **Third-party enforcement** | External arbiter | International AI body with teeth |
+The technical architecture of compute monitoring involves several key components. Know-your-customer requirements for GPU purchases above certain thresholds would create visibility into who has access to significant compute resources. Chip-level monitoring could track compute usage patterns consistent with large model training, while secure enclaves could enable verification without exposing proprietary information. Early pilot programs by organizations like Anthropic and Google have demonstrated the technical feasibility of some of these approaches, though significant challenges remain in balancing transparency with competitive concerns.
 
-**Examples**:
-- **Responsible Scaling Policies**: Labs commit to capability thresholds
-- **Compute governance**: Agreements enforced via hardware controls
+Cryptographic verification represents a more ambitious long-term possibility. Zero-knowledge proof systems could theoretically allow organizations to prove properties of their AI systems—such as compliance with safety constraints or absence of certain capabilities—without revealing sensitive implementation details. However, the computational overhead of current cryptographic approaches makes them impractical for verifying properties of large AI systems. Research into more efficient verification protocols, including developments in succinct argument systems and homomorphic encryption, could change this calculus over the next several years.
 
-### 2. Verification Infrastructure
+## Incentive Alignment and Economic Mechanisms
 
-**Purpose**: Allow actors to verify each other's compliance.
+Creating sustainable coordination requires addressing the underlying economic incentives that drive racing behavior. Current approaches range from direct subsidies for safety research to liability frameworks that internalize the costs of AI-related harms. The Biden administration's executive order on AI, implemented in October 2023, represents the most significant government intervention to date, requiring safety testing and reporting for models trained with more than 10^26 FLOPs and establishing the AI Safety Institute to develop evaluation standards.
 
-| Mechanism | How It Works | AI Application |
-|-----------|--------------|----------------|
-| **Auditing** | Third-party inspection | AI safety audits |
-| **Monitoring** | Continuous observation | Compute monitoring |
-| **Transparency** | Open information sharing | Model cards, safety reports |
-| **Cryptographic verification** | Mathematical proof | Secure compute verification |
+Liability frameworks offer a market-based approach to incentive alignment but face significant implementation challenges. Traditional product liability law struggles with AI systems because harms may emerge from complex interactions between training data, model architecture, and deployment context. Proposed solutions include strict liability regimes for certain AI applications, mandatory insurance requirements for high-capability systems, and algorithmic auditing standards that could inform liability determinations. The EU's AI Act, which came into effect in 2024, provides the most comprehensive regulatory framework to date, though its impact on coordination dynamics remains to be determined.
 
-**Examples**:
-- **AI safety audits**: UK AISI, third-party evaluations
-- **Compute reporting**: Know-your-customer for GPU clusters
+Insurance mechanisms could play a crucial role in pricing AI risks and creating market incentives for safety. Early AI insurance products focus primarily on traditional cyber risks, but emerging proposals would extend coverage to AI-specific harms including model misuse, capability overhang, and systemic risks. The development of actuarial models for AI risk assessment represents a significant technical challenge, requiring integration of technical risk assessments with traditional insurance underwriting practices.
 
-### 3. Reputation Systems
+## Game-Theoretic Foundations and Strategic Dynamics
 
-**Purpose**: Track and share information about actor behavior.
+The strategic structure underlying AI coordination problems exhibits characteristics of several well-studied game forms, each requiring different coordination approaches. The core AI safety challenge resembles a multiplayer prisoner's dilemma, where mutual cooperation (slower, safer development) produces better outcomes than mutual defection (racing), but individual defection (racing while others are cautious) yields the highest payoff for defectors. This structure makes coordination inherently unstable without external enforcement or repeated interaction effects.
 
-| Mechanism | How It Works | AI Application |
-|-----------|--------------|----------------|
-| **Track records** | Historical behavior data | Lab safety track records |
-| **Peer evaluation** | Actors rate each other | Research quality ratings |
-| **Public reporting** | Transparent performance data | Incident databases |
-| **Certification** | Third-party quality marks | Safety certifications |
+However, the game structure becomes more complex when considering the heterogeneity of actors and their capabilities. The situation often resembles an asymmetric coordination game, where leading AI laboratories face different strategic considerations than smaller players or governments. Leading labs may prefer coordination mechanisms that maintain their competitive advantages, while smaller players may view coordination as a way to prevent being permanently left behind. This asymmetry complicates the design of coordination mechanisms, as solutions that work for some actors may be unacceptable to others.
 
-**Examples**:
-- **AI Incident Database**: Track AI failures
-- **Lab rankings**: Informal reputation among researchers
+The repeated nature of AI development interactions creates opportunities for reputation-based coordination that don't exist in one-shot games. Organizations that consistently honor safety commitments can build reputations that enable more ambitious cooperation over time. However, the rapid pace of technological change means that the shadow of the future—the degree to which future interactions matter for current decisions—may be shorter than optimal for sustaining cooperation. This temporal mismatch between coordination benefits and competitive pressures represents a fundamental challenge for voluntary coordination mechanisms.
 
-### 4. Incentive Alignment
+## International Coordination and Governance Challenges
 
-**Purpose**: Change individual incentives to align with collective good.
+The global nature of AI development creates coordination challenges that extend beyond technical and economic considerations into the realm of international relations and sovereignty. Unlike domains such as nuclear nonproliferation, where the number of capable actors remains limited, AI development capacity is distributed across numerous countries and organizations with varying levels of state involvement. This distribution complicates traditional arms control approaches and requires new models for international cooperation.
 
-| Mechanism | How It Works | AI Application |
-|-----------|--------------|----------------|
-| **Subsidies** | Pay for safety investments | Government safety R&D funding |
-| **Liability** | Make harms costly | AI liability frameworks |
-| **Insurance** | Price risk | AI safety insurance |
-| **Taxes/fees** | Internalize externalities | Compute taxes |
+Current international coordination efforts face significant structural limitations. The lack of binding enforcement mechanisms means that agreements rely primarily on reputation effects and reciprocity. The dual-use nature of AI research makes it difficult to distinguish between legitimate scientific advancement and potentially dangerous capability development. National security considerations create incentives for non-transparency that conflict with verification requirements for effective coordination.
 
-**Examples**:
-- **EU AI Act fines**: Penalties for non-compliance
-- **AI liability proposals**: Various jurisdictions
+The emergence of distinct AI governance approaches in different jurisdictions further complicates coordination. The EU's comprehensive regulatory approach through the AI Act contrasts sharply with the more industry-led approach in the United States and the state-directed model emerging in China. These different approaches create challenges for companies operating globally and may lead to fragmentation of coordination efforts along geopolitical lines. However, they also provide opportunities for learning and eventual convergence on effective governance models.
 
-### 5. Communication Platforms
+## Safety Implications and Risk Assessment
 
-**Purpose**: Enable information sharing and negotiation.
+The success or failure of coordination technologies carries profound implications for AI safety outcomes. Effective coordination could enable the kind of gradual, safety-focused development trajectory that many researchers believe necessary for managing advanced AI risks. Coordination mechanisms that successfully slow racing dynamics could provide crucial time for safety research to keep pace with capability advancement. They could also enable the kind of coordinated response that may be necessary if dangerous capabilities emerge unexpectedly.
 
-| Mechanism | How It Works | AI Application |
-|-----------|--------------|----------------|
-| **Common knowledge** | Everyone knows that everyone knows | Public safety benchmarks |
-| **Cheap talk signaling** | Communicate intentions | Safety announcements |
-| **Negotiation forums** | Space for agreement | AI summits |
-| **Early warning** | Share threat information | Capability alerts |
+However, coordination mechanisms also create their own risks that must be carefully managed. Coordination frameworks dominated by current leading organizations could entrench existing power structures and limit beneficial innovation. Overly restrictive coordination could drive development underground or toward less safety-conscious actors. International coordination mechanisms could be weaponized by authoritarian regimes to limit AI development in democratic countries while continuing their own programs in secret.
 
-**Examples**:
-- **AI Safety Summits**: UK, Korea, France
-- **Lab coordination calls**: (Informal)
+The timing of coordination efforts relative to capability development trajectories represents a crucial consideration. Coordination mechanisms established too early may prove inadequate for managing more advanced systems, while efforts that wait until clear dangers emerge may come too late to prevent harm. This timing challenge is complicated by fundamental uncertainties about AI development trajectories and the difficulty of predicting when dangerous capabilities might emerge.
+
+## Near-Term Trajectory (1-2 Years)
+
+The next two years are likely to see significant expansion and formalization of current coordination initiatives. Responsible Scaling Policies are expected to evolve from general frameworks toward more specific, measurable commitments with clearer trigger conditions and response protocols. The development of standardized safety evaluations, led by efforts like the UK AI Safety Institute and US AISI, will provide common benchmarks that could form the basis for more sophisticated coordination agreements.
+
+Compute governance mechanisms are likely to see their first real-world implementations during this period. Pilot programs for chip-level monitoring and large-scale training run registration will provide crucial data about the feasibility and effectiveness of hardware-based verification approaches. The results of these pilots will significantly influence the trajectory of technical verification mechanisms and their adoption by industry and government stakeholders.
+
+International coordination efforts are expected to become more concrete and implementation-focused. The establishment of the International AI Safety Research Network, announced at the Seoul AI Safety Summit, represents a shift toward operational coordination among government AI safety institutes. Industry initiatives like the Frontier Model Forum are likely to expand their scope and membership, potentially evolving toward more formal coordination bodies with stronger enforcement mechanisms.
+
+## Medium-Term Outlook (2-5 Years)
+
+The medium-term trajectory for coordination technologies will likely be shaped by several converging trends. As AI capabilities continue to advance, the stakes of coordination failure will become increasingly apparent, potentially creating stronger political will for more ambitious coordination mechanisms. The maturation of safety evaluation methods will enable more sophisticated verification approaches that could support stronger coordination commitments.
+
+The development of more advanced cryptographic verification systems could enable new forms of coordination that balance transparency with competitive concerns. Zero-knowledge proof systems specifically designed for AI properties could allow organizations to prove safety properties of their systems without revealing proprietary information. The integration of such systems with hardware-level monitoring could create comprehensive verification infrastructures that support ambitious coordination agreements.
+
+Regulatory frameworks established during this period, particularly in major AI-developing regions, will significantly influence the landscape for coordination technologies. The implementation experience with the EU AI Act and similar regulations will provide crucial data about the effectiveness of different governance approaches. The success or failure of current voluntary coordination mechanisms will likely determine whether more coercive regulatory approaches become politically necessary.
+
+## Critical Uncertainties and Research Frontiers
+
+Several fundamental uncertainties will shape the development and effectiveness of coordination technologies. The tractability of AI safety verification remains an open question—while current approaches show promise for monitoring certain properties of AI systems, it's unclear whether verification can keep pace with increasing system complexity and capability. The development of more advanced AI systems may create verification challenges that current approaches cannot address.
+
+The stability of international cooperation on AI governance faces significant uncertainty. Geopolitical tensions, particularly between the US and China, could undermine coordination efforts just as they become most critical. The degree to which nations are willing to accept verification mechanisms that provide transparency into their AI development efforts remains unclear, particularly as AI capabilities become more directly relevant to military applications.
+
+The pace of AI development relative to coordination mechanism development represents perhaps the most critical uncertainty. If AI capabilities advance faster than our ability to develop and implement effective coordination mechanisms, we may face a world where dangerous capabilities emerge before adequate governance structures are in place. Conversely, if coordination development can keep pace with or exceed capability development, we may be able to navigate the transition to advanced AI systems safely. The resolution of this race between coordination and capability will likely determine the trajectory of AI development for decades to come.
 
 ---
-
-## Current Initiatives
-
-### AI Governance
-
-| Initiative | Type | Status |
-|------------|------|--------|
-| **Frontier AI Forum** | Lab coordination | Active |
-| **UK AI Safety Summit** | International negotiation | Ongoing |
-| **Responsible Scaling Policies** | Self-commitment | Adopted by some labs |
-| **Model Spec / System Cards** | Transparency | Growing |
-| **Compute governance proposals** | Verification infrastructure | Research stage |
-
-### Epistemic Defense
-
-| Initiative | Type | Status |
-|------------|------|--------|
-| **C2PA (content provenance)** | Verification infrastructure | Deploying |
-| **Platform transparency reports** | Public reporting | Established |
-| **Fact-checking networks** | Coordination among verifiers | Active |
-| **ISAC for AI** | Information sharing | Proposed |
-
----
-
-## Design Principles
-
-### 1. Start with Willing Actors
-
-**Principle**: Don't need universal adoption to start.
-
-| Stage | Approach |
-|-------|----------|
-| **Coalition** | Like-minded actors commit first |
-| **Demonstration** | Show coordination works |
-| **Expansion** | Others join as benefits become clear |
-| **Critical mass** | Eventually becomes standard |
-
-### 2. Make Verification Easy
-
-**Principle**: Compliance should be verifiable without excessive burden.
-
-| Approach | Mechanism |
-|----------|-----------|
-| **Technical verification** | Cryptography, monitoring |
-| **Third-party audits** | Independent verification |
-| **Transparency defaults** | Open by default |
-| **Spot checks** | Random but meaningful |
-
-### 3. Graduated Enforcement
-
-**Principle**: Match penalties to violations; allow course correction.
-
-| Level | Response |
-|-------|----------|
-| **Warning** | First minor violation |
-| **Public disclosure** | Transparency about failures |
-| **Exclusion** | Remove from coordination mechanisms |
-| **Legal/financial** | Serious violations |
-
-### 4. Preserve Competition
-
-**Principle**: Coordination shouldn't become cartel.
-
-| Safeguard | Purpose |
-|-----------|---------|
-| **Antitrust exemptions** | Only for safety coordination |
-| **Open standards** | Anyone can participate |
-| **Scope limits** | Coordinate on safety, not market |
-| **Sunset provisions** | Re-evaluate periodically |
-
----
-
-## Game Theory Foundations
-
-### Changing the Game
-
-| Game Structure | Without Coordination | With Coordination |
-|----------------|---------------------|-------------------|
-| **Prisoner's Dilemma** | Both defect | Commit to cooperate |
-| **Stag Hunt** | Coordination failure | Signal intentions |
-| **Chicken** | Dangerous brinkmanship | Commit to safety |
-
-### What Makes Coordination Work
-
-| Factor | Mechanism |
-|--------|-----------|
-| **Repeated interaction** | Future matters; reputation counts |
-| **Observable actions** | Can see what others do |
-| **Credible punishment** | Defectors are penalized |
-| **Common knowledge** | Everyone knows the rules |
-| **Focal points** | Clear standards to coordinate on |
-
----
-
-## Challenges
-
-### Technical
-
-| Challenge | Explanation |
-|-----------|-------------|
-| **Verification difficulty** | Some behaviors hard to observe |
-| **Gaming** | Actors optimize for metrics, not intent |
-| **Complexity** | AI systems hard to evaluate |
-| **Speed** | Agreements can't keep pace with technology |
-
-### Political
-
-| Challenge | Explanation |
-|-----------|-------------|
-| **Sovereignty** | Nations resist external oversight |
-| **Competition** | Strategic advantage from non-cooperation |
-| **Trust deficits** | Actors don't trust each other |
-| **Capture** | Coordination mechanisms can be captured |
-
-### Economic
-
-| Challenge | Explanation |
-|-----------|-------------|
-| **Costs** | Coordination is expensive |
-| **Free riding** | Some benefit without contributing |
-| **Market pressure** | Competition punishes safety investment |
-| **Short-termism** | Coordination benefits are long-term |
-
----
-
-## Key Uncertainties
 
 <KeyQuestions
   questions={[
-    "Can coordination mechanisms keep pace with AI development speed?",
-    "Will major powers participate in international AI coordination?",
-    "Can verification work for complex AI systems?",
-    "How do we coordinate when actors have fundamentally different values?",
-    "What's the right scope for AI safety coordination vs antitrust concerns?"
+    "Can technical verification mechanisms scale to verify properties of superintelligent AI systems?",
+    "Will geopolitical competition ultimately undermine international AI coordination efforts?",
+    "Can voluntary coordination mechanisms evolve sufficient enforcement power without becoming captured by incumbent players?",
+    "How can coordination frameworks adapt to rapidly changing AI capability profiles and risk landscapes?",
+    "What role will smaller actors and open-source development play in coordination frameworks designed for large labs?",
+    "Can coordination technologies balance safety objectives with innovation incentives and competitive dynamics?"
   ]}
 />
-
----
-
-## Research and Resources
-
-### Academic
-
-| Field | Relevant Work |
-|-------|---------------|
-| **Game theory** | Mechanism design, repeated games |
-| **International relations** | Arms control, treaty verification |
-| **Economics** | Externalities, public goods |
-| **Computer science** | Cryptographic verification |
-
-### Organizations
-
-| Organization | Focus |
-|--------------|-------|
-| **[GovAI](https://www.governance.ai/)** | AI governance research |
-| **[CSET](https://cset.georgetown.edu/)** | Technology policy |
-| **[Future of Life Institute](https://futureoflife.org/)** | Coordination initiatives |
-| **[RAND](https://www.rand.org/)** | International security |
-
-### Key Readings
-
-- Schelling (1960): "The Strategy of Conflict"
-- Ostrom (1990): "Governing the Commons"
-- [Dafoe (2020): AI Governance research agenda](https://www.governance.ai/)
-- [Compute governance literature](https://arxiv.org/abs/2402.08797)
-

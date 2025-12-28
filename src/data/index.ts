@@ -6,7 +6,7 @@
  */
 
 import database from './database.json';
-import type { Expert, Organization, Estimate, Crux, GlossaryTerm, Entity, StructuredLikelihood, StructuredTimeframe, ResearchMaturity } from './schema';
+import type { Expert, Organization, Estimate, Crux, GlossaryTerm, Entity, StructuredLikelihood, StructuredTimeframe, ResearchMaturity, Resource } from './schema';
 
 // =============================================================================
 // DATA ACCESS
@@ -18,6 +18,7 @@ export const estimates: Estimate[] = database.estimates as Estimate[];
 export const cruxes: Crux[] = database.cruxes as Crux[];
 export const glossary: GlossaryTerm[] = database.glossary as GlossaryTerm[];
 export const entities: Entity[] = (database as any).entities as Entity[] || [];
+export const resources: Resource[] = (database as any).resources as Resource[] || [];
 
 // Derived data (computed at build time)
 export const backlinks: Record<string, Array<{ id: string; type: string; title: string; relationship?: string }>> =
@@ -98,6 +99,14 @@ export function getGlossaryTerm(idOrTerm: string): GlossaryTerm | undefined {
   return glossary.find(
     (t) => t.id === idOrTerm || t.term.toLowerCase() === idOrTerm.toLowerCase()
   );
+}
+
+export function getResourceById(id: string): Resource | undefined {
+  return resources.find((r) => r.id === id);
+}
+
+export function getResourcesByIds(ids: string[]): Resource[] {
+  return ids.map(id => getResourceById(id)).filter((r): r is Resource => r !== undefined);
 }
 
 export function getPageById(id: string): Page | undefined {
