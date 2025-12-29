@@ -13,7 +13,7 @@
  *   --ci              Output JSON for CI pipelines
  *   --fail-fast       Stop on first failure
  *   --skip=<check>    Skip specific checks (comma-separated)
- *                     Available: data, links, orphans, mdx, style, staleness, consistency, sidebar, types
+ *                     Available: data, links, orphans, mdx, style, staleness, consistency, sidebar, types, dollars
  *
  * Exit codes:
  *   0 = All checks passed
@@ -110,6 +110,12 @@ const CHECKS = [
     name: 'Type Consistency',
     script: 'validate-types.mjs',
     description: 'UI components handle all entity types from schema',
+  },
+  {
+    id: 'dollars',
+    name: 'Dollar Sign Escaping',
+    script: 'validate-dollar-signs.mjs',
+    description: 'Currency values escaped to prevent LaTeX math parsing',
   },
 ];
 

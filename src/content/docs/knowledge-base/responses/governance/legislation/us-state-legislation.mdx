@@ -1,32 +1,69 @@
 ---
 title: "US State AI Legislation"
-description: "Comprehensive analysis of AI regulation across US states, tracking the evolution from ~40 bills in 2019 to 400+ in 2024. States are serving as policy laboratories with enacted laws in Colorado, Illinois, California, and others covering employment, deepfakes, and consumer protection, creating a complex patchwork that may ultimately drive federal uniformity."
+description: "Comprehensive analysis of AI regulation across US states, tracking the evolution from ~40 bills in 2019 to 1,000+ in 2025. States are serving as policy laboratories with enacted laws in Colorado, Texas, Illinois, California, and Tennessee covering employment, deepfakes, and consumer protection, creating a complex patchwork that may ultimately drive federal uniformity."
 sidebar:
   order: 10
-quality: 52
-llmSummary: "US state AI legislation grew from ~40 bills in 2019 to 400+ in 2024, with Colorado enacting the most comprehensive risk-based framework (SB 21-205), California leading on deepfakes, and Illinois pioneering employment AI regulation. The failed California SB 1047 frontier AI bill demonstrates tensions between state innovation and federal preemption, with states effectively becoming de facto standard-setters in the absence of federal action."
-lastEdited: "2025-12-24"
+quality: 80
+llmSummary: "US state AI legislation grew from ~40 bills in 2019 to 1,080+ in 2025, with Colorado enacting the most comprehensive risk-based framework (SB 24-205, effective June 2026), Texas passing TRAIGA (effective January 2026), California leading on deepfakes, and Illinois pioneering employment AI regulation. The vetoed California SB 1047 frontier AI bill demonstrates tensions between state innovation and federal preemption. Of 1,080 bills introduced in 2025, only 118 (11%) became law, with deepfakes seeing the highest passage rate (68 of 301 bills enacted)."
+lastEdited: "2025-12-28"
 importance: 68.5
 ---
-import {DataInfoBox} from '../../../../../../components/wiki';
+import {DataInfoBox, R} from '../../../../../../components/wiki';
 
 <DataInfoBox entityId="us-state-legislation" />
 
 ## Overview
 
-In the absence of comprehensive federal AI legislation, US states have emerged as the primary laboratories for artificial intelligence governance. This state-led approach represents one of the most significant policy developments in AI safety, with profound implications for how AI systems are regulated, deployed, and developed across the United States. From approximately 40 AI-related bills introduced in 2019, the landscape has exploded to over 400 proposed bills across all 50 states in 2024, marking a ten-fold increase in legislative activity.
+In the absence of comprehensive federal AI legislation, US states have emerged as the primary laboratories for artificial intelligence governance. This state-led approach represents one of the most significant policy developments in AI safety, with profound implications for how AI systems are regulated, deployed, and developed across the United States. From approximately 40 AI-related bills introduced in 2019, the landscape has exploded to over 1,080 proposed bills in 2025, according to the <R id="1e8d4f5f6cea8c36">National Conference of State Legislatures</R>, representing a twenty-five-fold increase in legislative activity.
 
 This rapid proliferation of state AI legislation creates both opportunities and challenges for AI safety. On the positive side, states are pioneering innovative regulatory approaches, from Colorado's comprehensive algorithmic impact assessments to Tennessee's artist protection laws. These diverse experiments provide valuable real-world data on different regulatory frameworks and their effectiveness. However, the resulting patchwork of laws also creates compliance burdens for AI developers and potential jurisdictional arbitrage, where companies may relocate to avoid stricter regulations.
 
 The trajectory toward state leadership in AI governance appears driven by federal inaction, with Congress unable to pass comprehensive AI legislation despite numerous proposals. States like California and Colorado are effectively becoming de facto national standard-setters, as companies often find it more efficient to comply with the strictest requirements nationwide rather than maintain separate systems for different jurisdictions. This dynamic mirrors historical patterns in areas like data privacy and emissions standards, where state innovation eventually influenced federal policy.
 
+## Legislative Activity Summary
+
+| Year | Bills Introduced | Bills Enacted | Passage Rate | Key Developments |
+|------|-----------------|---------------|--------------|------------------|
+| 2019 | ~40 | 3 | ~8% | Illinois AI Video Interview Act pioneers employment AI regulation |
+| 2020 | ~70 | 5 | ~7% | COVID accelerates digital transformation and AI adoption |
+| 2021 | ~130 | 8 | ~6% | Growing awareness of algorithmic bias in hiring and lending |
+| 2022 | ~200 | 12 | ~6% | NYC Local Law 144 influences state approaches |
+| 2023 | ~300 | 25 | ~8% | AI-generated deepfake concerns surge after viral incidents |
+| 2024 | 635 | 99 | 16% | Colorado AI Act, Tennessee ELVIS Act, California SB 1047 vetoed |
+| 2025 | 1,080+ | 118 | 11% | Texas TRAIGA, continued deepfake focus, employment protections |
+
+*Sources: <R id="0870596acf7e24b1">NCSL AI Legislation Database</R>, <R id="78de5f5b1083aa03">MultiState AI Tracker</R>, <R id="2106019e617f115e">IAPP State AI Governance Tracker</R>*
+
+### 2025 Legislation by Category
+
+| Category | Bills Introduced | Bills Enacted | Notes |
+|----------|-----------------|---------------|-------|
+| Deepfakes | 301 | 68 | Highest passage rate; mostly criminal/civil penalties for sexual deepfakes |
+| NCII/CSAM | 53 | 0 | Many folded into broader deepfake legislation |
+| Elections | 33 | 0 | Constitutional concerns after AB 2839 blocked in California |
+| Generative AI Transparency | 31 | 2 | Disclosure requirements for AI-generated content |
+| High-Risk AI/ADMT | 29 | 2 | Colorado-style comprehensive frameworks |
+| Government Use | 22 | 4 | Impact assessments and oversight mechanisms |
+| Employment | 13 | 6 | Highest success rate for substantive private sector obligations |
+| Healthcare | 12 | 2 | Clinical decision support transparency |
+
+*Source: <R id="9fb4f55faf4125da">Retail Industry Leaders Association 2025 End-of-Session Recap</R>*
+
 ## Major Enacted Legislation
 
-### Colorado AI Act (SB 21-205): The Comprehensive Framework
+### Colorado AI Act (SB 24-205): The Comprehensive Framework
 
-Colorado's AI Act, signed in May 2024 and taking effect in February 2026, represents the most comprehensive state-level AI regulation to date. The law establishes a risk-based framework targeting "high-risk artificial intelligence systems" that make consequential decisions affecting legal, material, or similarly significant individual interests. Companies deploying such systems must conduct algorithmic impact assessments, implement governance programs, and provide clear disclosures to consumers.
+Colorado's AI Act, signed by Governor Jared Polis on May 17, 2024, represents the most comprehensive state-level AI regulation to date. Originally set to take effect February 1, 2026, the implementation date was <R id="bfea23eedfdc3de2">postponed to June 30, 2026</R> when Governor Polis signed SB 25B-004 on August 28, 2025. The law establishes a risk-based framework targeting "high-risk artificial intelligence systems" that make consequential decisions affecting legal, material, or similarly significant individual interests.
 
-The Colorado law's risk-based approach specifically covers AI systems used in employment, education, financial services, healthcare, housing, insurance, and legal services. Algorithmic impact assessments must evaluate potential discrimination, identify affected protected classes, and document safeguards against bias. The law includes enforcement mechanisms through the state attorney general's office and provides for civil penalties up to \$20,000 per violation. Notably, the legislation survived significant industry lobbying and represents a model that other states are actively considering adopting.
+| Requirement | Developer Obligations | Deployer Obligations |
+|-------------|----------------------|----------------------|
+| Risk Assessment | Document reasonably foreseeable uses and known harmful uses | Complete annual impact assessment for each high-risk system |
+| Governance | Make documentation available to deployers | Implement risk management policy and program |
+| Transparency | Provide general statement on system capabilities | Notify consumers before AI makes consequential decisions |
+| Discrimination Prevention | Use reasonable care to prevent algorithmic discrimination | Evaluate and mitigate bias in deployment context |
+| Consumer Rights | N/A | Provide contact information and plain-language system description |
+
+The Colorado law's risk-based approach specifically covers AI systems used in employment, education, financial services, healthcare, housing, insurance, and legal services. According to the <R id="83f901ddb5c484ea">American Bar Association analysis</R>, algorithmic impact assessments must evaluate potential discrimination, identify affected protected classes, and document safeguards against bias. The law grants the <R id="35aa12c9e0592b30">Colorado Attorney General exclusive enforcement authority</R> and provides for civil penalties under the Colorado Consumer Protection Act. Notably, the legislation survived significant industry lobbying and represents a model that other states are actively considering adopting.
 
 ### California's Deepfake Legislation Suite
 
@@ -36,25 +73,113 @@ AB 602 (2019) addresses non-consensual intimate imagery created through AI, esta
 
 ### Illinois AI Video Interview Act: Employment Regulation Pioneer
 
-Illinois broke new ground in 2020 with the first state law specifically regulating AI in employment contexts. The AI Video Interview Act requires employers to notify job candidates when AI will analyze video interviews, obtain informed consent before analysis begins, and destroy recorded videos upon candidate request. While seemingly narrow, this law has had outsized influence, inspiring similar employment AI regulations across multiple states.
+Illinois <R id="49157a44ef644e3f">became the first state</R> to enact a statute regulating employer use of AI to analyze job applicants when it passed HB2557, the Artificial Intelligence Video Interview Act (AIVIA), effective January 1, 2020. The law applies to all employers using AI tools to analyze video interviews for positions based in Illinois, requiring notice and consent before interviews, explanation of how the AI works, and deletion of videos within 30 days upon request.
 
-The Illinois law's practical impact extends beyond its technical requirements. Major recruiting platforms and employers have modified their practices nationwide to comply with Illinois standards, effectively making the law's disclosure and consent requirements a de facto national standard. Employment lawyers report that the law has increased awareness of AI use in hiring, leading to more transparent practices even in non-covered jurisdictions.
+| Requirement | Details |
+|------------|---------|
+| Notice | Notify applicants before interview that AI may be used for analysis |
+| Explanation | Provide information on how AI works and what characteristics it evaluates |
+| Consent | Obtain applicant consent before using AI analysis |
+| Sharing Limits | Videos may only be shared with those whose expertise is necessary for evaluation |
+| Deletion Rights | Destroy videos within 30 days of applicant request, including third-party copies |
+
+The Illinois law's practical impact extends beyond its technical requirements. Major recruiting platforms and employers have modified their practices nationwide to comply with Illinois standards, effectively making the law's disclosure and consent requirements a de facto national standard. Notably, on <R id="0d1e8ad892d1f628">August 9, 2024, Illinois enacted HB 3773</R>, amending the Illinois Human Rights Act to prohibit discriminatory AI use in employment decisions, effective January 1, 2026. Unlike AIVIA, employers using AI covered by Illinois's <R id="01709d77146f05bd">Biometric Information Privacy Act</R> (BIPA) for facial recognition in video analysis may face additional liability under BIPA's private right of action with statutory damages of \$1,000-\$1,000 per violation.
 
 ### Tennessee ELVIS Act: Protecting Artistic Identity
 
-Tennessee's Ensuring Likeness Voice and Image Security (ELVIS) Act, enacted in 2024, creates property rights in voice likeness and prohibits AI-generated content that mimics voices without consent. The law includes both civil remedies and criminal penalties, with enhanced protections for deceased performers' estates. This legislation reflects growing concern about AI's impact on creative industries and sets a precedent for protecting individual identity rights against AI manipulation.
+Tennessee's Ensuring Likeness Voice and Image Security (ELVIS) Act, <R id="5976d3e9be0cd5a1">signed by Governor Bill Lee on March 21, 2024</R>, became the first enacted legislation in the United States specifically designed to protect musicians from unauthorized AI voice cloning. The law, which took effect July 1, 2024, creates enforceable property rights in a person's "name, photograph, voice, or likeness" and prohibits AI-generated content that mimics voices without consent. The legislation passed with <R id="47ac3fd490b2f092">unanimous bipartisan support</R>: 93-0 in the House and 30-0 in the Senate.
 
-The ELVIS Act's naming pays homage to Tennessee's musical heritage while addressing very modern concerns. The law covers both commercial and non-commercial uses of AI voice cloning, though it includes exceptions for news reporting, criticism, and parody. Early enforcement efforts have focused on commercial exploitation cases, though the law's broader implications for AI training data and fair use remain legally uncertain.
+| Aspect | Details |
+|--------|---------|
+| Effective Date | July 1, 2024 |
+| Criminal Penalty | Class A misdemeanor for unauthorized AI voice cloning |
+| Civil Remedies | Private right of action for rights holders |
+| Platform Liability | Creates liability for distributing tools whose "primary purpose" is unauthorized voice/image generation |
+| Enforcement | Rights holders or exclusive licensees (e.g., record labels) may bring actions |
+| Exceptions | News reporting, criticism, parody |
+
+The law was catalyzed by a viral AI-generated song in spring 2023 that mimicked Drake and The Weeknd, receiving millions of streams before removal. According to <R id="9cfd43a0baa05d77">NPR</R>, the legislation received support from RIAA, Academy of Country Music, ASCAP, BMI, SAG-AFTRA, and the National Music Publishers' Association. The ELVIS Act replaces Tennessee's 1984 Personal Rights Protection Act (originally passed to extend Elvis Presley's publicity rights after his death) and has become a model for similar legislation in other states.
+
+### Texas Responsible AI Governance Act (TRAIGA)
+
+On June 22, 2025, Texas Governor Greg Abbott <R id="4441212239e26fe1">signed TRAIGA into law</R>, making Texas the fourth state (after Colorado, Utah, and California) to pass comprehensive AI-specific legislation. The law takes effect January 1, 2026. However, the <R id="3da81210253ac6b5">final version significantly narrowed its scope</R> from the original bill, focusing primarily on government use of AI rather than broad private sector obligations.
+
+| Provision | Details |
+|-----------|---------|
+| Prohibited Uses | Behavioral manipulation, discrimination, CSAM, unlawful deepfakes, constitutional rights infringement |
+| Advisory Council | 7-member Texas AI Advisory Council appointed by governor, lt. governor, and speaker |
+| Regulatory Sandbox | Establishes sandbox program for AI developers |
+| Enforcement | Exclusive Texas Attorney General authority; no private right of action |
+| Civil Penalties | \$10,000-\$12,000/curable violation; \$10,000-\$100,000/uncurable violation; \$1,000-\$10,000/day ongoing |
+| Private Sector | No disclosure requirements for private employers (removed from original bill) |
+
+The Texas approach represents a notably lighter regulatory touch compared to Colorado's comprehensive framework. According to <R id="1a561c2cd77a69aa">Littler Mendelson analysis</R>, TRAIGA 2.0 imposes no requirement that private employers disclose their use of AI in employment decisions, reflecting Texas's traditional preference for business-friendly regulation. The regulatory sandbox provision is designed to encourage AI innovation while allowing regulators to study emerging risks.
 
 ## Failed and Vetoed Legislation
 
 ### California SB 1047: The Frontier AI Controversy
 
-Perhaps no single piece of state AI legislation has generated more national attention than California's SB 1047, the Safe and Secure Innovation for Frontier Artificial Intelligence Models Act. Passed by the legislature in August 2024, the bill would have required extensive safety testing and reporting for AI models trained with more than \$100 million in compute. Governor Gavin Newsom's veto in September 2024 marked a significant moment in state AI regulation, with the governor explicitly citing concerns about federal preemption and the need for national rather than state-by-state approaches to frontier AI.
+Perhaps no single piece of state AI legislation has generated more national attention than California's SB 1047, the Safe and Secure Innovation for Frontier Artificial Intelligence Models Act. Passed by the legislature in August 2024, the bill would have required extensive safety testing and reporting for AI models trained with more than \$100 million in compute or using more than 10^26 floating-point operations. <R id="bca8b99da9428cf5">Governor Gavin Newsom vetoed the bill on September 29, 2024</R>, criticizing it as "a solution that is not informed by an empirical trajectory analysis of AI systems and capabilities."
 
-The SB 1047 debate revealed deep divisions within the AI community. Supporters, including many AI safety researchers, argued that the bill's safety testing requirements were modest and necessary given the potential risks of increasingly powerful AI systems. OpenAI, Anthropic, and other major AI companies opposed the legislation, arguing it would stifle innovation and create compliance burdens that could drive AI development offshore. The governor's veto message acknowledged these concerns while calling for federal action, effectively punting the issue to Congress.
+| Stakeholder Position | Organizations | Key Arguments |
+|---------------------|---------------|---------------|
+| **Supporters** | Center for AI Safety, Anthropic (initially), Elon Musk, 113+ AI lab employees, LA Times editorial board | Safety testing requirements modest; potential catastrophic risks justify precaution |
+| **Opponents** | OpenAI, Meta, House Speaker Pelosi, 8 congressional Democrats | Would stifle innovation; drive development offshore; create compliance burdens |
+| **Concerns Cited in Veto** | Governor's Office | Targets model size rather than deployment risk; could create false sense of security |
 
-The failure of SB 1047 has important implications for future state AI legislation. It suggests that attempts to regulate the most advanced AI systems may face higher legal and political barriers than sector-specific applications. However, the bill's passage through the legislature demonstrates significant support for AI safety regulation, and similar proposals are expected in other states with modifications to address Newsom's concerns.
+According to <R id="006e7685ee710738">Gibson Dunn analysis</R>, the bill would have made tech companies legally liable for harms caused by AI models and mandated "kill switch" capabilities. The <R id="61d484269e6dbd8c">Carnegie Endowment</R> notes that Newsom signed 17 other AI governance bills in the 30 days before vetoing SB 1047, and announced a partnership with AI experts to develop "an empirical, science-based trajectory analysis of frontier models."
+
+The failure of SB 1047 has important implications for future state AI legislation. It suggests that attempts to regulate the most advanced AI systems may face higher legal and political barriers than sector-specific applications. However, the bill's passage through the legislature demonstrates significant support for AI safety regulation. The deadline for lawmakers to override Newsom's veto (November 30, 2024) passed without action.
+
+## Comparative State Approaches
+
+import {Mermaid} from '../../../../../../components/wiki';
+
+<Mermaid client:load chart={`
+flowchart TD
+    subgraph Federal["Federal Inaction"]
+        Congress[Congress<br/>No comprehensive AI law]
+    end
+
+    subgraph States["State Response Spectrum"]
+        direction LR
+        Comprehensive[Comprehensive<br/>Colorado SB 24-205]
+        Targeted[Targeted<br/>Tennessee ELVIS Act]
+        Light[Light Touch<br/>Texas TRAIGA]
+    end
+
+    subgraph Outcomes["Regulatory Outcomes"]
+        Patchwork[Patchwork of Laws]
+        DeFacto[De Facto National Standards]
+        RaceBottom[Race to Bottom Risk]
+    end
+
+    Congress --> States
+    Comprehensive --> Patchwork
+    Targeted --> DeFacto
+    Light --> RaceBottom
+
+    Patchwork --> Compliance[Compliance Burden]
+    DeFacto --> Harmonization[Eventual Harmonization]
+    RaceBottom --> Arbitrage[Jurisdictional Arbitrage]
+
+    style Congress fill:#ffcccc
+    style Comprehensive fill:#99ccff
+    style Targeted fill:#99ff99
+    style Light fill:#ffff99
+`} />
+
+### State Regulatory Comparison
+
+| State | Key Legislation | Approach | Effective Date | Private Sector Scope | Enforcement |
+|-------|----------------|----------|----------------|---------------------|-------------|
+| **Colorado** | SB 24-205 | Comprehensive risk-based | June 30, 2026 | Broad: employment, housing, healthcare, financial services | AG exclusive; UCPA penalties |
+| **Texas** | TRAIGA | Government-focused | January 1, 2026 | Limited: prohibited uses only | AG exclusive; \$10K-\$100K/violation |
+| **Illinois** | AIVIA + HB 3773 | Employment-specific | 2020 / 2026 | Hiring AI only | No private right (AIVIA); IHRA enforcement (HB 3773) |
+| **Tennessee** | ELVIS Act | Voice/likeness protection | July 1, 2024 | Creative industries | Private right + criminal penalties |
+| **California** | AB 730, AB 602, AB 2655 | Deepfake-targeted | 2019-2024 | Political and NCII deepfakes | Civil + criminal |
+
+*Source: <R id="9ba6666750b39e29">Orrick US State AI Law Tracker</R>*
 
 ## Current Regulatory Categories and Approaches
 
@@ -96,13 +221,18 @@ The focus on specific applications rather than general AI capabilities has prove
 
 ## Future Trajectory and Predictions
 
-### Near-term Developments (1-2 years)
+### Near-term Developments (2026)
 
-The immediate future of state AI legislation will likely be shaped by early implementation experiences with laws already enacted. Colorado's AI Act will begin enforcement in February 2026, providing the first real-world test of comprehensive state AI regulation. Early compliance experiences and any enforcement actions will significantly influence other states' approaches to AI legislation.
+The immediate future of state AI legislation will be shaped by implementation experiences with major laws taking effect. Colorado's AI Act enforcement begins June 30, 2026, and Texas TRAIGA takes effect January 1, 2026, providing the first real-world tests of comprehensive state AI regulation. Illinois's HB 3773 anti-discrimination provisions also become effective January 1, 2026. Early compliance experiences and any enforcement actions will significantly influence other states' approaches.
 
-Several major states including New York, Massachusetts, and Washington are expected to pass significant AI legislation in 2025. These laws will likely focus on employment AI regulation and consumer protection rather than frontier AI systems, following the path established by successful state laws rather than the controversial approach of California's vetoed SB 1047.
+| Implementation Timeline | Jurisdiction | What to Watch |
+|------------------------|--------------|---------------|
+| January 1, 2026 | Texas | TRAIGA enforcement; regulatory sandbox activity |
+| January 1, 2026 | Illinois | HB 3773 anti-discrimination provisions for employment AI |
+| June 30, 2026 | Colorado | SB 24-205 enforcement; algorithmic impact assessment compliance |
+| 2026 Sessions | NY, MA, WA | New comprehensive proposals likely |
 
-The federal landscape will also influence state activity. If Congress passes comprehensive AI legislation in 2025-2026, it could preempt state laws or establish a federal floor with state authority to exceed federal standards. The November 2024 elections and subsequent federal policy priorities will significantly shape this dynamic.
+The federal landscape remains uncertain. The 2024 election results and subsequent federal policy priorities will shape the preemption question significantly. If Congress passes comprehensive AI legislation in 2026, it could preempt state laws or establish a federal floor with state authority to exceed federal standards.
 
 ### Medium-term Evolution (2-5 years)
 
@@ -113,6 +243,15 @@ Interstate coordination mechanisms will likely emerge as the compliance burden o
 Federal preemption questions will likely be resolved through either Congressional action or court decisions. If federal legislation emerges, state laws will need to adapt to federal standards. If federal action continues to lag, constitutional challenges to state AI laws will likely clarify the boundaries of state authority over AI regulation.
 
 ## Key Uncertainties and Open Questions
+
+| Uncertainty | Current Status | Resolution Timeline | Impact on AI Safety |
+|-------------|---------------|---------------------|---------------------|
+| Federal preemption | No comprehensive federal AI law | 2025-2027 | High: determines whether state experimentation continues |
+| Commerce Clause challenges | No SCOTUS ruling on AI regulation | 2026-2028 | High: could invalidate state laws regulating interstate AI services |
+| Deepfake First Amendment limits | AB 2839 blocked; AB 730 upheld narrowly | 2025-2027 | Medium: shapes permissible content regulation |
+| Colorado SB 24-205 effectiveness | Enforcement begins June 2026 | 2027-2028 | High: template for other states if successful |
+| Algorithmic audit technical feasibility | Untested at scale | 2026-2028 | Medium: determines viability of key compliance mechanism |
+| Interstate coordination | NAAG beginning coordination | 2026-2029 | Medium: could harmonize or fragment further |
 
 ### Constitutional and Legal Boundaries
 
