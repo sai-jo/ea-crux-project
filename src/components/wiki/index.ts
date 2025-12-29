@@ -63,6 +63,7 @@ export { ConceptsDirectory } from './ConceptsDirectory';
 
 // Risk relationship diagrams
 export { RiskRelationshipDiagram } from './RiskRelationshipDiagram';
+export { default as ParameterFlowDiagram } from './ParameterFlowDiagram';
 
 // Analytical models
 export { ModelsList } from './ModelsList';

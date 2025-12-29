@@ -7,11 +7,11 @@ sidebar:
 lastEdited: "2025-12-29"
 ---
 
-import {Mermaid, RiskRelationshipDiagram} from '../../../../components/wiki';
+import {Mermaid, ParameterFlowDiagram} from '../../../../components/wiki';
 
 ## Overview
 
-Key Parameters are foundational societal variables that can **increase or decrease** based on various factors, including AI development and deployment. Unlike "risks" (which frame things negatively) or "interventions" (which frame things positively), parameters provide a **symmetric framework** for understanding how AI affects important aspects of society.
+Key Parameters are foundational societal variables that AI development and deployment can shift in either direction. Unlike "risks" (which frame things negatively) or "interventions" (which frame things positively), parameters provide a **symmetric framework** for understanding how AI affects important aspects of society.
 
 This framing is more analytically useful because:
 
@@ -24,70 +24,53 @@ This framing is more analytically useful because:
 
 ## How Parameters, Risks, and Interventions Connect
 
-This diagram shows how key parameters (purple) are affected by risks (red) that decrease them and interventions (green) that increase them, with metrics (blue) that measure their levels.
+This interactive diagram shows how both risks (red) and interventions (green) affect parameters (purple). Risks decrease parameter values while interventions increase them. Click and drag to pan, scroll to zoom.
 
-<RiskRelationshipDiagram
+<ParameterFlowDiagram
   client:load
-  title=""
-  layout="manual"
-  width={1100}
-  height={600}
+  height={450}
   nodes={[
-    // RISKS (left column) - Red
-    { id: 'deceptive-alignment', title: 'Deceptive Alignment', href: '/knowledge-base/risks/accident/deceptive-alignment/', x: 0, y: 8, color: '#dc2626' },
-    { id: 'reward-hacking', title: 'Reward Hacking', href: '/knowledge-base/risks/accident/reward-hacking/', x: 0, y: 22, color: '#dc2626' },
-    { id: 'racing-dynamics', title: 'Racing Dynamics', href: '/knowledge-base/risks/structural/racing-dynamics/', x: 0, y: 36, color: '#dc2626' },
-    { id: 'trust-erosion', title: 'Trust Erosion', href: '/knowledge-base/risks/epistemic/trust-erosion/', x: 0, y: 50, color: '#dc2626' },
-    { id: 'erosion-of-agency', title: 'Erosion of Agency', href: '/knowledge-base/risks/structural/erosion-of-agency/', x: 0, y: 64, color: '#dc2626' },
-    { id: 'bioweapons', title: 'AI Bioweapons', href: '/knowledge-base/risks/misuse/bioweapons/', x: 0, y: 78, color: '#dc2626' },
-    { id: 'cyberweapons', title: 'AI Cyberweapons', href: '/knowledge-base/risks/misuse/cyberweapons/', x: 0, y: 92, color: '#dc2626' },
+    // RISKS (will be placed on left)
+    { id: 'deceptive-alignment', title: 'Deceptive Alignment', type: 'risk', href: '/knowledge-base/risks/accident/deceptive-alignment/' },
+    { id: 'reward-hacking', title: 'Reward Hacking', type: 'risk', href: '/knowledge-base/risks/accident/reward-hacking/' },
+    { id: 'racing-dynamics', title: 'Racing Dynamics', type: 'risk', href: '/knowledge-base/risks/structural/racing-dynamics/' },
+    { id: 'trust-decline', title: 'Trust Decline', type: 'risk', href: '/knowledge-base/risks/epistemic/trust-decline/' },
+    { id: 'erosion-of-agency', title: 'Erosion of Agency', type: 'risk', href: '/knowledge-base/risks/structural/erosion-of-agency/' },
+    { id: 'bioweapons', title: 'AI Bioweapons', type: 'risk', href: '/knowledge-base/risks/misuse/bioweapons/' },
 
-    // PARAMETERS (center column) - Purple
-    { id: 'alignment-robustness', title: 'Alignment Robustness', href: '/knowledge-base/parameters/alignment-robustness/', x: 35, y: 5, color: '#d946ef' },
-    { id: 'safety-capability-gap', title: 'Safety-Capability Gap', href: '/knowledge-base/parameters/safety-capability-gap/', x: 35, y: 19, color: '#d946ef' },
-    { id: 'racing-intensity', title: 'Racing Intensity', href: '/knowledge-base/parameters/racing-intensity/', x: 35, y: 33, color: '#d946ef' },
-    { id: 'societal-trust', title: 'Societal Trust', href: '/knowledge-base/parameters/societal-trust/', x: 35, y: 47, color: '#d946ef' },
-    { id: 'human-agency', title: 'Human Agency', href: '/knowledge-base/parameters/human-agency/', x: 35, y: 61, color: '#d946ef' },
-    { id: 'biological-threat-exposure', title: 'Bio Threat Exposure', href: '/knowledge-base/parameters/biological-threat-exposure/', x: 35, y: 75, color: '#d946ef' },
-    { id: 'cyber-defense', title: 'Cyber Threat Exposure', href: '/knowledge-base/parameters/cyber-threat-exposure/', x: 35, y: 89, color: '#d946ef' },
+    // PARAMETERS (will be placed in center)
+    { id: 'alignment-robustness', title: 'Alignment Robustness', type: 'parameter', href: '/knowledge-base/parameters/alignment-robustness/' },
+    { id: 'racing-intensity', title: 'Racing Intensity', type: 'parameter', href: '/knowledge-base/parameters/racing-intensity/' },
+    { id: 'societal-trust', title: 'Societal Trust', type: 'parameter', href: '/knowledge-base/parameters/societal-trust/' },
+    { id: 'human-agency', title: 'Human Agency', type: 'parameter', href: '/knowledge-base/parameters/human-agency/' },
+    { id: 'biological-threat-exposure', title: 'Biological Threat Exposure', type: 'parameter', href: '/knowledge-base/parameters/biological-threat-exposure/' },
 
-    // INTERVENTIONS (right column) - Green
-    { id: 'interpretability', title: 'Interpretability', href: '/knowledge-base/responses/alignment/interpretability/', x: 70, y: 8, color: '#16a34a' },
-    { id: 'evals', title: 'AI Evaluations', href: '/knowledge-base/responses/alignment/evals/', x: 70, y: 22, color: '#16a34a' },
-    { id: 'compute-governance', title: 'Compute Governance', href: '/knowledge-base/responses/governance/compute-governance/', x: 70, y: 36, color: '#16a34a' },
-    { id: 'content-auth', title: 'Content Authentication', href: '/knowledge-base/responses/epistemic-tools/', x: 70, y: 50, color: '#16a34a' },
-    { id: 'scalable-oversight', title: 'Scalable Oversight', href: '/knowledge-base/responses/alignment/scalable-oversight/', x: 70, y: 64, color: '#16a34a' },
-    { id: 'dna-screening', title: 'DNA Screening', href: '/knowledge-base/responses/biosecurity/', x: 70, y: 78, color: '#16a34a' },
-    { id: 'ai-defense', title: 'AI-Powered Defense', href: '/knowledge-base/responses/cybersecurity/', x: 70, y: 92, color: '#16a34a' },
-
-    // METRICS (bottom row) - Blue
-    { id: 'alignment-progress', title: 'Alignment Progress', href: '/knowledge-base/metrics/alignment-progress/', x: 20, y: 100, color: '#2563eb' },
-    { id: 'lab-behavior', title: 'Lab Behavior', href: '/knowledge-base/metrics/lab-behavior/', x: 35, y: 100, color: '#2563eb' },
-    { id: 'public-opinion', title: 'Public Opinion', href: '/knowledge-base/metrics/public-opinion/', x: 50, y: 100, color: '#2563eb' },
+    // INTERVENTIONS (will be placed on right)
+    { id: 'interpretability', title: 'Interpretability', type: 'intervention', href: '/knowledge-base/responses/alignment/interpretability/' },
+    { id: 'evals', title: 'AI Evaluations', type: 'intervention', href: '/knowledge-base/responses/alignment/evals/' },
+    { id: 'compute-governance', title: 'Compute Governance', type: 'intervention', href: '/knowledge-base/responses/governance/compute-governance/' },
+    { id: 'content-auth', title: 'Content Authentication', type: 'intervention', href: '/knowledge-base/responses/epistemic-tools/' },
+    { id: 'scalable-oversight', title: 'Scalable Oversight', type: 'intervention', href: '/knowledge-base/responses/alignment/scalable-oversight/' },
+    { id: 'dna-screening', title: 'DNA Screening', type: 'intervention', href: '/knowledge-base/responses/biosecurity/' },
   ]}
   edges={[
-    // Risks → Parameters (decreases)
-    { from: 'deceptive-alignment', to: 'alignment-robustness', type: 'decreases', label: 'decreases' },
-    { from: 'reward-hacking', to: 'alignment-robustness', type: 'decreases', label: 'decreases' },
-    { from: 'racing-dynamics', to: 'safety-capability-gap', type: 'decreases', label: 'widens' },
-    { from: 'racing-dynamics', to: 'racing-intensity', type: 'increases', label: 'increases' },
-    { from: 'trust-erosion', to: 'societal-trust', type: 'decreases', label: 'decreases' },
-    { from: 'erosion-of-agency', to: 'human-agency', type: 'decreases', label: 'decreases' },
-    { from: 'bioweapons', to: 'biological-threat-exposure', type: 'decreases', label: 'threatens' },
-    { from: 'cyberweapons', to: 'cyber-defense', type: 'decreases', label: 'threatens' },
+    // Risks → Parameters
+    { from: 'deceptive-alignment', to: 'alignment-robustness', label: 'threatens' },
+    { from: 'reward-hacking', to: 'alignment-robustness', label: 'threatens' },
+    { from: 'racing-dynamics', to: 'racing-intensity', label: 'increases' },
+    { from: 'trust-decline', to: 'societal-trust', label: 'erodes' },
+    { from: 'erosion-of-agency', to: 'human-agency', label: 'reduces' },
+    { from: 'bioweapons', to: 'biological-threat-exposure', label: 'threatens' },
 
-    // Interventions → Parameters (increases)
-    { from: 'interpretability', to: 'alignment-robustness', label: 'increases' },
-    { from: 'evals', to: 'alignment-robustness', label: 'increases' },
+    // Interventions → Parameters (interventions improve/protect parameters)
+    { from: 'interpretability', to: 'alignment-robustness', label: 'improves' },
+    { from: 'evals', to: 'alignment-robustness', label: 'measures' },
     { from: 'compute-governance', to: 'racing-intensity', label: 'moderates' },
-    { from: 'content-auth', to: 'societal-trust', label: 'increases' },
+    { from: 'content-auth', to: 'societal-trust', label: 'protects' },
     { from: 'scalable-oversight', to: 'human-agency', label: 'preserves' },
-    { from: 'dna-screening', to: 'biological-threat-exposure', label: 'increases' },
-    { from: 'ai-defense', to: 'cyber-defense', label: 'increases' },
+    { from: 'dna-screening', to: 'biological-threat-exposure', label: 'protects' },
   ]}
 />
-
-**Legend:** <span style={{color: '#dc2626'}}>■</span> Risks (decrease parameters) · <span style={{color: '#d946ef'}}>■</span> Parameters · <span style={{color: '#16a34a'}}>■</span> Interventions (increase parameters) · <span style={{color: '#2563eb'}}>■</span> Metrics
 
 ---
 

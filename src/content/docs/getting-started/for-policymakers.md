@@ -130,7 +130,7 @@ AI undermining our ability to distinguish true from false.
 
 **Examples:**
 - [Epistemic Collapse](/knowledge-base/risks/epistemic/epistemic-collapse/) - Inability to verify information
-- [Trust Erosion](/knowledge-base/risks/epistemic/trust-erosion/) - Loss of faith in institutions
+- [Trust Decline](/knowledge-base/risks/epistemic/trust-decline/) - Loss of faith in institutions
 - [Automation Bias](/knowledge-base/risks/accident/automation-bias/) - Over-reliance on AI outputs
 
 **Policy relevance**: Verification frameworks, authentication standards, institutional resilience.

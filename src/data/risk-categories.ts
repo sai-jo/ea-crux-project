@@ -26,9 +26,9 @@ export const RISK_CATEGORIES = {
     'preference-manipulation',
     'reality-fragmentation',
     'scientific-corruption',
-    'sycophancy-scale',
+    'epistemic-sycophancy',
     'trust-cascade',
-    'trust-erosion',
+    'trust-decline',
   ],
   misuse: [
     'authoritarian-tools',
