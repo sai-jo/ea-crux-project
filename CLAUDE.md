@@ -234,8 +234,11 @@ npm run validate:consistency  # Cross-page consistency
 npm run validate:data         # Entity data integrity
 npm run validate:links        # Internal link validation
 npm run validate:mdx          # MDX syntax validation
+npm run validate:mermaid      # Mermaid diagram syntax and best practices
 npm run validate:sidebar      # Sidebar configuration (index pages)
 npm run validate:types        # UI components handle all schema entity types
+npm run validate:dollars      # Currency values escaped for LaTeX
+npm run validate:comparisons  # Less-than/greater-than escaped for JSX
 ```
 
 ### Workflow: Validate Content
@@ -350,6 +353,9 @@ Required sections:
 - Maximum 15 nodes per diagram
 - Maximum 3 subgraphs
 - Use semantic colors (red for risks, green for interventions)
+- **Subgraph syntax**: Use `subgraph id["Label"]` not `subgraph "Label"`
+- **Avoid comparison operators in labels**: Use "above 0.5" instead of "> 0.5"
+- Run `npm run validate:mermaid` to check diagram syntax
 
 ## Data Layer
 

@@ -1,0 +1,300 @@
+---
+title: "Power Distribution"
+description: "How concentrated or distributed power over AI development and deployment is across actors—a structural parameter where neither extreme is optimal. Currently concentrating: fewer than 20 organizations can train frontier models, with costs projected to reach $1-10B by 2030."
+sidebar:
+  order: 3
+quality: 4
+llmSummary: "Power distribution measures how AI development and deployment power is spread across actors. Currently concentrating: 5 firms control 80%+ of AI cloud, fewer than 20 orgs can train frontier models, and costs will reach $1-10B by 2030. Neither extreme concentration (authoritarian risk) nor complete diffusion (coordination failure) is optimal—the parameter requires balancing competition, safety coordination, and democratic accountability."
+lastEdited: "2025-12-28"
+---
+import {DataInfoBox, Backlinks, Mermaid, R} from '../../../../components/wiki';
+
+<DataInfoBox entityId="power-distribution" />
+
+## Overview
+
+Power Distribution measures how concentrated or distributed power over AI development and deployment is across actors—including corporations, governments, and individuals. Unlike most parameters where "higher is better," power distribution has an **optimal range**: extreme concentration enables authoritarianism, while extreme diffusion prevents coordination.
+
+This parameter affects:
+- **Democratic accountability**: Can citizens influence AI development?
+- **Safety coordination**: Can actors agree on and enforce safety standards?
+- **Innovation dynamics**: Who benefits from AI advances?
+- **Geopolitical stability**: How is AI power distributed across nations?
+
+Understanding power distribution as a parameter enables:
+- **Nuanced analysis**: Avoiding the false dichotomy of "monopoly vs. free-for-all"
+- **Intervention design**: Policies that shift distribution without overcorrecting
+- **Scenario modeling**: Exploring different distribution equilibria
+- **Progress tracking**: Monitoring concentration trends over time
+
+---
+
+## Current State Assessment
+
+### Compute and Infrastructure Concentration
+
+| Dimension | Current Status | Trend |
+|-----------|---------------|-------|
+| Cloud infrastructure | 3 firms (AWS, Azure, GCP) control 68% | Stable-High |
+| AI training chips | NVIDIA has 95%+ market share | Stable |
+| Frontier model training | Fewer than 20 organizations capable | Concentrating |
+| Training costs | \$100M+ per frontier model | Increasing |
+| Projected 2030 costs | \$1-10B per model | Accelerating |
+
+*Sources: <R id="dfeb27439fd01d3e">GPT-4 training requirements</R>, <R id="5fa46de681ff9902">Anthropic estimates</R>, <R id="ee877771092e5530">Cloud market data</R>*
+
+### Capital and Investment Concentration
+
+| Investment | Amount | Implication |
+|------------|--------|-------------|
+| Microsoft → OpenAI | \$13B+ | Largest private AI partnership |
+| Amazon → Anthropic | \$1B | Major cloud-lab vertical integration |
+| Meta AI infrastructure | \$15B+/year | Self-funded capability development |
+| Google DeepMind (internal) | Billions/year | Fully integrated with parent |
+
+### Talent Concentration
+
+- Top 50 AI researchers concentrated at 6 labs
+- Academic institutions losing talent to industry
+- Visa restrictions limit global distribution
+- Safety expertise particularly concentrated
+
+### Geopolitical Distribution
+
+| Actor | Investment | Compute Access |
+|-------|------------|----------------|
+| United States | \$12B (CHIPS Act) | Full access to frontier chips |
+| China | \$150B (2030 AI Plan) | Limited by export controls |
+| European Union | ~\$10B (various programs) | Dependent on US/Asian chips |
+| Rest of World | Minimal | Very limited |
+
+---
+
+## The Optimal Range Problem
+
+Unlike trust or epistemic capacity (where higher is better), power distribution has **tradeoffs at both extremes**:
+
+<Mermaid chart={`
+flowchart TD
+    subgraph Concentration["High Concentration"]
+        C1[Authoritarian risk]
+        C2[Regulatory capture]
+        C3[Single points of failure]
+        C4[Coordination easier]
+        C5[Safety investment concentrated]
+    end
+
+    subgraph Distribution["High Distribution"]
+        D1[Coordination difficult]
+        D2[Safety standards fragmented]
+        D3[Racing to bottom]
+        D4[Democratic accountability higher]
+        D5[Innovation diversity]
+    end
+
+    subgraph Optimal["Optimal Range"]
+        O1[Multiple capable actors]
+        O2[Shared safety standards]
+        O3[Democratic oversight]
+        O4[Competition with coordination]
+    end
+
+    Concentration -.->|Too much| O1
+    Distribution -.->|Too much| O1
+
+    style C1 fill:#ffcdd2
+    style C2 fill:#ffcdd2
+    style C3 fill:#ffcdd2
+    style D1 fill:#ffcdd2
+    style D2 fill:#ffcdd2
+    style D3 fill:#ffcdd2
+    style O1 fill:#c8e6c9
+    style O2 fill:#c8e6c9
+    style O3 fill:#c8e6c9
+    style O4 fill:#c8e6c9
+`} />
+
+### Risks of Extreme Concentration
+
+| Risk | Mechanism | Current Concern Level |
+|------|-----------|----------------------|
+| **Authoritarian capture** | Small group controls transformative technology | Medium-High |
+| **Regulatory capture** | AI companies influence their own regulation | High |
+| **Single points of failure** | Safety failure at one lab affects everyone | High |
+| **Democratic deficit** | Citizens cannot influence AI development | High |
+| **Abuse of power** | No checks on concentrated capability | Medium |
+
+### Risks of Extreme Distribution
+
+| Risk | Mechanism | Current Concern Level |
+|------|-----------|----------------------|
+| **Safety race to bottom** | Weakest standards set the floor | Medium |
+| **Coordination failure** | Cannot agree on safety protocols | Medium |
+| **Proliferation** | Dangerous capabilities spread widely | Medium |
+| **Fragmentation** | Incompatible standards and approaches | Low-Medium |
+
+---
+
+## Factors That Concentrate Power
+
+### Structural Drivers
+
+| Factor | Mechanism | Strength |
+|--------|-----------|----------|
+| **Compute scaling** | Frontier models require exponentially more compute | Very Strong |
+| **Capital requirements** | \$100M+ training costs exclude most actors | Very Strong |
+| **Data advantages** | Big tech has unique proprietary datasets | Strong |
+| **Talent concentration** | Top researchers cluster at well-funded labs | Strong |
+| **Network effects** | Users create more data → better models → more users | Strong |
+| **Infrastructure control** | Cloud providers are also AI developers | Moderate-Strong |
+
+### Recent Concentration Events
+
+| Event | Date | Impact |
+|-------|------|--------|
+| Microsoft extends OpenAI investment to \$13B+ | 2023 | Major vertical integration |
+| Amazon invests \$1B in Anthropic | 2023-24 | Cloud-lab integration |
+| NVIDIA achieves 95% chip market share | Ongoing | Critical infrastructure chokepoint |
+| Compute costs for frontier models reach \$100M+ | 2023+ | Excludes most organizations |
+
+---
+
+## Factors That Distribute Power
+
+### Technical Developments
+
+| Development | Mechanism | Current Status |
+|-------------|-----------|----------------|
+| **Open-source models** | Broad access to capabilities | LLaMA, Mistral 1-2 generations behind frontier |
+| **Efficiency improvements** | Lower compute requirements | Algorithmic progress ~10x/year |
+| **Federated learning** | Training without data centralization | Research stage |
+| **Edge AI** | Capable models on personal devices | Growing rapidly |
+
+### Policy Interventions
+
+| Intervention | Mechanism | Status |
+|--------------|-----------|--------|
+| **Antitrust action** | Break up vertical integration | FTC investigations ongoing |
+| **Public compute** | Government-funded training resources | NAIRR proposed (\$1.6B) |
+| **Export controls** | Limit concentration by geography | Active (US → China) |
+| **Mandatory licensing** | Conditions on compute access | Under discussion |
+| **Open-source requirements** | Mandate capability sharing | Proposed in some jurisdictions |
+
+### Market Forces
+
+| Force | Mechanism | Strength |
+|-------|-----------|----------|
+| **Competition** | Multiple labs racing for capability | Moderate (oligopoly, not monopoly) |
+| **New entrants** | Well-funded startups (xAI, etc.) | Moderate |
+| **Hardware competition** | AMD, Intel, custom chips | Emerging |
+| **Cloud alternatives** | Oracle, smaller providers | Weak |
+
+---
+
+## Why This Parameter Matters
+
+### Concentration Scenarios
+
+| Scenario | Power Distribution | Key Features | Concern Level |
+|----------|-------------------|--------------|---------------|
+| **Current trajectory** | 5-10 frontier-capable orgs by 2030 | Oligopoly with regulatory tension | High |
+| **Hyperconcentration** | 1-3 actors control transformative AI | Winner-take-all dynamics | Critical |
+| **Distributed equilibrium** | 20+ capable actors with shared standards | Coordination with competition | Lower (hard to achieve) |
+| **Fragmentation** | Many actors, incompatible approaches | Safety race to bottom | High |
+
+### Existential Risk Implications
+
+Power distribution affects x-risk through multiple channels:
+
+- **Safety coordination**: Concentrated power *could* enable better safety standards if leaders prioritize safety, or *could* enable catastrophic corners-cutting if they don't
+- **Correction capacity**: Distributed power creates more chances to catch and correct mistakes, but also more chances for any actor to deploy dangerous systems
+- **Democratic legitimacy**: Concentrated AI development may lack the public mandate needed for transformative decisions
+
+---
+
+## Trajectory and Projections
+
+### Projected Distribution (2025-2030)
+
+| Metric | 2024 | 2027 | 2030 |
+|--------|------|------|------|
+| Frontier-capable organizations | ~20 | ~10-15 | ~5-10 |
+| Training cost for frontier model | \$100M+ | \$100M-1B | \$1-10B |
+| Open-source gap to frontier | 1-2 generations | 2-3 generations | 2-4 generations |
+| Alternative chip market share | &lt;5% | 10-15% | 15-25% |
+
+*Based on: <R id="2efa03ce0d906d78">Epoch AI compute trends</R>, <R id="5fa46de681ff9902">Anthropic cost projections</R>*
+
+### Key Decision Points
+
+| Window | Decision | Stakes |
+|--------|----------|--------|
+| **2024-2025** | Antitrust action on AI partnerships | Could reshape market structure |
+| **2025-2026** | Public compute investment | Determines non-corporate capability |
+| **2025-2027** | International AI governance | Sets global distribution norms |
+| **2026-2028** | Safety standard coordination | Tests whether concentration enables or hinders safety |
+
+---
+
+## Key Debates
+
+### Open Source: Equalizer or Illusion?
+
+**Arguments for open source as equalizer:**
+- <R id="f0a602414a4a2667">Meta's LLaMA releases</R> provide broad access
+- Enables academic research and small-company innovation
+- Creates competitive pressure on closed models
+
+**Arguments against:**
+- Open models trail frontier by 1-2 generations
+- <R id="5fa46de681ff9902">Amodei (Anthropic)</R>: True frontier requires inference infrastructure, talent, safety expertise—not just weights
+- May create proliferation risks without distribution benefits
+
+### Competition vs. Coordination
+
+**Pro-competition view:**
+- <R id="d095176cfcff71eb">Scott Morton (Yale)</R>: Competition essential for innovation and safety
+- Concentrated power invites abuse
+- Market forces can drive safety investment
+
+**Pro-coordination view:**
+- <R id="16914f3b14803a87">CNAS</R>: Fragmenting US AI advantages China
+- Safety standards require cooperation
+- Racing dynamics create risks at any distribution level
+
+---
+
+## Related Pages
+
+### Related Risk
+- [Concentration of Power](/knowledge-base/risks/structural/concentration-of-power/) — Describes extreme concentration scenario
+
+### Related Interventions
+- [Compute Governance](/knowledge-base/responses/governance/compute-governance/)
+- [Antitrust approaches](/knowledge-base/responses/governance/legislation/)
+- [Public compute proposals](/knowledge-base/responses/institutions/)
+
+### Related Analyses
+- [Racing Dynamics](/knowledge-base/risks/structural/racing-dynamics/)
+- [Winner-Take-All](/knowledge-base/risks/structural/winner-take-all/)
+
+---
+
+## Sources & Key Research
+
+### Market Analysis
+- <R id="ee877771092e5530">Cloud infrastructure market data</R>
+- <R id="31ee49c7212810bb">NVIDIA market share analysis</R>
+- <R id="2a760ffcf303c734">CB Insights AI trends</R>
+
+### Policy Research
+- <R id="7a7a198f908cb5bf">RAND Corporation: AI and Power</R>
+- <R id="4bb2a429153348e5">AI Now Institute: Compute sovereignty</R>
+- <R id="16914f3b14803a87">CNAS: AI competition research</R>
+
+### Technical
+- <R id="dfeb27439fd01d3e">GPT-4 training requirements</R>
+- <R id="5fa46de681ff9902">Anthropic: Cost projections</R>
+- <R id="2efa03ce0d906d78">Epoch AI: Computing trends</R>
+
+<Backlinks entityId="power-distribution" />

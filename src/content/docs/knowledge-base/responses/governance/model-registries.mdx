@@ -1,0 +1,290 @@
+---
+title: "Model Registries"
+description: "Centralized databases of frontier AI models that enable governments to track development, enforce safety requirements, and coordinate international oversight—serving as foundational infrastructure for AI governance analogous to drug registries for the FDA."
+sidebar:
+  order: 12
+quality: 4
+lastEdited: "2025-12-28"
+importance: 76
+---
+import {Mermaid} from '../../../../../components/wiki';
+
+## Overview
+
+Model registries represent a foundational governance tool for managing risks from advanced AI systems. Like drug registries that enable pharmaceutical regulation or aircraft registries that support aviation safety, AI model registries would create centralized databases containing information about frontier AI systems—their capabilities, training details, deployment contexts, and safety evaluations. This infrastructure provides governments with the visibility necessary to implement more sophisticated AI governance measures.
+
+The policy momentum is significant. The U.S. Executive Order on AI (October 2023) mandated quarterly reporting for models trained above 10^26 FLOP. The EU AI Act requires registration of high-risk AI systems and general-purpose AI models. California's Transparency in Frontier AI Act (TFAIA) mandates annual publication of comprehensive "Frontier AI Frameworks" by large developers. New York's RAISE Act requires incident reporting within 72 hours. These requirements create the skeleton of a registry system, though implementation remains fragmented and early-stage.
+
+The strategic value of model registries lies in their enabling function. A registry alone doesn't prevent harm—but it provides the information foundation for safety requirements, pre-deployment review, incident tracking, and international coordination. Without knowing what models exist and what capabilities they possess, governments cannot effectively regulate AI development. Model registries transform AI governance from reactive to proactive by creating visibility into the development pipeline before deployment.
+
+## Core Design Principles
+
+Effective model registries must balance multiple objectives: providing sufficient information for governance while minimizing regulatory burden on developers and avoiding competitive disclosure concerns.
+
+<Mermaid client:load chart={`
+flowchart TD
+    subgraph DEVELOPERS["AI Developers"]
+        A[Train Model] --> B[Compute Threshold Exceeded?]
+        B -->|Yes| C[Submit Registration]
+        B -->|No| D[No Requirement]
+        C --> E[Provide Required Information]
+    end
+
+    subgraph REGISTRY["Model Registry"]
+        E --> F[Validate Submission]
+        F --> G[Store in Database]
+        G --> H[Public Subset]
+        G --> I[Confidential Subset]
+    end
+
+    subgraph APPLICATIONS["Governance Applications"]
+        H --> J[Public Transparency]
+        I --> K[Pre-Deployment Review]
+        I --> L[Incident Investigation]
+        I --> M[International Coordination]
+        G --> N[Aggregate Statistics]
+    end
+
+    style DEVELOPERS fill:#e1f5ff
+    style REGISTRY fill:#fff3cd
+    style APPLICATIONS fill:#d4edda
+`} />
+
+### Key Design Questions
+
+| Question | Considerations | Current Approaches |
+|----------|---------------|-------------------|
+| **What triggers registration?** | Compute thresholds vs. capabilities vs. use cases | US: 10^26 FLOP; EU: 10^25 FLOP + capability criteria |
+| **What information required?** | Training data, capabilities, safety evals, incidents | Varies; usually training details + safety documentation |
+| **Who has access?** | Public, regulators, international partners | Tiered access common; sensitive info restricted |
+| **When to register?** | Pre-training, pre-deployment, post-deployment | Trend toward pre-deployment notification |
+| **Enforcement mechanisms?** | Penalties for non-compliance | Fines up to \$1-3M (NY RAISE Act) |
+| **Update requirements?** | Material changes, incidents, periodic review | Annual updates + incident reporting |
+
+### Information Categories
+
+A comprehensive model registry would include:
+
+| Category | Information | Sensitivity | Governance Use |
+|----------|-------------|-------------|----------------|
+| **Identity** | Model name, version, developer, release date | Low | Tracking, accountability |
+| **Training** | Compute used, data sources, training methods | Medium-High | Threshold triggers, capability inference |
+| **Capabilities** | Benchmark results, evaluated risks, known limitations | Medium | Risk assessment, deployment decisions |
+| **Safety** | Red team findings, mitigations, known failures | High | Safety requirements, best practices |
+| **Deployment** | APIs, user counts, use cases, geographic reach | Medium | Impact assessment, enforcement |
+| **Incidents** | Failures, harms, near-misses | High | Learning, accountability |
+
+## Current Implementation Landscape
+
+### United States
+
+**Federal Level:**
+The October 2023 Executive Order directed the Bureau of Industry and Security (BIS) to establish reporting requirements for advanced AI models. Under the proposed rule:
+- Entities must report models trained with >10^26 FLOP
+- Quarterly reporting on training activities
+- Six-month forward-looking projections required
+- Information includes ownership, compute access, safety testing
+
+**State Level:**
+
+| State | Legislation | Key Requirements | Status |
+|-------|-------------|------------------|--------|
+| **California** | TFAIA (AB 2885) | Annual Frontier AI Framework publication; developer accountability | Enacted; effective Jan 1, 2026 |
+| **New York** | RAISE Act | 72-hour incident reporting; safety protocol publication; civil penalties up to \$1M | Enacted 2024 |
+| **Colorado** | SB 24-205 | High-risk AI system registration; algorithmic impact assessments | Enacted May 2024 |
+
+### European Union
+
+The EU AI Act establishes the most comprehensive registry requirements to date:
+
+- **General-Purpose AI Models**: Registration with EU AI Office if trained >10^25 FLOP
+- **High-Risk AI Systems**: Registration in EU database before market placement
+- **Systemic Risk Models**: Additional transparency and safety requirements
+- **Required Information**: Technical documentation, compliance evidence, intended use
+
+The EU database will be publicly accessible for high-risk AI systems, with confidential technical documentation available to regulators.
+
+### China
+
+China has implemented registration requirements since 2023:
+
+- Deep synthesis (deepfake) algorithms must register with CAC
+- Generative AI services require registration before public offering
+- Algorithmic recommendation services subject to separate registry
+- Focus on content moderation and political sensitivity
+
+### Comparison Table
+
+| Jurisdiction | Compute Threshold | Pre/Post Deployment | Public Access | Penalties |
+|--------------|------------------|--------------------|--------------| ----------|
+| **US Federal** | 10^26 FLOP | Pre + ongoing | Limited (security) | TBD |
+| **California** | Capability-based | Pre-deployment | Framework public | Civil liability |
+| **New York** | Scale-based | Pre + incidents | Protocols public | Up to \$1M |
+| **EU** | 10^25 FLOP | Pre-market | Partial | Up to 7% revenue |
+| **China** | Any public AI | Pre-deployment | Limited | Service suspension |
+
+## Strategic Assessment
+
+### Benefits of Model Registries
+
+| Benefit | Mechanism | Confidence |
+|---------|-----------|------------|
+| **Visibility for governance** | Know what exists before regulating | High |
+| **Incident learning** | Track failures across the ecosystem | High |
+| **Pre-deployment review** | Enable safety checks before release | Medium-High |
+| **International coordination** | Common information standards | Medium |
+| **Enforcement foundation** | Can't enforce rules without knowing who to apply them to | High |
+| **Research ecosystem support** | Aggregate data for policy research | Medium |
+
+### Limitations and Challenges
+
+| Challenge | Description | Mitigation |
+|-----------|-------------|------------|
+| **Threshold gaming** | Developers structure training to avoid thresholds | Multiple thresholds; capability-based triggers |
+| **Dual-use concerns** | Registry information could advantage competitors/adversaries | Tiered access; confidentiality provisions |
+| **Open-source gap** | Registries focus on centralized developers | Post-release monitoring; community registries |
+| **Enforcement difficulty** | Verifying submitted information is accurate | Auditing; whistleblower protections |
+| **Rapid obsolescence** | Thresholds outdated as technology advances | Automatic update mechanisms; sunset provisions |
+| **International gaps** | No global registry; jurisdiction shopping | International coordination (nascent) |
+
+### Relationship to Other Governance Tools
+
+Model registries are necessary but not sufficient for AI governance. They enable but don't replace:
+
+<Mermaid client:load chart={`
+flowchart LR
+    A[Model Registry] --> B[Pre-Deployment Review]
+    A --> C[Safety Certification]
+    A --> D[Compute Monitoring]
+    A --> E[International Coordination]
+    A --> F[Incident Investigation]
+    A --> G[Liability Assignment]
+
+    B --> H[Safe Deployment]
+    C --> H
+    D --> I[Development Oversight]
+    E --> J[Global Coordination]
+    F --> K[Systemic Learning]
+    G --> L[Accountability]
+
+    style A fill:#e1f5ff
+    style H fill:#d4edda
+    style I fill:#d4edda
+    style J fill:#d4edda
+    style K fill:#d4edda
+    style L fill:#d4edda
+`} />
+
+## Implementation Recommendations
+
+### Minimum Viable Registry
+
+For jurisdictions establishing initial AI model registries:
+
+1. **Compute-based threshold**: 10^25-10^26 FLOP (adjustable)
+2. **Pre-deployment notification**: 30-90 days before public release
+3. **Required information**:
+   - Developer identity and contact
+   - Training compute and data sources (categorical)
+   - Intended use cases and deployment scope
+   - Safety evaluation summary
+   - Known risks and mitigations
+4. **Incident reporting**: 72 hours for critical harms
+5. **Annual updates**: Mandatory refresh of all information
+6. **Tiered access**: Public summary + confidential technical details
+
+### Best Practices from Research
+
+Based on analysis by Convergence Analysis and the Institute for Law & AI:
+
+| Principle | Rationale | Implementation |
+|-----------|-----------|----------------|
+| **Minimal burden** | Encourage compliance, reduce resistance | Require only information developers already track |
+| **Interoperable** | Enable international coordination | Align with emerging international standards |
+| **Updatable** | Technology changes faster than regulation | Built-in mechanism for threshold adjustment |
+| **Complementary** | Registry enables other tools, doesn't replace them | Design for integration with safety requirements |
+| **Proportionate** | Different requirements for different risk levels | Tiered obligations based on capability/deployment |
+
+### Avoiding Common Pitfalls
+
+**Don't:**
+- Set thresholds so high only 2-3 models qualify (too narrow)
+- Require disclosure of trade secrets unnecessarily (industry opposition)
+- Create registry without enforcement mechanism (toothless)
+- Assume static thresholds will remain appropriate (obsolescence)
+- Ignore international coordination from the start (jurisdiction shopping)
+
+## Future Trajectory
+
+### Near-Term (2025-2026)
+
+- US federal registry rules finalized
+- EU database operational for high-risk AI
+- California TFAIA implementation
+- 5-10 jurisdictions with some form of registry
+- Initial international coordination discussions
+
+### Medium-Term (2027-2030)
+
+- Potential international registry framework
+- Capability-based triggers supplement compute thresholds
+- Integration with compute monitoring
+- Real-time incident reporting systems
+- Cross-border data sharing agreements
+
+### Key Uncertainties
+
+| Question | Optimistic Scenario | Pessimistic Scenario |
+|----------|--------------------|--------------------|
+| International coordination | Common standards, shared database | Fragmented, incompatible systems |
+| Enforcement effectiveness | High compliance, meaningful oversight | Widespread evasion, symbolic only |
+| Open-source coverage | Community registries, post-release tracking | Unmonitored proliferation |
+| Threshold relevance | Adaptive thresholds track real risks | Outdated, easily gamed |
+
+## Quick Assessment
+
+| Dimension | Assessment | Notes |
+|-----------|------------|-------|
+| **Tractability** | High | Active legislation in multiple jurisdictions |
+| **If AI risk high** | High | Essential infrastructure for any governance |
+| **If AI risk low** | Medium | Still useful for transparency and accountability |
+| **Neglectedness** | Low-Medium | Active policy area but implementation gaps |
+| **Timeline to impact** | 1-3 years | Requirements taking effect 2025-2026 |
+| **Grade** | B+ | Foundational but not transformative alone |
+
+## Risks Addressed
+
+| Risk | Mechanism | Effectiveness |
+|------|-----------|---------------|
+| [Racing Dynamics](/knowledge-base/risks/structural/racing-dynamics/) | Visibility into development timelines | Low-Medium |
+| [Misuse Risks](/knowledge-base/cruxes/misuse-risks/) | Know what capabilities exist | Medium |
+| Regulatory arbitrage | Harmonized international requirements | Low (currently) |
+| Incident learning gaps | Mandatory reporting creates database | Medium-High |
+
+## Complementary Interventions
+
+- [Compute Governance](/knowledge-base/responses/governance/compute-governance/) - Hardware-based verification complements software registration
+- [Export Controls](/knowledge-base/responses/governance/compute-governance/export-controls/) - Control inputs to models in registry
+- [AI Safety Institutes](/knowledge-base/responses/institutions/ai-safety-institutes/) - Institutions to review registered models
+- [Responsible Scaling Policies](/knowledge-base/responses/governance/industry/responsible-scaling-policies/) - Industry commitments that registries can verify
+
+## Sources
+
+### Policy Analysis
+
+- **Convergence Analysis (2024):** "AI Model Registries: A Foundational Tool for AI Governance" - Comprehensive design framework
+- **Institute for Law & AI (2024):** "The Role of Compute Thresholds for AI Governance" - Threshold design considerations
+- **Carnegie Endowment (2025):** "Entity-Based Regulation in Frontier AI Governance" - Alternative regulatory approaches
+
+### Legislation and Regulation
+
+- **US Executive Order 14110 (October 2023):** "Safe, Secure, and Trustworthy Development and Use of Artificial Intelligence"
+- **EU AI Act (2024):** Regulation establishing harmonized rules on artificial intelligence
+- **California AB 2885 (2024):** Transparency in Frontier Artificial Intelligence Act
+- **New York RAISE Act (2024):** Requiring AI Safety and Excellence
+
+### Implementation Resources
+
+- **NIST:** AI Risk Management Framework integration guidance
+- **EU AI Office:** High-risk AI database specifications
+- **BIS:** Proposed rule on AI model reporting requirements (2024)
