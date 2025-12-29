@@ -86,37 +86,30 @@ Healthy regulatory capacity would enable governments to understand AI systems at
 
 <Mermaid client:load chart={`
 flowchart TD
-    subgraph STRUCTURAL["Structural Barriers"]
-        STR1[600:1 Resource disparity]
-        STR2[Talent pipeline to industry]
-        STR3[Capability gap widening]
-    end
+    STRUCTURAL[Structural Barriers]
+    POLITICAL[Political Volatility]
+    TECHNICAL[Technical Challenges]
 
-    subgraph POLITICAL["Political Volatility"]
-        POL1[Administration changes]
-        POL2[Innovation vs. safety framing]
-        POL3[Budget constraints]
-    end
+    STRUCTURAL --> STR1[600:1 Resource disparity]
+    STRUCTURAL --> STR2[Talent pipeline to industry]
 
-    subgraph TECHNICAL["Technical Challenges"]
-        TECH1[Model opacity]
-        TECH2[Rapid capability advances]
-        TECH3[Dual-use nature]
-    end
+    POLITICAL --> POL1[Administration changes]
+    POLITICAL --> POL2[Budget constraints]
+
+    TECHNICAL --> TECH1[Model opacity]
+    TECHNICAL --> TECH2[Rapid capability advances]
 
     STR1 --> CAP[Capacity Decreases]
     STR2 --> CAP
-    STR3 --> CAP
     POL1 --> CAP
     POL2 --> CAP
-    POL3 --> CAP
     TECH1 --> CAP
     TECH2 --> CAP
-    TECH3 --> CAP
 
     style CAP fill:#ffcdd2
-    style STR1 fill:#fff3e0
-    style POL1 fill:#e1f5fe
+    style STRUCTURAL fill:#fff3e0
+    style POLITICAL fill:#e1f5fe
+    style TECHNICAL fill:#e8f5e9
 `} />
 
 ### Resource Asymmetry

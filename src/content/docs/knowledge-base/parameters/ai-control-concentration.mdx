@@ -76,42 +76,29 @@ Unlike trust or epistemic capacity (where higher is better), power distribution 
 
 <Mermaid client:load chart={`
 flowchart TD
-    subgraph Concentration["High Concentration"]
-        C1[Authoritarian risk]
-        C2[Regulatory capture]
-        C3[Single points of failure]
-        C4[Coordination easier]
-        C5[Safety investment concentrated]
-    end
+    HIGH_CONC[High Concentration]
+    HIGH_DIST[High Distribution]
+    OPTIMAL[Optimal Range]
 
-    subgraph Distribution["High Distribution"]
-        D1[Coordination difficult]
-        D2[Safety standards fragmented]
-        D3[Racing to bottom]
-        D4[Democratic accountability higher]
-        D5[Innovation diversity]
-    end
+    HIGH_CONC --> C1[Authoritarian risk]
+    HIGH_CONC --> C2[Regulatory capture]
+    HIGH_CONC --> C3[Single points of failure]
 
-    subgraph Optimal["Optimal Range"]
-        O1[Multiple capable actors]
-        O2[Shared safety standards]
-        O3[Democratic oversight]
-        O4[Competition with coordination]
-    end
+    HIGH_DIST --> D1[Coordination difficult]
+    HIGH_DIST --> D2[Safety standards fragmented]
+    HIGH_DIST --> D3[Race to bottom]
 
-    Concentration -.->|Too much| O1
-    Distribution -.->|Too much| O1
+    OPTIMAL --> O1[Multiple capable actors]
+    OPTIMAL --> O2[Shared safety standards]
+    OPTIMAL --> O3[Democratic oversight]
 
-    style C1 fill:#ffcdd2
-    style C2 fill:#ffcdd2
-    style C3 fill:#ffcdd2
-    style D1 fill:#ffcdd2
-    style D2 fill:#ffcdd2
-    style D3 fill:#ffcdd2
-    style O1 fill:#c8e6c9
-    style O2 fill:#c8e6c9
-    style O3 fill:#c8e6c9
-    style O4 fill:#c8e6c9
+    C1 -.->|Risks| BALANCE[Balance needed]
+    D1 -.->|Risks| BALANCE
+
+    style HIGH_CONC fill:#ffcdd2
+    style HIGH_DIST fill:#ffcdd2
+    style OPTIMAL fill:#c8e6c9
+    style BALANCE fill:#fff3e0
 `} />
 
 ### Risks of Extreme Concentration

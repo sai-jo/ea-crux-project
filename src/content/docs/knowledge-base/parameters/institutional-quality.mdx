@@ -90,37 +90,30 @@ Healthy institutional quality in AI governance would exhibit characteristics tha
 
 <Mermaid client:load chart={`
 flowchart TD
-    subgraph CAPTURE["Capture Dynamics"]
-        CAP1[Resource asymmetry 600:1]
-        CAP2[Revolving door personnel]
-        CAP3[Information dependence on industry]
-    end
+    CAPTURE[Capture Dynamics]
+    POLITICAL[Political Pressures]
+    STRUCTURAL[Structural Weaknesses]
 
-    subgraph POLITICAL["Political Pressures"]
-        POL1[Administration changes reverse policy]
-        POL2[Innovation vs. safety framing]
-        POL3[Industry lobbying campaigns]
-    end
+    CAPTURE --> CAP1[600:1 Resource asymmetry]
+    CAPTURE --> CAP2[Revolving door personnel]
 
-    subgraph STRUCTURAL["Structural Weaknesses"]
-        STR1[Expertise gaps]
-        STR2[Slow institutional processes]
-        STR3[Fragmented oversight]
-    end
+    POLITICAL --> POL1[Administration reversals]
+    POLITICAL --> POL2[Industry lobbying]
+
+    STRUCTURAL --> STR1[Expertise gaps]
+    STRUCTURAL --> STR2[Fragmented oversight]
 
     CAP1 --> QUAL[Quality Decreases]
     CAP2 --> QUAL
-    CAP3 --> QUAL
     POL1 --> QUAL
     POL2 --> QUAL
-    POL3 --> QUAL
     STR1 --> QUAL
     STR2 --> QUAL
-    STR3 --> QUAL
 
     style QUAL fill:#ffcdd2
-    style CAP1 fill:#fff3e0
-    style POL1 fill:#e1f5fe
+    style CAPTURE fill:#fff3e0
+    style POLITICAL fill:#e1f5fe
+    style STRUCTURAL fill:#e8f5e9
 `} />
 
 ### Regulatory Capture Dynamics

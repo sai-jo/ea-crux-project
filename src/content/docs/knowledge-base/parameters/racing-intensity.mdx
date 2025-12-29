@@ -110,47 +110,27 @@ Before ChatGPT's November 2022 launch:
 
 <Mermaid client:load chart={`
 flowchart TD
-    subgraph drivers["Intensifying Factors"]
-        COMP[Competitor Release<br/>ChatGPT, DeepSeek R1]
-        GEO[Geopolitical Competition<br/>US-China AI Race]
-        FUNDING[Investor Expectations<br/>\$17B in VC funding]
-        TALENT[Talent Competition<br/>+180% salaries]
-    end
+    DRIVERS[Intensifying Factors]
+    DRIVERS --> COMP[Competitor releases]
+    DRIVERS --> GEO[Geopolitical competition]
+    DRIVERS --> FUNDING[Investor pressure]
 
-    subgraph pressure["Racing Dynamics"]
-        COMP --> PRESSURE[High Competitive Pressure]
-        GEO --> PRESSURE
-        FUNDING --> PRESSURE
-        TALENT --> PRESSURE
-        PRESSURE --> TIMELINE[Timeline Compression<br/>70-80% reduction]
-        TIMELINE --> BUDGET[Budget Reallocation<br/>12% to 6% safety spend]
-    end
+    COMP --> PRESSURE[High Competitive Pressure]
+    GEO --> PRESSURE
+    FUNDING --> PRESSURE
 
-    subgraph consequences["Safety Consequences"]
-        BUDGET --> CORNERS[Safety Corners Cut]
-        TIMELINE --> CORNERS
-        CORNERS --> RISK[Elevated Risk<br/>+56% incidents YoY]
-        RISK --> INCIDENT[Major Safety Incident]
-    end
+    PRESSURE --> TIMELINE[Timeline compression]
+    TIMELINE --> CORNERS[Safety corners cut]
+    CORNERS --> INCIDENT[Major Safety Incident]
 
-    subgraph outcomes["Potential Trajectories"]
-        INCIDENT --> |15-25%| SLOWDOWN[Crisis-Driven Coordination]
-        INCIDENT --> |25-35%| NORMALIZE[Normalized Risk-Taking]
-        INCIDENT --> |40-50%| ESCALATE[Accelerated Racing]
-    end
+    INCIDENT --> |15-25%| SLOWDOWN[Coordination]
+    INCIDENT --> |40-50%| ESCALATE[More racing]
 
-    SLOWDOWN --> REDUCE[Reduced Racing Intensity]
-    NORMALIZE --> CONTINUE[Status Quo Continues]
-    ESCALATE --> PRESSURE
+    ESCALATE -.-> PRESSURE
 
-    style COMP fill:#ff6b6b
-    style GEO fill:#ff6b6b
-    style FUNDING fill:#ff9999
-    style TALENT fill:#ff9999
-    style RISK fill:#ffcccc
+    style DRIVERS fill:#ff6b6b
     style INCIDENT fill:#990000,color:#fff
     style SLOWDOWN fill:#90EE90
-    style REDUCE fill:#228B22,color:#fff
 `} />
 
 This diagram illustrates the self-reinforcing dynamics of racing intensity. Multiple intensifying factors (competitor releases like ChatGPT and DeepSeek R1, geopolitical competition, investor pressure, and talent wars) converge to create high competitive pressure. This pressure manifests through timeline compression (70-80% reduction in evaluation periods) and budget reallocation away from safety (12% to 6% of R&D). These resource constraints force safety corner-cutting, which elevates risk—as evidenced by the 56% year-over-year increase in AI incidents documented in 2024. Major safety incidents could trigger three divergent trajectories: crisis-driven coordination that reduces racing intensity (15-25% probability), normalized risk-taking that maintains the status quo (25-35%), or paradoxically accelerated racing as actors scramble to "win" before regulation arrives (40-50%). The feedback loop from escalation back to competitive pressure represents the self-reinforcing trap that makes racing intensity particularly difficult to escape once established.
