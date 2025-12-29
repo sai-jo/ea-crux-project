@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import mermaid from 'mermaid';
 
 interface MermaidProps {
   chart: string;
 }
 
-// Initialize mermaid with settings optimized for readability
-mermaid.initialize({
+const mermaidConfig = {
   startOnLoad: false,
   theme: 'base',
   securityLevel: 'loose',
@@ -48,18 +46,23 @@ mermaid.initialize({
     // Flowchart specific
     edgeLabelBackground: '#ffffff',
   },
-});
+};
 
 export function Mermaid({ chart }: MermaidProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [svg, setSvg] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const renderChart = async () => {
       if (!containerRef.current) return;
 
       try {
+        // Dynamically import mermaid only on client side
+        const mermaid = (await import('mermaid')).default;
+        mermaid.initialize(mermaidConfig);
+
         const id = `mermaid-${Math.random().toString(36).substr(2, 9)}`;
         const { svg } = await mermaid.render(id, chart);
         setSvg(svg);
@@ -67,6 +70,8 @@ export function Mermaid({ chart }: MermaidProps) {
       } catch (err) {
         console.error('Mermaid rendering error:', err);
         setError(err instanceof Error ? err.message : 'Failed to render diagram');
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -85,6 +90,28 @@ export function Mermaid({ chart }: MermaidProps) {
         <pre style={{ fontSize: '0.75rem', marginTop: '0.5rem', overflow: 'auto' }}>
           {chart}
         </pre>
+      </div>
+    );
+  }
+
+  if (loading || !svg) {
+    return (
+      <div
+        ref={containerRef}
+        className="mermaid-diagram"
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          margin: '1.5rem 0',
+          padding: '2rem',
+          background: 'var(--sl-color-bg-nav)',
+          borderRadius: '8px',
+          minHeight: '100px',
+          color: 'var(--sl-color-text-accent)',
+        }}
+      >
+        Loading diagram...
       </div>
     );
   }
