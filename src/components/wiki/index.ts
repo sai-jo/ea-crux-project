@@ -59,6 +59,7 @@ export { TagBrowser } from './TagBrowser';
 export { EntityIndex } from './EntityIndex';
 export { PageIndex } from './PageIndex';
 export { RecentUpdates } from './RecentUpdates';
+export { ConceptsDirectory } from './ConceptsDirectory';
 
 // Risk relationship diagrams
 export { RiskRelationshipDiagram } from './RiskRelationshipDiagram';
