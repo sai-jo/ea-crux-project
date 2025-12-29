@@ -112,6 +112,23 @@ Respond with JSON:
 }`;
 
 /**
+ * Detect page type based on filename and frontmatter
+ * - 'overview': index.mdx files (navigation pages)
+ * - 'stub': explicitly marked in frontmatter (intentionally minimal)
+ * - 'content': default (full quality criteria apply)
+ */
+function detectPageType(id, frontmatter) {
+  // Auto-detect overview pages from filename
+  if (id === 'index') return 'overview';
+
+  // Explicit stub marking in frontmatter
+  if (frontmatter.pageType === 'stub') return 'stub';
+
+  // Default to content
+  return 'content';
+}
+
+/**
  * Scan content directory and collect all pages
  */
 function collectPages() {
@@ -140,6 +157,9 @@ function collectPages() {
         // Check if it's a model page
         const isModel = urlPrefix.includes('/models') || fm.ratings !== undefined;
 
+        // Detect page type
+        const pageType = detectPageType(id, fm);
+
         pages.push({
           id,
           filePath: fullPath,
@@ -149,6 +169,7 @@ function collectPages() {
           category,
           subcategory,
           isModel,
+          pageType,
           currentImportance: fm.importance ?? null,
           currentQuality: fm.quality ?? null,
           currentRatings: fm.ratings ?? null,
@@ -340,9 +361,11 @@ async function main() {
     console.log(`Filtered to ${pages.length} pages without importance`);
   }
 
-  // Skip index files and internal files (starting with _)
-  pages = pages.filter(p => p.id !== 'index' && !p.id.startsWith('_'));
-  console.log(`Filtered to ${pages.length} content pages`);
+  // Skip overview pages (index.mdx), stub pages, and internal files (starting with _)
+  const skippedOverview = pages.filter(p => p.pageType === 'overview').length;
+  const skippedStub = pages.filter(p => p.pageType === 'stub').length;
+  pages = pages.filter(p => p.pageType === 'content' && !p.id.startsWith('_'));
+  console.log(`Filtered to ${pages.length} content pages (skipped ${skippedOverview} overview, ${skippedStub} stub)`);
 
   if (options.limit) {
     pages = pages.slice(0, options.limit);

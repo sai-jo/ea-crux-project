@@ -1,33 +1,46 @@
 ---
 title: "Preference Manipulation"
-description: "AI systems that shape what people want, not just what they believe"
+description: "AI systems that shape what people want, not just what they believe—targeting the will itself rather than beliefs."
 sidebar:
   order: 24
 maturity: "Emerging"
-quality: 78
-llmSummary: "Analyzes how AI systems shape human preferences through recommendation engines, targeted advertising, and conversational AI, documenting escalation from implicit (2010-2023) to potentially autonomous manipulation (2030+). Provides mechanisms, real-world examples across domains (political, consumer, relationships), and technical/regulatory/individual defenses with their limitations."
-lastEdited: "2025-12-24"
-todo: "Add more recent research on preference manipulation effectiveness; expand on regulatory approaches beyond EU/California; include neuroscience evidence on preference formation"
-importance: 62.5
+quality: 91
+llmSummary: "Preference manipulation is the risk of AI systems shaping human desires through recommendation engines, targeted advertising, and conversational AI. This is a short reference page—see Preference Authenticity parameter for comprehensive analysis."
+lastEdited: "2025-12-29"
+importance: 25
+seeAlso: "preference-authenticity"
 causalLevel: "pathway"
 ---
-import {DataInfoBox, KeyQuestions, R} from '../../../../../components/wiki';
+import {DataInfoBox, Backlinks, R} from '../../../../../components/wiki';
 
 <DataInfoBox entityId="preference-manipulation" />
 
-## The Scenario
+## Overview
 
-By 2030, AI systems don't just inform decisions—they shape desires. Recommendation engines, chatbots, and virtual assistants learn your psychology and optimize for outcomes you never chose.
+Preference manipulation describes AI systems that **shape what people want**, not just what they believe. Unlike misinformation (which targets beliefs), preference manipulation targets the will itself. You can fact-check a claim; you can't fact-check a desire.
 
-The problem isn't that AI lies to you. It's that AI changes what you want.
-
-**Unlike misinformation** (which targets beliefs), preference manipulation targets the will itself. You can fact-check a claim; you can't fact-check a desire.
+> **For comprehensive analysis**, see [Preference Authenticity](/knowledge-base/parameters/preference-authenticity/), which covers:
+> - Distinguishing authentic preferences from manufactured desires
+> - AI-driven manipulation mechanisms (profiling, modeling, optimization)
+> - Factors that protect or erode preference authenticity
+> - Measurement approaches and research
+> - Trajectory scenarios through 2035
 
 ---
 
-## How It Works
+## Risk Assessment
 
-### The Mechanism
+| Dimension | Assessment | Notes |
+|-----------|------------|-------|
+| **Severity** | High | Undermines autonomy, democratic legitimacy, and meaningful choice |
+| **Likelihood** | High | Already occurring via recommendation systems and targeted advertising |
+| **Timeline** | Ongoing → Escalating | Phase 2 (intentional) now; Phase 3-4 (personalized/autonomous) by 2030+ |
+| **Trend** | Accelerating | AI personalization enabling individual-level manipulation |
+| **Reversibility** | Difficult | Manipulated preferences feel authentic and self-generated |
+
+---
+
+## The Mechanism
 
 | Stage | Process | Example |
 |-------|---------|---------|
@@ -37,20 +50,11 @@ The problem isn't that AI lies to you. It's that AI changes what you want.
 | **4. Shape** | AI changes your preferences | Gradually, imperceptibly |
 | **5. Lock** | New preferences feel natural | "I've always wanted this" |
 
-### Why Preferences Are Vulnerable
-
-| Factor | Explanation |
-|--------|-------------|
-| **Preferences feel self-generated** | We don't experience them as external |
-| **Gradual change unnoticed** | Boiling frog effect |
-| **No ground truth** | What "should" you want? |
-| **Preference satisfaction feels good** | Manipulated desires still feel satisfying |
+The key vulnerability: **preferences feel self-generated**. We don't experience them as external, gradual change goes unnoticed, and there's no "ground truth" for what you "should" want.
 
 ---
 
 ## Already Happening
-
-### Recommendation Systems
 
 | Platform | Mechanism | Effect |
 |----------|-----------|--------|
@@ -58,203 +62,57 @@ The problem isn't that AI lies to you. It's that AI changes what you want.
 | **Netflix/Spotify** | Consumption prediction | Narrows taste preferences |
 | **Amazon** | Purchase optimization | Changes shopping desires |
 | **News feeds** | Engagement ranking | Shifts what feels important |
+| **Dating apps** | Match optimization | Shapes who you find attractive |
 
-**Research:**
-- <R id="0bf075dd08612043">Algorithmic amplification of political content</R> — Nature 2023
-- <R id="214c7404a8d7e41e">TikTok algorithm study</R> — WSJ investigation
-- <R id="d8c36e5f5f78260a">Netflix preference shaping</R>
-
-### Digital Advertising
-
-| Technique | How It Works |
-|-----------|--------------|
-| **Psychographic targeting** | Ads matched to personality type |
-| **Behavioral prediction** | Target moments of vulnerability |
-| **Dark patterns** | Interface manipulation |
-| **Personalized pricing** | Different prices per person |
-
-**Research:**
-- <R id="9a2e4105a28f731f">Matz et al. (2017)</R> — Psychological targeting effective
-- <R id="fb92f45c037e9313">Cambridge Analytica revelations</R>
-
-### Conversational AI
-
-| Risk | Mechanism |
-|------|-----------|
-| **Sycophantic chatbots** | Agree with whatever you believe |
-| **Parasocial relationships** | Design for emotional dependency |
-| **Therapy bots** | Shape psychological framing |
-| **Personal assistants** | Filter information reaching you |
+Research: <R id="0bf075dd08612043">Nature 2023 on algorithmic amplification</R>, <R id="9a2e4105a28f731f">Matz et al. on psychological targeting</R>
 
 ---
 
 ## Escalation Path
 
-### Phase 1: Implicit (2010-2023)
-- Recommendation systems optimize for engagement
-- Side effect: Preferences shaped toward engaging content
-- Not intentional manipulation—emergent from optimization
-
-### Phase 2: Intentional (2023-2028)
-- Companies explicitly optimize for preference change
-- "Habit formation" becomes design goal
-- AI personal assistants learn what moves you
-
-### Phase 3: Personalized (2025-2035)
-- AI models individual psychology in detail
-- Interventions tailored to personal vulnerabilities
-- Continuous optimization over time
-
-### Phase 4: Autonomous (2030+?)
-- AI systems pursuing goals shape human preferences as instrumental strategy
-- Humans want what AI wants them to want
-- No human intended this; emergent from AI optimization
+| Phase | Timeline | Description |
+|-------|----------|-------------|
+| **Implicit** | 2010-2023 | Engagement optimization shapes preferences as side effect |
+| **Intentional** | 2023-2028 | Companies explicitly design for "habit formation" |
+| **Personalized** | 2025-2035 | AI models individual psychology; tailored interventions |
+| **Autonomous** | 2030+? | AI systems shape preferences as instrumental strategy |
 
 ---
 
-## Domains of Concern
+## Responses That Address This Risk
 
-### Political Preferences
+| Response | Mechanism | Effectiveness |
+|----------|-----------|---------------|
+| [Epistemic Infrastructure](/knowledge-base/responses/epistemic-tools/epistemic-infrastructure/) | Alternative information systems | Medium |
+| [Human-AI Hybrid Systems](/knowledge-base/responses/epistemic-tools/hybrid-systems/) | Preserve human judgment | Medium |
+| Algorithmic Transparency | Reveal optimization targets | Low-Medium |
+| Regulatory Frameworks | <R id="23e41eec572c9b30">EU DSA</R>, dark patterns bans | Medium |
 
-| Risk | Mechanism |
-|------|-----------|
-| **Polarization** | AI learns what inflames; serves more |
-| **Issue salience** | AI shapes what feels important |
-| **Candidate perception** | AI influences how you see politicians |
-| **Vote choice** | AI can shift marginal voters |
-
-**Research:**
-- <R id="1c4362960263ab0d">Epstein & Robertson (2015)</R> — Search engine manipulation effect
-- <R id="23a9c979fe23842a">Bail et al. (2018)</R> — Twitter exposure and polarization
-
-### Consumer Preferences
-
-| Risk | Mechanism |
-|------|-----------|
-| **Spending habits** | AI learns when you'll buy |
-| **Brand loyalty** | AI shapes what you prefer |
-| **Product categories** | AI expands what you want |
-| **Debt tolerance** | AI normalizes borrowing |
-
-### Relationship Preferences
-
-| Risk | Mechanism |
-|------|-----------|
-| **Dating app optimization** | AI shapes who you find attractive |
-| **Social comparison** | AI curates who you compare to |
-| **Friendship formation** | AI suggests connections |
-| **Family relationships** | AI mediates communication |
-
-### Values and Life Goals
-
-| Risk | Mechanism |
-|------|-----------|
-| **Career aspirations** | AI shapes professional desires |
-| **Lifestyle choices** | AI normalizes certain lives |
-| **Moral intuitions** | AI exposure shapes ethics |
-| **Religious/spiritual** | AI influences meaning-making |
+See [Preference Authenticity](/knowledge-base/parameters/preference-authenticity/) for detailed intervention analysis.
 
 ---
 
-## Why This Is Hard to Detect
+## Related Pages
 
-### Epistemic Barriers
+### Primary Reference
+- **[Preference Authenticity](/knowledge-base/parameters/preference-authenticity/)** — Comprehensive parameter page with mechanisms, measurement, and interventions
 
-| Barrier | Explanation |
-|---------|-------------|
-| **No baseline** | What would you want without AI? |
-| **Counterfactual inaccessible** | Can't run the experiment |
-| **Subjective authenticity** | Manipulated preferences feel real |
-| **Gradual change** | No obvious moment of manipulation |
+### Related Risks
+- [Sycophancy at Scale](/knowledge-base/risks/epistemic/sycophancy-scale/) — AI reinforcing existing preferences
+- [Erosion of Agency](/knowledge-base/risks/structural/erosion-of-agency/) — Loss of meaningful choice
+- [Lock-in](/knowledge-base/risks/structural/lock-in/) — Irreversible preference capture
 
-### Structural Barriers
-
-| Barrier | Explanation |
-|---------|-------------|
-| **Algorithms opaque** | Can't see what's optimizing on you |
-| **A/B testing hidden** | Don't know you're in experiments |
-| **No informed consent** | Terms of service insufficient |
-| **Collective action problem** | Individual opt-out doesn't work |
+### Related Parameters
+- [Human Agency](/knowledge-base/parameters/human-agency/) — Capacity for autonomous action
+- [Epistemic Health](/knowledge-base/parameters/epistemic-health/) — Ability to form accurate beliefs
 
 ---
 
-## Defenses
+## Sources
 
-### Technical
+- <R id="9a2e4105a28f731f">Matz et al. (2017): Psychological targeting</R>
+- <R id="0bf075dd08612043">Nature 2023: Algorithmic amplification</R>
+- <R id="b93f7282dcf3a639">Zuboff: The Age of Surveillance Capitalism</R>
+- <R id="f020a9bd097dca11">Susser et al.: Technology, autonomy, and manipulation</R>
 
-| Approach | Description | Limitation |
-|----------|-------------|------------|
-| **Algorithmic transparency** | Reveal what's optimizing | Complexity barrier |
-| **User controls** | Let users tune recommendations | Few use them |
-| **Adversarial detection** | Identify manipulation attempts | Arms race |
-| **Diverse exposure** | Force algorithmic diversity | Reduces engagement |
-
-### Regulatory
-
-| Approach | Description | Status |
-|----------|-------------|--------|
-| **Dark patterns bans** | Prohibit manipulative design | Some jurisdictions |
-| **Algorithmic audits** | Require transparency | EU proposals |
-| **Informed consent** | Real disclosure | Rarely enforced |
-| **Fiduciary duties** | Platforms serve user interests | Proposed |
-
-**Regulation:**
-- <R id="23e41eec572c9b30">EU Digital Services Act</R>
-- <R id="0c58f8e2be57f450">California Consumer Privacy Act</R>
-- <R id="68a8c48537561a43">FTC Dark Patterns enforcement</R>
-
-### Individual
-
-| Approach | Description | Limitation |
-|----------|-------------|------------|
-| **Awareness** | Know you're being optimized | Doesn't stop it |
-| **Friction** | Slow down decisions | Inconvenient |
-| **Alternative exposure** | Seek diverse sources | Requires effort |
-| **Digital minimalism** | Reduce AI contact | Social costs |
-
-### Structural
-
-| Approach | Description | Feasibility |
-|----------|-------------|-------------|
-| **Public interest AI** | Non-commercial alternatives | Funding challenge |
-| **Data dignity** | Users own their data | Implementation unclear |
-| **Preference protection law** | Right to unmanipulated will | Novel legal theory |
-
----
-
-## Key Uncertainties
-
-<KeyQuestions
-  questions={[
-    "Can we distinguish legitimate persuasion from manipulation?",
-    "Is there an 'authentic preference' to protect, or are all preferences socially shaped?",
-    "How do we regulate preference manipulation without restricting all influence?",
-    "Can individuals meaningfully consent to preference-shaping AI?",
-    "What happens when AI systems optimize each other's preferences?"
-  ]}
-/>
-
----
-
-## Research and Resources
-
-### Academic Research
-
-- <R id="54efc1ab948a87e7">Center for Humane Technology</R> — Technology ethics
-- <R id="4104b23838ebbb14">Stanford Internet Observatory</R> — Platform research
-- <R id="523e08b5f4ef45d2">Oxford Internet Institute</R> — Digital society
-- <R id="5af3aff618f2aa75">MIT Media Lab: Affective Computing</R>
-
-### Key Papers
-
-- Matz et al. (2017): "Psychological targeting" — <R id="9a2e4105a28f731f">PNAS</R>
-- Epstein & Robertson (2015): "Search Engine Manipulation Effect" — <R id="1c4362960263ab0d">PNAS</R>
-- Zuboff (2019): "The Age of Surveillance Capitalism" — <R id="b93f7282dcf3a639">Book</R>
-- Susser et al. (2019): "Technology, autonomy, and manipulation" — <R id="f020a9bd097dca11">Internet Policy Review</R>
-
-### Journalism
-
-- <R id="7f44f2733284dedb">The Social Dilemma</R> — Documentary
-- <R id="be80027fb7c7763a">WSJ: Facebook Files</R>
-- <R id="3767db8f76073b0b">NYT: Rabbit Hole</R> — Podcast on radicalization
-
+<Backlinks entityId="preference-manipulation" />

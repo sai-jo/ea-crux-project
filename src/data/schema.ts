@@ -289,6 +289,7 @@ export const EntityType = z.enum([
   'analysis',      // Analysis or comparison pages
   'model',         // Analytical model for risks/scenarios (has MDX content)
   'parameter',     // Key societal/structural variable that can increase or decrease
+  'metric',        // Measurable indicator for tracking parameters or outcomes
 ]);
 export type EntityType = z.infer<typeof EntityType>;
 
@@ -300,6 +301,11 @@ export const RelationshipType = z.enum([
   'enables',      // A makes B possible
   'blocks',       // A prevents B
   'supersedes',   // A replaces B (for deprecated entries)
+  // Parameter-specific relationships
+  'increases',    // Intervention increases parameter
+  'decreases',    // Risk decreases parameter
+  'supports',     // Intervention supports/stabilizes parameter
+  'measures',     // Metric measures parameter
 ]);
 export type RelationshipType = z.infer<typeof RelationshipType>;
 

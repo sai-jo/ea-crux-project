@@ -268,7 +268,7 @@ export function ResourcesIndex({
               <th>Date</th>
               {showTags && <th>Tags</th>}
               <th>Cited By</th>
-              <th></th>
+              <th>Notes</th>
             </tr>
           </thead>
           <tbody>
@@ -367,6 +367,16 @@ export function ResourcesIndex({
                     <a
                       href={`/browse/resources/${resource.id}/`}
                       className="resources-index__view-link"
+                      style={{
+                        display: 'inline-block',
+                        padding: '2px 8px',
+                        fontSize: '11px',
+                        borderRadius: '4px',
+                        backgroundColor: 'var(--sl-color-accent)',
+                        color: 'white',
+                        textDecoration: 'none',
+                        whiteSpace: 'nowrap',
+                      }}
                     >
                       View →
                     </a>

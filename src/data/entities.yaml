@@ -5413,6 +5413,19 @@
       type: risk
     - id: redwood
       type: lab
+    # Parameters this intervention supports
+    - id: alignment-robustness
+      type: parameter
+      relationship: increases
+    - id: interpretability-coverage
+      type: parameter
+      relationship: increases
+    - id: safety-capability-gap
+      type: parameter
+      relationship: supports
+    - id: human-oversight-quality
+      type: parameter
+      relationship: increases
   sources:
     - title: Scaling Monosemanticity
       url: https://transformer-circuits.pub/2024/scaling-monosemanticity/
@@ -5455,6 +5468,16 @@
       type: risk
     - id: corrigibility-failure
       type: risk
+    # Parameters this intervention supports
+    - id: human-oversight-quality
+      type: parameter
+      relationship: increases
+    - id: alignment-robustness
+      type: parameter
+      relationship: supports
+    - id: human-agency
+      type: parameter
+      relationship: supports
   sources:
     - title: AI Safety via Debate
       url: https://arxiv.org/abs/1805.00899
@@ -5982,17 +6005,24 @@
     - capabilities
   lastUpdated: 2025-12
 - id: international-coordination
-  type: concept
-  title: International AI Coordination
-  description: Global cooperation efforts on AI governance, safety standards, and development norms.
-  status: stub
+  type: parameter
+  title: International Coordination
+  description: Degree of global cooperation on AI governance and safety, measured through treaty participation, shared standards adoption, and institutional network strength.
+  customFields:
+    - label: Direction
+      value: Higher is better
+    - label: Current Trend
+      value: Mixed (11-country AISI network, but US/UK refused Paris 2025 declaration)
+    - label: Key Measurement
+      value: Treaty signatories, AISI network participation, shared evaluation standards
   relatedEntries:
-    - id: ai-safety-summit
-      type: historical
+    - id: international-summits
+      type: intervention
+      relationship: related
   tags:
     - governance
     - international
-    - policy
+    - coordination
   lastUpdated: 2025-12
 - id: beth-barnes
   type: researcher
@@ -7837,4 +7867,731 @@
     - whistleblowing
     - incentives
     - transparency
+  lastUpdated: 2025-12
+
+# Key Parameters
+- id: societal-trust
+  type: parameter
+  title: Societal Trust
+  description: Level of public confidence in institutions, experts, and verification systems. A foundational parameter affecting democratic function and collective action.
+  customFields:
+    - label: Direction
+      value: Higher is better
+    - label: Current Trend
+      value: Declining (77% → 22% government trust since 1964)
+    - label: Measurement
+      value: Survey data (Pew, Gallup)
+  relatedEntries:
+    # Risks that decrease trust
+    - id: trust-erosion
+      type: risk
+      relationship: decreases
+    - id: misinformation
+      type: risk
+      relationship: decreases
+    - id: deepfakes
+      type: risk
+      relationship: decreases
+    # Interventions that increase trust
+    - id: content-authentication
+      type: intervention
+      relationship: supports
+    - id: transparency-requirements
+      type: intervention
+      relationship: supports
+    # Related parameters
+    - id: epistemic-health
+      type: parameter
+      relationship: related
+    - id: information-authenticity
+      type: parameter
+      relationship: related
+  tags:
+    - epistemic
+    - governance
+    - structural
+  lastUpdated: 2025-12
+- id: epistemic-health
+  type: parameter
+  title: Epistemic Health
+  description: Society's collective ability to distinguish truth from falsehood and form shared beliefs about reality. Essential for democratic deliberation and coordinated action.
+  customFields:
+    - label: Direction
+      value: Higher is better
+    - label: Current Trend
+      value: Declining (50%+ web content AI-generated)
+    - label: Measurement
+      value: Verification success rates, consensus formation
+  relatedEntries:
+    # Risks that decrease epistemic capacity
+    - id: epistemic-collapse
+      type: risk
+      relationship: decreases
+    - id: misinformation
+      type: risk
+      relationship: decreases
+    - id: consensus-manufacturing
+      type: risk
+      relationship: decreases
+    # Interventions that increase epistemic capacity
+    - id: media-literacy
+      type: intervention
+      relationship: supports
+    - id: epistemic-security
+      type: intervention
+      relationship: supports
+    # Related parameters
+    - id: societal-trust
+      type: parameter
+      relationship: related
+    - id: information-authenticity
+      type: parameter
+      relationship: related
+  tags:
+    - epistemic
+    - information-environment
+  lastUpdated: 2025-12
+- id: information-authenticity
+  type: parameter
+  title: Information Authenticity
+  description: The degree to which content circulating in society can be verified as genuine—tracing to real sources, events, or creators. Currently stressed by AI-generated content and deepfake detection challenges.
+  customFields:
+    - label: Direction
+      value: Higher is better
+    - label: Current Trend
+      value: Declining (human deepfake detection at 55% accuracy)
+    - label: Measurement
+      value: Verification capability, provenance adoption, detection accuracy
+  relatedEntries:
+    - id: epistemic-health
+      type: parameter
+      relationship: related
+  tags:
+    - epistemic
+    - information-environment
+    - verification
+  lastUpdated: 2025-12
+- id: ai-control-concentration
+  type: parameter
+  title: AI Control Concentration
+  description: How concentrated or distributed power over AI development and deployment is across actors. Neither extreme concentration nor complete diffusion is optimal.
+  customFields:
+    - label: Direction
+      value: Context-dependent (neither extreme ideal)
+    - label: Current Trend
+      value: Concentrating (<20 orgs can train frontier models)
+    - label: Measurement
+      value: Market share, compute access, talent distribution
+  relatedEntries:
+    - id: concentration-of-power
+      type: risk
+      relationship: related
+  tags:
+    - structural
+    - governance
+    - market-dynamics
+  lastUpdated: 2025-12
+- id: human-agency
+  type: parameter
+  title: Human Agency
+  description: Degree of meaningful human control over decisions affecting their lives. Includes autonomy, oversight capacity, and ability to opt out of AI-mediated systems.
+  customFields:
+    - label: Direction
+      value: Higher is better
+    - label: Current Trend
+      value: Declining (increasing automation of decisions)
+    - label: Measurement
+      value: Decision autonomy, opt-out availability, oversight capacity
+  relatedEntries:
+    - id: erosion-of-agency
+      type: risk
+      relationship: related
+  tags:
+    - structural
+    - autonomy
+    - human-ai-interaction
+  lastUpdated: 2025-12
+- id: economic-stability
+  type: parameter
+  title: Economic Stability
+  description: Resilience of economic systems to AI-driven changes—including labor market adaptability, income distribution, and transition smoothness. Currently declining as 40-60% of jobs face AI exposure.
+  customFields:
+    - label: Direction
+      value: Higher is better
+    - label: Current Trend
+      value: Mixed (productivity gains vs displacement risks)
+    - label: Measurement
+      value: Employment rates, inequality indices, transition costs
+  relatedEntries:
+    - id: economic-disruption
+      type: risk
+      relationship: related
+  tags:
+    - economic
+    - labor-market
+    - structural
+  lastUpdated: 2025-12
+- id: human-expertise
+  type: parameter
+  title: Human Expertise
+  description: Maintenance of human skills, knowledge, and cognitive capabilities in an AI-augmented world. Tracks skill retention, domain mastery, and ability to function without AI assistance.
+  customFields:
+    - label: Direction
+      value: Higher is better
+    - label: Current Trend
+      value: Declining (36% news avoidance, rising deskilling concerns)
+    - label: Measurement
+      value: Skill retention, cognitive engagement, domain knowledge depth
+  relatedEntries:
+    - id: learned-helplessness
+      type: risk
+      relationship: related
+  tags:
+    - epistemic
+    - human-factors
+    - cognitive
+  lastUpdated: 2025-12
+- id: human-oversight-quality
+  type: parameter
+  title: Human Oversight Quality
+  description: Effectiveness of human review, decision authority, and correction capability over AI systems. Essential for maintaining accountability and preventing harmful AI behaviors.
+  customFields:
+    - label: Direction
+      value: Higher is better
+    - label: Current Trend
+      value: Declining (capability gap widening, automation bias increasing)
+    - label: Measurement
+      value: Review effectiveness, decision authority, error detection rates
+  relatedEntries:
+    - id: scalable-oversight
+      type: safety-agenda
+      relationship: related
+  tags:
+    - governance
+    - human-factors
+    - safety
+  lastUpdated: 2025-12
+- id: alignment-robustness
+  type: parameter
+  title: Alignment Robustness
+  description: How reliably AI systems pursue intended goals across contexts, distribution shifts, and adversarial conditions. Measures the stability of alignment under real-world deployment.
+  customFields:
+    - label: Direction
+      value: Higher is better
+    - label: Current Trend
+      value: Declining relative to capability (1-2% reward hacking in frontier models)
+    - label: Key Measurement
+      value: Behavioral reliability under distribution shift, reward hacking rates
+  relatedEntries:
+    # Risks that decrease this parameter
+    - id: reward-hacking
+      type: risk
+      relationship: decreases
+    - id: mesa-optimization
+      type: risk
+      relationship: decreases
+    - id: goal-misgeneralization
+      type: risk
+      relationship: decreases
+    - id: deceptive-alignment
+      type: risk
+      relationship: decreases
+    - id: sycophancy
+      type: risk
+      relationship: decreases
+    # Interventions that increase this parameter
+    - id: interpretability
+      type: intervention
+      relationship: supports
+    - id: evals
+      type: intervention
+      relationship: supports
+    - id: ai-control
+      type: intervention
+      relationship: supports
+    - id: constitutional-ai
+      type: intervention
+      relationship: supports
+    - id: red-teaming
+      type: intervention
+      relationship: supports
+    # Related parameters
+    - id: interpretability-coverage
+      type: parameter
+      relationship: related
+    - id: safety-capability-gap
+      type: parameter
+      relationship: related
+    - id: human-oversight-quality
+      type: parameter
+      relationship: related
+  tags:
+    - safety
+    - technical
+    - alignment
+  lastUpdated: 2025-12
+- id: safety-capability-gap
+  type: parameter
+  title: Safety-Capability Gap
+  description: The lag between AI capability advances and corresponding safety/alignment understanding. Measures how far safety research trails behind what frontier systems can do.
+  customFields:
+    - label: Direction
+      value: Lower is better (want safety close to capabilities)
+    - label: Current Trend
+      value: Widening (safety timelines compressed 70-80% post-ChatGPT)
+    - label: Key Measurement
+      value: Months/years capabilities lead safety research
+  relatedEntries:
+    # Risks that widen the gap
+    - id: racing-dynamics
+      type: risk
+      relationship: decreases
+    # Interventions that close the gap
+    - id: pause
+      type: intervention
+      relationship: supports
+    - id: safety-evals
+      type: intervention
+      relationship: supports
+    - id: interpretability
+      type: intervention
+      relationship: supports
+    # Related parameters
+    - id: alignment-robustness
+      type: parameter
+      relationship: related
+    - id: racing-intensity
+      type: parameter
+      relationship: related
+    - id: safety-culture-strength
+      type: parameter
+      relationship: related
+  tags:
+    - safety
+    - technical
+    - governance
+  lastUpdated: 2025-12
+- id: interpretability-coverage
+  type: parameter
+  title: Interpretability Coverage
+  description: The percentage of model behavior that can be explained and understood by researchers. Measures transparency into AI system internals.
+  customFields:
+    - label: Direction
+      value: Higher is better
+    - label: Current Trend
+      value: Improving slowly (70% of Claude 3 Sonnet features interpretable, but only ~10% of frontier model capacity mapped)
+    - label: Key Measurement
+      value: Percentage of model behavior explainable, feature coverage
+  relatedEntries:
+    - id: interpretability
+      type: concept
+      relationship: related
+  tags:
+    - safety
+    - technical
+    - interpretability
+  lastUpdated: 2025-12
+- id: regulatory-capacity
+  type: parameter
+  title: Regulatory Capacity
+  description: Ability of governments to effectively understand, evaluate, and regulate AI systems, including technical expertise, enforcement capability, and institutional resources.
+  customFields:
+    - label: Direction
+      value: Higher is better
+    - label: Current Trend
+      value: Growing but constrained (AISI budgets ~\$10-50M vs. \$100B+ industry spending)
+    - label: Key Measurement
+      value: Agency technical expertise, enforcement actions, evaluation capability
+  relatedEntries:
+    - id: nist-ai-rmf
+      type: policy
+      relationship: related
+    - id: us-executive-order
+      type: policy
+      relationship: related
+  tags:
+    - governance
+    - regulation
+    - institutions
+  lastUpdated: 2025-12
+- id: institutional-quality
+  type: parameter
+  title: Institutional Quality
+  description: Health and effectiveness of institutions involved in AI governance, including independence from capture, expertise retention, and decision-making quality.
+  customFields:
+    - label: Direction
+      value: Higher is better
+    - label: Current Trend
+      value: Under pressure (regulatory capture concerns, expertise gaps, rapid policy shifts)
+    - label: Key Measurement
+      value: Independence from industry, expertise retention, decision quality metrics
+  relatedEntries:
+    - id: institutional-capture
+      type: risk
+      relationship: related
+  tags:
+    - governance
+    - institutions
+    - accountability
+  lastUpdated: 2025-12
+- id: reality-coherence
+  type: parameter
+  title: Reality Coherence
+  description: The degree to which different populations share common factual beliefs about basic events, evidence, and causal relationships—enabling democratic deliberation and collective action.
+  customFields:
+    - label: Direction
+      value: Higher is better
+    - label: Current Trend
+      value: Declining (cross-partisan news overlap from 47% to 12% since 2010)
+    - label: Key Measurement
+      value: Cross-partisan factual agreement, shared source overlap, institutional trust
+  relatedEntries:
+    - id: reality-fragmentation
+      type: risk
+      relationship: related
+    - id: epistemic-health
+      type: parameter
+      relationship: related
+  tags:
+    - epistemic
+    - information-environment
+    - democracy
+  lastUpdated: 2025-12
+- id: preference-authenticity
+  type: parameter
+  title: Preference Authenticity
+  description: The degree to which human preferences reflect genuine values rather than externally shaped desires. Essential for autonomy, democratic legitimacy, and meaningful choice.
+  customFields:
+    - label: Direction
+      value: Higher is better
+    - label: Current Trend
+      value: Under pressure (AI recommendation systems optimize for engagement, not user wellbeing)
+    - label: Key Measurement
+      value: Reflective endorsement, preference stability, manipulation exposure
+  relatedEntries:
+    - id: preference-manipulation
+      type: risk
+      relationship: related
+    - id: human-agency
+      type: parameter
+      relationship: related
+  tags:
+    - epistemic
+    - autonomy
+    - human-ai-interaction
+  lastUpdated: 2025-12
+- id: racing-intensity
+  type: parameter
+  title: Racing Intensity
+  description: The degree of competitive pressure driving AI development speed over safety. High intensity leads to safety corner-cutting and premature deployment.
+  customFields:
+    - label: Direction
+      value: Lower is better
+    - label: Current Trend
+      value: High (safety timelines compressed 70-80% post-ChatGPT)
+    - label: Key Measurement
+      value: Safety evaluation duration, safety budget allocation, deployment delays
+  relatedEntries:
+    - id: racing-dynamics
+      type: risk
+      relationship: related
+  tags:
+    - governance
+    - safety
+    - market-dynamics
+  lastUpdated: 2025-12
+- id: safety-culture-strength
+  type: parameter
+  title: Safety Culture Strength
+  description: The degree to which AI organizations genuinely prioritize safety in decisions, resource allocation, and personnel incentives.
+  customFields:
+    - label: Direction
+      value: Higher is better
+    - label: Current Trend
+      value: Mixed (some labs lead, others decline under competitive pressure)
+    - label: Key Measurement
+      value: Safety budget trends, deployment veto authority, incident transparency
+  relatedEntries:
+    - id: racing-dynamics
+      type: risk
+      relationship: related
+  tags:
+    - governance
+    - safety
+    - organizational
+  lastUpdated: 2025-12
+- id: coordination-capacity
+  type: parameter
+  title: Coordination Capacity
+  description: The degree to which AI stakeholders successfully coordinate on safety standards, information sharing, and development practices.
+  customFields:
+    - label: Direction
+      value: Higher is better
+    - label: Current Trend
+      value: Fragile (voluntary commitments exist but lack enforcement)
+    - label: Key Measurement
+      value: Commitment compliance, information sharing, standard adoption
+  relatedEntries:
+    - id: racing-dynamics
+      type: risk
+      relationship: related
+    - id: international-coordination
+      type: parameter
+      relationship: related
+  tags:
+    - governance
+    - international
+    - coordination
+  lastUpdated: 2025-12
+- id: biological-threat-exposure
+  type: parameter
+  title: Biological Threat Exposure
+  description: Society's capacity to prevent, detect, and respond to biological threats including AI-enabled bioweapons.
+  customFields:
+    - label: Direction
+      value: Higher is better
+    - label: Current Trend
+      value: Stressed (DNA screening catches ~25% of threats; AI approaching expert virology)
+    - label: Key Measurement
+      value: Screening coverage, surveillance capability, response speed
+  relatedEntries:
+    - id: bioweapons
+      type: risk
+      relationship: related
+  tags:
+    - security
+    - biosecurity
+    - defense
+  lastUpdated: 2025-12
+- id: cyber-threat-exposure
+  type: parameter
+  title: Cyber Threat Exposure
+  description: Society's ability to defend critical systems against cyber attacks, including AI-enabled threats.
+  customFields:
+    - label: Direction
+      value: Higher is better
+    - label: Current Trend
+      value: Stressed (87% of orgs report AI attacks; 72% year-over-year increase)
+    - label: Key Measurement
+      value: Detection capability, response time, breach cost reduction
+  relatedEntries:
+    - id: cyberweapons
+      type: risk
+      relationship: related
+  tags:
+    - security
+    - cybersecurity
+    - defense
+  lastUpdated: 2025-12
+- id: societal-resilience
+  type: parameter
+  title: Societal Resilience
+  description: Society's ability to maintain essential functions and recover from AI-related failures, attacks, or disruptions.
+  customFields:
+    - label: Direction
+      value: Higher is better
+    - label: Current Trend
+      value: Mixed (increasing AI dependency vs. some redundancy investments)
+    - label: Key Measurement
+      value: Redundancy levels, recovery capability, human skill maintenance
+  relatedEntries:
+    - id: economic-disruption
+      type: risk
+      relationship: related
+  tags:
+    - resilience
+    - infrastructure
+    - structural
+  lastUpdated: 2025-12
+
+# Key Metrics - measurable indicators for tracking parameters
+- id: alignment-progress
+  type: metric
+  title: Alignment Progress
+  description: Metrics tracking AI alignment research progress including interpretability coverage, RLHF effectiveness, jailbreak resistance, and deception detection capabilities.
+  relatedEntries:
+    - id: alignment-robustness
+      type: parameter
+      relationship: measures
+    - id: safety-capability-gap
+      type: parameter
+      relationship: measures
+    - id: interpretability-coverage
+      type: parameter
+      relationship: measures
+  tags:
+    - alignment
+    - safety
+    - research
+  lastUpdated: 2025-12
+
+- id: safety-research
+  type: metric
+  title: Safety Research
+  description: Metrics tracking AI safety research including researcher headcount, funding levels, publication rates, and research agenda progress.
+  relatedEntries:
+    - id: safety-capability-gap
+      type: parameter
+      relationship: measures
+    - id: racing-intensity
+      type: parameter
+      relationship: measures
+    - id: safety-culture-strength
+      type: parameter
+      relationship: measures
+  tags:
+    - safety
+    - research
+    - funding
+  lastUpdated: 2025-12
+
+- id: lab-behavior
+  type: metric
+  title: Lab Behavior
+  description: Metrics tracking frontier AI lab practices including RSP compliance, safety commitments, transparency, and deployment decisions.
+  relatedEntries:
+    - id: safety-culture-strength
+      type: parameter
+      relationship: measures
+    - id: racing-intensity
+      type: parameter
+      relationship: measures
+    - id: human-oversight-quality
+      type: parameter
+      relationship: measures
+  tags:
+    - governance
+    - labs
+    - safety
+  lastUpdated: 2025-12
+
+- id: public-opinion
+  type: metric
+  title: Public Opinion
+  description: Metrics tracking public awareness, concern levels, and trust regarding AI systems and AI safety.
+  relatedEntries:
+    - id: societal-trust
+      type: parameter
+      relationship: measures
+    - id: preference-authenticity
+      type: parameter
+      relationship: measures
+  tags:
+    - public
+    - surveys
+    - trust
+  lastUpdated: 2025-12
+
+- id: expert-opinion
+  type: metric
+  title: Expert Opinion
+  description: Metrics from AI researcher surveys including P(doom) estimates, timeline predictions, and research priorities.
+  relatedEntries:
+    - id: epistemic-health
+      type: parameter
+      relationship: measures
+    - id: racing-intensity
+      type: parameter
+      relationship: measures
+  tags:
+    - experts
+    - surveys
+    - forecasts
+  lastUpdated: 2025-12
+
+- id: economic-labor
+  type: metric
+  title: Economic & Labor
+  description: Metrics tracking AI's economic impact including investment levels, automation rates, job displacement, and productivity effects.
+  relatedEntries:
+    - id: economic-stability
+      type: parameter
+      relationship: measures
+    - id: human-expertise
+      type: parameter
+      relationship: measures
+    - id: human-agency
+      type: parameter
+      relationship: measures
+  tags:
+    - economics
+    - labor
+    - automation
+  lastUpdated: 2025-12
+
+- id: capabilities
+  type: metric
+  title: AI Capabilities
+  description: Metrics tracking AI capability development including benchmark performance, task completion, and capability trajectories.
+  relatedEntries:
+    - id: safety-capability-gap
+      type: parameter
+      relationship: measures
+  tags:
+    - capabilities
+    - benchmarks
+    - progress
+  lastUpdated: 2025-12
+
+- id: compute-hardware
+  type: metric
+  title: Compute & Hardware
+  description: Metrics tracking compute trends including GPU production, training compute, efficiency improvements, and compute access distribution.
+  relatedEntries:
+    - id: ai-control-concentration
+      type: parameter
+      relationship: measures
+    - id: racing-intensity
+      type: parameter
+      relationship: measures
+  tags:
+    - compute
+    - hardware
+    - infrastructure
+  lastUpdated: 2025-12
+
+- id: geopolitics
+  type: metric
+  title: Geopolitics
+  description: Metrics tracking international AI dynamics including US-China relations, talent flows, export controls, and coordination efforts.
+  relatedEntries:
+    - id: international-coordination
+      type: parameter
+      relationship: measures
+    - id: coordination-capacity
+      type: parameter
+      relationship: measures
+  tags:
+    - international
+    - geopolitics
+    - coordination
+  lastUpdated: 2025-12
+
+- id: structural
+  type: metric
+  title: Structural Indicators
+  description: Metrics tracking structural societal factors including information quality, institutional capacity, and system resilience.
+  relatedEntries:
+    - id: epistemic-health
+      type: parameter
+      relationship: measures
+    - id: societal-trust
+      type: parameter
+      relationship: measures
+    - id: institutional-quality
+      type: parameter
+      relationship: measures
+    - id: societal-resilience
+      type: parameter
+      relationship: measures
+    - id: regulatory-capacity
+      type: parameter
+      relationship: measures
+    - id: information-authenticity
+      type: parameter
+      relationship: measures
+  tags:
+    - structural
+    - institutions
+    - resilience
   lastUpdated: 2025-12

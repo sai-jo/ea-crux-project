@@ -4,10 +4,10 @@ description: Foundational societal variables that AI can increase or decrease, p
 sidebar:
   label: Overview
   order: 0
-lastEdited: "2025-12-28"
+lastEdited: "2025-12-29"
 ---
 
-import {Mermaid} from '../../../../components/wiki';
+import {Mermaid, RiskRelationshipDiagram} from '../../../../components/wiki';
 
 ## Overview
 
@@ -22,77 +22,120 @@ This framing is more analytically useful because:
 
 ---
 
-## How Parameters Relate to Risks and Metrics
+## How Parameters, Risks, and Interventions Connect
 
-<Mermaid client:load chart={`
-flowchart TD
-    subgraph Parameters["Key Parameters (Conceptual)"]
-        P1[Societal Trust]
-        P2[Epistemic Capacity]
-        P3[Power Distribution]
-        P4[Human Agency]
-    end
+This diagram shows how key parameters (purple) are affected by risks (red) that decrease them and interventions (green) that increase them, with metrics (blue) that measure their levels.
 
-    subgraph Risks["Risks (Decrease Parameters)"]
-        R1[Trust Erosion]
-        R2[Epistemic Collapse]
-        R3[Concentration of Power]
-        R4[Erosion of Agency]
-    end
+<RiskRelationshipDiagram
+  client:load
+  title=""
+  layout="manual"
+  width={1100}
+  height={600}
+  nodes={[
+    // RISKS (left column) - Red
+    { id: 'deceptive-alignment', title: 'Deceptive Alignment', href: '/knowledge-base/risks/accident/deceptive-alignment/', x: 0, y: 8, color: '#dc2626' },
+    { id: 'reward-hacking', title: 'Reward Hacking', href: '/knowledge-base/risks/accident/reward-hacking/', x: 0, y: 22, color: '#dc2626' },
+    { id: 'racing-dynamics', title: 'Racing Dynamics', href: '/knowledge-base/risks/structural/racing-dynamics/', x: 0, y: 36, color: '#dc2626' },
+    { id: 'trust-erosion', title: 'Trust Erosion', href: '/knowledge-base/risks/epistemic/trust-erosion/', x: 0, y: 50, color: '#dc2626' },
+    { id: 'erosion-of-agency', title: 'Erosion of Agency', href: '/knowledge-base/risks/structural/erosion-of-agency/', x: 0, y: 64, color: '#dc2626' },
+    { id: 'bioweapons', title: 'AI Bioweapons', href: '/knowledge-base/risks/misuse/bioweapons/', x: 0, y: 78, color: '#dc2626' },
+    { id: 'cyberweapons', title: 'AI Cyberweapons', href: '/knowledge-base/risks/misuse/cyberweapons/', x: 0, y: 92, color: '#dc2626' },
 
-    subgraph Interventions["Interventions (Increase Parameters)"]
-        I1[Content Authentication]
-        I2[Media Literacy]
-        I3[Antitrust Regulation]
-        I4[Human-in-the-Loop Requirements]
-    end
+    // PARAMETERS (center column) - Purple
+    { id: 'alignment-robustness', title: 'Alignment Robustness', href: '/knowledge-base/parameters/alignment-robustness/', x: 35, y: 5, color: '#d946ef' },
+    { id: 'safety-capability-gap', title: 'Safety-Capability Gap', href: '/knowledge-base/parameters/safety-capability-gap/', x: 35, y: 19, color: '#d946ef' },
+    { id: 'racing-intensity', title: 'Racing Intensity', href: '/knowledge-base/parameters/racing-intensity/', x: 35, y: 33, color: '#d946ef' },
+    { id: 'societal-trust', title: 'Societal Trust', href: '/knowledge-base/parameters/societal-trust/', x: 35, y: 47, color: '#d946ef' },
+    { id: 'human-agency', title: 'Human Agency', href: '/knowledge-base/parameters/human-agency/', x: 35, y: 61, color: '#d946ef' },
+    { id: 'biological-threat-exposure', title: 'Bio Threat Exposure', href: '/knowledge-base/parameters/biological-threat-exposure/', x: 35, y: 75, color: '#d946ef' },
+    { id: 'cyber-defense', title: 'Cyber Threat Exposure', href: '/knowledge-base/parameters/cyber-threat-exposure/', x: 35, y: 89, color: '#d946ef' },
 
-    subgraph Metrics["Metrics (Measure Parameters)"]
-        M1[Public Opinion Surveys]
-        M2[Fact-Check Success Rates]
-        M3[Market Concentration Data]
-        M4[Automation Rates]
-    end
+    // INTERVENTIONS (right column) - Green
+    { id: 'interpretability', title: 'Interpretability', href: '/knowledge-base/responses/alignment/interpretability/', x: 70, y: 8, color: '#16a34a' },
+    { id: 'evals', title: 'AI Evaluations', href: '/knowledge-base/responses/alignment/evals/', x: 70, y: 22, color: '#16a34a' },
+    { id: 'compute-governance', title: 'Compute Governance', href: '/knowledge-base/responses/governance/compute-governance/', x: 70, y: 36, color: '#16a34a' },
+    { id: 'content-auth', title: 'Content Authentication', href: '/knowledge-base/responses/epistemic-tools/', x: 70, y: 50, color: '#16a34a' },
+    { id: 'scalable-oversight', title: 'Scalable Oversight', href: '/knowledge-base/responses/alignment/scalable-oversight/', x: 70, y: 64, color: '#16a34a' },
+    { id: 'dna-screening', title: 'DNA Screening', href: '/knowledge-base/responses/biosecurity/', x: 70, y: 78, color: '#16a34a' },
+    { id: 'ai-defense', title: 'AI-Powered Defense', href: '/knowledge-base/responses/cybersecurity/', x: 70, y: 92, color: '#16a34a' },
 
-    R1 -->|decreases| P1
-    R2 -->|decreases| P2
-    R3 -->|decreases| P3
-    R4 -->|decreases| P4
+    // METRICS (bottom row) - Blue
+    { id: 'alignment-progress', title: 'Alignment Progress', href: '/knowledge-base/metrics/alignment-progress/', x: 20, y: 100, color: '#2563eb' },
+    { id: 'lab-behavior', title: 'Lab Behavior', href: '/knowledge-base/metrics/lab-behavior/', x: 35, y: 100, color: '#2563eb' },
+    { id: 'public-opinion', title: 'Public Opinion', href: '/knowledge-base/metrics/public-opinion/', x: 50, y: 100, color: '#2563eb' },
+  ]}
+  edges={[
+    // Risks → Parameters (decreases)
+    { from: 'deceptive-alignment', to: 'alignment-robustness', type: 'decreases', label: 'decreases' },
+    { from: 'reward-hacking', to: 'alignment-robustness', type: 'decreases', label: 'decreases' },
+    { from: 'racing-dynamics', to: 'safety-capability-gap', type: 'decreases', label: 'widens' },
+    { from: 'racing-dynamics', to: 'racing-intensity', type: 'increases', label: 'increases' },
+    { from: 'trust-erosion', to: 'societal-trust', type: 'decreases', label: 'decreases' },
+    { from: 'erosion-of-agency', to: 'human-agency', type: 'decreases', label: 'decreases' },
+    { from: 'bioweapons', to: 'biological-threat-exposure', type: 'decreases', label: 'threatens' },
+    { from: 'cyberweapons', to: 'cyber-defense', type: 'decreases', label: 'threatens' },
 
-    I1 -->|increases| P1
-    I2 -->|increases| P2
-    I3 -->|increases| P3
-    I4 -->|increases| P4
+    // Interventions → Parameters (increases)
+    { from: 'interpretability', to: 'alignment-robustness', label: 'increases' },
+    { from: 'evals', to: 'alignment-robustness', label: 'increases' },
+    { from: 'compute-governance', to: 'racing-intensity', label: 'moderates' },
+    { from: 'content-auth', to: 'societal-trust', label: 'increases' },
+    { from: 'scalable-oversight', to: 'human-agency', label: 'preserves' },
+    { from: 'dna-screening', to: 'biological-threat-exposure', label: 'increases' },
+    { from: 'ai-defense', to: 'cyber-defense', label: 'increases' },
+  ]}
+/>
 
-    M1 -.->|measures| P1
-    M2 -.->|measures| P2
-    M3 -.->|measures| P3
-    M4 -.->|measures| P4
-
-    style P1 fill:#d946ef,color:#fff
-    style P2 fill:#d946ef,color:#fff
-    style P3 fill:#d946ef,color:#fff
-    style P4 fill:#d946ef,color:#fff
-    style R1 fill:#dc2626,color:#fff
-    style R2 fill:#dc2626,color:#fff
-    style R3 fill:#dc2626,color:#fff
-    style R4 fill:#dc2626,color:#fff
-    style I1 fill:#16a34a,color:#fff
-    style I2 fill:#16a34a,color:#fff
-    style I3 fill:#16a34a,color:#fff
-    style I4 fill:#16a34a,color:#fff
-`} />
+**Legend:** <span style={{color: '#dc2626'}}>■</span> Risks (decrease parameters) · <span style={{color: '#d946ef'}}>■</span> Parameters · <span style={{color: '#16a34a'}}>■</span> Interventions (increase parameters) · <span style={{color: '#2563eb'}}>■</span> Metrics
 
 ---
 
-## Current Parameters
+## Parameter Categories
 
-| Parameter | Direction | Current Trend | Key Measurement |
-|-----------|-----------|---------------|-----------------|
-| [Societal Trust](/knowledge-base/parameters/societal-trust/) | Higher is better | Declining | Survey data (Pew, Gallup) |
-| [Epistemic Capacity](/knowledge-base/parameters/epistemic-capacity/) | Higher is better | Declining | Verification success, consensus formation |
-| Power Distribution | Context-dependent | Concentrating | Market share, compute access |
-| Human Agency | Higher is better | Declining | Decision autonomy, oversight capacity |
+### Safety Parameters
+Parameters related to AI system safety and alignment:
+
+| Parameter | Direction | Current Trend | Key Risks | Key Interventions |
+|-----------|-----------|---------------|-----------|-------------------|
+| [Alignment Robustness](/knowledge-base/parameters/alignment-robustness/) | Higher is better | Declining | Reward hacking, deception | Interpretability, evals |
+| [Safety-Capability Gap](/knowledge-base/parameters/safety-capability-gap/) | Lower is better | Widening | Racing dynamics | Pause, safety research |
+| [Interpretability Coverage](/knowledge-base/parameters/interpretability-coverage/) | Higher is better | Improving slowly | — | Mechanistic interp |
+| [Human Oversight Quality](/knowledge-base/parameters/human-oversight-quality/) | Higher is better | Declining | Automation complacency | Scalable oversight |
+| [Safety Culture Strength](/knowledge-base/parameters/safety-culture-strength/) | Higher is better | Mixed | Racing, commercialization | RSPs, safety evals |
+
+### Governance Parameters
+Parameters related to AI governance and coordination:
+
+| Parameter | Direction | Current Trend | Key Risks | Key Interventions |
+|-----------|-----------|---------------|-----------|-------------------|
+| [Coordination Capacity](/knowledge-base/parameters/coordination-capacity/) | Higher is better | Fragile | Racing dynamics | Voluntary commitments |
+| [International Coordination](/knowledge-base/parameters/international-coordination/) | Higher is better | Mixed | Geopolitical competition | AISI network, treaties |
+| [Regulatory Capacity](/knowledge-base/parameters/regulatory-capacity/) | Higher is better | Improving | Regulatory capture | Tech expertise building |
+| [Institutional Quality](/knowledge-base/parameters/institutional-quality/) | Higher is better | Mixed | Capture, politicization | Independence safeguards |
+| [Racing Intensity](/knowledge-base/parameters/racing-intensity/) | Lower is better | Accelerating | Competition pressure | Coordination, pause |
+
+### Societal Parameters
+Parameters related to broader societal impacts:
+
+| Parameter | Direction | Current Trend | Key Risks | Key Interventions |
+|-----------|-----------|---------------|-----------|-------------------|
+| [Societal Trust](/knowledge-base/parameters/societal-trust/) | Higher is better | Declining | Trust erosion, deepfakes | Content authentication |
+| [Epistemic Health](/knowledge-base/parameters/epistemic-health/) | Higher is better | Declining | Misinformation, AI content | Media literacy |
+| [Human Agency](/knowledge-base/parameters/human-agency/) | Higher is better | Declining | Erosion of agency | Human-in-the-loop |
+| [AI Control Concentration](/knowledge-base/parameters/ai-control-concentration/) | Context-dependent | Concentrating | Concentration of power | Antitrust, open source |
+| [Economic Stability](/knowledge-base/parameters/economic-stability/) | Higher is better | Mixed | Job displacement | Transition support |
+
+### Resilience Parameters
+Parameters related to societal resilience:
+
+| Parameter | Direction | Current Trend | Key Risks | Key Interventions |
+|-----------|-----------|---------------|-----------|-------------------|
+| [Societal Resilience](/knowledge-base/parameters/societal-resilience/) | Higher is better | Mixed | Single points of failure | Redundancy, backups |
+| [Biological Threat Exposure](/knowledge-base/parameters/biological-threat-exposure/) | Higher is better | Stressed | AI-enabled bioweapons | DNA screening |
+| [Cyber Threat Exposure](/knowledge-base/parameters/cyber-threat-exposure/) | Higher is better | Stressed | AI cyberattacks | AI-powered defense |
+| [Information Authenticity](/knowledge-base/parameters/information-authenticity/) | Higher is better | Declining | Deepfakes, AI content | Provenance, watermarks |
+| [Human Expertise](/knowledge-base/parameters/human-expertise/) | Higher is better | Declining | Deskilling | Skill maintenance |
 
 ---
 

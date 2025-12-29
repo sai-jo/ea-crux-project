@@ -54,7 +54,7 @@ function getFilePath(pagePath) {
 
 // List pages that need improvement
 function listPages(pages, options = {}) {
-  const { limit = 20, maxQuality = 4, minImportance = 30 } = options;
+  const { limit = 20, maxQuality = 90, minImportance = 30 } = options;
 
   const candidates = pages
     .filter(p => p.quality && p.quality <= maxQuality)
@@ -66,7 +66,7 @@ function listPages(pages, options = {}) {
       path: p.path,
       quality: p.quality,
       importance: p.importance,
-      gap: p.importance - (p.quality * 10)
+      gap: p.importance - p.quality  // Both on 1-100 scale now
     }))
     .sort((a, b) => b.gap - a.gap)
     .slice(0, limit);
@@ -75,7 +75,7 @@ function listPages(pages, options = {}) {
   console.log('| # | Quality | Imp | Gap | Page |');
   console.log('|---|---------|-----|-----|------|');
   candidates.forEach((p, i) => {
-    console.log(`| ${i + 1} | Q${p.quality} | ${p.importance} | ${p.gap} | ${p.title} |`);
+    console.log(`| ${i + 1} | ${p.quality} | ${p.importance} | ${p.gap > 0 ? '+' : ''}${p.gap} | ${p.title} |`);
   });
   console.log(`\nRun: node scripts/page-improver.mjs <page-id> to get improvement prompt`);
 }
@@ -171,7 +171,7 @@ A Q5 page MUST have ALL of these elements. Check each one:
    - Replace vague claims with quantified statements
 
 6. **Update metadata**:
-   - quality: 5
+   - quality: 91 (scale is 1-100, target is 91+)
    - lastEdited: "${new Date().toISOString().split('T')[0]}"
 
 ## Verification
@@ -182,7 +182,7 @@ Before finishing, confirm:
 - [ ] Mermaid diagram exists with proper import
 - [ ] 10+ [linked citations](https://url) throughout
 - [ ] No "<NUMBER" patterns anywhere in the file
-- [ ] Metadata updated (quality: 5, lastEdited: today)
+- [ ] Metadata updated (quality: 91, lastEdited: today)
 
 Use the Edit tool for each change. DO NOT rewrite the entire file.`;
 }
@@ -203,7 +203,7 @@ Usage:
 Options:
   --list          List candidate pages
   --info          Show page info only (no prompt)
-  --max-qual N    Max quality for listing (default: 4)
+  --max-qual N    Max quality for listing (default: 90, scale 1-100)
   --min-imp N     Min importance for listing (default: 30)
   --limit N       Limit results (default: 20)
 
@@ -224,7 +224,7 @@ Examples:
     const limitIdx = args.indexOf('--limit');
 
     listPages(pages, {
-      maxQuality: maxQualIdx >= 0 ? parseInt(args[maxQualIdx + 1]) : 4,
+      maxQuality: maxQualIdx >= 0 ? parseInt(args[maxQualIdx + 1]) : 90,
       minImportance: minImpIdx >= 0 ? parseInt(args[minImpIdx + 1]) : 30,
       limit: limitIdx >= 0 ? parseInt(args[limitIdx + 1]) : 20
     });

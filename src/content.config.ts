@@ -3,7 +3,13 @@ import { docsLoader } from '@astrojs/starlight/loaders';
 import { docsSchema } from '@astrojs/starlight/schema';
 
 /**
- * Quality Rating Guide (0-100):
+ * Page Type System:
+ *
+ * - overview: Auto-detected from index.mdx filename. Navigation pages. Excluded from quality scoring.
+ * - content: Default for all substantive pages. Full quality criteria (tables, citations, diagrams).
+ * - stub: Explicitly marked. Intentionally minimal - placeholders, brief profiles, reference pointers. Excluded from quality scoring.
+ *
+ * Quality Rating Guide (0-100) - applies to 'content' pages only:
  *
  * 80-100 - Comprehensive: 2+ tables, diagrams, 5+ citations, quantified claims
  * 60-79  - Good: 1+ table, some citations (3+), mostly prose with numbers
@@ -18,12 +24,16 @@ export const collections = {
     loader: docsLoader(),
     schema: docsSchema({
       extend: z.object({
+        // Page type: 'stub' for intentionally minimal pages (overview auto-detected, content is default)
+        pageType: z.enum(['content', 'stub']).optional(),
         // Editorial metadata for PageStatus (0-100 scale, see rating guide above)
         quality: z.number().min(0).max(100).optional(),
         importance: z.number().min(0).max(100).optional(),
         llmSummary: z.string().optional(),
         lastEdited: z.string().optional(),
         todo: z.string().optional(),
+        // Reference to primary page (for reference-style stubs)
+        seeAlso: z.string().optional(),
         // Model page ratings
         ratings: z.object({
           novelty: z.number().min(1).max(5).optional(),

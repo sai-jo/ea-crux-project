@@ -219,6 +219,32 @@ node scripts/resource-manager.mjs create "https://example.com" --title "Example"
 
 ## Content Quality System
 
+### Page Type System
+
+Pages are classified into three types, which determines how quality scoring applies:
+
+| Type | Detection | Quality Scoring |
+|------|-----------|-----------------|
+| `overview` | Auto-detected from `index.mdx` filename | Excluded |
+| `content` | Default for all other pages | Full criteria (tables, citations, diagrams) |
+| `stub` | Explicit `pageType: stub` in frontmatter | Excluded |
+
+**When to use `pageType: stub`:**
+- Intentionally minimal placeholder pages
+- Brief reference pages pointing to more comprehensive coverage elsewhere
+- People/organization profiles that are intentionally short
+
+**Example frontmatter for a stub:**
+```yaml
+---
+title: "Brief Topic"
+pageType: stub
+seeAlso: "comprehensive-topic"  # Optional: points to primary coverage
+---
+```
+
+**Note:** The grading script (`scripts/grade-content.mjs`) automatically skips overview and stub pages.
+
 ### Available Validators
 
 Run all validators:

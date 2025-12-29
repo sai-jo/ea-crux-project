@@ -102,6 +102,7 @@ const typeLabels: Record<EntityType, { label: string; color: string }> = {
   'analysis': { label: 'Analysis', color: '#0ea5e9' },
   'model': { label: 'Model', color: '#8b5cf6' },
   'parameter': { label: 'Parameter', color: '#d946ef' },
+  'metric': { label: 'Metric', color: '#2563eb' },
 };
 
 const defaultTypeInfo = { label: 'Entry', color: '#6b7280' };
