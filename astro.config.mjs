@@ -45,6 +45,7 @@ export default defineConfig({
                   collapsed: true,
                   items: [
                       { label: 'Overview', slug: 'knowledge-base' },
+                      { label: 'Key Parameters', collapsed: true, autogenerate: { directory: 'knowledge-base/parameters' } },
                       { label: 'Interventions', collapsed: true, items: [
                           { label: 'Overview', slug: 'knowledge-base/responses' },
                           { label: 'AI Alignment', collapsed: true, autogenerate: { directory: 'knowledge-base/responses/alignment' } },

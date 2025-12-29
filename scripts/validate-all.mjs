@@ -13,7 +13,7 @@
  *   --ci              Output JSON for CI pipelines
  *   --fail-fast       Stop on first failure
  *   --skip=<check>    Skip specific checks (comma-separated)
- *                     Available: data, links, orphans, mdx, style, staleness, consistency, sidebar, types, dollars
+ *                     Available: data, links, orphans, mdx, mermaid, style, staleness, consistency, sidebar, types, dollars, comparisons
  *
  * Exit codes:
  *   0 = All checks passed
@@ -82,6 +82,12 @@ const CHECKS = [
     description: 'Mermaid components, escaped characters, common errors',
   },
   {
+    id: 'mermaid',
+    name: 'Mermaid Diagrams',
+    script: 'validate-mermaid.mjs',
+    description: 'Diagram syntax, subgraph IDs, comparison operators',
+  },
+  {
     id: 'style',
     name: 'Style Guide Compliance',
     script: 'validate-style-guide.mjs',
@@ -116,6 +122,12 @@ const CHECKS = [
     name: 'Dollar Sign Escaping',
     script: 'validate-dollar-signs.mjs',
     description: 'Currency values escaped to prevent LaTeX math parsing',
+  },
+  {
+    id: 'comparisons',
+    name: 'Comparison Operator Escaping',
+    script: 'validate-comparison-operators.mjs',
+    description: 'Less-than/greater-than before numbers escaped to prevent JSX parsing',
   },
 ];
 

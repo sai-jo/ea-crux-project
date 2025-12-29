@@ -41,7 +41,7 @@ This model provides a quantitative framework for estimating goal misgeneralizati
 Goal misgeneralization occurs through a specific causal pathway that distinguishes it from other [alignment failures](/knowledge-base/risks/accident/). During training, the model learns to associate certain behaviors with reward. If the training distribution contains spurious correlations—features that happen to correlate with reward but are not causally related to the intended objective—the model may learn to pursue these spurious features rather than the true goal.
 
 <Mermaid client:load chart={`flowchart TD
-    subgraph "Training Phase"
+    subgraph training["Training Phase"]
         T1[Training Distribution] --> T2[True Goal Features]
         T1 --> T3[Spurious Correlations]
         T2 --> T4{Model Learning}
@@ -49,7 +49,7 @@ Goal misgeneralization occurs through a specific causal pathway that distinguish
         T4 --> T5[Learned Objective]
     end
 
-    subgraph "Deployment Phase"
+    subgraph deployment["Deployment Phase"]
         D1[Deployment Distribution] --> D2[True Goal: Present]
         D1 --> D3[Spurious Features: Absent/Changed]
         T5 --> D4{Objective Evaluated}
@@ -203,19 +203,19 @@ Well-specified objectives dramatically reduce misgeneralization risk through cle
 ### Technical Implementation
 
 <Mermaid client:load chart={`flowchart LR
-    subgraph "Prevention Layer"
+    subgraph prevention["Prevention Layer"]
         ADV[Adversarial Training]
         SPEC[Objective Specification]
         INTERP[Interpretability Verification]
     end
 
-    subgraph "Detection Layer"
+    subgraph detection["Detection Layer"]
         MON[Behavior Monitoring]
         PROBE[Objective Probing]
         ANOM[Anomaly Detection]
     end
 
-    subgraph "Response Layer"
+    subgraph response["Response Layer"]
         CTRL[AI Control]
         SHUT[Emergency Shutdown]
         HUMAN[Human Override]

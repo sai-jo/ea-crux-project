@@ -1,0 +1,146 @@
+---
+title: Key Parameters
+description: Foundational societal variables that AI can increase or decrease, providing a symmetric framework for understanding both risks and opportunities.
+sidebar:
+  label: Overview
+  order: 0
+lastEdited: "2025-12-28"
+---
+
+import {Mermaid} from '../../../../components/wiki';
+
+## Overview
+
+Key Parameters are foundational societal variables that can **increase or decrease** based on various factors, including AI development and deployment. Unlike "risks" (which frame things negatively) or "interventions" (which frame things positively), parameters provide a **symmetric framework** for understanding how AI affects important aspects of society.
+
+This framing is more analytically useful because:
+
+1. **Symmetric analysis**: Track both threats (what decreases the parameter) and supports (what increases it)
+2. **Causal clarity**: Separate the *thing we care about* from *directions it could move*
+3. **Action-oriented**: Focus on maintaining or improving parameters, not just avoiding bad outcomes
+4. **Measurable**: Parameters can be tracked over time with concrete metrics
+
+---
+
+## How Parameters Relate to Risks and Metrics
+
+<Mermaid chart={`
+flowchart TD
+    subgraph Parameters["Key Parameters (Conceptual)"]
+        P1[Societal Trust]
+        P2[Epistemic Capacity]
+        P3[Power Distribution]
+        P4[Human Agency]
+    end
+
+    subgraph Risks["Risks (Decrease Parameters)"]
+        R1[Trust Erosion]
+        R2[Epistemic Collapse]
+        R3[Concentration of Power]
+        R4[Erosion of Agency]
+    end
+
+    subgraph Interventions["Interventions (Increase Parameters)"]
+        I1[Content Authentication]
+        I2[Media Literacy]
+        I3[Antitrust Regulation]
+        I4[Human-in-the-Loop Requirements]
+    end
+
+    subgraph Metrics["Metrics (Measure Parameters)"]
+        M1[Public Opinion Surveys]
+        M2[Fact-Check Success Rates]
+        M3[Market Concentration Data]
+        M4[Automation Rates]
+    end
+
+    R1 -->|decreases| P1
+    R2 -->|decreases| P2
+    R3 -->|decreases| P3
+    R4 -->|decreases| P4
+
+    I1 -->|increases| P1
+    I2 -->|increases| P2
+    I3 -->|increases| P3
+    I4 -->|increases| P4
+
+    M1 -.->|measures| P1
+    M2 -.->|measures| P2
+    M3 -.->|measures| P3
+    M4 -.->|measures| P4
+
+    style P1 fill:#d946ef,color:#fff
+    style P2 fill:#d946ef,color:#fff
+    style P3 fill:#d946ef,color:#fff
+    style P4 fill:#d946ef,color:#fff
+    style R1 fill:#dc2626,color:#fff
+    style R2 fill:#dc2626,color:#fff
+    style R3 fill:#dc2626,color:#fff
+    style R4 fill:#dc2626,color:#fff
+    style I1 fill:#16a34a,color:#fff
+    style I2 fill:#16a34a,color:#fff
+    style I3 fill:#16a34a,color:#fff
+    style I4 fill:#16a34a,color:#fff
+`} />
+
+---
+
+## Current Parameters
+
+| Parameter | Direction | Current Trend | Key Measurement |
+|-----------|-----------|---------------|-----------------|
+| [Societal Trust](/knowledge-base/parameters/societal-trust/) | Higher is better | Declining | Survey data (Pew, Gallup) |
+| [Epistemic Capacity](/knowledge-base/parameters/epistemic-capacity/) | Higher is better | Declining | Verification success, consensus formation |
+| [Power Distribution](/knowledge-base/parameters/power-distribution/) | Context-dependent | Concentrating | Market share, compute access |
+| [Human Agency](/knowledge-base/parameters/human-agency/) | Higher is better | Declining | Decision autonomy, oversight capacity |
+
+---
+
+## Why This Framing Matters
+
+### Traditional Risk Framing
+- "Trust erosion is a risk we must prevent"
+- "Concentration of power threatens democracy"
+- Focus: Avoiding negative outcomes
+
+### Parameter Framing
+- "Trust is a parameter that AI affects in both directions"
+- "Power distribution is a variable we can influence through policy"
+- Focus: Understanding dynamics and identifying intervention points
+
+The parameter framing enables:
+
+1. **Better modeling**: Can estimate current levels, trends, and intervention effects
+2. **Clearer priorities**: Which parameters matter most for good outcomes?
+3. **Strategic allocation**: Where should resources go to maintain critical parameters?
+4. **Progress tracking**: Are our interventions actually improving parameter levels?
+
+---
+
+## Relationship to Other Sections
+
+| Section | Relationship to Parameters |
+|---------|---------------------------|
+| **Risks** | Many risks describe *decreases* in parameters (e.g., "trust erosion" = trust declining) |
+| **Interventions** | Interventions aim to *increase* or *stabilize* parameters |
+| **Metrics** | Metrics are *concrete measurements* of parameter levels |
+| **Models** | Analytical models often estimate parameter dynamics and trajectories |
+
+---
+
+## How to Use This Section
+
+### For Researchers
+- Understand which underlying variables matter for AI outcomes
+- Identify gaps between current and optimal parameter levels
+- Design studies to measure parameter changes
+
+### For Policymakers
+- Prioritize interventions based on which parameters are most degraded
+- Monitor parameter trends to assess policy effectiveness
+- Coordinate across domains (a single parameter may affect multiple risks)
+
+### For Forecasters
+- Use parameters as input variables for scenario modeling
+- Estimate how different interventions would shift parameter levels
+- Identify tipping points where parameter degradation becomes irreversible

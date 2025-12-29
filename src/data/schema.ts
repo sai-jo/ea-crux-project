@@ -288,6 +288,7 @@ export const EntityType = z.enum([
   'historical',    // Historical era or timeline event
   'analysis',      // Analysis or comparison pages
   'model',         // Analytical model for risks/scenarios (has MDX content)
+  'parameter',     // Key societal/structural variable that can increase or decrease
 ]);
 export type EntityType = z.infer<typeof EntityType>;
 

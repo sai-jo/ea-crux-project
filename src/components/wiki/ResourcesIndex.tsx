@@ -11,6 +11,29 @@ interface ResourcesIndexProps {
   defaultType?: string;
   showCredibility?: boolean;
   showTags?: boolean;
+  showContent?: boolean;
+}
+
+/**
+ * Get content status for a resource
+ */
+function getContentStatus(resource: Resource): { level: 'full' | 'partial' | 'metadata' | 'none'; label: string; color: string } {
+  const hasLocalFile = !!resource.local_filename;
+  const hasSummary = !!resource.summary;
+  const hasReview = !!resource.review;
+  const hasAbstract = !!resource.abstract;
+  const hasKeyPoints = resource.key_points && resource.key_points.length > 0;
+
+  if (hasLocalFile && hasReview && hasKeyPoints) {
+    return { level: 'full', label: 'Full', color: '#2e7d32' };
+  }
+  if (hasSummary || hasAbstract) {
+    return { level: 'partial', label: 'Summary', color: '#1976d2' };
+  }
+  if (resource.authors?.length || resource.published_date) {
+    return { level: 'metadata', label: 'Metadata', color: '#f57c00' };
+  }
+  return { level: 'none', label: 'None', color: '#9e9e9e' };
 }
 
 /**
@@ -55,11 +78,13 @@ export function ResourcesIndex({
   defaultType,
   showCredibility = true,
   showTags = true,
+  showContent = true,
 }: ResourcesIndexProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedType, setSelectedType] = useState<string>(defaultType || 'all');
   const [selectedCredibility, setSelectedCredibility] = useState<string>('all');
-  const [sortBy, setSortBy] = useState<'title' | 'date' | 'type' | 'credibility'>('title');
+  const [selectedContent, setSelectedContent] = useState<string>('all');
+  const [sortBy, setSortBy] = useState<'title' | 'date' | 'type' | 'credibility' | 'content'>('title');
 
   // Get unique types for filter
   const types = useMemo(() => {
@@ -82,6 +107,11 @@ export function ResourcesIndex({
       result = result.filter((r) => getResourceCredibility(r) === level);
     }
 
+    // Filter by content status
+    if (selectedContent !== 'all') {
+      result = result.filter((r) => getContentStatus(r).level === selectedContent);
+    }
+
     // Filter by search
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
@@ -95,6 +125,7 @@ export function ResourcesIndex({
     }
 
     // Sort
+    const contentOrder = { full: 0, partial: 1, metadata: 2, none: 3 };
     result.sort((a, b) => {
       switch (sortBy) {
         case 'date':
@@ -103,6 +134,8 @@ export function ResourcesIndex({
           return a.type.localeCompare(b.type);
         case 'credibility':
           return (getResourceCredibility(b) || 0) - (getResourceCredibility(a) || 0);
+        case 'content':
+          return contentOrder[getContentStatus(a).level] - contentOrder[getContentStatus(b).level];
         case 'title':
         default:
           return a.title.localeCompare(b.title);
@@ -110,13 +143,22 @@ export function ResourcesIndex({
     });
 
     return result;
-  }, [searchQuery, selectedType, selectedCredibility, sortBy]);
+  }, [searchQuery, selectedType, selectedCredibility, selectedContent, sortBy]);
 
   // Group by type for summary
   const typeStats = useMemo(() => {
     const stats: Record<string, number> = {};
     for (const r of resources) {
       stats[r.type] = (stats[r.type] || 0) + 1;
+    }
+    return stats;
+  }, []);
+
+  // Content stats
+  const contentStats = useMemo(() => {
+    const stats = { full: 0, partial: 0, metadata: 0, none: 0 };
+    for (const r of resources) {
+      stats[getContentStatus(r).level]++;
     }
     return stats;
   }, []);
@@ -179,6 +221,20 @@ export function ResourcesIndex({
               </select>
             )}
 
+            {showContent && (
+              <select
+                value={selectedContent}
+                onChange={(e) => setSelectedContent(e.target.value)}
+                className="resources-index__select"
+              >
+                <option value="all">All Content ({resources.length})</option>
+                <option value="full">Full ({contentStats.full})</option>
+                <option value="partial">Summary ({contentStats.partial})</option>
+                <option value="metadata">Metadata ({contentStats.metadata})</option>
+                <option value="none">None ({contentStats.none})</option>
+              </select>
+            )}
+
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
@@ -188,6 +244,7 @@ export function ResourcesIndex({
               <option value="date">Sort by Date</option>
               <option value="type">Sort by Type</option>
               <option value="credibility">Sort by Credibility</option>
+              <option value="content">Sort by Content</option>
             </select>
           </div>
         )}
@@ -206,6 +263,7 @@ export function ResourcesIndex({
               <th>Type</th>
               <th>Title</th>
               {showCredibility && <th>Credibility</th>}
+              {showContent && <th>Content</th>}
               <th>Authors</th>
               <th>Date</th>
               {showTags && <th>Tags</th>}
@@ -217,6 +275,7 @@ export function ResourcesIndex({
             {filteredResources.map((resource) => {
               const credibility = getResourceCredibility(resource);
               const publication = getResourcePublication(resource);
+              const contentStatus = getContentStatus(resource);
               return (
                 <tr key={resource.id}>
                   <td>
@@ -257,6 +316,29 @@ export function ResourcesIndex({
                       ) : (
                         <span style={{ color: 'var(--sl-color-gray-4)' }}>—</span>
                       )}
+                    </td>
+                  )}
+                  {showContent && (
+                    <td className="resources-index__content">
+                      <span
+                        style={{
+                          display: 'inline-block',
+                          fontSize: '10px',
+                          padding: '2px 6px',
+                          borderRadius: '3px',
+                          backgroundColor: `${contentStatus.color}20`,
+                          color: contentStatus.color,
+                          fontWeight: 500,
+                        }}
+                        title={
+                          contentStatus.level === 'full' ? 'Downloaded, reviewed, with key points' :
+                          contentStatus.level === 'partial' ? 'Has summary or abstract' :
+                          contentStatus.level === 'metadata' ? 'Has author/date but no content' :
+                          'No content fetched'
+                        }
+                      >
+                        {contentStatus.label}
+                      </span>
                     </td>
                   )}
                   <td className="resources-index__authors">

@@ -19,6 +19,7 @@ import {
   Route,
   Banknote,
   Microscope,
+  Gauge,
   type LucideIcon,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -43,6 +44,7 @@ export type EntityType =
   | "funder"
   | "historical"
   | "analysis"
+  | "parameter"
 
 interface EntityTypeConfig {
   icon: LucideIcon
@@ -145,6 +147,11 @@ export const entityTypeConfig: Record<EntityType, EntityTypeConfig> = {
     icon: BarChart3,
     label: "Analysis",
     color: "text-rose-600 dark:text-rose-400",
+  },
+  parameter: {
+    icon: Gauge,
+    label: "Parameter",
+    color: "text-fuchsia-600 dark:text-fuchsia-400",
   },
 }
 
