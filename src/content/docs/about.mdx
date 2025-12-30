@@ -9,6 +9,9 @@ quality: 72
 llmSummary: "Meta-analysis of the wiki's own biases, creation process, and limitations, explicitly acknowledging it represents AI safety community perspective and was created with AI assistance. Provides systematic transparency through 5 tables covering assumptions, coverage biases, and evaluation guidelines."
 ---
 import { InfoBox } from '../../components/wiki';
+import { getWikiStats } from '../../lib/dashboard';
+
+export const wikiStats = getWikiStats();
 
 <InfoBox
   type="meta"
@@ -32,6 +35,60 @@ This wiki is an experimental project exploring how to structure and communicate 
 - It may inherit biases present in that discourse
 - It has been reviewed but not comprehensively fact-checked
 - It should be treated as a starting point for exploration, not a definitive reference
+
+---
+
+## Wiki Statistics
+
+<div className="not-content grid grid-cols-2 md:grid-cols-4 gap-4 my-6">
+  <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg text-center">
+    <div className="text-2xl font-bold">{wikiStats.totalPages}</div>
+    <div className="text-sm text-gray-600 dark:text-gray-400">Content Pages</div>
+  </div>
+  <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg text-center">
+    <div className="text-2xl font-bold">{wikiStats.totalEntities}</div>
+    <div className="text-sm text-gray-600 dark:text-gray-400">Entities Tracked</div>
+  </div>
+  <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg text-center">
+    <div className="text-2xl font-bold">{wikiStats.totalResources}</div>
+    <div className="text-sm text-gray-600 dark:text-gray-400">External Resources</div>
+  </div>
+  <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg text-center">
+    <div className="text-2xl font-bold">{wikiStats.totalWords}</div>
+    <div className="text-sm text-gray-600 dark:text-gray-400">Words (approx)</div>
+  </div>
+</div>
+
+| Metric | Value |
+|--------|-------|
+| **Content pages** | {wikiStats.totalPages} |
+| **Entities tracked** | {wikiStats.totalEntities} |
+| **External resources/citations** | {wikiStats.totalResources} |
+| **Approximate word count** | {wikiStats.totalWords} |
+| **Average quality score** | {wikiStats.avgQuality} / 5.0 |
+| **Created** | {wikiStats.createdDate} |
+| **Last data build** | {wikiStats.lastBuildDate} |
+
+### Content Breakdown
+
+| Category | Count |
+|----------|-------|
+| Risks & Risk Factors | {wikiStats.entityBreakdown.risks} |
+| Responses (Agendas, Interventions, Policies) | {wikiStats.entityBreakdown.responses} |
+| Organizations & Labs | {wikiStats.entityBreakdown.orgs} |
+| People | {wikiStats.entityBreakdown.people} |
+| Analytical Models | {wikiStats.entityBreakdown.models} |
+| Concepts & Capabilities | {wikiStats.entityBreakdown.concepts} |
+
+### Quality Distribution
+
+| Quality Level | Count |
+|---------------|-------|
+| Low (1-2) — Needs improvement | {wikiStats.qualitySummary.low} |
+| Adequate (3) — Meets basic standards | {wikiStats.qualitySummary.adequate} |
+| High (4-5) — Well-developed | {wikiStats.qualitySummary.high} |
+
+For detailed quality metrics and entity gap analysis, see the [Dashboard](/dashboard/).
 
 ---
 

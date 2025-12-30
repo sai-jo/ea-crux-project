@@ -8,6 +8,8 @@
 
 import database from '../data/database.json';
 import pages from '../data/pages.json';
+import resources from '../data/resources.json';
+import stats from '../data/stats.json';
 
 // Types for dashboard data
 export interface QualityDistribution {
@@ -351,5 +353,63 @@ export function getSummaryStats(): {
     models: getModelCount(),
     avgQuality: computeAverageQuality().toFixed(1),
     gaps,
+  };
+}
+
+/**
+ * Wiki Statistics - high-level stats for the About page
+ */
+export interface WikiStats {
+  totalPages: number;
+  totalEntities: number;
+  totalResources: number;
+  totalWords: string;
+  avgQuality: string;
+  qualitySummary: { low: number; adequate: number; high: number };
+  entityBreakdown: {
+    risks: number;
+    responses: number;
+    orgs: number;
+    people: number;
+    models: number;
+    concepts: number;
+  };
+  createdDate: string;
+  lastBuildDate: string;
+}
+
+/**
+ * Get wiki-wide statistics for meta/about page
+ */
+export function getWikiStats(): WikiStats {
+  const pagesData = getPages();
+  const byType = countByType();
+  const qualityDist = computeQualityDistribution();
+
+  // Count quality buckets
+  const low = qualityDist.filter(d => d.quality === 1 || d.quality === 2).reduce((s, d) => s + d.count, 0);
+  const adequate = qualityDist.find(d => d.quality === 3)?.count || 0;
+  const high = qualityDist.filter(d => d.quality === 4 || d.quality === 5).reduce((s, d) => s + d.count, 0);
+
+  // Entity type helpers
+  const getCount = (types: string[]) => byType.filter(t => types.includes(t.type)).reduce((s, t) => s + t.count, 0);
+
+  return {
+    totalPages: pagesData.length,
+    totalEntities: (stats as any).totalEntities || getEntities().length,
+    totalResources: (resources as any[]).length,
+    totalWords: '~970K', // Pre-computed approximation
+    avgQuality: computeAverageQuality().toFixed(1),
+    qualitySummary: { low, adequate, high },
+    entityBreakdown: {
+      risks: getCount(['risk', 'risk-factor']),
+      responses: getCount(['safety-agenda', 'intervention', 'policy']),
+      orgs: getCount(['organization', 'lab', 'lab-academic', 'lab-research']),
+      people: getCount(['researcher']),
+      models: getCount(['model']),
+      concepts: getCount(['concept', 'crux', 'capability']),
+    },
+    createdDate: 'December 2024',
+    lastBuildDate: (stats as any).lastBuilt ? new Date((stats as any).lastBuilt).toLocaleDateString() : 'Unknown',
   };
 }

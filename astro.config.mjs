@@ -46,7 +46,41 @@ export default defineConfig({
                   items: [
                       { label: 'Overview', slug: 'knowledge-base' },
                       { label: 'Directory', slug: 'knowledge-base/directory' },
-                      { label: 'Key Parameters', collapsed: true, autogenerate: { directory: 'knowledge-base/parameters' } },
+                      { label: 'Key Parameters', collapsed: true, items: [
+                          { label: 'Overview', slug: 'knowledge-base/parameters' },
+                          { label: 'Outcomes', collapsed: true, autogenerate: { directory: 'knowledge-base/parameters/outcomes' } },
+                          { label: 'Aggregates', collapsed: true, autogenerate: { directory: 'knowledge-base/parameters/aggregates' } },
+                          { label: 'Alignment', collapsed: true, items: [
+                              { slug: 'knowledge-base/parameters/alignment-robustness' },
+                              { slug: 'knowledge-base/parameters/safety-capability-gap' },
+                              { slug: 'knowledge-base/parameters/interpretability-coverage' },
+                              { slug: 'knowledge-base/parameters/human-oversight-quality' },
+                              { slug: 'knowledge-base/parameters/safety-culture-strength' },
+                          ]},
+                          { label: 'Governance', collapsed: true, items: [
+                              { slug: 'knowledge-base/parameters/coordination-capacity' },
+                              { slug: 'knowledge-base/parameters/international-coordination' },
+                              { slug: 'knowledge-base/parameters/regulatory-capacity' },
+                              { slug: 'knowledge-base/parameters/institutional-quality' },
+                              { slug: 'knowledge-base/parameters/racing-intensity' },
+                          ]},
+                          { label: 'Societal', collapsed: true, items: [
+                              { slug: 'knowledge-base/parameters/societal-trust' },
+                              { slug: 'knowledge-base/parameters/epistemic-health' },
+                              { slug: 'knowledge-base/parameters/human-agency' },
+                              { slug: 'knowledge-base/parameters/ai-control-concentration' },
+                              { slug: 'knowledge-base/parameters/economic-stability' },
+                              { slug: 'knowledge-base/parameters/preference-authenticity' },
+                              { slug: 'knowledge-base/parameters/reality-coherence' },
+                              { slug: 'knowledge-base/parameters/information-authenticity' },
+                          ]},
+                          { label: 'Resilience', collapsed: true, items: [
+                              { slug: 'knowledge-base/parameters/societal-resilience' },
+                              { slug: 'knowledge-base/parameters/biological-threat-exposure' },
+                              { slug: 'knowledge-base/parameters/cyber-threat-exposure' },
+                              { slug: 'knowledge-base/parameters/human-expertise' },
+                          ]},
+                      ]},
                       { label: 'Interventions', collapsed: true, items: [
                           { label: 'Overview', slug: 'knowledge-base/responses' },
                           { label: 'AI Alignment', collapsed: true, autogenerate: { directory: 'knowledge-base/responses/alignment' } },
@@ -106,6 +140,14 @@ export default defineConfig({
                   label: 'Internal',
                   collapsed: true,
                   autogenerate: { directory: 'internal' },
+              },
+              {
+                  label: 'Meta',
+                  collapsed: true,
+                  items: [
+                      { label: 'About & Transparency', slug: 'about' },
+                      { label: 'Dashboard', slug: 'dashboard' },
+                  ],
               },
           ],
       }),
