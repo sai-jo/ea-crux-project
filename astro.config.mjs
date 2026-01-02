@@ -49,6 +49,7 @@ export default defineConfig({
                       { label: 'Key Parameters', collapsed: true, items: [
                           { label: 'Overview', slug: 'knowledge-base/parameters' },
                           { label: 'Outcomes', collapsed: true, autogenerate: { directory: 'knowledge-base/parameters/outcomes' } },
+                          { label: 'Critical Outcomes', collapsed: true, autogenerate: { directory: 'knowledge-base/parameters/critical-outcomes' } },
                           { label: 'Aggregates', collapsed: true, autogenerate: { directory: 'knowledge-base/parameters/aggregates' } },
                           { label: 'Alignment', collapsed: true, items: [
                               { slug: 'knowledge-base/parameters/alignment-robustness' },
@@ -119,7 +120,8 @@ export default defineConfig({
                       { label: 'Scenarios', collapsed: true, autogenerate: { directory: 'knowledge-base/scenarios' } },
                       { label: 'Worldviews', collapsed: true, autogenerate: { directory: 'knowledge-base/worldviews' } },
                       { label: 'Key Debates', collapsed: true, autogenerate: { directory: 'knowledge-base/debates' } },
-                      { label: 'Arguments', collapsed: true, autogenerate: { directory: 'knowledge-base/arguments' } },
+                      { label: 'Methodology', collapsed: true, autogenerate: { directory: 'knowledge-base/methodology' } },
+                      { label: 'Research Notes', collapsed: true, autogenerate: { directory: 'knowledge-base/research-notes' } },
                   ],
               },
               {
