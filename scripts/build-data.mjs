@@ -48,7 +48,7 @@ function normalizeUrl(url) {
 }
 
 /**
- * Build URL → resource map from resources.yaml
+ * Build URL → resource map from resources
  */
 function buildUrlToResourceMap(resources) {
   const urlToResource = new Map();
@@ -125,7 +125,7 @@ const DATA_FILES = [
   { key: 'entities', file: 'entities.yaml' },
   { key: 'literature', file: 'literature.yaml' },
   { key: 'funders', file: 'funders.yaml' },
-  { key: 'resources', file: 'resources.yaml' },
+  { key: 'resources', dir: 'resources' }, // Split into multiple files
   { key: 'publications', file: 'publications.yaml' },
 ];
 
@@ -137,6 +137,29 @@ function loadYaml(filename) {
   }
   const content = readFileSync(filepath, 'utf-8');
   return parse(content) || [];
+}
+
+/**
+ * Load and merge all YAML files from a directory
+ */
+function loadYamlDir(dirname) {
+  const dirpath = join(DATA_DIR, dirname);
+  if (!existsSync(dirpath)) {
+    console.warn(`Directory not found: ${dirpath}`);
+    return [];
+  }
+
+  const files = readdirSync(dirpath).filter((f) => f.endsWith('.yaml'));
+  const merged = [];
+
+  for (const file of files) {
+    const filepath = join(dirpath, file);
+    const content = readFileSync(filepath, 'utf-8');
+    const data = parse(content) || [];
+    merged.push(...data);
+  }
+
+  return merged;
 }
 
 function countEntries(data) {
@@ -462,8 +485,8 @@ function main() {
 
   const database = {};
 
-  for (const { key, file } of DATA_FILES) {
-    const data = loadYaml(file);
+  for (const { key, file, dir } of DATA_FILES) {
+    const data = dir ? loadYamlDir(dir) : loadYaml(file);
     database[key] = data;
     console.log(`  ${key}: ${countEntries(data)} entries`);
   }
@@ -541,8 +564,8 @@ function main() {
   console.log(`\n✓ Written: ${OUTPUT_FILE}`);
 
   // Also write individual JSON files for selective imports
-  for (const { key, file } of DATA_FILES) {
-    const jsonFile = file.replace('.yaml', '.json');
+  for (const { key, file, dir } of DATA_FILES) {
+    const jsonFile = dir ? `${key}.json` : file.replace('.yaml', '.json');
     writeFileSync(join(DATA_DIR, jsonFile), JSON.stringify(database[key], null, 2));
   }
 

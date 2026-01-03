@@ -28,9 +28,12 @@ import { createHash } from 'crypto';
 import { parse as parseYaml, stringify as stringifyYaml } from 'yaml';
 
 const CONTENT_DIR = 'src/content/docs';
-const RESOURCES_FILE = 'src/data/resources.yaml';
+const RESOURCES_DIR = 'src/data/resources';
 const PUBLICATIONS_FILE = 'src/data/publications.yaml';
 const PAGES_FILE = 'src/data/pages.json';
+
+// Forum publication IDs that go in forums.yaml
+const FORUM_PUBLICATION_IDS = new Set(['lesswrong', 'alignment-forum', 'ea-forum']);
 
 // ============ Utilities ============
 
@@ -38,20 +41,66 @@ function hashId(str) {
   return createHash('sha256').update(str).digest('hex').slice(0, 16);
 }
 
-function loadResources() {
-  const content = readFileSync(RESOURCES_FILE, 'utf-8');
-  return parseYaml(content) || [];
+/**
+ * Determine which file a resource belongs to based on type/publication
+ */
+function getResourceCategory(resource) {
+  if (resource.type === 'paper') return 'papers';
+  if (resource.type === 'government') return 'government';
+  if (resource.publication_id && FORUM_PUBLICATION_IDS.has(resource.publication_id)) return 'forums';
+  return 'general';
 }
 
-function saveResources(resources) {
-  const header = `# External Resources Referenced in the Knowledge Base
-# ==================================================
-#
-# Auto-generated and manually curated.
-# See src/data/schema.ts for Resource schema.
+/**
+ * Load all resources from the split directory
+ */
+function loadResources() {
+  const resources = [];
+  if (!existsSync(RESOURCES_DIR)) {
+    return resources;
+  }
 
-`;
-  writeFileSync(RESOURCES_FILE, header + stringifyYaml(resources, { lineWidth: 100 }));
+  const files = readdirSync(RESOURCES_DIR).filter((f) => f.endsWith('.yaml'));
+  for (const file of files) {
+    const filepath = join(RESOURCES_DIR, file);
+    const content = readFileSync(filepath, 'utf-8');
+    const data = parseYaml(content) || [];
+    resources.push(...data);
+  }
+  return resources;
+}
+
+/**
+ * Save resources to the appropriate split files based on type
+ */
+function saveResources(resources) {
+  // Categorize resources
+  const categorized = {
+    papers: [],
+    government: [],
+    forums: [],
+    general: [],
+  };
+
+  for (const resource of resources) {
+    const category = getResourceCategory(resource);
+    categorized[category].push(resource);
+  }
+
+  // Headers for each file
+  const headers = {
+    papers: '# Papers Resources\n# Academic papers, preprints, and research publications\n\n',
+    government: '# Government Resources\n# Government documents, policy reports, and regulatory materials\n\n',
+    forums: '# Forums Resources\n# Posts from LessWrong, Alignment Forum, and EA Forum\n\n',
+    general: '# General Resources\n# Web articles, blog posts, and other resources\n\n',
+  };
+
+  // Write each category to its file
+  for (const [category, items] of Object.entries(categorized)) {
+    const filepath = join(RESOURCES_DIR, `${category}.yaml`);
+    const content = headers[category] + stringifyYaml(items, { lineWidth: 100 });
+    writeFileSync(filepath, content);
+  }
 }
 
 function loadPages() {
@@ -382,7 +431,7 @@ function cmdProcess(opts) {
     // Save resources first
     if (newResources.length > 0) {
       saveResources(resources);
-      console.log(`✅ Saved ${newResources.length} new resources to resources.yaml`);
+      console.log(`✅ Saved ${newResources.length} new resources`);
     }
 
     // Save file
@@ -562,7 +611,7 @@ async function extractArxivMetadata(opts) {
 
   if (!dryRun && updated > 0 && !opts._skipSave) {
     saveResources(resources);
-    console.log('   Saved resources.yaml');
+    console.log('   Saved resources files');
   }
   return updated;
 }
@@ -654,7 +703,7 @@ async function extractForumMetadata(opts) {
 
   if (!dryRun && updated > 0 && !opts._skipSave) {
     saveResources(resources);
-    console.log('   Saved resources.yaml');
+    console.log('   Saved resources files');
   }
   return updated;
 }
@@ -776,7 +825,7 @@ async function extractScholarMetadata(opts) {
 
   if (!dryRun && updated > 0 && !opts._skipSave) {
     saveResources(resources);
-    console.log('   Saved resources.yaml');
+    console.log('   Saved resources files');
   }
   return updated;
 }
@@ -931,7 +980,7 @@ async function extractWebMetadata(opts) {
 
   if (!dryRun && updated > 0 && !opts._skipSave) {
     saveResources(resources);
-    console.log('   Saved resources.yaml');
+    console.log('   Saved resources files');
   }
   return updated;
 }
@@ -1031,7 +1080,7 @@ async function cmdMetadata(opts) {
     // Save once at the end
     if (totalUpdated > 0 && !opts['dry-run']) {
       saveResources(resources);
-      console.log('\n📁 Saved resources.yaml');
+      console.log('\n📁 Saved resources files');
     }
   } else {
     // Sequential execution
@@ -1111,7 +1160,7 @@ async function cmdRebuildCitations(opts) {
 
   if (!dryRun) {
     saveResources(resources);
-    console.log('   Saved resources.yaml');
+    console.log('   Saved resources files');
     console.log('\n💡 Run `npm run build:data` to update the database.');
   }
 }
@@ -1238,7 +1287,7 @@ async function cmdEnrich(opts) {
 
   if (!dryRun && (pubMapped > 0 || tagsAdded > 0)) {
     saveResources(resources);
-    console.log('\n   Saved resources.yaml');
+    console.log('\n   Saved resources files');
     console.log('💡 Run `npm run build:data` to update the database.');
   }
 }

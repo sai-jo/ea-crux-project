@@ -204,7 +204,7 @@ Sources and rate limits:
 
 ### Rebuild Citations Command
 
-Scan MDX files and rebuild `cited_by` relationships in resources.yaml:
+Scan MDX files and rebuild `cited_by` relationships in resource files:
 ```bash
 node scripts/resource-manager.mjs rebuild-citations
 ```
@@ -600,7 +600,7 @@ import {ArticleSources} from '../../../../components/wiki';
 
 ### Workflow for AI Content Generation
 
-1. When citing an external source, check if URL exists in `resources.yaml`
+1. When citing an external source, check if URL exists in `src/data/resources/`
 2. If yes, use `<R id="{hash}">Label</R>` instead of markdown link
 3. If no, use standard markdown link `[Label](url)` — it will be tracked by the scan script
 4. Add `<ArticleSources entityId="..." />` at end of articles to show all cited resources

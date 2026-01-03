@@ -50,10 +50,10 @@ The following table compares progress across major alignment research agendas, b
 
 | Research Agenda | Lead Organizations | 2024 Status | 2025 Status | Progress Rating | Key Milestone |
 |-----------------|-------------------|-------------|-------------|-----------------|---------------|
-| **Mechanistic Interpretability** | Anthropic, Google DeepMind | Early research | Feature extraction at scale | 3/10 | [Sparse autoencoders on Claude 3 Sonnet](https://transformer-circuits.pub/2024/scaling-monosemanticity/) |
+| **Mechanistic Interpretability** | Anthropic, Google DeepMind | Early research | Feature extraction at scale | 3/10 | <R id="e724db341d6e0065">Sparse autoencoders on Claude 3 Sonnet</R> |
 | **Constitutional AI** | Anthropic | Deployed in Claude | Enhanced with classifiers | 7/10 | \$10K-\$20K bounties unbroken |
 | **RLHF / RLAIF** | OpenAI, Anthropic, DeepMind | Standard practice | Improved detection methods | 6/10 | PAR framework: 5+ pp improvement |
-| **Scalable Oversight** | OpenAI, Anthropic | Theoretical | Limited empirical results | 2/10 | [Scaling laws show sharp capability gap decline](https://arxiv.org/html/2504.18530v1) |
+| **Scalable Oversight** | OpenAI, Anthropic | Theoretical | Limited empirical results | 2/10 | <R id="a2f0c5f433869914">Scaling laws show sharp capability gap decline</R> |
 | **Weak-to-Strong Generalization** | OpenAI | Initial experiments | Mixed results | 3/10 | GPT-2 supervising GPT-4 experiments |
 | **Debate / Amplification** | Anthropic, OpenAI | Conceptual | Limited deployment | 2/10 | Agent Score Difference metric |
 | **Process Supervision** | OpenAI | Research | Some production use | 5/10 | Process reward models in reasoning |
@@ -103,7 +103,7 @@ flowchart TD
 
 ### Lab Safety Index Scores (FLI 2025)
 
-The [Future of Life Institute's AI Safety Index](https://futureoflife.org/ai-safety-index-winter-2025/) provides independent assessment of leading AI labs across safety dimensions. The Winter 2025 assessment found no lab scored above C+ overall, with particular weaknesses in existential safety planning.
+The <R id="97185b28d68545b4">Future of Life Institute's AI Safety Index</R> provides independent assessment of leading AI labs across safety dimensions. The Winter 2025 assessment found no lab scored above C+ overall, with particular weaknesses in existential safety planning.
 
 | Organization | Overall Grade | Risk Management | Transparency | Existential Safety | Alignment Investment |
 |--------------|---------------|-----------------|--------------|-------------------|---------------------|
@@ -115,7 +115,7 @@ The [Future of Life Institute's AI Safety Index](https://futureoflife.org/ai-saf
 | **DeepSeek** | F | F | F | F | F |
 | **Alibaba Cloud** | F | F | F | F | F |
 
-*Source: [FLI AI Safety Index Winter 2025](https://futureoflife.org/ai-safety-index-winter-2025/). Grades based on 33 indicators across six domains.*
+*Source: <R id="97185b28d68545b4">FLI AI Safety Index Winter 2025</R>. Grades based on 33 indicators across six domains.*
 
 **Key Finding**: Despite predictions of AGI within the decade, no lab scored above D in Existential Safety planning. One FLI reviewer called this "deeply disturbing," noting that despite racing toward human-level AI, "none of the companies has anything like a coherent, actionable plan" for ensuring such systems remain safe and controllable.
 
@@ -130,7 +130,7 @@ The [Future of Life Institute's AI Safety Index](https://futureoflife.org/ai-saf
 | Sparse Autoencoders (SAEs) | Specific features in narrow contexts | Cannot explain polysemantic neurons | <R id="f771d4f56ad4dbaa">Anthropic Research</R> |
 | Circuit Tracing | Individual reasoning circuits | Limited to simple behaviors | <R id="4ff5ab7d45bc6dc5">Mechanistic Interpretability</R> |
 | Probing Methods | Surface-level representations | Miss deeper reasoning patterns | <R id="a306e0b63bdedbd5">AI Safety Research</R> |
-| Attribution Graphs | Multi-step reasoning chains | Computationally expensive | [Anthropic 2025](https://alignment.anthropic.com/) |
+| Attribution Graphs | Multi-step reasoning chains | Computationally expensive | <R id="5a651b8ed18ffeb1">Anthropic 2025</R> |
 | Transcoders | Layer-to-layer transformations | Early stage | Academic research (2025) |
 
 ### Major 2024-2025 Breakthroughs
@@ -138,7 +138,7 @@ The [Future of Life Institute's AI Safety Index](https://futureoflife.org/ai-saf
 | Achievement | Organization | Date | Significance |
 |-------------|--------------|------|--------------|
 | SAEs on Claude 3 Sonnet | Anthropic | May 2024 | First application to frontier production model |
-| [Gemma Scope 2 release](https://deepmind.google/blog/gemma-scope-2-helping-the-ai-safety-community-deepen-understanding-of-complex-language-model-behavior/) | Google DeepMind | Dec 2025 | Largest open-source interpretability tools release |
+| <R id="a1036bc63472c5fc">Gemma Scope 2 release</R> | Google DeepMind | Dec 2025 | Largest open-source interpretability tools release |
 | Attribution graphs open-sourced | Anthropic | 2025 | Enables external researchers to trace model reasoning |
 | Backdoor detection via probing | Multiple | 2025 | Can detect sleeper agents about to behave dangerously |
 
@@ -179,18 +179,18 @@ SAEs have emerged as the most promising direction for addressing polysemanticity
 |--------|----------------|-----------|---------------|--------|
 | Cluster Separation Index (CSI) | ~70% | Latent space analysis | Medium | Academic (2024) |
 | Energy Loss Monitoring | ~60% | Final layer analysis | Medium | Academic (2024) |
-| [PAR Framework](https://arxiv.org/html/2502.18770v3) | 5+ pp improvement | Preference-based rewards | High | Feb 2025 |
+| <R id="e6e4c43e6c19769e">PAR Framework</R> | 5+ pp improvement | Preference-based rewards | High | Feb 2025 |
 | Ensemble Disagreement | ~78% precision | Multiple reward models | High | Shihab et al. (Jul 2025) |
-| [PURM](https://arxiv.org/abs/2503.05613) | Gaussian uncertainty | Probabilistic reward modeling | High | Sun et al. (Mar 2025) |
+| <R id="79f4094f091a55b5">PURM</R> | Gaussian uncertainty | Probabilistic reward modeling | High | Sun et al. (Mar 2025) |
 
 ### 2025 Research Advances
 
 | Approach | Mechanism | Improvement | Reference |
 |----------|-----------|-------------|-----------|
-| **Reward Shaping** | Bounded rewards with rapid initial growth | Partially mitigates hacking | [Feb 2025 paper](https://arxiv.org/html/2502.18770v3) |
+| **Reward Shaping** | Bounded rewards with rapid initial growth | Partially mitigates hacking | <R id="e6e4c43e6c19769e">Feb 2025 paper</R> |
 | **Adversarial Training** | RL-driven adversarial example generation | Immunizes against known exploits | Bukharin et al. (Apr 2025) |
 | **Preference As Reward (PAR)** | Latent preferences as RL signal | 5+ pp AlpacaEval improvement | Feb 2025 |
-| **HHH Preference Penalization** | Penalize reward hacking during training | >75% reduction in misaligned generalization | [Anthropic 2025](https://assets.anthropic.com/m/74342f2c96095771/original/Natural-emergent-misalignment-from-reward-hacking-paper.pdf) |
+| **HHH Preference Penalization** | Penalize reward hacking during training | >75% reduction in misaligned generalization | <R id="b31b409bce6c24cb">Anthropic 2025</R> |
 
 **Mitigation Success Rates**:
 - **Densely Specified Rewards**: 31% reduction in hacking frequency
@@ -301,13 +301,13 @@ By definition, successful [deceptive alignment](/knowledge-base/risks/accident/d
 | Process Supervision | Medium | Mixed results | Promising for reasoning | OpenAI (2024) |
 | Ensemble Learning | Medium | Some improvement | Computationally expensive | Academic (2024) |
 | Partitioned Oversight | High | Early stage | Unknown scalability | Academic (2025) |
-| [Hierarchical Delegated Oversight](https://openreview.net/forum?id=l5Wrcgyobp) | High | PAC-Bayesian bounds | Promising for multi-agent | 2025 |
+| <R id="7edac65dd8f45228">Hierarchical Delegated Oversight</R> | High | PAC-Bayesian bounds | Promising for multi-agent | 2025 |
 
 ### Scaling Laws (2025)
 
 **Critical Finding**: <R id="68224b08ec1085a4">Game-theoretic analysis</R> between strong AI ("Houdini") and weaker overseer ("Guard") shows **oversight probability drops sharply as capability gap grows**, even with nested oversight strategies.
 
-[Recent empirical research](https://arxiv.org/html/2504.18530v1) has derived scaling laws for oversight success as a function of the capability gap between overseer and overseen system:
+<R id="a2f0c5f433869914">Recent empirical research</R> has derived scaling laws for oversight success as a function of the capability gap between overseer and overseen system:
 
 | Capability Gap | Oversight Success Rate | Method | Notes |
 |----------------|----------------------|--------|-------|
@@ -360,7 +360,7 @@ By definition, successful [deceptive alignment](/knowledge-base/risks/accident/d
 |--------------|-----------------|------------|-----------------|
 | **Anthropic** | Integrated safety teams | Board oversight | Responsible Scaling Policy |
 | **OpenAI** | Restructured post-superalignment | Board oversight | Preparedness Framework |
-| **Google DeepMind** | [Frontier Safety Framework](https://deepmind.google/discover/blog/introducing-the-frontier-safety-framework/) | RSC + AGI Safety Council | Critical Capability Levels |
+| **Google DeepMind** | <R id="d8c3d29798412b9f">Frontier Safety Framework</R> | RSC + AGI Safety Council | Critical Capability Levels |
 | **xAI** | Minimal public structure | Unknown | Limited public commitments |
 | **Meta** | AI safety research team | Standard corporate | Open-source focused |
 
@@ -458,7 +458,7 @@ The <R id="181a6c57dd4cbc02">inaugural International AI Safety Report</R> (Janua
 
 ### DeepMind AGI Safety Assessment (2025)
 
-Google DeepMind executives released a [145-page paper](https://deepmind.google/discover/blog/taking-a-responsible-path-to-agi/) in early 2025 outlining their approach to AGI safety. Key findings:
+Google DeepMind executives released a <R id="cedad15781bf04f2">145-page paper</R> in early 2025 outlining their approach to AGI safety. Key findings:
 
 | Risk Category | Assessment | Priority |
 |---------------|------------|----------|
@@ -559,26 +559,26 @@ pie title 2025 Progress Distribution by Agenda
 |----------|------------|--------------|------|
 | **Interpretability** | <R id="61e0b20e9ae20876">Sparse Autoencoders</R> | Anthropic | 2024 |
 | | <R id="4ff5ab7d45bc6dc5">Mechanistic Interpretability</R> | Anthropic | 2024 |
-| | [Gemma Scope 2](https://deepmind.google/blog/gemma-scope-2-helping-the-ai-safety-community-deepen-understanding-of-complex-language-model-behavior/) | DeepMind | 2025 |
-| | [SAE Survey](https://arxiv.org/html/2503.05613v1) | Academic | 2025 |
+| | <R id="a1036bc63472c5fc">Gemma Scope 2</R> | DeepMind | 2025 |
+| | <R id="d62cac1429bcd095">SAE Survey</R> | Academic | 2025 |
 | **Deceptive Alignment** | <R id="0b3e69501bc2d0d9">CoT Monitor+</R> | Multiple | 2025 |
 | | <R id="9aad80c8b7a4f191">Sleeper Agents</R> | Anthropic | 2024 |
-| **RLHF & Reward Hacking** | [Reward Shaping](https://arxiv.org/html/2502.18770v3) | Academic | 2025 |
-| | [Natural Emergent Misalignment](https://assets.anthropic.com/m/74342f2c96095771/original/Natural-emergent-misalignment-from-reward-hacking-paper.pdf) | Anthropic | 2025 |
-| **Scalable Oversight** | [Scaling Laws for Oversight](https://arxiv.org/html/2504.18530v1) | Academic | 2025 |
-| | [Hierarchical Delegated Oversight](https://openreview.net/forum?id=l5Wrcgyobp) | Academic | 2025 |
+| **RLHF & Reward Hacking** | <R id="e6e4c43e6c19769e">Reward Shaping</R> | Academic | 2025 |
+| | <R id="b31b409bce6c24cb">Natural Emergent Misalignment</R> | Anthropic | 2025 |
+| **Scalable Oversight** | <R id="a2f0c5f433869914">Scaling Laws for Oversight</R> | Academic | 2025 |
+| | <R id="7edac65dd8f45228">Hierarchical Delegated Oversight</R> | Academic | 2025 |
 | **Corrigibility** | <R id="006486db8e5f5f91">Shutdown Resistance in LLMs</R> | Independent | 2025 |
 | | <R id="181a6c57dd4cbc02">International AI Safety Report</R> | Multi-national | 2025 |
-| **Lab Safety** | [Frontier Safety Framework](https://deepmind.google/discover/blog/introducing-the-frontier-safety-framework/) | DeepMind | 2025 |
-| | [AGI Safety Paper](https://deepmind.google/discover/blog/taking-a-responsible-path-to-agi/) | DeepMind | 2025 |
+| **Lab Safety** | <R id="d8c3d29798412b9f">Frontier Safety Framework</R> | DeepMind | 2025 |
+| | <R id="cedad15781bf04f2">AGI Safety Paper</R> | DeepMind | 2025 |
 
 ### Independent Assessments
 
 | Assessment | Organization | Scope | Access |
 |------------|--------------|-------|--------|
-| [AI Safety Index Winter 2025](https://futureoflife.org/ai-safety-index-winter-2025/) | Future of Life Institute | 7 labs, 33 indicators | Public |
-| [AI Safety Index Summer 2025](https://futureoflife.org/ai-safety-index-summer-2025/) | Future of Life Institute | 7 labs, 6 domains | Public |
-| [Alignment Research Directions](https://alignment.anthropic.com/2025/recommended-directions/) | Anthropic | Research priorities | Public |
+| <R id="97185b28d68545b4">AI Safety Index Winter 2025</R> | Future of Life Institute | 7 labs, 33 indicators | Public |
+| <R id="df46edd6fa2078d1">AI Safety Index Summer 2025</R> | Future of Life Institute | 7 labs, 6 domains | Public |
+| <R id="7ae6b3be2d2043c1">Alignment Research Directions</R> | Anthropic | Research priorities | Public |
 
 ### Benchmarks & Evaluation Platforms
 
@@ -594,7 +594,7 @@ pie title 2025 Progress Distribution by Agenda
 
 | Organization | Role | Key Publications |
 |-------------|------|------------------|
-| <R id="817964dfbb0e3b1b">UK AI Safety Institute</R> | Government research | Evaluation frameworks, red-teaming, [DeepMind partnership](https://deepmind.google/blog/deepening-our-partnership-with-the-uk-ai-security-institute/) |
+| <R id="817964dfbb0e3b1b">UK AI Safety Institute</R> | Government research | Evaluation frameworks, red-teaming, <R id="d648a6e2afc00d15">DeepMind partnership</R> |
 | <R id="c9c2bcaca0d2c3e6">US AI Safety Institute</R> | Standards development | Safety guidelines, metrics |
 | <R id="f37ebc766aaa61d7">EU AI Office</R> | Regulatory oversight | Compliance frameworks |
 

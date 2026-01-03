@@ -3,114 +3,96 @@ title: "Project Roadmap"
 description: "Future work, infrastructure improvements, and project tracking"
 sidebar:
   order: 10
-lastEdited: "2025-12-26"
+lastEdited: "2026-01-02"
 importance: 0
 quality: 25
-llmSummary: "Internal project management document tracking infrastructure tasks (Vale integration, freshness tracking, schema enhancements) and style guide evolution from kb-2.0. Primarily checklist format with minimal actionable content."
----
-his file tracks infrastructure improvements, tooling ideas, and style guide evolution. For content-specific enhancement tasks, see the [Enhancement Queue](/internal/enhancement-queue/).
-
+llmSummary: "Internal project management document tracking future infrastructure tasks and content priorities. Most core infrastructure (validators, dashboard, grading) is complete."
 ---
 
-## Infrastructure Improvements
+This file tracks future infrastructure improvements and project priorities. For content-specific tasks, see the [Enhancement Queue](/internal/enhancement-queue/).
 
-### Content Quality Automation
+## Current State (January 2026)
 
-- [ ] **Vale integration** - Prose linting for terminology consistency, hedging, readability
-  - Priority: Low
-  - Effort: ~30 min basic setup, ~2 hours for custom rules
-  - Would catch ~20-30% of mechanical style issues (terminology, passive voice, hedging)
-  - Can't check structural issues (hierarchy, argument quality)
-  - Start with built-in packages (Microsoft, write-good), add custom rules later
+The project has mature infrastructure:
 
-- [ ] **Freshness tracking system** - Identify pages needing review
-  - Priority: Medium
-  - Effort: ~2-3 hours
-  - Add `lastReviewed` field to schema (distinct from `lastEdited`)
-  - Add `reviewCycle` field (days before considered stale)
-  - Create script to generate staleness report
-  - Integrate into validation suite
+| System | Status | Notes |
+|--------|--------|-------|
+| Validation Suite | ✅ Complete | 14 validators covering style, links, MDX, Mermaid, staleness, redundancy |
+| Quality Grading | ✅ Complete | Claude API-powered grading (0-100 quality/importance) |
+| Dashboard | ✅ Complete | `/dashboard/` with quality distribution, `/dashboard/graph/` for relationships |
+| Knowledge Base | ✅ Complete | SQLite cache with article/source extraction and AI summaries |
+| Resource Linking | ✅ Complete | `<R>` component with bidirectional tracking, metadata extraction |
+| Page Type System | ✅ Complete | overview/content/stub classification |
+| Freshness Tracking | ✅ Complete | `reviewBy`, `contentDependencies`, staleness validator |
 
-- [ ] **Quality dashboard** - Visual overview of content health
-  - Priority: Low
-  - Could be a generated page showing:
-    - Pages by quality score
-    - Pages by staleness
-    - Pages missing required fields
-    - Style guide version coverage
+---
 
-### Schema Enhancements
+## Future Work
 
-- [ ] Add `lastReviewed` field (when human verified accuracy)
-- [ ] Add `reviewCycle` field (days before stale, default 90?)
-- [ ] Validate `styleGuideVersion` against known versions (kb-1.0, kb-2.0, etc.)
-- [ ] Consider `contentType` enum for better categorization
+### Content Quality
 
-### Tooling
+- [ ] **Batch content improvement** - Systematically upgrade high-importance, low-quality pages
+  - Use `node scripts/page-improver.mjs --list` to identify priorities
+  - Target: All pages with importance > 60 and quality < 40
 
-- [ ] **VS Code snippets** - Scaffolding for new pages
-  - Priority: Low
-  - Effort: ~30 min
+- [ ] **Citation coverage** - Many pages lack external citations
+  - Resource manager can convert links: `npm run resources process [page] --apply`
+  - Goal: Every substantive claim has a source
+
+### Tooling (Low Priority)
+
+- [ ] **Vale integration** - Prose linting for terminology consistency
+  - Would catch mechanical style issues (hedging, passive voice)
+  - Deferred: Current validators cover structural issues well
+
+- [ ] **VS Code snippets** - Scaffolding templates for new pages
+  - Low effort (~30 min), zero installation
   - Templates for: risk, response, model, debate pages
-  - Zero installation, immediate value
 
-- [ ] **Hygen templates** - Interactive page creation (if snippets aren't enough)
-  - Priority: Very Low
-  - More powerful but requires installation
+### Style Guide
 
----
+- [ ] **Model page guidance** - Models need different structure than risks/responses
+  - Mermaid diagrams, quantitative tables, scenario analysis
+  - Could be `model-1.0` or expand kb-2.0 with "Model Pages" section
 
-## Style Guide Evolution
-
-### Current: kb-2.0 (2025-12-26)
-
-Covers risks and responses with emphasis on:
-- Proper h2/h3 hierarchy (not flat structures)
-- Integrated arguments (not sparse Case For/Against)
-- Content over format (guidelines not rigid templates)
-- Sparing use of visualizations (DisagreementMap often confusing)
-
-### Future Considerations
-
-- [ ] **Separate guide for models?** - Models have different structure (Mermaid diagrams, quantitative tables, scenarios)
-  - Could be `model-1.0` extending shared principles from `kb-2.0`
-  - Or expand kb guide with "Model Pages" section
-
-- [ ] **Mermaid diagram guidance** - When to use, how to structure, accessibility considerations
-
-- [ ] **Component usage patterns** - When to use:
+- [ ] **Component usage patterns** - Document when to use:
   - EstimateBox vs plain tables
-  - DisagreementMap vs prose
-  - KeyQuestions vs inline questions
-
-- [ ] **Cross-linking standards** - More specific guidance on:
-  - How many links per page
-  - When to use inline links vs Related Pages section
-  - Bidirectional link maintenance
-
----
-
-## Content Priorities
-
-Enhancement tasks are tracked in the [Enhancement Queue](/internal/enhancement-queue/).
-
-### Pages Already Updated to kb-2.0
-- [x] ai-safety-institutes.mdx (2025-12-26)
+  - Mermaid diagrams vs prose explanations
+  - KeyQuestions component
 
 ---
 
 ## Completed
 
-### 2025-12-26
-- [x] Created kb-2.0 style guide (renamed from risk-response templates)
-- [x] Added styleGuideVersion tracking to frontmatter
-- [x] Restructured ai-safety-institutes.mdx as pilot page
-- [x] Researched Vale/automation options (decided to defer)
+### December 2025
+
+**Infrastructure:**
+- Quality dashboard at `/dashboard/`
+- Freshness tracking (`reviewBy`, `contentDependencies`, staleness validator)
+- Page type system (overview/content/stub)
+- Redundancy detection validator
+- Wiki statistics on About page
+- Mermaid diagram validator
+- Comparison operator validator
+- Dollar sign escaping validator
+
+**Content:**
+- Entity naming refactor for consistency
+- Parameter pages restructured
+- Concepts directory page (LessWrong-style layout)
+
+### Earlier
+
+- kb-2.0 style guide
+- Full validation suite (style, links, MDX, data integrity, etc.)
+- Knowledge base system (scan + summarize)
+- Resource manager CLI
+- Quality grading system
 
 ---
 
 ## Notes
 
-- **Don't over-engineer** - Start simple, add tooling only when manual process becomes painful
-- **Style guide is guidelines, not law** - Adapt to content, don't force content into templates
-- **Versioning helps prioritization** - Can search for old styleGuideVersion to find pages needing updates
+- **Don't over-engineer** - Add tooling only when manual process becomes painful
+- **Style guide is guidelines, not law** - Adapt to content, don't force templates
+- Run `npm run validate` before committing to catch issues early

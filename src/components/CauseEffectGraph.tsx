@@ -104,6 +104,18 @@ function toYaml(nodes: Node<CauseEffectNodeData>[], edges: Edge<CauseEffectEdgeD
 const NODE_WIDTH = 180;
 const NODE_HEIGHT = 80;
 
+// Group container padding
+const GROUP_PADDING = 15;
+const GROUP_LABEL_HEIGHT = 0;  // No labels - rely on color coding in legend
+
+// Group labels and colors for each node type
+const groupConfig: Record<string, { label: string; bgColor: string; borderColor: string }> = {
+  leaf: { label: 'Leaf Parameters', bgColor: 'rgba(236, 253, 245, 0.4)', borderColor: '#a7f3d0' },
+  cause: { label: 'Aggregate Parameters', bgColor: 'rgba(241, 245, 249, 0.4)', borderColor: '#cbd5e1' },
+  intermediate: { label: 'Critical Outcomes', bgColor: 'rgba(219, 234, 254, 0.4)', borderColor: '#93c5fd' },
+  effect: { label: 'Ultimate Outcomes', bgColor: 'rgba(254, 243, 199, 0.4)', borderColor: '#fcd34d' },
+};
+
 // Style edges based on strength and effect
 // - Thickness: strong=4, medium=2.5, weak=1.5
 // - Color: increases risk=red, decreases risk=green, neutral=gray
@@ -145,24 +157,21 @@ function getStyledEdges(edges: Edge<CauseEffectEdgeData>[]): Edge<CauseEffectEdg
   });
 }
 
-// ELK layout options
+// ELK layout options - compact with polyline edges
 const elkOptions = {
   'elk.algorithm': 'layered',
   'elk.direction': 'DOWN',
-  'elk.spacing.nodeNode': '80',
-  'elk.spacing.edgeEdge': '20',
-  'elk.spacing.edgeNode': '30',
-  'elk.layered.spacing.nodeNodeBetweenLayers': '120',
-  'elk.layered.spacing.edgeNodeBetweenLayers': '40',
-  'elk.layered.spacing.edgeEdgeBetweenLayers': '20',
-  'elk.edgeRouting': 'SPLINES',
+  'elk.spacing.nodeNode': '40',
+  'elk.spacing.edgeEdge': '15',
+  'elk.spacing.edgeNode': '20',
+  'elk.layered.spacing.nodeNodeBetweenLayers': '80',
+  'elk.layered.spacing.edgeNodeBetweenLayers': '30',
+  'elk.layered.spacing.edgeEdgeBetweenLayers': '15',
+  'elk.edgeRouting': 'POLYLINE',  // Simpler routing, less space needed
   'elk.layered.mergeEdges': 'false',
   'elk.layered.nodePlacement.strategy': 'NETWORK_SIMPLEX',
   'elk.layered.crossingMinimization.strategy': 'LAYER_SWEEP',
-  // Ensure proper layering respects constraints
   'elk.layered.layering.strategy': 'NETWORK_SIMPLEX',
-  // Compact layout
-  'elk.layered.compaction.postCompaction.strategy': 'LEFT_RIGHT_CONNECTION_LOCKING',
 };
 
 // Async ELK layout function with layer constraints based on node types
@@ -201,8 +210,7 @@ async function getLayoutedElements(
     return { ...node, position: { x: elkNode?.x ?? 0, y: elkNode?.y ?? 0 } };
   });
 
-  // Second pass: force same-type nodes into same horizontal row
-  // Group nodes by type and compute target Y for each group
+  // Second pass: group nodes by type
   const nodesByType: Record<string, typeof layoutedNodes> = {};
   for (const node of layoutedNodes) {
     const type = node.data.type || 'intermediate';
@@ -210,38 +218,117 @@ async function getLayoutedElements(
     nodesByType[type].push(node);
   }
 
-  // For each type, set all nodes to the same Y (minimum Y in that group for consistent row)
-  for (const type of Object.keys(nodesByType)) {
-    const group = nodesByType[type];
-    if (group.length > 1) {
-      // Use minimum Y so the row is at the highest position of any node in that group
-      const targetY = Math.min(...group.map(n => n.position.y));
-      for (const node of group) {
-        node.position.y = targetY;
+  // Define which intermediate nodes are "upstream" (feed into other intermediates)
+  // These go in the first intermediate row
+  const upstreamIntermediates = new Set([
+    'turb',           // Turbulence → State
+    'fast-takeover',  // Direct to outcomes
+    'slow-takeover',  // Direct to outcomes + Lock-in
+    'state-catastrophe', // → Lock-in
+    'rogue-catastrophe', // Direct to outcomes
+  ]);
+
+  // Split intermediates into two sub-groups
+  const intermediateRow1: typeof layoutedNodes = [];
+  const intermediateRow2: typeof layoutedNodes = [];
+
+  if (nodesByType['intermediate']) {
+    for (const node of nodesByType['intermediate']) {
+      if (upstreamIntermediates.has(node.id)) {
+        intermediateRow1.push(node);
+      } else {
+        intermediateRow2.push(node);
       }
     }
   }
 
-  // Third pass: redistribute X positions within each row to avoid overlaps and center
-  for (const type of Object.keys(nodesByType)) {
-    const group = nodesByType[type];
-    if (group.length > 1) {
-      // Sort by current X position
-      group.sort((a, b) => a.position.x - b.position.x);
-      // Calculate total width needed
-      const spacing = NODE_WIDTH + 40; // node width + gap
-      const totalWidth = group.length * spacing - 40;
-      // Find center X of original positions
-      const centerX = group.reduce((sum, n) => sum + n.position.x, 0) / group.length;
-      // Redistribute evenly centered around that point
-      const startX = centerX - totalWidth / 2;
-      group.forEach((node, i) => {
-        node.position.x = startX + i * spacing;
-      });
+  // Calculate row Y positions with gaps between containers
+  // Container gap = GROUP_PADDING * 2 + some extra space for visual separation
+  const CONTAINER_GAP = 40;
+
+  // Get base Y positions from ELK layout
+  const leafY = nodesByType['leaf'] ? Math.min(...nodesByType['leaf'].map(n => n.position.y)) : 0;
+  const causeY = nodesByType['cause'] ? Math.min(...nodesByType['cause'].map(n => n.position.y)) : leafY + NODE_HEIGHT + 100;
+
+  // Set leaf nodes to their row
+  if (nodesByType['leaf']) {
+    for (const node of nodesByType['leaf']) {
+      node.position.y = leafY;
     }
   }
 
+  // Position cause nodes with gap from leaf container
+  const causeRowY = leafY + NODE_HEIGHT + GROUP_PADDING * 2 + CONTAINER_GAP;
+  if (nodesByType['cause']) {
+    for (const node of nodesByType['cause']) {
+      node.position.y = causeRowY;
+    }
+  }
+
+  // Position intermediate rows with gap from cause container
+  const intermediateRow1Y = causeRowY + NODE_HEIGHT + GROUP_PADDING * 2 + CONTAINER_GAP;
+  let intermediateRow2Y = intermediateRow1Y;
+
+  if (intermediateRow1.length > 0) {
+    for (const node of intermediateRow1) {
+      node.position.y = intermediateRow1Y;
+    }
+  }
+
+  if (intermediateRow2.length > 0) {
+    intermediateRow2Y = intermediateRow1Y + NODE_HEIGHT + 30; // Space between intermediate rows
+    for (const node of intermediateRow2) {
+      node.position.y = intermediateRow2Y;
+    }
+  }
+
+  // Position effect nodes with gap from intermediate container
+  if (nodesByType['effect'] && nodesByType['effect'].length > 0) {
+    const effectRowY = intermediateRow2Y + NODE_HEIGHT + GROUP_PADDING * 2 + CONTAINER_GAP;
+    for (const node of nodesByType['effect']) {
+      node.position.y = effectRowY;
+    }
+  }
+
+  // Third pass: redistribute X positions within each row with wider spacing for non-leaf
+  // All rows will be centered around the same X coordinate
+  // Use a larger center X to account for the many leaf parameters
+  const globalCenterX = 800; // Fixed center point for all rows
+
+  const redistributeRow = (group: typeof layoutedNodes, extraSpacing: number = 0) => {
+    if (group.length <= 1) {
+      if (group.length === 1) {
+        group[0].position.x = globalCenterX - NODE_WIDTH / 2;
+      }
+      return;
+    }
+    group.sort((a, b) => a.position.x - b.position.x);
+    const spacing = NODE_WIDTH + 40 + extraSpacing; // Base gap + extra for some rows
+    const totalWidth = (group.length - 1) * spacing;
+    const startX = globalCenterX - totalWidth / 2;
+    group.forEach((node, i) => {
+      node.position.x = startX + i * spacing;
+    });
+  };
+
+  // Apply horizontal redistribution with different spacing per row type
+  // Leaf nodes have no extra spacing (there are many of them)
+  if (nodesByType['leaf']) redistributeRow(nodesByType['leaf'], -10);  // Tighter for many nodes
+  if (nodesByType['cause']) redistributeRow(nodesByType['cause'], 40);
+  redistributeRow(intermediateRow1, 60);
+  redistributeRow(intermediateRow2, 80);
+  if (nodesByType['effect']) redistributeRow(nodesByType['effect'], 120);
+
+  // No group containers - rely on node colors which are already distinct
+  // This avoids overlapping containers and keeps the visualization clean
   return { nodes: layoutedNodes, edges: getStyledEdges(edges) };
+}
+
+// Group container node component - no label, just background
+function GroupNode({ data }: NodeProps<Node<CauseEffectNodeData>>) {
+  return (
+    <div style={{ width: '100%', height: '100%' }} />
+  );
 }
 
 // Custom node component
@@ -305,7 +392,7 @@ function CauseEffectNode({ data, selected }: NodeProps<Node<CauseEffectNodeData>
   );
 }
 
-const nodeTypes = { causeEffect: CauseEffectNode };
+const nodeTypes = { causeEffect: CauseEffectNode, group: GroupNode };
 
 // Details panel component
 function DetailsPanel({ node, onClose }: { node: Node<CauseEffectNodeData> | null; onClose: () => void }) {
@@ -619,7 +706,7 @@ export default function CauseEffectGraph({
   initialNodes,
   initialEdges,
   height = 500,
-  fitViewPadding = 0.3,
+  fitViewPadding = 0.1,  // Allow more zoom out
 }: CauseEffectGraphProps) {
   const [nodes, setNodes, onNodesChange] = useNodesState<Node<CauseEffectNodeData>>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge<CauseEffectEdgeData>>([]);
@@ -709,13 +796,17 @@ export default function CauseEffectGraph({
   // Style nodes based on hover state (dim unconnected nodes)
   const styledNodes = useMemo(() => {
     if (!hoveredNodeId) return nodes;
-    return nodes.map(node => ({
-      ...node,
-      style: {
-        ...node.style,
-        opacity: connectedNodeIds.has(node.id) ? 1 : 0.3,
-      },
-    }));
+    return nodes.map(node => {
+      // Don't dim group nodes
+      if (node.type === 'group') return node;
+      return {
+        ...node,
+        style: {
+          ...node.style,
+          opacity: connectedNodeIds.has(node.id) ? 1 : 0.3,
+        },
+      };
+    });
   }, [nodes, hoveredNodeId, connectedNodeIds]);
 
   useEffect(() => {

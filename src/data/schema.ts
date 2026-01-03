@@ -510,7 +510,7 @@ export const Entity = z.object({
   // Sources (legacy inline format)
   sources: z.array(EntitySource).optional(),
   // Resources (semantic references by ID)
-  resources: z.array(z.string()).optional(),      // Resource IDs from resources.yaml
+  resources: z.array(z.string()).optional(),      // Resource IDs from src/data/resources/
   // Parameter distinctions (for parameter-type entities)
   parameterDistinctions: ParameterDistinctions.optional(),
 });

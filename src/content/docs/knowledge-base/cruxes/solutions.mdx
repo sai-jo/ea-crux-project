@@ -29,18 +29,18 @@ These disagreements have enormous practical implications. Whether [AI-based veri
 
 ## Solution Effectiveness Overview
 
-The [2025 AI Safety Index](https://futureoflife.org/ai-safety-index-winter-2025/) from the Future of Life Institute and the [International AI Safety Report 2025](https://internationalaisafetyreport.org/publication/international-ai-safety-report-2025)---compiled by 96 AI experts representing 30 countries---provide sobering assessments of current solution effectiveness. Despite growing investment, core challenges including alignment, control, interpretability, and robustness remain unresolved, with system complexity growing year by year. The following table summarizes effectiveness estimates across major solution categories based on 2024-2025 assessments.
+The <R id="97185b28d68545b4">2025 AI Safety Index</R> from the Future of Life Institute and the <R id="b163447fdc804872">International AI Safety Report 2025</R>---compiled by 96 AI experts representing 30 countries---provide sobering assessments of current solution effectiveness. Despite growing investment, core challenges including alignment, control, interpretability, and robustness remain unresolved, with system complexity growing year by year. The following table summarizes effectiveness estimates across major solution categories based on 2024-2025 assessments.
 
 | Solution Category | Estimated Effectiveness | Investment Level (2024) | Maturity | Key Gaps |
 |-------------------|------------------------|------------------------|----------|----------|
 | Technical alignment research | Moderate (35-50%) | \$500M-1B | Early research | Scalability, verification |
 | [Interpretability](/knowledge-base/responses/alignment/interpretability/) | Promising (40-55%) | \$100-200M | Active research | Superposition, automation |
 | [Responsible Scaling Policies](/knowledge-base/responses/governance/industry/responsible-scaling-policies/) | Limited (25-35%) | N/A (policy) | Deployed but weak | Vague thresholds, compliance |
-| Third-party evaluations ([METR](https://metr.org/)) | Moderate (45-55%) | \$10-20M | Operational | Coverage, standardization |
+| Third-party evaluations (<R id="45370a5153534152">METR</R>) | Moderate (45-55%) | \$10-20M | Operational | Coverage, standardization |
 | [Compute governance](/knowledge-base/responses/governance/compute-governance/) | Theoretical (20-30%) | \$5-10M | Early research | Verification mechanisms |
 | International coordination | Very limited (15-25%) | \$50-100M | Nascent | US-China competition |
 
-According to [Anthropic's recommended research directions](https://alignment.anthropic.com/2025/recommended-directions/), the main reason current AI systems do not pose catastrophic risks is that they lack many of the capabilities necessary for causing catastrophic harm---not because alignment solutions have been proven effective. This distinction is crucial for understanding the urgency of solution development.
+According to <R id="7ae6b3be2d2043c1">Anthropic's recommended research directions</R>, the main reason current AI systems do not pose catastrophic risks is that they lack many of the capabilities necessary for causing catastrophic harm---not because alignment solutions have been proven effective. This distinction is crucial for understanding the urgency of solution development.
 
 ### Solution Prioritization Framework
 
@@ -229,7 +229,7 @@ Research by <R id="01f2211a18a3aa5a">UC Berkeley</R> and <R id="51df12a0a334621c
 
 ### Technical Alignment Research Progress (2024-2025)
 
-Recent advances in [mechanistic interpretability](https://arxiv.org/abs/2404.14082) have demonstrated promising safety applications. Using attribution graphs, Anthropic researchers directly examined Claude 3.5 Haiku's internal reasoning processes, revealing hidden mechanisms beyond what the model displays in its chain-of-thought. As of March 2025, circuit tracing allows researchers to observe model reasoning, uncovering a shared conceptual space where reasoning happens before being translated into language.
+Recent advances in <R id="b1d6e7501debf627">mechanistic interpretability</R> have demonstrated promising safety applications. Using attribution graphs, Anthropic researchers directly examined Claude 3.5 Haiku's internal reasoning processes, revealing hidden mechanisms beyond what the model displays in its chain-of-thought. As of March 2025, circuit tracing allows researchers to observe model reasoning, uncovering a shared conceptual space where reasoning happens before being translated into language.
 
 | Alignment Approach | 2024-2025 Progress | Effectiveness Estimate | Key Challenges |
 |-------------------|-------------------|----------------------|----------------|
@@ -239,7 +239,7 @@ Recent advances in [mechanistic interpretability](https://arxiv.org/abs/2404.140
 | Circuit tracing | Direct observation of reasoning | Research phase | Automation, scaling |
 | Adversarial techniques (debate) | Prover-verifier games | 25-40% oversight improvement | Equilibrium identification |
 
-The [shallow review of technical AI safety (2025)](https://www.alignmentforum.org/posts/Wti4Wr7Cf5ma3FGWa/shallow-review-of-technical-ai-safety-2025-2) notes that increasing reasoning depth can raise latency and energy consumption, posing challenges for real-time applications. Scaling alignment mechanisms to future, larger models or eventual AGI systems remains an open research question, with complexity growing exponentially with model size and task diversity.
+The <R id="36fb43e4e059f0c9">shallow review of technical AI safety (2025)</R> notes that increasing reasoning depth can raise latency and energy consumption, posing challenges for real-time applications. Scaling alignment mechanisms to future, larger models or eventual AGI systems remains an open research question, with complexity growing exponentially with model size and task diversity.
 
 ## Coordination Solution Cruxes
 
@@ -299,19 +299,19 @@ However, early implementation has revealed significant limitations: evaluation s
 
 ### Third-Party Evaluation Effectiveness
 
-[METR](https://metr.org/) (formerly ARC Evals) has emerged as the leading third-party evaluator of frontier AI systems, conducting pre-deployment evaluations of GPT-4, Claude 2, and Claude 3.5 Sonnet. Their April 2025 evaluation of OpenAI's o3 and o4-mini found these models displayed higher autonomous capabilities than other public models tested, with o3 appearing somewhat prone to "reward hacking." METR's evaluation of Claude 3.7 Sonnet found impressive AI R&D capabilities on RE-Bench, though no significant evidence for dangerous autonomous capabilities.
+<R id="45370a5153534152">METR</R> (formerly ARC Evals) has emerged as the leading third-party evaluator of frontier AI systems, conducting pre-deployment evaluations of GPT-4, Claude 2, and Claude 3.5 Sonnet. Their April 2025 evaluation of OpenAI's o3 and o4-mini found these models displayed higher autonomous capabilities than other public models tested, with o3 appearing somewhat prone to "reward hacking." METR's evaluation of Claude 3.7 Sonnet found impressive AI R&D capabilities on RE-Bench, though no significant evidence for dangerous autonomous capabilities.
 
 | Evaluation Organization | Models Evaluated (2024-2025) | Key Findings | Limitations |
 |------------------------|------------------------------|--------------|-------------|
-| [METR](https://metr.org/) | GPT-4, Claude 2/3.5/3.7, o3/o4-mini | Autonomous capability increases; reward hacking in o3 | Limited to cooperative labs |
-| [UK AI Safety Institute](https://www.aisi.gov.uk/) | Pre-deployment evals for major labs | Advanced AI evaluation frameworks | Resource constraints |
+| <R id="45370a5153534152">METR</R> | GPT-4, Claude 2/3.5/3.7, o3/o4-mini | Autonomous capability increases; reward hacking in o3 | Limited to cooperative labs |
+| <R id="fdf68a8f30f57dee">UK AI Safety Institute</R> | Pre-deployment evals for major labs | Advanced AI evaluation frameworks | Resource constraints |
 | Internal lab evaluations | All frontier models | Proprietary capabilities assessments | Conflict of interest |
 
 METR proposes measuring AI performance in terms of the length of tasks AI agents can complete, showing this metric has been exponentially increasing over the past 6 years with a doubling time of around 7 months. Extrapolating this trend predicts that within five years, AI agents may independently complete a large fraction of software tasks that currently take humans days or weeks.
 
 ### RSP Compliance Analysis (2024-2025)
 
-Anthropic's [October 2024 RSP update](https://www.anthropic.com/rsp-updates) introduced more flexible approaches but drew criticism from external analysts. According to [SaferAI](https://www.safer-ai.org/anthropics-responsible-scaling-policy-update-makes-a-step-backwards), Anthropic's grade dropped from 2.2 to 1.9, placing them alongside OpenAI and DeepMind in the "weak" category. The primary issue lies in the shift away from precisely defined capability thresholds and mitigation measures. Anthropic acknowledged falling short in some areas, including completing evaluations 3 days late, though these instances posed minimal safety risk.
+Anthropic's <R id="c6766d463560b923">October 2024 RSP update</R> introduced more flexible approaches but drew criticism from external analysts. According to <R id="a5e4c7b49f5d3e1b">SaferAI</R>, Anthropic's grade dropped from 2.2 to 1.9, placing them alongside OpenAI and DeepMind in the "weak" category. The primary issue lies in the shift away from precisely defined capability thresholds and mitigation measures. Anthropic acknowledged falling short in some areas, including completing evaluations 3 days late, though these instances posed minimal safety risk.
 
 | RSP Element | Anthropic | OpenAI | Google DeepMind |
 |-------------|-----------|--------|-----------------|
@@ -427,7 +427,7 @@ However, the feasibility of comprehensive compute monitoring remains unclear. Cl
 
 ### Compute Governance Verification Mechanisms
 
-[GovAI research on compute governance](https://www.governance.ai/analysis/computing-power-and-the-governance-of-ai) identifies three primary mechanisms for using compute as a governance lever: tracking/monitoring compute to gain visibility into AI development; subsidizing or limiting access to shape resource allocation; and building "guardrails" into hardware to enforce rules. The AI governance platform market is projected to grow from \$227 million in 2024 to \$4.83 billion by 2034, driven by generative AI adoption and regulations like the EU AI Act.
+<R id="482b71342542a659">GovAI research on compute governance</R> identifies three primary mechanisms for using compute as a governance lever: tracking/monitoring compute to gain visibility into AI development; subsidizing or limiting access to shape resource allocation; and building "guardrails" into hardware to enforce rules. The AI governance platform market is projected to grow from \$227 million in 2024 to \$4.83 billion by 2034, driven by generative AI adoption and regulations like the EU AI Act.
 
 | Verification Mechanism | Feasibility | Current Status | Key Barriers |
 |----------------------|-------------|----------------|--------------|
@@ -437,11 +437,11 @@ However, the feasibility of comprehensive compute monitoring remains unclear. Cl
 | Workload classification (zero-knowledge) | Low | Theoretical | Privacy concerns, adversarial evasion |
 | Data center monitoring | Medium | Limited | Jurisdiction gaps |
 
-According to the [Institute for Law & AI](https://law-ai.org/the-role-of-compute-thresholds-for-ai-governance/), meaningful enforcement requires regulators to be aware of or able to verify the amount of compute being used. A regulatory threshold will be ineffective if regulators have no way of knowing whether a threshold has been reached. Research on [verification for international AI governance](https://aigi.ox.ac.uk/wp-content/uploads/2025/07/Verification_for_International_AI_Governance.pdf) proposes mechanisms to verify that data centers are not conducting large AI training runs exceeding agreed-upon thresholds.
+According to the <R id="510c42bfa643b8de">Institute for Law & AI</R>, meaningful enforcement requires regulators to be aware of or able to verify the amount of compute being used. A regulatory threshold will be ineffective if regulators have no way of knowing whether a threshold has been reached. Research on <R id="d6ad3bb2bd9d729b">verification for international AI governance</R> proposes mechanisms to verify that data centers are not conducting large AI training runs exceeding agreed-upon thresholds.
 
 ### International Governance Coordination Status
 
-The [UN High-Level Advisory Body on AI](https://unsceb.org/sites/default/files/2024-04/United%20Nations%20System%20White%20Paper%20on%20AI%20Governance.pdf) submitted seven recommendations in August 2024: launching a twice-yearly intergovernmental dialogue; creating an independent international scientific panel; an AI standards exchange; a capacity development network; a global fund for AI; a global AI data framework; and a dedicated AI office within the UN Secretariat. However, [academic analysis](https://academic.oup.com/ia/article/100/3/1275/7641064) concludes that a governance deficit remains due to inadequacy of existing initiatives, gaps in the landscape, and difficulties reaching agreement over more appropriate mechanisms.
+The <R id="e11a50f25b1a20df">UN High-Level Advisory Body on AI</R> submitted seven recommendations in August 2024: launching a twice-yearly intergovernmental dialogue; creating an independent international scientific panel; an AI standards exchange; a capacity development network; a global fund for AI; a global AI data framework; and a dedicated AI office within the UN Secretariat. However, <R id="3277a685c8b28fe0">academic analysis</R> concludes that a governance deficit remains due to inadequacy of existing initiatives, gaps in the landscape, and difficulties reaching agreement over more appropriate mechanisms.
 
 | Governance Initiative | Participants | Binding Status | Effectiveness Assessment |
 |----------------------|--------------|----------------|-------------------------|
@@ -639,21 +639,21 @@ Understanding these dependencies will be crucial for developing comprehensive so
 | Organization | Focus Area | Key Resources |
 |-------------|-----------|---------------|
 | <R id="d99a6d0fb1edc2db">Metaculus</R> | Forecasting, prediction | <R id="10ca22c5e88ffee9">AI forecasting project</R> |
-| [Good Judgment](https://goodjudgment.com/) | Superforecasting | Crowd forecasting methodology |
+| <R id="664518d11aec3317">Good Judgment</R> | Superforecasting | Crowd forecasting methodology |
 
 ### Safety Research and Evaluation
 | Organization | Focus Area | Key Resources |
 |-------------|-----------|---------------|
-| [METR](https://metr.org/) | Third-party AI evaluations | Autonomous capability assessments |
-| [Anthropic Alignment](https://alignment.anthropic.com/) | Technical alignment research | [Research directions 2025](https://alignment.anthropic.com/2025/recommended-directions/) |
-| [UK AI Safety Institute](https://www.aisi.gov.uk/) | Government evaluations | [Evaluation approach](https://www.gov.uk/government/publications/ai-safety-institute-approach-to-evaluations/ai-safety-institute-approach-to-evaluations) |
+| <R id="45370a5153534152">METR</R> | Third-party AI evaluations | Autonomous capability assessments |
+| <R id="5a651b8ed18ffeb1">Anthropic Alignment</R> | Technical alignment research | <R id="7ae6b3be2d2043c1">Research directions 2025</R> |
+| <R id="fdf68a8f30f57dee">UK AI Safety Institute</R> | Government evaluations | <R id="533b576199ec323d">Evaluation approach</R> |
 
 ### Key 2024-2025 Reports
 | Report | Organization | Focus |
 |--------|-------------|-------|
-| [2025 AI Safety Index](https://futureoflife.org/ai-safety-index-winter-2025/) | Future of Life Institute | Industry safety practices |
-| [International AI Safety Report 2025](https://internationalaisafetyreport.org/publication/international-ai-safety-report-2025) | 96 AI experts, 30 countries | Global safety assessment |
-| [Shallow Review of Technical AI Safety 2025](https://www.alignmentforum.org/posts/Wti4Wr7Cf5ma3FGWa/shallow-review-of-technical-ai-safety-2025-2) | Alignment Forum | Research progress review |
-| [Mechanistic Interpretability Review](https://arxiv.org/abs/2404.14082) | TMLR | Interpretability research survey |
-| [Computing Power and AI Governance](https://www.governance.ai/analysis/computing-power-and-the-governance-of-ai) | GovAI | Compute governance mechanisms |
-| [Global AI Governance Analysis](https://academic.oup.com/ia/article/100/3/1275/7641064) | International Affairs | Governance deficit assessment |
+| <R id="97185b28d68545b4">2025 AI Safety Index</R> | Future of Life Institute | Industry safety practices |
+| <R id="b163447fdc804872">International AI Safety Report 2025</R> | 96 AI experts, 30 countries | Global safety assessment |
+| <R id="36fb43e4e059f0c9">Shallow Review of Technical AI Safety 2025</R> | Alignment Forum | Research progress review |
+| <R id="b1d6e7501debf627">Mechanistic Interpretability Review</R> | TMLR | Interpretability research survey |
+| <R id="482b71342542a659">Computing Power and AI Governance</R> | GovAI | Compute governance mechanisms |
+| <R id="3277a685c8b28fe0">Global AI Governance Analysis</R> | International Affairs | Governance deficit assessment |
