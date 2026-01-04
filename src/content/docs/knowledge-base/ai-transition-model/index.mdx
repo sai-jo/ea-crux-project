@@ -7,7 +7,7 @@ sidebar:
 lastEdited: "2026-01-04"
 ---
 
-import {Mermaid, ParameterFlowDiagram, ParametersTable} from '../../../../components/wiki';
+import {EmbeddedParameterGraph, ParameterFlowDiagram, ParametersTable} from '../../../../components/wiki';
 
 ## Overview
 
@@ -25,68 +25,11 @@ This model helps identify:
 
 ---
 
-## Interactive Model
-
-<a href="/parameter-graph/" class="sl-link-card" style="display: block; padding: 1.5rem; border: 2px solid var(--sl-color-accent); border-radius: 0.5rem; text-decoration: none; margin: 1rem 0 2rem 0; background: var(--sl-color-accent-low);">
-  <strong style="font-size: 1.25rem; display: block; margin-bottom: 0.5rem;">🔗 View Full Interactive Model →</strong>
-  <span style="color: var(--sl-color-text);">Explore the parameter graph with hover highlighting, click-to-inspect nodes, and fullscreen mode. This is the canonical visualization of the three-layer causal structure.</span>
-</a>
-
----
-
 ## Model Structure
 
-The model flows through three levels:
+The model flows through three levels: **Root Factors** → **Structural Scenarios** → **Ultimate Outcomes**. Click nodes to navigate to their pages, or [view fullscreen](/parameter-graph/).
 
-```
-Root Factors (5) → Structural Scenarios (3) → Ultimate Outcomes (2)
-```
-
-<Mermaid client:load chart={`
-flowchart TD
-    subgraph Outcomes["Ultimate Outcomes"]
-        EXCAT[Existential Catastrophe]
-        TRAJ[Long-term Trajectory]
-    end
-
-    subgraph Scenarios["Structural Scenarios"]
-        TAKEOVER[AI Takeover]
-        HUMAN[Human-Caused Catastrophe]
-        LOCKIN[Long-term Lock-in]
-    end
-
-    subgraph RootFactors["Root Factors"]
-        MISALIGN[Misalignment Potential]
-        CAPS[AI Capabilities]
-        CIV[Civilizational Competence]
-        TURB[Transition Turbulence]
-        MISUSE[Misuse Potential]
-    end
-
-    %% Root Factors to Structural Scenarios
-    MISALIGN -->|"increases"| TAKEOVER
-    CAPS -->|"increases"| TAKEOVER
-    TURB -->|"increases"| TAKEOVER
-    CIV -->|"decreases"| TAKEOVER
-
-    MISUSE -->|"increases"| HUMAN
-    TURB -->|"increases"| HUMAN
-    CIV -->|"decreases"| HUMAN
-
-    CIV -->|"shapes"| LOCKIN
-
-    %% Structural Scenarios to Ultimate Outcomes
-    TAKEOVER -->|"increases"| EXCAT
-    HUMAN -->|"increases"| EXCAT
-    TAKEOVER -->|"shapes"| TRAJ
-    LOCKIN -->|"shapes"| TRAJ
-
-    style EXCAT fill:#ff6b6b
-    style TRAJ fill:#4ecdc4
-    style TAKEOVER fill:#ffb6c1
-    style HUMAN fill:#ffb6c1
-    style LOCKIN fill:#ffe4b5
-`} />
+<EmbeddedParameterGraph client:load height={500} />
 
 ---
 
