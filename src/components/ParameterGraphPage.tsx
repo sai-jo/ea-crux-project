@@ -77,8 +77,8 @@ export default function ParameterGraphPage() {
     <>
       <style>{styles}</style>
       <div className="parameter-graph-page">
-        <a href="/knowledge-base/parameters/" className="parameter-graph-page__back-link">
-          &larr; Back to Parameters
+        <a href="/knowledge-base/ai-transition-model/" className="parameter-graph-page__back-link">
+          &larr; Back to AI Transition Model
         </a>
         <div className="parameter-graph-page__container">
           <CauseEffectGraph

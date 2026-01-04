@@ -46,40 +46,22 @@ export default defineConfig({
                   items: [
                       { label: 'Overview', slug: 'knowledge-base' },
                       { label: 'Directory', slug: 'knowledge-base/directory' },
-                      { label: 'Key Parameters', collapsed: true, items: [
-                          { label: 'Overview', slug: 'knowledge-base/parameters' },
-                          { label: 'Outcomes', collapsed: true, autogenerate: { directory: 'knowledge-base/parameters/outcomes' } },
-                          { label: 'Critical Outcomes', collapsed: true, autogenerate: { directory: 'knowledge-base/parameters/critical-outcomes' } },
-                          { label: 'Aggregates', collapsed: true, autogenerate: { directory: 'knowledge-base/parameters/aggregates' } },
-                          { label: 'Alignment', collapsed: true, items: [
-                              { slug: 'knowledge-base/parameters/alignment-robustness' },
-                              { slug: 'knowledge-base/parameters/safety-capability-gap' },
-                              { slug: 'knowledge-base/parameters/interpretability-coverage' },
-                              { slug: 'knowledge-base/parameters/human-oversight-quality' },
-                              { slug: 'knowledge-base/parameters/safety-culture-strength' },
+                      { label: 'AI Transition Model', collapsed: true, items: [
+                          { label: 'Overview', slug: 'knowledge-base/ai-transition-model' },
+                          { label: 'Outcomes', collapsed: true, autogenerate: { directory: 'knowledge-base/ai-transition-model/outcomes' } },
+                          { label: 'Scenarios', collapsed: true, items: [
+                              { label: 'Overview', slug: 'knowledge-base/ai-transition-model/scenarios' },
+                              { label: 'AI Takeover', collapsed: true, autogenerate: { directory: 'knowledge-base/ai-transition-model/scenarios/ai-takeover' } },
+                              { label: 'Human Catastrophe', collapsed: true, autogenerate: { directory: 'knowledge-base/ai-transition-model/scenarios/human-catastrophe' } },
+                              { label: 'Long-term Lock-in', collapsed: true, autogenerate: { directory: 'knowledge-base/ai-transition-model/scenarios/long-term-lockin' } },
                           ]},
-                          { label: 'Governance', collapsed: true, items: [
-                              { slug: 'knowledge-base/parameters/coordination-capacity' },
-                              { slug: 'knowledge-base/parameters/international-coordination' },
-                              { slug: 'knowledge-base/parameters/regulatory-capacity' },
-                              { slug: 'knowledge-base/parameters/institutional-quality' },
-                              { slug: 'knowledge-base/parameters/racing-intensity' },
-                          ]},
-                          { label: 'Societal', collapsed: true, items: [
-                              { slug: 'knowledge-base/parameters/societal-trust' },
-                              { slug: 'knowledge-base/parameters/epistemic-health' },
-                              { slug: 'knowledge-base/parameters/human-agency' },
-                              { slug: 'knowledge-base/parameters/ai-control-concentration' },
-                              { slug: 'knowledge-base/parameters/economic-stability' },
-                              { slug: 'knowledge-base/parameters/preference-authenticity' },
-                              { slug: 'knowledge-base/parameters/reality-coherence' },
-                              { slug: 'knowledge-base/parameters/information-authenticity' },
-                          ]},
-                          { label: 'Resilience', collapsed: true, items: [
-                              { slug: 'knowledge-base/parameters/societal-resilience' },
-                              { slug: 'knowledge-base/parameters/biological-threat-exposure' },
-                              { slug: 'knowledge-base/parameters/cyber-threat-exposure' },
-                              { slug: 'knowledge-base/parameters/human-expertise' },
+                          { label: 'Root Factors', collapsed: true, items: [
+                              { label: 'Overview', slug: 'knowledge-base/ai-transition-model/factors' },
+                              { label: 'Misalignment Potential', collapsed: true, autogenerate: { directory: 'knowledge-base/ai-transition-model/factors/misalignment-potential' } },
+                              { label: 'AI Capabilities', collapsed: true, autogenerate: { directory: 'knowledge-base/ai-transition-model/factors/ai-capabilities' } },
+                              { label: 'Civilizational Competence', collapsed: true, autogenerate: { directory: 'knowledge-base/ai-transition-model/factors/civilizational-competence' } },
+                              { label: 'Transition Turbulence', collapsed: true, autogenerate: { directory: 'knowledge-base/ai-transition-model/factors/transition-turbulence' } },
+                              { label: 'Misuse Potential', collapsed: true, autogenerate: { directory: 'knowledge-base/ai-transition-model/factors/misuse-potential' } },
                           ]},
                       ]},
                       { label: 'Interventions', collapsed: true, items: [
