@@ -10,12 +10,12 @@ import {Mermaid} from '../../../../../components/wiki';
 
 ## Overview
 
-Ultimate Outcomes represent what we fundamentally care about when thinking about AI's impact on humanity. Unlike [Critical Outcomes](/knowledge-base/parameters/critical-outcomes/) (which describe intermediate scenarios) or [parameters](/knowledge-base/parameters/) (which measure specific factors), Ultimate Outcomes describe the **final states** we're trying to achieve or avoid.
+Ultimate Outcomes represent what we fundamentally care about when thinking about AI's impact on humanity. Unlike [Scenarios](/knowledge-base/ai-transition-model/scenarios/) (which describe intermediate scenarios) or [parameters](/knowledge-base/ai-transition-model/) (which measure specific factors), Ultimate Outcomes describe the **final states** we're trying to achieve or avoid.
 
 There are two Ultimate Outcomes:
 
-1. **[Acute Risk](/knowledge-base/parameters/outcomes/acute-risk/)** — Does catastrophe occur?
-2. **[Long-run Value](/knowledge-base/parameters/outcomes/long-run-value/)** — What's the expected value of the future?
+1. **[Acute Risk](/knowledge-base/ai-transition-model/outcomes/existential-catastrophe/)** — Does catastrophe occur?
+2. **[Long-run Value](/knowledge-base/ai-transition-model/outcomes/long-term-trajectory/)** — What's the expected value of the future?
 
 ---
 
@@ -36,8 +36,8 @@ flowchart LR
 
 | Outcome | Question | Scope |
 |---------|----------|-------|
-| [**Acute Risk**](/knowledge-base/parameters/outcomes/acute-risk/) | "Does catastrophe occur?" | The transition period |
-| [**Long-run Value**](/knowledge-base/parameters/outcomes/long-run-value/) | "What's the future worth?" | Post-resolution trajectory |
+| [**Acute Risk**](/knowledge-base/ai-transition-model/outcomes/existential-catastrophe/) | "Does catastrophe occur?" | The transition period |
+| [**Long-run Value**](/knowledge-base/ai-transition-model/outcomes/long-term-trajectory/) | "What's the future worth?" | Post-resolution trajectory |
 
 ---
 
@@ -45,7 +45,7 @@ flowchart LR
 
 Previous versions of this framework had three outcomes (including "Transition Smoothness"). We moved to two because:
 
-1. **Transition Turbulence is a pathway, not endpoint**: How rough the transition is affects *both* acute risk and long-run value. It belongs in [Critical Outcomes](/knowledge-base/parameters/critical-outcomes/transition-turbulence/).
+1. **Transition Turbulence is a pathway, not endpoint**: How rough the transition is affects *both* acute risk and long-run value. It belongs in [Critical Outcomes](/knowledge-base/ai-transition-model/factors/transition-turbulence/).
 
 2. **Cleaner analytical structure**: Two outcomes are genuinely orthogonal:
    - You can have low acute risk but poor long-run value (safe dystopia)
@@ -115,14 +115,14 @@ flowchart TD
 
 | Critical Outcome | Affects Acute Risk | Affects Long-run Value |
 |------------------|-------------------|----------------------|
-| [Transition Turbulence](/knowledge-base/parameters/critical-outcomes/transition-turbulence/) | Yes (can trigger) | Yes (path dependence) |
-| [Rapid AI Takeover](/knowledge-base/parameters/critical-outcomes/ai-takeover-fast/) | Yes (primary) | — |
-| [Gradual AI Takeover](/knowledge-base/parameters/critical-outcomes/ai-takeover-gradual/) | Yes | Yes |
-| [State-Caused Catastrophe](/knowledge-base/parameters/critical-outcomes/state-actor-catastrophe/) | Yes | — |
-| [Rogue Actor Catastrophe](/knowledge-base/parameters/critical-outcomes/rogue-actor-catastrophe/) | Yes | — |
-| [Value Lock-in](/knowledge-base/parameters/critical-outcomes/value-lock-in/) | Yes (bad lock-in) | Yes (primary) |
-| [Epistemic Trajectory](/knowledge-base/parameters/critical-outcomes/epistemic-quality/) | — | Yes |
-| [Power Transition](/knowledge-base/parameters/critical-outcomes/power-transition/) | — | Yes |
+| [Transition Turbulence](/knowledge-base/ai-transition-model/factors/transition-turbulence/) | Yes (can trigger) | Yes (path dependence) |
+| [Rapid AI Takeover](/knowledge-base/ai-transition-model/scenarios/ai-takeover/rapid/) | Yes (primary) | — |
+| [Gradual AI Takeover](/knowledge-base/ai-transition-model/scenarios/ai-takeover/gradual/) | Yes | Yes |
+| [State-Caused Catastrophe](/knowledge-base/ai-transition-model/scenarios/human-catastrophe/state-actor/) | Yes | — |
+| [Rogue Actor Catastrophe](/knowledge-base/ai-transition-model/scenarios/human-catastrophe/rogue-actor/) | Yes | — |
+| [Value Lock-in](/knowledge-base/ai-transition-model/scenarios/long-term-lockin/values/) | Yes (bad lock-in) | Yes (primary) |
+| [Epistemic Trajectory](/knowledge-base/ai-transition-model/scenarios/long-term-lockin/epistemics/) | — | Yes |
+| [Power Transition](/knowledge-base/ai-transition-model/scenarios/long-term-lockin/power/) | — | Yes |
 
 ---
 
@@ -143,7 +143,7 @@ See [Phases of the AI Transition](/knowledge-base/methodology/ai-transition-phas
 
 ## Related Pages
 
-- [Critical Outcomes](/knowledge-base/parameters/critical-outcomes/) — The intermediate scenarios
-- [Key Parameters Index](/knowledge-base/parameters/) — All parameters
-- [Aggregate Parameters](/knowledge-base/parameters/aggregates/) — How parameters group together
+- [Scenarios](/knowledge-base/ai-transition-model/scenarios/) — The intermediate scenarios
+- [AI Transition Model](/knowledge-base/ai-transition-model/) — All parameters
+- [Aggregate Parameters](/knowledge-base/ai-transition-model/factors/) — How parameters group together
 - [Phases of the AI Transition](/knowledge-base/methodology/ai-transition-phases/) — Temporal structure

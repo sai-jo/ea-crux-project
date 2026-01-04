@@ -10,18 +10,18 @@ This wiki maps the landscape of AI existential risk—the arguments, key uncerta
 
 ## Core Framework: Key Parameters
 
-The wiki is organized around **[Key Parameters](/knowledge-base/parameters/)**—foundational variables that AI development affects in both directions. This framework connects:
+The wiki is organized around **[Key Parameters](/knowledge-base/ai-transition-model/)**—foundational variables that AI development affects in both directions. This framework connects:
 
 - **[Risks](/knowledge-base/risks/)** — What decreases these parameters (51 documented risks)
 - **[Responses](/knowledge-base/responses/)** — What increases or protects them (technical & governance approaches)
 
-Parameters include things like alignment robustness, racing intensity, societal trust, and human agency. Start with the [Parameters overview](/knowledge-base/parameters/) to understand the analytical framework.
+Parameters include things like alignment robustness, racing intensity, societal trust, and human agency. Start with the [Parameters overview](/knowledge-base/ai-transition-model/) to understand the analytical framework.
 
 ## Main Sections
 
 | Section | What's There |
 |---------|--------------|
-| **[Key Parameters](/knowledge-base/parameters/)** | 22 foundational variables with trends, risks, and interventions |
+| **[Key Parameters](/knowledge-base/ai-transition-model/)** | 22 foundational variables with trends, risks, and interventions |
 | **[Risks](/knowledge-base/risks/)** | Accident, misuse, structural, and epistemic risks |
 | **[Responses](/knowledge-base/responses/)** | Technical alignment approaches and governance interventions |
 | **[Organizations](/knowledge-base/organizations/)** | Frontier labs, safety research orgs, government bodies |
