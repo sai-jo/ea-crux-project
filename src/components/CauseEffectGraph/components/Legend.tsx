@@ -44,13 +44,13 @@ export function Legend({ customItems, typeLabels }: LegendProps) {
             ))}
         </div>
 
-        {/* Arrow Thickness */}
-        <div className="ceg-legend__section">
+        {/* Arrow Strength */}
+        <div className="ceg-legend__section ceg-legend__section--last">
           <div className="ceg-legend__section-title">Arrow Strength</div>
           <div className="ceg-legend__row">
             <div className="ceg-legend__line-container">
               <svg width="24" height="4">
-                <line x1="0" y1="2" x2="24" y2="2" stroke="#64748b" strokeWidth="3.5" />
+                <line x1="0" y1="2" x2="24" y2="2" stroke="#94a3b8" strokeWidth="3.5" />
               </svg>
             </div>
             <span>Strong</span>
@@ -58,7 +58,7 @@ export function Legend({ customItems, typeLabels }: LegendProps) {
           <div className="ceg-legend__row">
             <div className="ceg-legend__line-container">
               <svg width="24" height="4">
-                <line x1="0" y1="2" x2="24" y2="2" stroke="#64748b" strokeWidth="2" />
+                <line x1="0" y1="2" x2="24" y2="2" stroke="#94a3b8" strokeWidth="2" />
               </svg>
             </div>
             <span>Medium</span>
@@ -66,31 +66,10 @@ export function Legend({ customItems, typeLabels }: LegendProps) {
           <div className="ceg-legend__row">
             <div className="ceg-legend__line-container">
               <svg width="24" height="4">
-                <line x1="0" y1="2" x2="24" y2="2" stroke="#64748b" strokeWidth="1.2" />
+                <line x1="0" y1="2" x2="24" y2="2" stroke="#94a3b8" strokeWidth="1.2" />
               </svg>
             </div>
             <span>Weak</span>
-          </div>
-        </div>
-
-        {/* Arrow Color */}
-        <div className="ceg-legend__section ceg-legend__section--last">
-          <div className="ceg-legend__section-title">Arrow Direction</div>
-          <div className="ceg-legend__row">
-            <div className="ceg-legend__line-container">
-              <svg width="24" height="4">
-                <line x1="0" y1="2" x2="24" y2="2" stroke="#dc2626" strokeWidth="2" />
-              </svg>
-            </div>
-            <span>Increases risk</span>
-          </div>
-          <div className="ceg-legend__row">
-            <div className="ceg-legend__line-container">
-              <svg width="24" height="4">
-                <line x1="0" y1="2" x2="24" y2="2" stroke="#16a34a" strokeWidth="2" />
-              </svg>
-            </div>
-            <span>Decreases risk</span>
           </div>
         </div>
       </div>

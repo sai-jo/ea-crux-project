@@ -10,7 +10,7 @@ const parameterGraphConfig: GraphConfig = {
     containerWidth: 1600,
     centerX: 800,
     layerGap: 60,
-    causeSpacing: 25,        // Spacing between root factor nodes
+    causeSpacing: 8,         // Spacing between root factor nodes
     intermediateSpacing: 200, // Spread middle row
     effectSpacing: 400,       // Spread bottom row
   },
@@ -20,14 +20,9 @@ const parameterGraphConfig: GraphConfig = {
     effect: 'Ultimate Outcomes',
   },
   subgroups: {
-    // Root Factor clusters
-    'ai': { label: 'AI System Factors', bgColor: 'rgba(219, 234, 254, 0.4)', borderColor: '#93c5fd' },
-    'society': { label: 'Societal Factors', bgColor: 'rgba(254, 243, 199, 0.4)', borderColor: '#fcd34d' },
-    // Ultimate Scenario subgroups (if used)
-    'ai-takeover': { label: 'AI Takeover', bgColor: 'rgba(255, 182, 193, 0.3)', borderColor: '#f9a8d4' },
-    'human-caused': { label: 'Human-Caused', bgColor: 'rgba(255, 182, 193, 0.3)', borderColor: '#f9a8d4' },
-    'post-trans-factors': { label: 'Post-Trans Factors', bgColor: 'rgba(255, 228, 181, 0.3)', borderColor: '#fcd34d' },
-    'transition': { label: 'Transition Effects', bgColor: 'rgba(135, 206, 235, 0.3)', borderColor: '#7dd3fc' },
+    // Root Factor clusters - subtle tints to distinguish AI vs Societal within blue tier
+    'ai': { label: 'AI System Factors', bgColor: 'rgba(219, 234, 254, 0.2)', borderColor: 'transparent' },
+    'society': { label: 'Societal Factors', bgColor: 'rgba(209, 250, 229, 0.2)', borderColor: 'transparent' },
   },
 };
 

@@ -1,19 +1,35 @@
 import { useState } from 'react';
 import { Handle, Position, type NodeProps, type Node } from '@xyflow/react';
 import type { CauseEffectNodeData } from '../types';
-import { NODE_TYPE_CONFIG } from '../config';
+import { NODE_TYPE_CONFIG, OUTCOME_COLORS, NODE_BORDER_RADIUS } from '../config';
 
-export function CauseEffectNode({ data, selected }: NodeProps<Node<CauseEffectNodeData>>) {
+export function CauseEffectNode({ data, selected, id }: NodeProps<Node<CauseEffectNodeData>>) {
   const [showTooltip, setShowTooltip] = useState(false);
   const nodeType = data.type || 'intermediate';
 
   const config = NODE_TYPE_CONFIG[nodeType] || NODE_TYPE_CONFIG.intermediate;
-  const colors = {
+
+  // Get base colors from config, then override for specific outcome nodes
+  let colors = {
     bg: config.nodeBg,
     border: config.nodeBorder,
     text: config.nodeText,
     accent: config.nodeAccent,
   };
+
+  // Apply special colors for individual outcome nodes (tier-based valence encoding)
+  if (nodeType === 'effect' && id && OUTCOME_COLORS[id]) {
+    const outcomeOverride = OUTCOME_COLORS[id];
+    colors = {
+      bg: outcomeOverride.nodeBg || colors.bg,
+      border: outcomeOverride.nodeBorder || colors.border,
+      text: outcomeOverride.nodeText || colors.text,
+      accent: outcomeOverride.nodeAccent || colors.accent,
+    };
+  }
+
+  // Get border radius based on node type (shapes encode function)
+  const borderRadius = NODE_BORDER_RADIUS[nodeType] || '12px';
 
   const hasSubItems = data.subItems && data.subItems.length > 0;
   const isClickable = !!data.href;
@@ -30,6 +46,7 @@ export function CauseEffectNode({ data, selected }: NodeProps<Node<CauseEffectNo
       style={{
         backgroundColor: colors.bg,
         borderColor: selected ? colors.text : colors.border,
+        borderRadius: borderRadius,
         boxShadow: selected ? `0 8px 24px rgba(0,0,0,0.15), 0 0 0 2px ${colors.accent}` : undefined,
         cursor: isClickable ? 'pointer' : undefined,
       }}

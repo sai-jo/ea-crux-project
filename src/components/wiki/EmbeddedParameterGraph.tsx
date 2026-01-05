@@ -17,8 +17,13 @@ const defaultConfig: GraphConfig = {
   },
   typeLabels: {
     cause: 'Root Factors',
-    intermediate: 'Structural Scenarios',
+    intermediate: 'Ultimate Scenarios',
     effect: 'Ultimate Outcomes',
+  },
+  subgroups: {
+    // Root Factor clusters - subtle tints to distinguish AI vs Societal within blue tier
+    'ai': { label: 'AI System Factors', bgColor: 'rgba(219, 234, 254, 0.2)', borderColor: 'transparent' },
+    'society': { label: 'Societal Factors', bgColor: 'rgba(209, 250, 229, 0.2)', borderColor: 'transparent' },
   },
 };
 

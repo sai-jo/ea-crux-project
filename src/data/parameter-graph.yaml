@@ -8,32 +8,47 @@ nodes:
   # X positions: 0=far left, 1=left-center, 2=center, 3=right-center, 4=far right
 
   - id: misalignment-potential
-    label: AI Misalignment Potential
-    description: Potential for AI to be misaligned.
+    label: AI Safety
+    description: >-
+      The degree to which AI systems reliably pursue intended goals without deception or harmful behavior.
+      This encompasses technical alignment research, interpretability of AI reasoning, and robustness of
+      safety measures. Higher AI safety reduces the risk that powerful AI systems act against human interests.
     type: cause
     subgroup: ai
     order: 0
     href: /knowledge-base/ai-transition-model/factors/misalignment-potential/
     subItems:
       - label: Technical AI Safety
+        description: Research into making AI systems reliably aligned with human values, including interpretability, robustness, and scalable oversight methods.
       - label: AI Governance
+        description: Policies, regulations, and institutional frameworks that shape how AI is developed and deployed, including safety standards and accountability mechanisms.
       - label: Lab Safety Practices
+        description: Internal practices at AI labs including safety testing, red-teaming, responsible disclosure, and organizational culture around risk management.
 
   - id: ai-capabilities
     label: AI Capabilities
-    description: How powerful AI systems become.
+    description: >-
+      How powerful and general AI systems become over time. This includes raw computational power,
+      algorithmic efficiency, and breadth of deployment. More capable AI can bring greater benefits
+      but also amplifies risks if safety doesn't keep pace.
     type: cause
     subgroup: ai
     order: 1
     href: /knowledge-base/ai-transition-model/factors/ai-capabilities/
     subItems:
       - label: Compute
-      - label: Algorithmic
+        description: Hardware resources for AI training and inference, including GPUs, TPUs, and specialized chips. More compute enables larger models and faster iteration.
+      - label: Algorithms
+        description: Efficiency of AI methods including architectures, training techniques, and data utilization. Algorithmic progress can multiply the impact of compute.
       - label: Adoption
+        description: How widely AI is integrated into the economy and daily life. Broader adoption increases both benefits and exposure to AI-related risks.
 
   - id: civ-competence
     label: Civilizational Competence
-    description: Humanity's ability to respond well.
+    description: >-
+      Humanity's collective ability to understand AI risks, coordinate responses, and adapt institutions.
+      This includes quality of governance, epistemic health of public discourse, and flexibility of
+      economic and political systems. Higher competence enables better navigation of the AI transition.
     type: cause
     subgroup: society
     order: 0
@@ -41,14 +56,20 @@ nodes:
     subItems:
       - label: Governance
         href: /knowledge-base/ai-transition-model/parameters/governance/
+        description: Quality of political institutions, regulatory capacity, and ability to create effective AI policy at national and international levels.
       - label: Epistemics
         href: /knowledge-base/ai-transition-model/parameters/epistemics/
+        description: Society's collective ability to form accurate beliefs, resist misinformation, and maintain shared understanding of reality.
       - label: Adaptability
         href: /knowledge-base/ai-transition-model/parameters/adaptability/
+        description: How quickly institutions, economies, and social structures can adjust to rapid technological change without breaking down.
 
   - id: transition-turbulence
     label: Transition Turbulence
-    description: Background instability during transition.
+    description: >-
+      Background instability during the AI transition period. Economic disruption from automation,
+      competitive racing dynamics between labs or nations, and social upheaval can create pressure
+      that leads to hasty decisions or reduced safety margins.
     type: cause
     subgroup: society
     order: 1
@@ -56,12 +77,17 @@ nodes:
     subItems:
       - label: Economic Stability
         href: /knowledge-base/ai-transition-model/parameters/economic-stability/
+        description: The degree of economic disruption from AI-driven automation, job displacement, and wealth concentration during the transition period.
       - label: Racing Intensity
         href: /knowledge-base/ai-transition-model/parameters/racing-intensity/
+        description: How much competitive pressure between AI labs or nations leads to cutting corners on safety to be first to develop advanced capabilities.
 
   - id: misuse-potential
     label: Misuse Potential
-    description: Potential for AI to be misused for harm.
+    description: >-
+      The degree to which AI enables humans to cause deliberate harm at scale. This includes
+      biological weapons development, cyber attacks, autonomous weapons, and novel threat vectors.
+      Even well-aligned AI could be catastrophic if misused by malicious actors.
     type: cause
     subgroup: society
     order: 2
@@ -69,85 +95,128 @@ nodes:
     subItems:
       - label: Biological Threat Exposure
         href: /knowledge-base/ai-transition-model/parameters/biological-threat-exposure/
+        description: Risk from AI-enabled bioweapons development, including pathogen design, synthesis optimization, and delivery mechanism engineering.
       - label: Cyber Threat Exposure
         href: /knowledge-base/ai-transition-model/parameters/cyber-threat-exposure/
+        description: Risk from AI-enhanced cyberattacks including automated vulnerability discovery, sophisticated social engineering, and attacks on critical infrastructure.
       - label: Robot Threat Exposure
+        description: Risk from AI-controlled physical systems including autonomous weapons, drones, and robotic systems that could cause physical harm at scale.
       - label: Surprise Threat Exposure
+        description: Risk from novel attack vectors we haven't anticipated, where AI enables entirely new categories of harm not covered by existing threat models.
 
   - id: ai-ownership
     label: AI Ownership
-    description: Who controls and owns AI systems.
-    type: cause
-    subgroup: ai
-    order: 2
-    subItems:
-      - label: Countries
-      - label: Companies
-      - label: Shareholders
-
-  - id: ai-uses
-    label: AI Uses
-    description: Where and how AI is deployed.
+    description: >-
+      Who controls the most powerful AI systems and their outputs. Concentration among a few
+      companies, countries, or individuals creates different risks than broad distribution.
+      Ownership structure shapes incentives, accountability, and the distribution of AI benefits.
     type: cause
     subgroup: ai
     order: 3
     subItems:
+      - label: Countries
+        description: Which nations control the most advanced AI capabilities. Geographic concentration affects geopolitical stability and access to AI benefits.
+      - label: Companies
+        description: Which corporations develop and deploy frontier AI systems. Corporate concentration shapes market dynamics, safety incentives, and accountability.
+      - label: Shareholders
+        description: Who owns equity in AI companies and thus captures economic value. Ownership concentration affects wealth distribution and political influence.
+
+  - id: ai-uses
+    label: AI Uses
+    description: >-
+      Where and how AI is actually deployed in the economy and society. Key applications include
+      recursive AI development (AI improving AI), integration into critical industries, government
+      use for surveillance or military, and tools for coordination and decision-making.
+    type: cause
+    subgroup: ai
+    order: 2
+    subItems:
       - label: Recursive AI Capabilities
+        description: AI systems used to accelerate AI research itself, potentially leading to rapid capability gains as AI improves its own development.
       - label: Industries
+        description: AI integration into economic sectors like healthcare, finance, transportation, and manufacturing. Deeper integration increases both productivity and systemic risk.
       - label: Governments
+        description: Government use of AI for surveillance, military applications, public services, and decision-making. Affects civil liberties, warfare, and state capacity.
       - label: Coordination
+        description: AI tools for collective decision-making, forecasting, and coordination. Could enhance or undermine democratic processes and international cooperation.
 
   # === ULTIMATE SCENARIOS (middle layer) ===
 
   - id: ai-takeover
     label: AI Takeover
-    description: AI gains decisive control over human affairs.
+    description: >-
+      A scenario where AI systems gain decisive control over human affairs, either through rapid
+      capability gain or gradual accumulation of power. This could occur through misaligned goals,
+      deceptive behavior, or humans voluntarily ceding control. The outcome depends heavily on
+      whether the AI's values align with human flourishing.
     type: intermediate
     order: 0
     href: /knowledge-base/ai-transition-model/scenarios/ai-takeover/
     subItems:
       - label: Rapid
         href: /knowledge-base/ai-transition-model/scenarios/ai-takeover/rapid/
+        description: Fast takeover scenarios where AI gains decisive advantage quickly, potentially through recursive self-improvement or exploitation of critical vulnerabilities.
       - label: Gradual
         href: /knowledge-base/ai-transition-model/scenarios/ai-takeover/gradual/
+        description: Slow takeover scenarios where AI accumulates control incrementally through economic leverage, institutional capture, or gradual human dependency.
 
   - id: human-catastrophe
     label: Human-Caused Catastrophe
-    description: Humans use AI to cause mass harm.
+    description: >-
+      Scenarios where humans deliberately use AI to cause mass harm. State actors might deploy
+      AI-enabled weapons or surveillance; rogue actors could use AI to develop bioweapons or
+      conduct massive cyber attacks. Unlike AI takeover, humans remain in control but use that
+      control destructively.
     type: intermediate
     order: 1
     href: /knowledge-base/ai-transition-model/scenarios/human-catastrophe/
     subItems:
       - label: State Actor
         href: /knowledge-base/ai-transition-model/scenarios/human-catastrophe/state-actor/
+        description: Catastrophes caused by governments or militaries using AI for warfare, mass surveillance, or authoritarian control at unprecedented scale.
       - label: Rogue Actor
         href: /knowledge-base/ai-transition-model/scenarios/human-catastrophe/rogue-actor/
+        description: Catastrophes caused by terrorists, criminals, or individuals using AI to develop weapons of mass destruction or conduct large-scale attacks.
 
   - id: long-term-lockin
     label: Long-term Lock-in
-    description: Permanent entrenchment of outcomes.
+    description: >-
+      Permanent entrenchment of particular power structures, values, or conditions due to AI-enabled
+      stability. This could be positive (locking in good values) or negative (perpetuating suffering
+      or oppression). Once locked in, these outcomes may be extremely difficult to change.
     type: intermediate
     order: 2
     href: /knowledge-base/ai-transition-model/scenarios/long-term-lockin/
     subItems:
       - label: Economic Power
+        description: Permanent entrenchment of economic inequality where AI-enabled productivity accrues to a small group, making redistribution structurally impossible.
       - label: Political Power
+        description: Lock-in of authoritarian or oligarchic political structures, where AI-enabled surveillance and control make regime change effectively impossible.
       - label: Epistemics
+        description: Lock-in of particular belief systems or information environments, where AI shapes what people believe in ways that become self-reinforcing.
       - label: Values
+        description: Permanent entrenchment of particular value systems that may not reflect humanity's best interests or allow for moral progress.
       - label: Suffering Lock-in
+        description: Scenarios where AI perpetuates or amplifies suffering at scale, potentially including digital minds experiencing vast amounts of negative states.
 
   # === ULTIMATE OUTCOMES (bottom layer) ===
 
   - id: existential-catastrophe
     label: Existential Catastrophe
-    description: Civilization-ending or irreversible harm.
+    description: >-
+      Outcomes that permanently and drastically curtail humanity's potential. This includes human
+      extinction, irreversible collapse of civilization, or permanent subjugation. The key feature
+      is irreversibility—recovery becomes impossible or extremely unlikely.
     type: effect
     order: 0
     href: /knowledge-base/ai-transition-model/outcomes/existential-catastrophe/
 
   - id: long-term-trajectory
     label: Long-term Trajectory
-    description: Quality of post-transition future.
+    description: >-
+      The quality and character of the post-transition future, assuming civilization survives.
+      This encompasses how much of humanity's potential is realized, the distribution of wellbeing,
+      preservation of human agency, and whether the future remains open to positive change.
     type: effect
     order: 1
     href: /knowledge-base/ai-transition-model/outcomes/long-term-trajectory/

@@ -16,7 +16,7 @@ import '../CauseEffectGraph.css';
 
 import type { CauseEffectNodeData, CauseEffectEdgeData, GraphConfig } from './types';
 import { GroupNode, SubgroupNode, CauseEffectNode } from './nodes';
-import { DetailsPanel, Legend, DataView, OutlineView, generateOutlineText, CopyIcon, CheckIcon, ExpandIcon, ShrinkIcon } from './components';
+import { DetailsPanel, Legend, DataView, OutlineView, InteractiveView, generateOutlineText, CopyIcon, CheckIcon, ExpandIcon, ShrinkIcon } from './components';
 import { getLayoutedElements, toYaml } from './layout';
 
 // Re-export types for external use
@@ -49,7 +49,7 @@ export default function CauseEffectGraph({
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
   const [isLayouting, setIsLayouting] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [activeTab, setActiveTab] = useState<'graph' | 'outline' | 'data'>('graph');
+  const [activeTab, setActiveTab] = useState<'graph' | 'interactive' | 'outline' | 'data'>('graph');
   const [copied, setCopied] = useState(false);
 
   const yamlData = toYaml(initialNodes, initialEdges);
@@ -208,6 +208,12 @@ export default function CauseEffectGraph({
             Graph
           </button>
           <button
+            className={`ceg-segment-btn ${activeTab === 'interactive' ? 'ceg-segment-btn--active' : ''}`}
+            onClick={() => setActiveTab('interactive')}
+          >
+            Interactive
+          </button>
+          <button
             className={`ceg-segment-btn ${activeTab === 'outline' ? 'ceg-segment-btn--active' : ''}`}
             onClick={() => setActiveTab('outline')}
           >
@@ -264,6 +270,14 @@ export default function CauseEffectGraph({
             <Legend typeLabels={graphConfig?.typeLabels} customItems={graphConfig?.legendItems} />
             <DetailsPanel node={selectedNode} onClose={() => setSelectedNode(null)} />
           </div>
+        )}
+        {activeTab === 'interactive' && (
+          <InteractiveView
+            nodes={initialNodes}
+            edges={initialEdges}
+            typeLabels={graphConfig?.typeLabels}
+            subgroups={graphConfig?.subgroups}
+          />
         )}
         {activeTab === 'outline' && (
           <OutlineView

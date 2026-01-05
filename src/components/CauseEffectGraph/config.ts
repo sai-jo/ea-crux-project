@@ -42,47 +42,74 @@ export const NODE_TYPE_CONFIG: Record<string, NodeTypeConfig> = {
   leaf: {
     label: DEFAULT_TYPE_LABELS.leaf,
     groupBg: 'rgba(236, 253, 245, 0.4)',
-    groupBorder: '#a7f3d0',
+    groupBorder: 'transparent',
     nodeBg: '#ecfdf5',
-    nodeBorder: '#059669',
+    nodeBorder: 'rgba(5, 150, 105, 0.3)',  // #059669 at 30% opacity
     nodeText: '#047857',
     nodeAccent: '#10b981',
     showInLegend: false,
     legendOrder: 0,
   },
+  // Root Factors - Blue family (tier-based: all inputs are blue)
   cause: {
     label: DEFAULT_TYPE_LABELS.cause,
-    groupBg: 'rgba(241, 245, 249, 0.4)',
-    groupBorder: '#cbd5e1',
-    nodeBg: '#f1f5f9',
-    nodeBorder: '#475569',
-    nodeText: '#334155',
-    nodeAccent: '#64748b',
+    groupBg: 'rgba(219, 234, 254, 0.3)',
+    groupBorder: 'transparent',
+    nodeBg: '#dbeafe',
+    nodeBorder: 'rgba(59, 130, 246, 0.3)',  // #3b82f6 at 30% opacity
+    nodeText: '#1d4ed8',
+    nodeAccent: '#60a5fa',
     showInLegend: true,
     legendOrder: 1,
   },
+  // Scenarios - Purple (tier-based: mechanisms are purple)
   intermediate: {
     label: DEFAULT_TYPE_LABELS.intermediate,
-    groupBg: 'rgba(219, 234, 254, 0.4)',
-    groupBorder: '#93c5fd',
-    nodeBg: '#dbeafe',
-    nodeBorder: '#2563eb',
-    nodeText: '#1d4ed8',
-    nodeAccent: '#3b82f6',
+    groupBg: 'rgba(237, 233, 254, 0.3)',
+    groupBorder: 'transparent',
+    nodeBg: '#ede9fe',
+    nodeBorder: 'rgba(124, 58, 237, 0.3)',  // #7c3aed at 30% opacity
+    nodeText: '#5b21b6',
+    nodeAccent: '#8b5cf6',
     showInLegend: true,
     legendOrder: 2,
   },
+  // Outcomes - Amber (default, individual nodes override via OUTCOME_COLORS)
   effect: {
     label: DEFAULT_TYPE_LABELS.effect,
-    groupBg: 'rgba(254, 243, 199, 0.4)',
-    groupBorder: '#fcd34d',
+    groupBg: 'rgba(254, 243, 199, 0.3)',
+    groupBorder: 'transparent',
     nodeBg: '#fef3c7',
-    nodeBorder: '#d97706',
+    nodeBorder: 'rgba(217, 119, 6, 0.3)',  // #d97706 at 30% opacity
     nodeText: '#92400e',
     nodeAccent: '#f59e0b',
     showInLegend: true,
     legendOrder: 3,
   },
+};
+
+// Special colors for individual outcome nodes (tier-based: differentiate by valence)
+export const OUTCOME_COLORS: Record<string, Partial<NodeTypeConfig>> = {
+  'existential-catastrophe': {
+    nodeBg: '#fee2e2',
+    nodeBorder: 'rgba(220, 38, 38, 0.3)',  // #dc2626 at 30% opacity
+    nodeText: '#991b1b',
+    nodeAccent: '#ef4444',
+  },
+  'long-term-trajectory': {
+    nodeBg: '#fef3c7',
+    nodeBorder: 'rgba(245, 158, 11, 0.3)',  // #f59e0b at 30% opacity
+    nodeText: '#92400e',
+    nodeAccent: '#fbbf24',
+  },
+};
+
+// Border radius by node type (shapes encode node function)
+export const NODE_BORDER_RADIUS: Record<string, string> = {
+  leaf: '12px',
+  cause: '12px',           // Standard rectangles for factors
+  intermediate: '20px',    // More rounded for scenarios (mechanisms)
+  effect: '40px',          // Stadium/pill shape for outcomes (terminals)
 };
 
 // Derived groupConfig for layout code

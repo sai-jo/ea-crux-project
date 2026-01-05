@@ -42,15 +42,15 @@ function estimateNodeWidth(node: { data: CauseEffectNodeData }): number {
 
 const elk = new ELK();
 
-// Style edges based on strength and effect
+// Style edges - all neutral gray to reduce visual noise and let node colors carry structure
 export function getStyledEdges(edges: Edge<CauseEffectEdgeData>[]): Edge<CauseEffectEdgeData>[] {
   const strengthMap = { strong: 3.5, medium: 2, weak: 1.2 };
-  const effectColors = { increases: '#dc2626', decreases: '#16a34a' };
+  // All edges use neutral gray - tier-based coloring on nodes carries the structure
+  const neutralGray = '#94a3b8';
 
   return edges.map((edge) => {
     const data = edge.data;
     const strokeWidth = data?.strength ? strengthMap[data.strength] : 2;
-    const strokeColor = data?.effect ? effectColors[data.effect] : '#64748b';
 
     return {
       ...edge,
@@ -59,8 +59,8 @@ export function getStyledEdges(edges: Edge<CauseEffectEdgeData>[]): Edge<CauseEf
       labelBgStyle: data?.label ? { fill: '#f8fafc', fillOpacity: 0.9 } : undefined,
       labelBgPadding: data?.label ? [4, 6] as [number, number] : undefined,
       labelBgBorderRadius: data?.label ? 4 : undefined,
-      style: { ...edge.style, stroke: strokeColor, strokeWidth, opacity: 0.4 },
-      markerEnd: { type: MarkerType.ArrowClosed, color: strokeColor, width: 16, height: 16 },
+      style: { ...edge.style, stroke: neutralGray, strokeWidth, opacity: 0.2 },
+      markerEnd: { type: MarkerType.ArrowClosed, color: neutralGray, width: 16, height: 16 },
     };
   });
 }
@@ -141,7 +141,14 @@ function createGroupContainer(
   if (!config) return null;
   const minX = globalCenterX - containerWidth / 2;
   const minY = Math.min(...nodesInGroup.map(n => n.position.y)) - GROUP_PADDING - GROUP_HEADER_HEIGHT;
-  const maxY = Math.max(...nodesInGroup.map(n => n.position.y + LAYOUT_NODE_HEIGHT)) + GROUP_PADDING;
+  let maxY = Math.max(...nodesInGroup.map(n => n.position.y + LAYOUT_NODE_HEIGHT)) + GROUP_PADDING;
+
+  // Type-specific height adjustments
+  if (type === 'intermediate') {
+    maxY += 20; // Extra bottom padding for scenarios (nodes with many subitems)
+  } else if (type === 'effect') {
+    maxY -= 40; // Less padding for outcomes (simpler nodes)
+  }
 
   // Use custom type labels if provided, otherwise fall back to default config label
   const label = typeLabels?.[type as keyof TypeLabels] || config.label;
