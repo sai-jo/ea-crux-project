@@ -20,10 +20,113 @@ nodes:
     subItems:
       - label: Technical AI Safety
         description: Research into making AI systems reliably aligned with human values, including interpretability, robustness, and scalable oversight methods.
+        ratings:
+          changeability: 45
+          xriskImpact: 85
+          trajectoryImpact: 70
+          uncertainty: 60
+        scope: |
+          Includes: Alignment research, interpretability, robustness, scalable oversight, and formal verification methods for AI systems.
+          Excludes: AI governance/policy (covered under AI Governance), lab operational safety practices (covered under Lab Safety Practices), and general ML capabilities research.
+        keyDebates:
+          - topic: Alignment difficulty
+            description: How hard is the core alignment problem? Is it a matter of scaling current techniques or does it require fundamental breakthroughs?
+          - topic: Interpretability tractability
+            description: Can we achieve meaningful interpretability of large models, or will they remain fundamentally opaque?
+          - topic: Scalable oversight
+            description: Can human oversight scale to superintelligent systems, or will we need AI to oversee AI?
+        relatedContent:
+          risks:
+            - path: /knowledge-base/risks/accident/deceptive-alignment/
+              title: Deceptive Alignment
+            - path: /knowledge-base/risks/accident/scheming/
+              title: Scheming
+            - path: /knowledge-base/risks/accident/goal-misgeneralization/
+              title: Goal Misgeneralization
+            - path: /knowledge-base/risks/accident/corrigibility-failure/
+              title: Corrigibility Failure
+          responses:
+            - path: /knowledge-base/responses/alignment/interpretability/
+              title: Interpretability Research
+            - path: /knowledge-base/responses/alignment/scalable-oversight/
+              title: Scalable Oversight
+            - path: /knowledge-base/responses/alignment/evals/
+              title: AI Evaluations
+            - path: /knowledge-base/responses/alignment/alignment/
+              title: Technical Alignment
+          models:
+            - path: /knowledge-base/models/safety-models/alignment-robustness-trajectory/
+              title: Alignment Robustness Trajectory
+            - path: /knowledge-base/models/risk-models/scheming-likelihood-model/
+              title: Scheming Likelihood Model
+          cruxes:
+            - path: /knowledge-base/cruxes/accident-risks/
+              title: Accident Risk Cruxes
       - label: AI Governance
         description: Policies, regulations, and institutional frameworks that shape how AI is developed and deployed, including safety standards and accountability mechanisms.
+        ratings:
+          changeability: 55
+          xriskImpact: 60
+          trajectoryImpact: 75
+          uncertainty: 50
+        keyDebates:
+          - topic: Regulatory timing
+            description: Should we regulate AI now with imperfect knowledge, or wait until risks are clearer?
+          - topic: International coordination
+            description: Is meaningful international AI governance achievable, or will competition dominate?
+          - topic: Capture risk
+            description: Will AI governance be captured by industry interests, undermining safety goals?
+        relatedContent:
+          risks:
+            - path: /knowledge-base/risks/structural/racing-dynamics/
+              title: Racing Dynamics
+            - path: /knowledge-base/risks/structural/concentration-of-power/
+              title: Concentration of Power
+          responses:
+            - path: /knowledge-base/responses/governance/
+              title: AI Governance Overview
+            - path: /knowledge-base/responses/governance/legislation/eu-ai-act/
+              title: EU AI Act
+            - path: /knowledge-base/responses/governance/legislation/us-executive-order/
+              title: US Executive Order
+            - path: /knowledge-base/responses/governance/international/coordination-mechanisms/
+              title: International Coordination
+            - path: /knowledge-base/responses/institutions/ai-safety-institutes/
+              title: AI Safety Institutes
+          models:
+            - path: /knowledge-base/models/governance-models/international-coordination-game/
+              title: International Coordination Game
+            - path: /knowledge-base/models/governance-models/institutional-adaptation-speed/
+              title: Institutional Adaptation Speed
       - label: Lab Safety Practices
         description: Internal practices at AI labs including safety testing, red-teaming, responsible disclosure, and organizational culture around risk management.
+        ratings:
+          changeability: 65
+          xriskImpact: 50
+          trajectoryImpact: 45
+          uncertainty: 40
+        keyDebates:
+          - topic: Voluntary vs mandatory
+            description: Can voluntary safety commitments work, or is regulation necessary?
+          - topic: Safety culture
+            description: How much do internal lab cultures actually prioritize safety vs capability advancement?
+        relatedContent:
+          responses:
+            - path: /knowledge-base/responses/governance/industry/responsible-scaling-policies/
+              title: Responsible Scaling Policies
+            - path: /knowledge-base/responses/governance/industry/voluntary-commitments/
+              title: Voluntary Commitments
+            - path: /knowledge-base/responses/organizational-practices/lab-culture/
+              title: Lab Culture
+            - path: /knowledge-base/responses/organizational-practices/whistleblower-protections/
+              title: Whistleblower Protections
+            - path: /knowledge-base/responses/alignment/red-teaming/
+              title: Red Teaming
+          models:
+            - path: /knowledge-base/models/safety-models/safety-culture-equilibrium/
+              title: Safety Culture Equilibrium
+            - path: /knowledge-base/models/dynamics-models/lab-incentives-model/
+              title: Lab Incentives Model
 
   - id: ai-capabilities
     label: AI Capabilities
@@ -38,10 +141,73 @@ nodes:
     subItems:
       - label: Compute
         description: Hardware resources for AI training and inference, including GPUs, TPUs, and specialized chips. More compute enables larger models and faster iteration.
+        ratings:
+          changeability: 30
+          xriskImpact: 70
+          trajectoryImpact: 80
+          uncertainty: 35
+        keyDebates:
+          - topic: Compute governance
+            description: Can controlling compute access effectively slow dangerous AI development?
+          - topic: Hardware bottlenecks
+            description: Will hardware limitations naturally constrain AI progress, or will efficiency gains compensate?
+        relatedContent:
+          responses:
+            - path: /knowledge-base/responses/governance/compute-governance/
+              title: Compute Governance Overview
+            - path: /knowledge-base/responses/governance/compute-governance/export-controls/
+              title: Export Controls
+            - path: /knowledge-base/responses/governance/compute-governance/monitoring/
+              title: Compute Monitoring
+            - path: /knowledge-base/responses/governance/compute-governance/hardware-enabled-governance/
+              title: Hardware-Enabled Governance
       - label: Algorithms
         description: Efficiency of AI methods including architectures, training techniques, and data utilization. Algorithmic progress can multiply the impact of compute.
+        ratings:
+          changeability: 20
+          xriskImpact: 75
+          trajectoryImpact: 85
+          uncertainty: 55
+        keyDebates:
+          - topic: Algorithmic overhang
+            description: How much latent capability exists in current algorithms waiting to be unlocked?
+          - topic: Paradigm shifts
+            description: Will transformative AI require new paradigms beyond deep learning?
+        relatedContent:
+          risks:
+            - path: /knowledge-base/risks/accident/emergent-capabilities/
+              title: Emergent Capabilities
+            - path: /knowledge-base/risks/accident/sharp-left-turn/
+              title: Sharp Left Turn
+          models:
+            - path: /knowledge-base/models/framework-models/capability-threshold-model/
+              title: Capability Threshold Model
       - label: Adoption
         description: How widely AI is integrated into the economy and daily life. Broader adoption increases both benefits and exposure to AI-related risks.
+        ratings:
+          changeability: 40
+          xriskImpact: 45
+          trajectoryImpact: 70
+          uncertainty: 40
+        keyDebates:
+          - topic: Adoption speed
+            description: How quickly will AI be integrated into critical systems and decision-making?
+          - topic: Dependency risks
+            description: Does widespread AI adoption create dangerous dependencies and single points of failure?
+        relatedContent:
+          risks:
+            - path: /knowledge-base/risks/structural/enfeeblement/
+              title: Enfeeblement
+            - path: /knowledge-base/risks/structural/economic-disruption/
+              title: Economic Disruption
+            - path: /knowledge-base/risks/epistemic/expertise-atrophy/
+              title: Expertise Atrophy
+          responses:
+            - path: /knowledge-base/responses/resilience/labor-transition/
+              title: Labor Transition
+          models:
+            - path: /knowledge-base/models/societal-models/expertise-atrophy-progression/
+              title: Expertise Atrophy Progression
 
   - id: civ-competence
     label: Civilizational Competence
@@ -57,12 +223,85 @@ nodes:
       - label: Governance
         href: /knowledge-base/ai-transition-model/parameters/governance/
         description: Quality of political institutions, regulatory capacity, and ability to create effective AI policy at national and international levels.
+        ratings:
+          changeability: 35
+          xriskImpact: 55
+          trajectoryImpact: 70
+          uncertainty: 45
+        keyDebates:
+          - topic: Democratic capacity
+            description: Can democratic institutions move fast enough to govern rapidly advancing AI?
+          - topic: Technocratic vs democratic
+            description: Should AI governance be led by technical experts or democratic processes?
+        relatedContent:
+          responses:
+            - path: /knowledge-base/responses/governance/
+              title: AI Governance
+            - path: /knowledge-base/responses/institutions/ai-safety-institutes/
+              title: AI Safety Institutes
+            - path: /knowledge-base/responses/institutions/standards-bodies/
+              title: Standards Bodies
+          models:
+            - path: /knowledge-base/models/governance-models/institutional-adaptation-speed/
+              title: Institutional Adaptation Speed
+            - path: /knowledge-base/models/governance-models/public-opinion-evolution/
+              title: Public Opinion Evolution
       - label: Epistemics
         href: /knowledge-base/ai-transition-model/parameters/epistemics/
         description: Society's collective ability to form accurate beliefs, resist misinformation, and maintain shared understanding of reality.
+        ratings:
+          changeability: 25
+          xriskImpact: 40
+          trajectoryImpact: 65
+          uncertainty: 55
+        keyDebates:
+          - topic: AI and truth
+            description: Will AI-generated content fundamentally undermine shared epistemics?
+          - topic: Expert consensus
+            description: Can we maintain scientific consensus on AI risks amid uncertainty and competing interests?
+        relatedContent:
+          risks:
+            - path: /knowledge-base/risks/epistemic/
+              title: Epistemic Risks Overview
+            - path: /knowledge-base/risks/epistemic/reality-fragmentation/
+              title: Reality Fragmentation
+            - path: /knowledge-base/risks/epistemic/epistemic-collapse/
+              title: Epistemic Collapse
+            - path: /knowledge-base/risks/misuse/disinformation/
+              title: Disinformation
+          responses:
+            - path: /knowledge-base/responses/epistemic-tools/
+              title: Epistemic Tools
+            - path: /knowledge-base/responses/resilience/epistemic-security/
+              title: Epistemic Security
+          cruxes:
+            - path: /knowledge-base/cruxes/epistemic-risks/
+              title: Epistemic Risk Cruxes
       - label: Adaptability
         href: /knowledge-base/ai-transition-model/parameters/adaptability/
         description: How quickly institutions, economies, and social structures can adjust to rapid technological change without breaking down.
+        ratings:
+          changeability: 30
+          xriskImpact: 50
+          trajectoryImpact: 60
+          uncertainty: 50
+        keyDebates:
+          - topic: Institutional inertia
+            description: Can large institutions adapt fast enough to keep pace with AI development?
+          - topic: Social resilience
+            description: How much economic and social disruption can societies absorb without destabilizing?
+        relatedContent:
+          risks:
+            - path: /knowledge-base/risks/structural/economic-disruption/
+              title: Economic Disruption
+            - path: /knowledge-base/risks/structural/flash-dynamics/
+              title: Flash Dynamics
+          responses:
+            - path: /knowledge-base/responses/resilience/
+              title: Resilience Responses
+          models:
+            - path: /knowledge-base/models/societal-models/post-incident-recovery/
+              title: Post-Incident Recovery
 
   - id: transition-turbulence
     label: Transition Turbulence
@@ -78,9 +317,66 @@ nodes:
       - label: Economic Stability
         href: /knowledge-base/ai-transition-model/parameters/economic-stability/
         description: The degree of economic disruption from AI-driven automation, job displacement, and wealth concentration during the transition period.
+        ratings:
+          changeability: 40
+          xriskImpact: 35
+          trajectoryImpact: 55
+          uncertainty: 50
+        keyDebates:
+          - topic: Automation timeline
+            description: How quickly will AI automate jobs? Gradual transition allows adaptation; rapid displacement could destabilize societies.
+          - topic: Redistribution feasibility
+            description: Can governments effectively redistribute AI-generated wealth, or will concentration prove politically intractable?
+          - topic: New job creation
+            description: Will AI create enough new jobs to offset displacement, or is this transition fundamentally different?
+        relatedContent:
+          risks:
+            - path: /knowledge-base/risks/structural/economic-disruption/
+              title: Economic Disruption
+            - path: /knowledge-base/risks/structural/winner-take-all/
+              title: Winner-Take-All Dynamics
+            - path: /knowledge-base/risks/structural/concentration-of-power/
+              title: Concentration of Power
+          responses:
+            - path: /knowledge-base/responses/resilience/labor-transition/
+              title: Labor Transition
+          models:
+            - path: /knowledge-base/models/impact-models/economic-disruption-impact/
+              title: Economic Disruption Impact
       - label: Racing Intensity
         href: /knowledge-base/ai-transition-model/parameters/racing-intensity/
         description: How much competitive pressure between AI labs or nations leads to cutting corners on safety to be first to develop advanced capabilities.
+        ratings:
+          changeability: 50
+          xriskImpact: 65
+          trajectoryImpact: 50
+          uncertainty: 45
+        keyDebates:
+          - topic: Race dynamics
+            description: Are we actually in a race, or do actors perceive one where none exists? Perception matters as much as reality.
+          - topic: Safety-capability tradeoff
+            description: Does racing actually reduce safety margins, or can safety work proceed in parallel without slowing progress?
+          - topic: Coordination possibility
+            description: Can meaningful racing slowdowns be coordinated, or is defection inevitable?
+        relatedContent:
+          risks:
+            - path: /knowledge-base/risks/structural/racing-dynamics/
+              title: Racing Dynamics
+            - path: /knowledge-base/risks/structural/multipolar-trap/
+              title: Multipolar Trap
+          responses:
+            - path: /knowledge-base/responses/organizational-practices/pause/
+              title: Pause Proposals
+            - path: /knowledge-base/responses/governance/international/coordination-mechanisms/
+              title: International Coordination
+          models:
+            - path: /knowledge-base/models/dynamics-models/racing-dynamics-impact/
+              title: Racing Dynamics Impact
+            - path: /knowledge-base/models/race-models/capability-alignment-race/
+              title: Capability-Alignment Race
+          cruxes:
+            - path: /knowledge-base/cruxes/structural-risks/
+              title: Structural Risk Cruxes
 
   - id: misuse-potential
     label: Misuse Potential
@@ -96,13 +392,102 @@ nodes:
       - label: Biological Threat Exposure
         href: /knowledge-base/ai-transition-model/parameters/biological-threat-exposure/
         description: Risk from AI-enabled bioweapons development, including pathogen design, synthesis optimization, and delivery mechanism engineering.
+        ratings:
+          changeability: 45
+          xriskImpact: 80
+          trajectoryImpact: 40
+          uncertainty: 60
+        keyDebates:
+          - topic: AI uplift magnitude
+            description: How much does AI actually help with bioweapons? Expert estimates range from marginal to transformative.
+          - topic: Defense vs offense
+            description: Does AI help biodefense more than bioattack, or vice versa? The balance determines net risk.
+          - topic: Access barriers
+            description: Are wet lab skills and materials the real bottleneck, making AI uplift less relevant?
+        relatedContent:
+          risks:
+            - path: /knowledge-base/risks/misuse/bioweapons/
+              title: AI-Enabled Bioweapons
+          models:
+            - path: /knowledge-base/models/domain-models/bioweapons-ai-uplift/
+              title: Bioweapons AI Uplift
+            - path: /knowledge-base/models/domain-models/bioweapons-attack-chain/
+              title: Bioweapons Attack Chain
+            - path: /knowledge-base/models/timeline-models/bioweapons-timeline/
+              title: Bioweapons Timeline
+          cruxes:
+            - path: /knowledge-base/cruxes/misuse-risks/
+              title: Misuse Risk Cruxes
       - label: Cyber Threat Exposure
         href: /knowledge-base/ai-transition-model/parameters/cyber-threat-exposure/
         description: Risk from AI-enhanced cyberattacks including automated vulnerability discovery, sophisticated social engineering, and attacks on critical infrastructure.
+        ratings:
+          changeability: 35
+          xriskImpact: 55
+          trajectoryImpact: 45
+          uncertainty: 50
+        keyDebates:
+          - topic: Cyber-physical escalation
+            description: Could AI-enabled cyberattacks cause physical catastrophe through infrastructure attacks?
+          - topic: Defense advantage
+            description: Will AI improve cyber defense more than offense, or create an offense-dominant world?
+          - topic: Attribution challenges
+            description: Does AI-enabled anonymity make cyber conflict more likely by enabling deniable attacks?
+        relatedContent:
+          risks:
+            - path: /knowledge-base/risks/misuse/cyberweapons/
+              title: AI-Enhanced Cyberweapons
+          models:
+            - path: /knowledge-base/models/domain-models/cyberweapons-offense-defense/
+              title: Cyber Offense-Defense Balance
+            - path: /knowledge-base/models/domain-models/cyberweapons-attack-automation/
+              title: Cyberweapons Attack Automation
       - label: Robot Threat Exposure
         description: Risk from AI-controlled physical systems including autonomous weapons, drones, and robotic systems that could cause physical harm at scale.
+        ratings:
+          changeability: 40
+          xriskImpact: 60
+          trajectoryImpact: 50
+          uncertainty: 65
+        keyDebates:
+          - topic: Autonomy thresholds
+            description: At what level of autonomy do AI weapons become unacceptably dangerous? Where should humans remain in the loop?
+          - topic: Proliferation control
+            description: Can autonomous weapons be controlled like nuclear weapons, or are they too easy to develop and deploy?
+          - topic: Swarm scenarios
+            description: Do coordinated autonomous swarms create qualitatively new risks beyond individual systems?
+        relatedContent:
+          risks:
+            - path: /knowledge-base/risks/misuse/autonomous-weapons/
+              title: Autonomous Weapons
+          models:
+            - path: /knowledge-base/models/domain-models/autonomous-weapons-proliferation/
+              title: Autonomous Weapons Proliferation
+            - path: /knowledge-base/models/domain-models/autonomous-weapons-escalation/
+              title: Autonomous Weapons Escalation
       - label: Surprise Threat Exposure
         description: Risk from novel attack vectors we haven't anticipated, where AI enables entirely new categories of harm not covered by existing threat models.
+        ratings:
+          changeability: 20
+          xriskImpact: 70
+          trajectoryImpact: 55
+          uncertainty: 85
+        keyDebates:
+          - topic: Unknown unknowns
+            description: By definition we can't enumerate these threats - how should we reason about risks we can't specify?
+          - topic: Preparation strategies
+            description: Is general resilience the right approach, or should we try to anticipate specific novel threats?
+          - topic: Early warning
+            description: Can we detect novel AI-enabled threats early enough to respond, or will they emerge suddenly?
+        relatedContent:
+          models:
+            - path: /knowledge-base/models/analysis-models/warning-signs-model/
+              title: Warning Signs Model
+            - path: /knowledge-base/models/analysis-models/critical-uncertainties/
+              title: Critical Uncertainties
+          responses:
+            - path: /knowledge-base/responses/resilience/
+              title: Resilience Building
 
   - id: ai-ownership
     label: AI Ownership
@@ -116,10 +501,81 @@ nodes:
     subItems:
       - label: Countries
         description: Which nations control the most advanced AI capabilities. Geographic concentration affects geopolitical stability and access to AI benefits.
+        ratings:
+          changeability: 25
+          xriskImpact: 45
+          trajectoryImpact: 65
+          uncertainty: 50
+        keyDebates:
+          - topic: US-China dynamics
+            description: Is US-China AI competition inevitable, or can cooperation emerge? The answer shapes global AI trajectory.
+          - topic: Multipolar vs unipolar
+            description: Is one country leading in AI safer or more dangerous than distributed capability?
+          - topic: Democratic AI advantage
+            description: Do democracies have structural advantages or disadvantages in AI development?
+        relatedContent:
+          risks:
+            - path: /knowledge-base/risks/structural/multipolar-trap/
+              title: Multipolar Trap
+          responses:
+            - path: /knowledge-base/responses/governance/international/coordination-mechanisms/
+              title: International Coordination
+            - path: /knowledge-base/responses/governance/compute-governance/export-controls/
+              title: Export Controls
+          models:
+            - path: /knowledge-base/models/governance-models/international-coordination-game/
+              title: International Coordination Game
       - label: Companies
         description: Which corporations develop and deploy frontier AI systems. Corporate concentration shapes market dynamics, safety incentives, and accountability.
+        ratings:
+          changeability: 35
+          xriskImpact: 50
+          trajectoryImpact: 70
+          uncertainty: 45
+        keyDebates:
+          - topic: Concentration effects
+            description: Is AI lab concentration good (easier to regulate) or bad (single points of failure)?
+          - topic: Profit vs safety
+            description: Can profit-motivated companies be trusted with AI safety, or do incentives fundamentally conflict?
+          - topic: Open source role
+            description: Does open source AI democratize capability or just make dangerous systems accessible?
+        relatedContent:
+          risks:
+            - path: /knowledge-base/risks/structural/concentration-of-power/
+              title: Concentration of Power
+            - path: /knowledge-base/risks/structural/winner-take-all/
+              title: Winner-Take-All Dynamics
+          responses:
+            - path: /knowledge-base/responses/organizational-practices/open-source/
+              title: Open Source AI
+            - path: /knowledge-base/responses/governance/industry/
+              title: Industry Governance
+          models:
+            - path: /knowledge-base/models/race-models/winner-take-all-concentration/
+              title: Winner-Take-All Concentration
+            - path: /knowledge-base/models/dynamics-models/lab-incentives-model/
+              title: Lab Incentives Model
       - label: Shareholders
         description: Who owns equity in AI companies and thus captures economic value. Ownership concentration affects wealth distribution and political influence.
+        ratings:
+          changeability: 30
+          xriskImpact: 25
+          trajectoryImpact: 60
+          uncertainty: 40
+        keyDebates:
+          - topic: Wealth concentration
+            description: Will AI ownership create unprecedented wealth concentration, and does this matter for AI safety?
+          - topic: Governance influence
+            description: Do shareholders actually influence AI company decisions, or is control elsewhere?
+          - topic: Public ownership
+            description: Should powerful AI be publicly owned? What governance structures would this require?
+        relatedContent:
+          risks:
+            - path: /knowledge-base/risks/structural/concentration-of-power/
+              title: Concentration of Power
+          models:
+            - path: /knowledge-base/models/impact-models/economic-disruption-impact/
+              title: Economic Disruption Impact
 
   - id: ai-uses
     label: AI Uses
@@ -133,12 +589,97 @@ nodes:
     subItems:
       - label: Recursive AI Capabilities
         description: AI systems used to accelerate AI research itself, potentially leading to rapid capability gains as AI improves its own development.
+        ratings:
+          changeability: 35
+          xriskImpact: 85
+          trajectoryImpact: 90
+          uncertainty: 70
+        keyDebates:
+          - topic: Takeoff speed
+            description: Will AI self-improvement be gradual (months/years) or sudden (days/weeks)? This determines our response time.
+          - topic: Human bottlenecks
+            description: Do human researchers, compute, or real-world data bottleneck recursive improvement, or can AI overcome these?
+          - topic: Capability vs alignment recursion
+            description: Can AI improve its own alignment as quickly as capabilities, or is there inherent asymmetry?
+        relatedContent:
+          risks:
+            - path: /knowledge-base/risks/accident/sharp-left-turn/
+              title: Sharp Left Turn
+            - path: /knowledge-base/risks/accident/emergent-capabilities/
+              title: Emergent Capabilities
+          responses:
+            - path: /knowledge-base/responses/alignment/ai-assisted/
+              title: AI-Assisted Alignment
+          models:
+            - path: /knowledge-base/models/timeline-models/intervention-timing-windows/
+              title: Intervention Timing Windows
       - label: Industries
         description: AI integration into economic sectors like healthcare, finance, transportation, and manufacturing. Deeper integration increases both productivity and systemic risk.
+        ratings:
+          changeability: 30
+          xriskImpact: 30
+          trajectoryImpact: 75
+          uncertainty: 35
+        keyDebates:
+          - topic: Critical infrastructure
+            description: How much AI in critical systems is too much? When does efficiency gain become systemic risk?
+          - topic: Sector variation
+            description: Should some industries (healthcare, finance) have stricter AI integration limits than others?
+          - topic: Reversibility
+            description: Once AI is deeply integrated, can we remove it if problems emerge, or are we locked in?
+        relatedContent:
+          risks:
+            - path: /knowledge-base/risks/structural/irreversibility/
+              title: Irreversibility
+            - path: /knowledge-base/risks/structural/flash-dynamics/
+              title: Flash Dynamics
       - label: Governments
         description: Government use of AI for surveillance, military applications, public services, and decision-making. Affects civil liberties, warfare, and state capacity.
+        ratings:
+          changeability: 40
+          xriskImpact: 55
+          trajectoryImpact: 70
+          uncertainty: 50
+        keyDebates:
+          - topic: Surveillance trade-offs
+            description: Does AI surveillance make societies safer or enable authoritarianism? Context-dependent or universal answer?
+          - topic: Military AI
+            description: Should lethal autonomous weapons be banned, or is such a ban unrealistic and unverifiable?
+          - topic: Democratic enhancement
+            description: Can AI actually improve democratic deliberation, or will it be captured by incumbents?
+        relatedContent:
+          risks:
+            - path: /knowledge-base/risks/misuse/surveillance/
+              title: Surveillance
+            - path: /knowledge-base/risks/misuse/autonomous-weapons/
+              title: Autonomous Weapons
+            - path: /knowledge-base/risks/misuse/authoritarian-tools/
+              title: Authoritarian Tools
+          models:
+            - path: /knowledge-base/models/societal-models/surveillance-authoritarian-stability/
+              title: Surveillance-Authoritarian Stability
       - label: Coordination
         description: AI tools for collective decision-making, forecasting, and coordination. Could enhance or undermine democratic processes and international cooperation.
+        ratings:
+          changeability: 45
+          xriskImpact: 40
+          trajectoryImpact: 65
+          uncertainty: 55
+        keyDebates:
+          - topic: Information aggregation
+            description: Can AI improve collective intelligence, or will it amplify existing biases and manipulation?
+          - topic: International cooperation
+            description: Does AI make international coordination easier (better translation, modeling) or harder (faster defection)?
+          - topic: Forecasting limits
+            description: Can AI significantly improve forecasting, or are complex systems fundamentally unpredictable?
+        relatedContent:
+          responses:
+            - path: /knowledge-base/responses/epistemic-tools/ai-forecasting/
+              title: AI Forecasting
+            - path: /knowledge-base/responses/epistemic-tools/coordination-tech/
+              title: Coordination Technology
+            - path: /knowledge-base/responses/epistemic-tools/deliberation/
+              title: AI Deliberation Tools
 
   # === ULTIMATE SCENARIOS (middle layer) ===
 
@@ -156,9 +697,33 @@ nodes:
       - label: Rapid
         href: /knowledge-base/ai-transition-model/scenarios/ai-takeover/rapid/
         description: Fast takeover scenarios where AI gains decisive advantage quickly, potentially through recursive self-improvement or exploitation of critical vulnerabilities.
+        ratings:
+          changeability: 40
+          xriskImpact: 95
+          trajectoryImpact: 85
+          uncertainty: 70
+        keyDebates:
+          - topic: FOOM plausibility
+            description: Is rapid recursive self-improvement physically possible, or are there fundamental bottlenecks?
+          - topic: Warning signs
+            description: Would we see warning signs before a rapid takeover, or could it be a surprise?
+          - topic: Prevention window
+            description: If rapid takeover is possible, is there a window to prevent it, or is it already too late?
       - label: Gradual
         href: /knowledge-base/ai-transition-model/scenarios/ai-takeover/gradual/
         description: Slow takeover scenarios where AI accumulates control incrementally through economic leverage, institutional capture, or gradual human dependency.
+        ratings:
+          changeability: 55
+          xriskImpact: 80
+          trajectoryImpact: 90
+          uncertainty: 60
+        keyDebates:
+          - topic: Boiling frog
+            description: Would humans notice gradual power accumulation in time to respond, or would it be invisible?
+          - topic: Voluntary cession
+            description: Might humans voluntarily cede control to AI systems that seem beneficial, until reversal is impossible?
+          - topic: Institutional defense
+            description: Can democratic institutions resist gradual AI influence, or are they structurally vulnerable?
 
   - id: human-catastrophe
     label: Human-Caused Catastrophe
@@ -174,9 +739,33 @@ nodes:
       - label: State Actor
         href: /knowledge-base/ai-transition-model/scenarios/human-catastrophe/state-actor/
         description: Catastrophes caused by governments or militaries using AI for warfare, mass surveillance, or authoritarian control at unprecedented scale.
+        ratings:
+          changeability: 45
+          xriskImpact: 75
+          trajectoryImpact: 70
+          uncertainty: 55
+        keyDebates:
+          - topic: Great power conflict
+            description: Does AI make great power conflict more or less likely? Does it change the stakes?
+          - topic: Authoritarian advantage
+            description: Do authoritarian regimes have structural advantages in deploying AI for control?
+          - topic: Deterrence stability
+            description: Does AI destabilize nuclear deterrence or other conflict-prevention mechanisms?
       - label: Rogue Actor
         href: /knowledge-base/ai-transition-model/scenarios/human-catastrophe/rogue-actor/
         description: Catastrophes caused by terrorists, criminals, or individuals using AI to develop weapons of mass destruction or conduct large-scale attacks.
+        ratings:
+          changeability: 35
+          xriskImpact: 70
+          trajectoryImpact: 45
+          uncertainty: 65
+        keyDebates:
+          - topic: Capability democratization
+            description: How much does AI lower barriers to WMD development for non-state actors?
+          - topic: Lone wolf threat
+            description: Could a single individual with AI cause catastrophic harm, or are scale limits inherent?
+          - topic: Defense adequacy
+            description: Can defensive measures keep pace with AI-enabled offensive capabilities for rogue actors?
 
   - id: long-term-lockin
     label: Long-term Lock-in
@@ -190,14 +779,74 @@ nodes:
     subItems:
       - label: Economic Power
         description: Permanent entrenchment of economic inequality where AI-enabled productivity accrues to a small group, making redistribution structurally impossible.
+        ratings:
+          changeability: 50
+          xriskImpact: 30
+          trajectoryImpact: 85
+          uncertainty: 45
+        keyDebates:
+          - topic: Reversibility threshold
+            description: At what point does economic concentration become truly irreversible? Are we approaching it?
+          - topic: Political economy
+            description: Can democratic politics overcome entrenched economic interests, or do they capture the state?
+          - topic: AI-enabled enforcement
+            description: Does AI make wealth concentration self-reinforcing through surveillance and control?
       - label: Political Power
         description: Lock-in of authoritarian or oligarchic political structures, where AI-enabled surveillance and control make regime change effectively impossible.
+        ratings:
+          changeability: 45
+          xriskImpact: 40
+          trajectoryImpact: 90
+          uncertainty: 50
+        keyDebates:
+          - topic: Surveillance permanence
+            description: Does AI surveillance make authoritarian regimes genuinely stable, or do other vulnerabilities remain?
+          - topic: Democratic resilience
+            description: Can democracies resist the temptation to deploy AI control, or is the slope too slippery?
+          - topic: Global coordination
+            description: Can the international community prevent political lock-in, or is sovereignty too strong?
       - label: Epistemics
         description: Lock-in of particular belief systems or information environments, where AI shapes what people believe in ways that become self-reinforcing.
+        ratings:
+          changeability: 35
+          xriskImpact: 35
+          trajectoryImpact: 80
+          uncertainty: 60
+        keyDebates:
+          - topic: Filter bubbles
+            description: Does AI-driven content selection create permanent epistemic fragmentation?
+          - topic: Truth-seeking AI
+            description: Could AI tools improve epistemics by detecting misinformation, or would they be captured?
+          - topic: Preference vs belief
+            description: Is AI shaping what we believe, or just what we prefer to see? Does the distinction matter?
       - label: Values
         description: Permanent entrenchment of particular value systems that may not reflect humanity's best interests or allow for moral progress.
+        ratings:
+          changeability: 30
+          xriskImpact: 50
+          trajectoryImpact: 95
+          uncertainty: 65
+        keyDebates:
+          - topic: Value lock-in timing
+            description: When should we try to "lock in" values, if ever? How do we know when values are good enough?
+          - topic: Moral progress
+            description: Does value lock-in prevent moral progress, or could AI enable ongoing value improvement?
+          - topic: Whose values
+            description: Whose values get locked in? Is there a legitimate process for deciding this?
       - label: Suffering Lock-in
         description: Scenarios where AI perpetuates or amplifies suffering at scale, potentially including digital minds experiencing vast amounts of negative states.
+        ratings:
+          changeability: 25
+          xriskImpact: 60
+          trajectoryImpact: 90
+          uncertainty: 75
+        keyDebates:
+          - topic: Digital sentience
+            description: Could digital minds suffer? How would we know? What moral weight should this have?
+          - topic: Scale of suffering
+            description: Could AI-enabled suffering exceed all historical suffering? What are plausible magnitudes?
+          - topic: Detection and prevention
+            description: How could we detect digital suffering? Can we build guarantees against it?
 
   # === ULTIMATE OUTCOMES (bottom layer) ===
 
@@ -305,3 +954,162 @@ edges:
     source: long-term-lockin
     target: long-term-trajectory
     strength: strong
+
+# Impact Grid - Numeric scores for how factors/scenarios/outcomes influence each other
+# Each entry has: source, target, impact (0-100), direction (increases/decreases), and notes
+impactGrid:
+  # === ROOT FACTORS → SCENARIOS ===
+
+  # AI Safety impacts
+  - source: misalignment-potential
+    target: ai-takeover
+    impact: 85
+    direction: increases
+    notes: Core driver of takeover risk - misaligned AI is the primary mechanism
+  - source: misalignment-potential
+    target: human-catastrophe
+    impact: 30
+    direction: increases
+    notes: Indirect effect through unsafe AI tools being misused
+  - source: misalignment-potential
+    target: long-term-lockin
+    impact: 60
+    direction: increases
+    notes: Misaligned AI could lock in bad values or power structures
+
+  # AI Capabilities impacts
+  - source: ai-capabilities
+    target: ai-takeover
+    impact: 80
+    direction: increases
+    notes: More capable AI = higher takeover potential if misaligned
+  - source: ai-capabilities
+    target: human-catastrophe
+    impact: 65
+    direction: increases
+    notes: More capable AI enables more destructive misuse
+  - source: ai-capabilities
+    target: long-term-lockin
+    impact: 70
+    direction: increases
+    notes: More capable AI makes lock-in scenarios more feasible
+
+  # Civilizational Competence impacts
+  - source: civ-competence
+    target: ai-takeover
+    impact: 55
+    direction: decreases
+    notes: Better coordination and institutions can slow/prevent takeover
+  - source: civ-competence
+    target: human-catastrophe
+    impact: 60
+    direction: decreases
+    notes: Better governance reduces misuse risk
+  - source: civ-competence
+    target: long-term-lockin
+    impact: 75
+    direction: mixed
+    notes: High competence could enable good or bad lock-in
+
+  # Transition Turbulence impacts
+  - source: transition-turbulence
+    target: ai-takeover
+    impact: 45
+    direction: increases
+    notes: Chaos and pressure lead to corners being cut on safety
+  - source: transition-turbulence
+    target: human-catastrophe
+    impact: 55
+    direction: increases
+    notes: Instability creates more opportunities for misuse
+  - source: transition-turbulence
+    target: long-term-lockin
+    impact: 40
+    direction: increases
+    notes: Crisis can entrench emergency powers and structures
+
+  # Misuse Potential impacts
+  - source: misuse-potential
+    target: ai-takeover
+    impact: 25
+    direction: increases
+    notes: Primarily affects human catastrophe, not takeover
+  - source: misuse-potential
+    target: human-catastrophe
+    impact: 90
+    direction: increases
+    notes: Core driver - misuse is the direct mechanism
+  - source: misuse-potential
+    target: long-term-lockin
+    impact: 35
+    direction: increases
+    notes: Misuse could trigger authoritarian responses
+
+  # AI Ownership impacts
+  - source: ai-ownership
+    target: ai-takeover
+    impact: 40
+    direction: mixed
+    notes: Concentrated ownership could help or hurt depending on actor
+  - source: ai-ownership
+    target: human-catastrophe
+    impact: 45
+    direction: mixed
+    notes: Depends on who controls AI and their intentions
+  - source: ai-ownership
+    target: long-term-lockin
+    impact: 85
+    direction: increases
+    notes: Ownership patterns directly shape what gets locked in
+
+  # AI Uses impacts
+  - source: ai-uses
+    target: ai-takeover
+    impact: 50
+    direction: increases
+    notes: Recursive AI and broad deployment increase takeover paths
+  - source: ai-uses
+    target: human-catastrophe
+    impact: 55
+    direction: mixed
+    notes: Some uses increase risk, others enable better coordination
+  - source: ai-uses
+    target: long-term-lockin
+    impact: 80
+    direction: increases
+    notes: Where AI is deployed determines what structures get entrenched
+
+  # === SCENARIOS → OUTCOMES ===
+
+  - source: ai-takeover
+    target: existential-catastrophe
+    impact: 90
+    direction: increases
+    notes: Misaligned takeover is a direct path to extinction/catastrophe
+  - source: ai-takeover
+    target: long-term-trajectory
+    impact: 85
+    direction: mixed
+    notes: Aligned takeover could be very good; misaligned very bad
+
+  - source: human-catastrophe
+    target: existential-catastrophe
+    impact: 70
+    direction: increases
+    notes: Some human-caused catastrophes could be existential
+  - source: human-catastrophe
+    target: long-term-trajectory
+    impact: 60
+    direction: decreases
+    notes: Even non-existential catastrophes harm long-term trajectory
+
+  - source: long-term-lockin
+    target: existential-catastrophe
+    impact: 40
+    direction: mixed
+    notes: Lock-in could prevent or cause extinction depending on what's locked
+  - source: long-term-lockin
+    target: long-term-trajectory
+    impact: 95
+    direction: mixed
+    notes: Lock-in is the primary determinant of long-term trajectory

@@ -5,6 +5,7 @@ import { NODE_TYPE_CONFIG, OUTCOME_COLORS, NODE_BORDER_RADIUS } from '../config'
 
 export function CauseEffectNode({ data, selected, id }: NodeProps<Node<CauseEffectNodeData>>) {
   const [showTooltip, setShowTooltip] = useState(false);
+  const [hoveredSubItemIndex, setHoveredSubItemIndex] = useState<number | null>(null);
   const nodeType = data.type || 'intermediate';
 
   const config = NODE_TYPE_CONFIG[nodeType] || NODE_TYPE_CONFIG.intermediate;
@@ -78,20 +79,29 @@ export function CauseEffectNode({ data, selected, id }: NodeProps<Node<CauseEffe
                 backgroundColor: colors.bg,
                 borderColor: `${colors.border}60`,
                 color: colors.text,
-                cursor: item.href ? 'pointer' : undefined,
+                cursor: item.href ? 'pointer' : (item.description ? 'help' : undefined),
+                position: 'relative',
               }}
               onClick={item.href ? (e) => { e.stopPropagation(); window.location.href = item.href!; } : undefined}
+              onMouseEnter={item.description ? () => setHoveredSubItemIndex(i) : undefined}
+              onMouseLeave={item.description ? () => setHoveredSubItemIndex(null) : undefined}
             >
               <span className="ceg-node__subitem-label">{item.label}</span>
               {item.probability && (
                 <span className="ceg-node__subitem-prob">{item.probability}</span>
+              )}
+              {hoveredSubItemIndex === i && item.description && (
+                <div className="ceg-node__tooltip ceg-node__tooltip--subitem">
+                  {item.description}
+                  <div className="ceg-node__tooltip-arrow" />
+                </div>
               )}
             </div>
           ))}
         </div>
       )}
 
-      {showTooltip && data.description && (
+      {showTooltip && data.description && hoveredSubItemIndex === null && (
         <div className="ceg-node__tooltip">
           {data.description}
           <div className="ceg-node__tooltip-arrow" />

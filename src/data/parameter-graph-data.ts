@@ -30,9 +30,18 @@ interface RawEdge {
   effect?: 'increases' | 'decreases';
 }
 
+export interface ImpactGridEntry {
+  source: string;
+  target: string;
+  impact: number;
+  direction: 'increases' | 'decreases' | 'mixed';
+  notes: string;
+}
+
 interface RawGraphData {
   nodes: RawNode[];
   edges: RawEdge[];
+  impactGrid?: ImpactGridEntry[];
 }
 
 // Parse YAML
@@ -111,3 +120,22 @@ export const parameterEdges: Edge<CauseEffectEdgeData>[] = rawData.edges.map(edg
     effect: edge.effect,
   },
 }));
+
+// Export impact grid data
+export const impactGrid: ImpactGridEntry[] = rawData.impactGrid || [];
+
+// Helper to get all impacts where this node is the source (what it affects)
+export function getImpactsFrom(nodeId: string): ImpactGridEntry[] {
+  return impactGrid.filter(entry => entry.source === nodeId);
+}
+
+// Helper to get all impacts where this node is the target (what affects it)
+export function getImpactsTo(nodeId: string): ImpactGridEntry[] {
+  return impactGrid.filter(entry => entry.target === nodeId);
+}
+
+// Helper to get node label by ID
+export function getNodeLabel(nodeId: string): string {
+  const node = rawData.nodes.find(n => n.id === nodeId);
+  return node?.label || nodeId;
+}
