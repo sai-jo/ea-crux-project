@@ -79,5 +79,3 @@ export { PageStatus } from './PageStatus';
 // Diagrams
 export { Mermaid } from './Mermaid';
 
-// Parameter Graph (single source of truth from parameter-graph.yaml)
-export { EmbeddedParameterGraph, parameterNodes, parameterEdges } from './EmbeddedParameterGraph';

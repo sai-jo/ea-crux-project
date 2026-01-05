@@ -34,6 +34,7 @@ interface CauseEffectGraphProps {
   height?: string | number;
   fitViewPadding?: number;
   graphConfig?: GraphConfig;
+  showFullscreenButton?: boolean;
 }
 
 export default function CauseEffectGraph({
@@ -42,6 +43,7 @@ export default function CauseEffectGraph({
   height = 500,
   fitViewPadding = 0.1,
   graphConfig,
+  showFullscreenButton = true,
 }: CauseEffectGraphProps) {
   const [nodes, setNodes, onNodesChange] = useNodesState<Node<CauseEffectNodeData>>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge<CauseEffectEdgeData>>([]);
@@ -234,10 +236,12 @@ export default function CauseEffectGraph({
               {copied ? 'Copied!' : 'Copy'}
             </button>
           )}
-          <button className="ceg-action-btn" onClick={toggleFullscreen}>
-            {isFullscreen ? <ShrinkIcon /> : <ExpandIcon />}
-            {isFullscreen ? 'Exit' : 'Fullscreen'}
-          </button>
+          {showFullscreenButton && (
+            <button className="ceg-action-btn" onClick={toggleFullscreen}>
+              {isFullscreen ? <ShrinkIcon /> : <ExpandIcon />}
+              {isFullscreen ? 'Exit' : 'Fullscreen'}
+            </button>
+          )}
         </div>
       </div>
 

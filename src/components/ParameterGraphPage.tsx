@@ -80,7 +80,7 @@ export default function ParameterGraphPage() {
       <style>{styles}</style>
       <div className="parameter-graph-page">
         <a href="/knowledge-base/ai-transition-model/" className="parameter-graph-page__back-link">
-          &larr; Back to AI Transition Model
+          &larr; Documentation
         </a>
         <div className="parameter-graph-page__container">
           <CauseEffectGraph
@@ -88,6 +88,7 @@ export default function ParameterGraphPage() {
             initialEdges={parameterEdges}
             height="100%"
             graphConfig={parameterGraphConfig}
+            showFullscreenButton={false}
           />
         </div>
       </div>
