@@ -37,11 +37,6 @@ export { DataEstimateBox } from './DataEstimateBox';
 export { DataInfoBox } from './DataInfoBox';
 export { DataCrux } from './DataCrux';
 
-// Dashboard layout components
-export { SummaryCard, CardGrid } from './SummaryCard';
-export { Tabs, TabPanel } from './Tabs';
-export { CollapsibleSection } from './CollapsibleSection';
-
 // Data tables
 export { RisksTable } from './RisksTable';
 export { ParametersTable } from './ParametersTable';
@@ -71,7 +66,6 @@ export { default as ParameterFlowDiagram } from './ParameterFlowDiagram';
 export { ModelsList } from './ModelsList';
 export { ModelRatings } from './ModelRatings';
 export { ModelsTable } from './ModelsTable';
-export type { ModelRatingsData } from './ModelRatings';
 
 // Editorial / page management
 export { PageStatus } from './PageStatus';
