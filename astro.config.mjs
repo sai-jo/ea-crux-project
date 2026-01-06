@@ -24,6 +24,8 @@ export default defineConfig({
               Head: './src/components/starlight/Head.astro',
               // Custom right sidebar with minimap for AI Transition Model pages
               PageSidebar: './src/components/starlight/PageSidebar.astro',
+              // Add MetaPanel for ?meta debugging on AI Transition Model pages
+              PageFrame: './src/components/starlight/PageFrame.astro',
           },
           tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 2 },
           social: [
