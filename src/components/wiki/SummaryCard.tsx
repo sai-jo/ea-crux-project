@@ -1,5 +1,6 @@
 import React from 'react';
-import './wiki.css';
+import { Card } from '../ui/card';
+import { cn } from '../../lib/utils';
 
 type CardVariant = 'default' | 'highlight' | 'warning' | 'success';
 
@@ -13,17 +14,24 @@ interface SummaryCardProps {
   icon?: string;
 }
 
-const variantStyles: Record<CardVariant, { bg: string; border: string; accent: string }> = {
-  default: { bg: 'var(--sl-color-gray-6)', border: 'var(--sl-color-gray-5)', accent: 'var(--sl-color-accent)' },
-  highlight: { bg: 'rgba(59, 130, 246, 0.1)', border: '#3b82f6', accent: '#3b82f6' },
-  warning: { bg: 'rgba(245, 158, 11, 0.1)', border: '#f59e0b', accent: '#f59e0b' },
-  success: { bg: 'rgba(34, 197, 94, 0.1)', border: '#22c55e', accent: '#22c55e' },
+const variantClasses: Record<CardVariant, string> = {
+  default: 'border-border bg-gradient-to-br from-muted to-background',
+  highlight: 'border-blue-500 bg-blue-500/10',
+  warning: 'border-amber-500 bg-amber-500/10',
+  success: 'border-green-500 bg-green-500/10',
+};
+
+const variantAccentClasses: Record<CardVariant, string> = {
+  default: 'bg-accent-foreground',
+  highlight: 'bg-blue-500',
+  warning: 'bg-amber-500',
+  success: 'bg-green-500',
 };
 
 const confidenceLabels = {
-  high: { text: 'High confidence', color: '#22c55e' },
-  medium: { text: 'Medium confidence', color: '#f59e0b' },
-  low: { text: 'Low confidence', color: '#ef4444' },
+  high: { text: 'High confidence', className: 'text-green-500' },
+  medium: { text: 'Medium confidence', className: 'text-amber-500' },
+  low: { text: 'Low confidence', className: 'text-red-500' },
 };
 
 export function SummaryCard({
@@ -35,35 +43,45 @@ export function SummaryCard({
   variant = 'default',
   icon,
 }: SummaryCardProps) {
-  const style = variantStyles[variant];
-
   const cardContent = (
-    <div
-      className={`summary-card summary-card--${variant}`}
+    <Card
+      className={cn(
+        'relative p-5 py-5 gap-1 overflow-hidden transition-all duration-200',
+        'shadow-sm hover:-translate-y-0.5 hover:shadow-lg',
+        variantClasses[variant]
+      )}
     >
-      <div className="summary-card__header">
-        {icon && <span className="summary-card__icon">{icon}</span>}
-        <span className="summary-card__title">{title}</span>
+      {/* Top accent bar */}
+      <div className={cn(
+        'absolute top-0 left-0 right-0 h-1 opacity-60 transition-opacity',
+        'group-hover:opacity-100',
+        variantAccentClasses[variant]
+      )} />
+
+      <div className="flex items-center gap-2 text-xs text-muted-foreground uppercase tracking-wide">
+        {icon && <span>{icon}</span>}
+        <span>{title}</span>
       </div>
-      <div className="summary-card__value">
+      <div className="text-2xl font-bold text-foreground">
         {value}
       </div>
       {subtitle && (
-        <div className="summary-card__subtitle">{subtitle}</div>
+        <div className="text-sm text-muted-foreground">{subtitle}</div>
       )}
       {confidence && (
-        <div
-          className="summary-card__confidence"
-          style={{ color: confidenceLabels[confidence].color }}
-        >
+        <div className={cn('text-xs font-medium mt-1', confidenceLabels[confidence].className)}>
           {confidenceLabels[confidence].text}
         </div>
       )}
-    </div>
+    </Card>
   );
 
   if (link) {
-    return <a href={link} className="summary-card__wrapper">{cardContent}</a>;
+    return (
+      <a href={link} className="no-underline block group">
+        {cardContent}
+      </a>
+    );
   }
 
   return cardContent;
@@ -75,8 +93,14 @@ interface CardGridProps {
 }
 
 export function CardGrid({ children, columns = 3 }: CardGridProps) {
+  const columnClasses = {
+    2: 'grid-cols-1 sm:grid-cols-2',
+    3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
+    4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',
+  };
+
   return (
-    <div className={`card-grid card-grid--${columns}-col`}>
+    <div className={cn('grid gap-4 my-4', columnClasses[columns])}>
       {children}
     </div>
   );

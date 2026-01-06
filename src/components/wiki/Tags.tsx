@@ -1,5 +1,5 @@
 import React from 'react';
-import './wiki.css';
+import { Badge } from '../ui/badge';
 
 interface TagsProps {
   tags: string[];
@@ -7,11 +7,11 @@ interface TagsProps {
 
 export function Tags({ tags }: TagsProps) {
   return (
-    <div className="wiki-tags">
+    <div className="flex flex-wrap gap-2">
       {tags.map((tag, index) => (
-        <span key={index} className="wiki-tag">
+        <Badge key={index} variant="secondary">
           {tag}
-        </span>
+        </Badge>
       ))}
     </div>
   );
