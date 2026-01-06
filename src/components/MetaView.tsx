@@ -1,12 +1,24 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+
+// Simple table components without overflow wrappers
+function SimpleTable({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <table className={`w-full text-sm ${className}`}>{children}</table>;
+}
+function SimpleTHead({ children }: { children: React.ReactNode }) {
+  return <thead className="border-b border-slate-200 dark:border-slate-700">{children}</thead>;
+}
+function SimpleTBody({ children }: { children: React.ReactNode }) {
+  return <tbody>{children}</tbody>;
+}
+function SimpleTR({ children }: { children: React.ReactNode }) {
+  return <tr className="border-b border-slate-100 dark:border-slate-800 last:border-0">{children}</tr>;
+}
+function SimpleTH({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <th className={`text-left py-2 pr-4 font-medium text-muted-foreground ${className}`}>{children}</th>;
+}
+function SimpleTD({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <td className={`py-2 pr-4 ${className}`}>{children}</td>;
+}
 
 interface MetaViewProps {
   slug: string;
@@ -50,8 +62,8 @@ export function MetaView({
 
       {/* Frontmatter Section */}
       <Section title="Frontmatter">
-        <Table>
-          <TableBody>
+        <SimpleTable>
+          <SimpleTBody>
             <Row label="Title" value={frontmatter.title} />
             <Row
               label="Description"
@@ -71,33 +83,33 @@ export function MetaView({
               label="Sidebar Label"
               value={frontmatter.sidebar?.label || frontmatter.title}
             />
-          </TableBody>
-        </Table>
+          </SimpleTBody>
+        </SimpleTable>
       </Section>
 
       {/* Ratings Section */}
-      {frontmatter.ratings && (
+      {frontmatter.ratings && Object.keys(frontmatter.ratings).length > 0 && (
         <Section title="Ratings">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Metric</TableHead>
-                <TableHead>Score</TableHead>
-                <TableHead>Visual</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
+          <SimpleTable>
+            <SimpleTHead>
+              <tr>
+                <SimpleTH className="w-40">Metric</SimpleTH>
+                <SimpleTH className="w-24">Score</SimpleTH>
+                <SimpleTH>Visual</SimpleTH>
+              </tr>
+            </SimpleTHead>
+            <SimpleTBody>
               {Object.entries(frontmatter.ratings).map(([key, value]) => (
-                <TableRow key={key}>
-                  <TableCell className="text-muted-foreground">{key}</TableCell>
-                  <TableCell>{value as number}/100</TableCell>
-                  <TableCell>
+                <SimpleTR key={key}>
+                  <SimpleTD className="text-muted-foreground capitalize">{key}</SimpleTD>
+                  <SimpleTD>{value as number}/100</SimpleTD>
+                  <SimpleTD>
                     <RatingBar value={value as number} />
-                  </TableCell>
-                </TableRow>
+                  </SimpleTD>
+                </SimpleTR>
               ))}
-            </TableBody>
-          </Table>
+            </SimpleTBody>
+          </SimpleTable>
         </Section>
       )}
 
@@ -105,8 +117,8 @@ export function MetaView({
       <Section title="Entity Data (entities.yaml)">
         {entity ? (
           <>
-            <Table>
-              <TableBody>
+            <SimpleTable>
+              <SimpleTBody>
                 <Row label="ID">
                   <Code>{entity.id}</Code>
                 </Row>
@@ -129,36 +141,36 @@ export function MetaView({
                   value={entity.lastUpdated}
                   fallback="Not set"
                 />
-              </TableBody>
-            </Table>
+              </SimpleTBody>
+            </SimpleTable>
 
             {entity.relatedEntries?.length > 0 && (
               <>
                 <h3 className="text-sm text-muted-foreground mt-4 mb-2">
                   Related Entries
                 </h3>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>ID</TableHead>
-                      <TableHead>Type</TableHead>
-                      <TableHead>Relationship</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
+                <SimpleTable>
+                  <SimpleTHead>
+                    <tr>
+                      <SimpleTH>ID</SimpleTH>
+                      <SimpleTH>Type</SimpleTH>
+                      <SimpleTH>Relationship</SimpleTH>
+                    </tr>
+                  </SimpleTHead>
+                  <SimpleTBody>
                     {entity.relatedEntries.map((rel: any, i: number) => (
-                      <TableRow key={i}>
-                        <TableCell>
+                      <SimpleTR key={i}>
+                        <SimpleTD>
                           <Code>{rel.id}</Code>
-                        </TableCell>
-                        <TableCell>
+                        </SimpleTD>
+                        <SimpleTD>
                           <Code>{rel.type}</Code>
-                        </TableCell>
-                        <TableCell>{rel.relationship}</TableCell>
-                      </TableRow>
+                        </SimpleTD>
+                        <SimpleTD>{rel.relationship}</SimpleTD>
+                      </SimpleTR>
                     ))}
-                  </TableBody>
-                </Table>
+                  </SimpleTBody>
+                </SimpleTable>
               </>
             )}
           </>
@@ -173,8 +185,8 @@ export function MetaView({
       <Section title="Parameter Graph Node">
         {graphNode ? (
           <>
-            <Table>
-              <TableBody>
+            <SimpleTable>
+              <SimpleTBody>
                 <Row label="ID">
                   <Code>{graphNode.id}</Code>
                 </Row>
@@ -186,13 +198,13 @@ export function MetaView({
                 <Row label="Href">
                   <a
                     href={graphNode.href}
-                    className="text-blue-400 hover:underline"
+                    className="text-blue-600 dark:text-blue-400 hover:underline"
                   >
                     {graphNode.href}
                   </a>
                 </Row>
-              </TableBody>
-            </Table>
+              </SimpleTBody>
+            </SimpleTable>
             {graphNode.description && (
               <p className="mt-2 text-sm">
                 <strong>Description:</strong> {graphNode.description}
@@ -210,26 +222,26 @@ export function MetaView({
           <p className="text-sm text-muted-foreground mb-2">
             Factors that affect this
           </p>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Source</TableHead>
-                <TableHead>Effect</TableHead>
-                <TableHead>Strength</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
+          <SimpleTable>
+            <SimpleTHead>
+              <tr>
+                <SimpleTH>Source</SimpleTH>
+                <SimpleTH>Effect</SimpleTH>
+                <SimpleTH>Strength</SimpleTH>
+              </tr>
+            </SimpleTHead>
+            <SimpleTBody>
               {incomingEdges.map((edge, i) => (
-                <TableRow key={i}>
-                  <TableCell>
+                <SimpleTR key={i}>
+                  <SimpleTD>
                     <Code>{edge.source}</Code>
-                  </TableCell>
-                  <TableCell>{edge.effect}</TableCell>
-                  <TableCell>{edge.strength}</TableCell>
-                </TableRow>
+                  </SimpleTD>
+                  <SimpleTD>{edge.effect}</SimpleTD>
+                  <SimpleTD>{edge.strength}</SimpleTD>
+                </SimpleTR>
               ))}
-            </TableBody>
-          </Table>
+            </SimpleTBody>
+          </SimpleTable>
         </Section>
       )}
 
@@ -239,26 +251,26 @@ export function MetaView({
           <p className="text-sm text-muted-foreground mb-2">
             What this affects
           </p>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Target</TableHead>
-                <TableHead>Effect</TableHead>
-                <TableHead>Strength</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
+          <SimpleTable>
+            <SimpleTHead>
+              <tr>
+                <SimpleTH>Target</SimpleTH>
+                <SimpleTH>Effect</SimpleTH>
+                <SimpleTH>Strength</SimpleTH>
+              </tr>
+            </SimpleTHead>
+            <SimpleTBody>
               {outgoingEdges.map((edge, i) => (
-                <TableRow key={i}>
-                  <TableCell>
+                <SimpleTR key={i}>
+                  <SimpleTD>
                     <Code>{edge.target}</Code>
-                  </TableCell>
-                  <TableCell>{edge.effect}</TableCell>
-                  <TableCell>{edge.strength}</TableCell>
-                </TableRow>
+                  </SimpleTD>
+                  <SimpleTD>{edge.effect}</SimpleTD>
+                  <SimpleTD>{edge.strength}</SimpleTD>
+                </SimpleTR>
               ))}
-            </TableBody>
-          </Table>
+            </SimpleTBody>
+          </SimpleTable>
         </Section>
       )}
 
@@ -271,7 +283,7 @@ export function MetaView({
           <ul className="list-disc pl-5 space-y-1">
             {backlinks.map((link, i) => (
               <li key={i}>
-                <a href={link.path} className="text-blue-400 hover:underline">
+                <a href={link.path} className="text-blue-600 dark:text-blue-400 hover:underline">
                   {link.title || link.path}
                 </a>
                 {link.context && (
@@ -288,8 +300,8 @@ export function MetaView({
 
       {/* Debug Info */}
       <Section title="Debug Info">
-        <Table>
-          <TableBody>
+        <SimpleTable>
+          <SimpleTBody>
             <Row label="Full Slug">
               <Code>{slug}</Code>
             </Row>
@@ -301,26 +313,26 @@ export function MetaView({
             <Row label="Incoming Edges" value={incomingEdges.length} />
             <Row label="Outgoing Edges" value={outgoingEdges.length} />
             <Row label="Backlinks" value={backlinks.length} />
-          </TableBody>
-        </Table>
+          </SimpleTBody>
+        </SimpleTable>
       </Section>
 
       {/* Raw JSON */}
-      <details className="mt-4">
-        <summary className="cursor-pointer text-muted-foreground text-sm">
+      <details className="mt-4 group">
+        <summary className="cursor-pointer text-muted-foreground text-sm hover:text-foreground">
           Raw Frontmatter JSON
         </summary>
-        <pre className="bg-gray-800 p-4 rounded-lg overflow-x-auto text-xs mt-2">
+        <pre className="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 p-4 rounded-lg overflow-x-auto text-xs mt-2 font-mono">
           {JSON.stringify(frontmatter, null, 2)}
         </pre>
       </details>
 
       {entity && (
-        <details className="mt-4">
-          <summary className="cursor-pointer text-muted-foreground text-sm">
+        <details className="mt-4 group">
+          <summary className="cursor-pointer text-muted-foreground text-sm hover:text-foreground">
             Raw Entity JSON
           </summary>
-          <pre className="bg-gray-800 p-4 rounded-lg overflow-x-auto text-xs mt-2">
+          <pre className="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 p-4 rounded-lg overflow-x-auto text-xs mt-2 font-mono">
             {JSON.stringify(entity, null, 2)}
           </pre>
         </details>
@@ -338,8 +350,8 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section className="mb-8 pb-6 border-b border-gray-700">
-      <h2 className="text-sm text-muted-foreground uppercase tracking-wide mb-3">
+    <section className="mb-6 pb-4 border-b border-slate-200 dark:border-slate-700">
+      <h2 className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3">
         {title}
       </h2>
       {children}
@@ -359,34 +371,35 @@ function Row({
   children?: React.ReactNode;
 }) {
   return (
-    <TableRow>
-      <TableCell className="text-muted-foreground w-36">{label}</TableCell>
-      <TableCell>
+    <SimpleTR>
+      <SimpleTD className="text-muted-foreground w-36 align-top">{label}</SimpleTD>
+      <SimpleTD>
         {children ?? (value !== undefined && value !== null ? (
           String(value)
         ) : (
           <span className="italic text-muted-foreground">{fallback}</span>
         ))}
-      </TableCell>
-    </TableRow>
+      </SimpleTD>
+    </SimpleTR>
   );
 }
 
 function Code({ children }: { children: React.ReactNode }) {
   return (
-    <code className="bg-gray-700 px-1.5 py-0.5 rounded text-xs">{children}</code>
+    <code className="bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200 px-1.5 py-0.5 rounded text-xs font-mono">{children}</code>
   );
 }
 
 function RatingBar({ value }: { value: number }) {
   return (
     <div className="inline-flex items-center gap-2">
-      <div className="w-24 h-2 bg-gray-700 rounded">
+      <div className="w-24 h-2 bg-slate-200 dark:bg-slate-700 rounded overflow-hidden">
         <div
-          className="h-full bg-blue-500 rounded"
+          className="h-full bg-blue-500 rounded-l"
           style={{ width: `${value}%` }}
         />
       </div>
+      <span className="text-xs text-muted-foreground">{value}%</span>
     </div>
   );
 }
