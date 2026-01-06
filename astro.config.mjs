@@ -138,8 +138,6 @@ export default defineConfig({
                       { label: 'Future Projections', collapsed: true, autogenerate: { directory: 'knowledge-base/future-projections' } },
                       { label: 'Worldviews', collapsed: true, autogenerate: { directory: 'knowledge-base/worldviews' } },
                       { label: 'Key Debates', collapsed: true, autogenerate: { directory: 'knowledge-base/debates' } },
-                      { label: 'Methodology', collapsed: true, autogenerate: { directory: 'knowledge-base/methodology' } },
-                      { label: 'Research Notes', collapsed: true, autogenerate: { directory: 'knowledge-base/research-notes' } },
                   ],
               },
               {

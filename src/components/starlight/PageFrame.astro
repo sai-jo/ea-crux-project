@@ -6,16 +6,18 @@
  * component at the top of content pages when quality/llmSummary/etc
  * are defined in frontmatter.
  *
- * Also provides MetaPanel for ?meta query param debugging.
+ * Also provides ?meta view that replaces page content with metadata.
  */
 import type { Props } from '@astrojs/starlight/props';
 import Default from '@astrojs/starlight/components/PageFrame.astro';
 import { PageStatus } from '../wiki/PageStatus';
-import { MetaPanel, MetaToggle } from '../MetaPanel';
+import { MetaView } from '../MetaView';
 import database from '../../data/database.json';
 
 // Extract frontmatter from the entry data
-const { entry } = Astro.props;
+// Starlight uses Astro.locals.starlightRoute for page info
+const starlightRoute = Astro.locals.starlightRoute;
+const entry = starlightRoute?.entry;
 const frontmatter = entry?.data || {};
 const slug = entry?.slug || '';
 
@@ -24,40 +26,115 @@ const hasEditorialMeta = frontmatter.quality || frontmatter.llmSummary || frontm
 const isKnowledgeBasePage = Astro.url.pathname.includes('/knowledge-base/');
 const showPageStatus = hasEditorialMeta && isKnowledgeBasePage;
 
-// Check if this is an ai-transition-model page (for meta panel)
-// Use slug instead of pathname for reliable static build detection
+// Check if this is an ai-transition-model page (for meta view)
 const isAiTransitionModelPage = slug.startsWith('ai-transition-model/') || slug === 'ai-transition-model';
+
+// Extract entity ID from slug
+const slugParts = slug.split('/');
+let entityId = slugParts[slugParts.length - 1];
+if (entityId === 'index' || !entityId) {
+  entityId = slugParts[slugParts.length - 2] || slugParts[0];
+}
+
+// Get entity data for meta view
+const entity = database.entities?.find((e: any) => e.id === entityId);
+const parameterGraph = database.parameterGraph || {};
+const graphNode = parameterGraph.nodes?.find((n: any) => n.id === entityId);
+const incomingEdges = parameterGraph.edges?.filter((e: any) => e.target === entityId) || [];
+const outgoingEdges = parameterGraph.edges?.filter((e: any) => e.source === entityId) || [];
+const backlinks = database.backlinks?.[entityId] || [];
 ---
 
 <Default {...Astro.props}>
   <slot name="header" slot="header" />
   <slot name="sidebar" slot="sidebar" />
-  {showPageStatus && (
-    <div class="page-status-wrapper">
-      <PageStatus
-        client:load
-        quality={frontmatter.quality}
-        llmSummary={frontmatter.llmSummary}
-        lastEdited={frontmatter.lastEdited}
-        todo={frontmatter.todo}
-        devOnly={true}
-      />
-    </div>
-  )}
-  <slot />
-  {/* Meta panel for ?meta debugging - only on ai-transition-model pages */}
+
+  {/* Regular content view */}
+  <div id="content-view" class="view-content">
+    {/* Meta button - floats near title */}
+    {isAiTransitionModelPage && (
+      <a href="?meta" class="meta-link-btn" id="meta-link-btn" title="View page metadata">Meta</a>
+    )}
+    {showPageStatus && (
+      <div class="page-status-wrapper">
+        <PageStatus
+          client:load
+          quality={frontmatter.quality}
+          llmSummary={frontmatter.llmSummary}
+          lastEdited={frontmatter.lastEdited}
+          todo={frontmatter.todo}
+          devOnly={true}
+        />
+      </div>
+    )}
+    <slot />
+  </div>
+
+  {/* Meta view - shown when ?meta is in URL */}
   {isAiTransitionModelPage && (
-    <>
-      <MetaPanel
+    <div id="meta-view" hidden>
+      <MetaView
         client:load
         slug={slug}
         frontmatter={frontmatter}
-        database={database}
+        entity={entity}
+        graphNode={graphNode}
+        incomingEdges={incomingEdges}
+        outgoingEdges={outgoingEdges}
+        backlinks={backlinks}
+        entityId={entityId}
       />
-      <MetaToggle client:load />
-    </>
+    </div>
   )}
 </Default>
+
+{isAiTransitionModelPage && (
+  <script>
+    function updateView() {
+      const params = new URLSearchParams(window.location.search);
+      const showMeta = params.has('meta');
+
+      const contentView = document.getElementById('content-view');
+      const metaView = document.getElementById('meta-view');
+
+      if (contentView) contentView.hidden = showMeta;
+      if (metaView) metaView.hidden = !showMeta;
+    }
+
+    // Handle link clicks without full page reload
+    document.getElementById('meta-link-btn')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      const url = new URL(window.location.href);
+      url.searchParams.set('meta', '');
+      window.history.pushState({}, '', url.toString());
+      updateView();
+    });
+
+    // Handle browser back/forward
+    window.addEventListener('popstate', updateView);
+
+    // Initial state
+    updateView();
+  </script>
+
+  <style>
+    /* Meta button on content view */
+    .meta-link-btn {
+      float: right;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      background: var(--sl-color-gray-6);
+      color: var(--sl-color-gray-3);
+      border-radius: 4px;
+      text-decoration: none;
+      margin-top: 0.25rem;
+    }
+    .meta-link-btn:hover {
+      background: var(--sl-color-gray-5);
+      color: var(--sl-color-white);
+    }
+  </style>
+)}
 
 <style>
   .page-status-wrapper {
