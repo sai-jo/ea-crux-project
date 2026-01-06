@@ -70,7 +70,7 @@ const backlinks = database.backlinks?.[entityId] || [];
   {isAiTransitionModelPage && (
     <div id="meta-view" hidden>
       <MetaView
-        client:load
+        client:only="react"
         slug={slug}
         frontmatter={frontmatter}
         entity={entity}
