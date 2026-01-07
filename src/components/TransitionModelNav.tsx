@@ -1,14 +1,12 @@
 // Shared navigation header for AI Transition Model pages
 
 interface TransitionModelNavProps {
-  activeTab: 'graph' | 'interactive' | 'outline' | 'data' | 'table';
+  activeTab: 'graph' | 'list' | 'data';
 }
 
 const tabs = [
   { id: 'graph', label: 'Graph', href: '/ai-transition-model-views/graph' },
-  { id: 'interactive', label: 'Interactive', href: '/ai-transition-model-views/interactive' },
-  { id: 'table', label: 'Table', href: '/ai-transition-model-views/table' },
-  { id: 'outline', label: 'Outline', href: '/ai-transition-model-views/outline' },
+  { id: 'list', label: 'List', href: '/ai-transition-model-views/list' },
   { id: 'data', label: 'Data (YAML)', href: '/ai-transition-model-views/data' },
 ];
 
