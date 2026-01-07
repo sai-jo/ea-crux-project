@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card } from '../ui/card';
 import { cn } from '../../lib/utils';
+import { importanceColors, resolvabilityLabels, type ImportanceLevel, type Resolvability } from './shared/style-config';
 
 interface Position {
   view: string;
@@ -23,26 +24,6 @@ interface CruxProps {
   relevantResearch?: { title: string; url?: string }[];
 }
 
-const importanceStyles = {
-  critical: { color: 'text-red-600', bg: 'bg-red-600' },
-  high: { color: 'text-orange-600', bg: 'bg-orange-600' },
-  medium: { color: 'text-yellow-600', bg: 'bg-yellow-600' },
-  low: { color: 'text-lime-600', bg: 'bg-lime-600' },
-};
-
-const importanceLabels = {
-  critical: '★★★',
-  high: '★★☆',
-  medium: '★☆☆',
-  low: '☆☆☆',
-};
-
-const resolvabilityLabels = {
-  soon: '< 2 years',
-  years: '2-10 years',
-  decades: '10+ years',
-  unclear: 'Unclear',
-};
 
 function SectionHeader({ children }: { children: React.ReactNode }) {
   return (
@@ -72,7 +53,7 @@ export function Crux({
   wouldUpdateOn,
   relevantResearch,
 }: CruxProps) {
-  const impStyle = importanceStyles[importance];
+  const impStyle = importanceColors[importance];
 
   return (
     <Card className="my-6 p-5" id={id}>
@@ -86,7 +67,7 @@ export function Crux({
             className={cn("text-sm", impStyle.color)}
             title={`Importance: ${importance}`}
           >
-            {importanceLabels[importance]}
+            {impStyle.label}
           </span>
         </div>
         <h3 className="text-lg font-semibold text-foreground m-0">{question}</h3>
@@ -212,7 +193,7 @@ export function CruxList({ domain, cruxes }: CruxListProps) {
 
       <div className="flex flex-col">
         {sortedCruxes.map((crux) => {
-          const impStyle = importanceStyles[crux.importance];
+          const impStyle = importanceColors[crux.importance];
           return (
             <div key={crux.id} className="px-4 py-3 border-b border-border last:border-b-0 hover:bg-muted/50">
               <div className="flex items-center gap-3 mb-1">

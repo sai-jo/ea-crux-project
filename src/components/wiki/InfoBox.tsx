@@ -4,6 +4,7 @@ import { Card } from '../ui/card';
 import { cn } from '../../lib/utils';
 import type { EntityType } from '../../data/schema';
 import { EntityTypeIcon, entityTypeConfig } from './EntityTypeIcon';
+import { severityColors, directionColors, maturityColors, riskCategoryColors } from './shared/style-config';
 
 // Define LucideIcon type locally to avoid ESM/CJS issues
 type LucideIcon = React.ForwardRefExoticComponent<React.SVGProps<SVGSVGElement> & { size?: number | string }>;
@@ -186,31 +187,20 @@ const typeLabels: Record<EntityType, { label: string; color: string }> = {
 
 const defaultTypeInfo = { label: 'Entry', color: '#6b7280' };
 
-const severityColors: Record<string, string> = {
-  low: '#22c55e',
-  medium: '#eab308',
-  high: '#f97316',
-  catastrophic: '#dc2626',
+// Category display labels (using hex colors from shared config)
+const categoryLabels: Record<string, string> = {
+  accident: 'Accident Risk',
+  misuse: 'Misuse Risk',
+  structural: 'Structural Risk',
+  epistemic: 'Epistemic Risk',
 };
 
-const directionConfig: Record<string, { icon: string; color: string }> = {
-  'higher': { icon: '▲', color: '#10b981' },
-  'lower': { icon: '▼', color: '#3b82f6' },
-  'context': { icon: '◆', color: '#f59e0b' },
-};
-
-const categoryConfig: Record<string, { label: string; color: string }> = {
-  accident: { label: 'Accident Risk', color: '#f59e0b' },
-  misuse: { label: 'Misuse Risk', color: '#ef4444' },
-  structural: { label: 'Structural Risk', color: '#6366f1' },
-  epistemic: { label: 'Epistemic Risk', color: '#a855f7' },
-};
-
-const maturityConfig: Record<string, { label: string; color: string }> = {
-  neglected: { label: 'Neglected', color: '#ef4444' },
-  emerging: { label: 'Emerging', color: '#f59e0b' },
-  growing: { label: 'Growing', color: '#3b82f6' },
-  mature: { label: 'Mature', color: '#22c55e' },
+const maturityLabels: Record<string, string> = {
+  neglected: 'Neglected',
+  emerging: 'Emerging',
+  growing: 'Growing',
+  mature: 'Mature',
+  established: 'Established',
 };
 
 function getImportanceColor(value: number): string {
@@ -280,11 +270,11 @@ export function InfoBox({
   if (location) fields.push({ label: 'Location', value: location });
   if (headcount) fields.push({ label: 'Employees', value: headcount });
   if (funding) fields.push({ label: 'Funding', value: funding });
-  if (category) fields.push({ label: 'Category', value: categoryConfig[category]?.label || category });
+  if (category) fields.push({ label: 'Category', value: categoryLabels[category] || category });
   if (severity) fields.push({ label: 'Severity', value: severity.charAt(0).toUpperCase() + severity.slice(1) });
   if (likelihood) fields.push({ label: 'Likelihood', value: likelihood });
   if (timeframe) fields.push({ label: 'Timeframe', value: timeframe });
-  if (maturity) fields.push({ label: 'Maturity', value: maturityConfig[maturity.toLowerCase()]?.label || maturity });
+  if (maturity) fields.push({ label: 'Maturity', value: maturityLabels[maturity.toLowerCase()] || maturity });
   if (jurisdiction) fields.push({ label: 'Jurisdiction', value: jurisdiction });
   if (status) fields.push({ label: 'Status', value: status });
   if (effectiveDate) fields.push({ label: 'Effective', value: effectiveDate });
@@ -298,12 +288,12 @@ export function InfoBox({
   if (website) fields.push({ label: 'Website', value: website });
   if (customFields) fields.push(...customFields);
 
-  const catColor = category ? categoryConfig[category]?.color : undefined;
-  const matColor = maturity ? maturityConfig[maturity.toLowerCase()]?.color : undefined;
+  const catColor = category ? riskCategoryColors[category as keyof typeof riskCategoryColors]?.hex : undefined;
+  const matColor = maturity ? maturityColors[maturity.toLowerCase() as keyof typeof maturityColors]?.hex : undefined;
 
   const getValueStyle = (label: string): React.CSSProperties | undefined => {
     if (label === 'Importance' && importance !== undefined) return { color: getImportanceColor(importance), fontWeight: 600 };
-    if (label === 'Severity' && severity) return { color: severityColors[severity] || 'inherit', fontWeight: 600 };
+    if (label === 'Severity' && severity) return { color: severityColors[severity as keyof typeof severityColors]?.hex || 'inherit', fontWeight: 600 };
     if (label === 'Category' && catColor) return { color: catColor, fontWeight: 500 };
     if (label === 'Maturity' && matColor) return { color: matColor, fontWeight: 500 };
     return undefined;
@@ -359,7 +349,7 @@ export function InfoBox({
 
             if (field.label === 'Direction') {
               const dirType = getDirectionType(field.value);
-              const config = dirType ? directionConfig[dirType] : null;
+              const config = dirType ? directionColors[dirType] : null;
               return (
                 <Row key={index} label={field.label}>
                   <span className="flex-1 text-foreground break-words flex items-center gap-1.5">

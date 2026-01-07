@@ -4,8 +4,8 @@ import * as React from "react"
 import type { ColumnDef } from "@tanstack/react-table"
 import { DataTable, SortableHeader } from "@/components/ui/data-table"
 import { cn } from "@/lib/utils"
-
-type ParameterCategory = 'alignment' | 'governance' | 'societal' | 'resilience'
+import { Badge } from "./shared/Badge"
+import { parameterCategoryColors, directionColors, type ParameterCategory } from "./shared/style-config"
 
 interface RelatedItem {
   id: string
@@ -32,53 +32,17 @@ interface ParametersTableProps {
   parameters: Parameter[]
 }
 
-const categoryConfig: Record<ParameterCategory, { label: string; color: string; activeColor: string }> = {
-  alignment: {
-    label: "Alignment",
-    color: "border-purple-300 text-purple-700 dark:border-purple-700 dark:text-purple-300",
-    activeColor: "bg-purple-100 border-purple-500 text-purple-800 dark:bg-purple-900/50 dark:border-purple-500 dark:text-purple-200"
-  },
-  governance: {
-    label: "Governance",
-    color: "border-blue-300 text-blue-700 dark:border-blue-700 dark:text-blue-300",
-    activeColor: "bg-blue-100 border-blue-500 text-blue-800 dark:bg-blue-900/50 dark:border-blue-500 dark:text-blue-200"
-  },
-  societal: {
-    label: "Societal",
-    color: "border-emerald-300 text-emerald-700 dark:border-emerald-700 dark:text-emerald-300",
-    activeColor: "bg-emerald-100 border-emerald-500 text-emerald-800 dark:bg-emerald-900/50 dark:border-emerald-500 dark:text-emerald-200"
-  },
-  resilience: {
-    label: "Resilience",
-    color: "border-amber-300 text-amber-700 dark:border-amber-700 dark:text-amber-300",
-    activeColor: "bg-amber-100 border-amber-500 text-amber-800 dark:bg-amber-900/50 dark:border-amber-500 dark:text-amber-200"
-  },
-}
-
-function Badge({ children, variant = "default" }: { children: React.ReactNode; variant?: "default" | "purple" | "blue" | "emerald" | "amber" }) {
-  const variants = {
-    default: "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300",
-    purple: "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300",
-    blue: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300",
-    emerald: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300",
-    amber: "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300",
-  }
-  return (
-    <span className={cn("inline-block px-2 py-0.5 rounded text-xs font-medium", variants[variant])}>
-      {children}
-    </span>
-  )
+// Category labels for display
+const categoryLabels: Record<ParameterCategory, string> = {
+  alignment: "Alignment",
+  governance: "Governance",
+  societal: "Societal",
+  resilience: "Resilience",
 }
 
 function CategoryBadge({ category }: { category: ParameterCategory }) {
-  const variants: Record<ParameterCategory, "purple" | "blue" | "emerald" | "amber"> = {
-    alignment: "purple",
-    governance: "blue",
-    societal: "emerald",
-    resilience: "amber",
-  }
-  const config = categoryConfig[category]
-  return <Badge variant={variants[category]}>{config?.label || category}</Badge>
+  const config = parameterCategoryColors[category]
+  return <Badge variant={config?.variant || "default"}>{categoryLabels[category] || category}</Badge>
 }
 
 function DirectionCell({ direction }: { direction: 'higher' | 'lower' | 'context' }) {
@@ -359,8 +323,8 @@ export function ParametersTable({ parameters }: ParametersTableProps) {
       {/* Filter by Category */}
       <div className="flex flex-wrap items-center gap-3">
         <span className="text-sm font-medium text-muted-foreground">Filter by category:</span>
-        {(Object.keys(categoryConfig) as ParameterCategory[]).map(category => {
-          const config = categoryConfig[category]
+        {(Object.keys(parameterCategoryColors) as ParameterCategory[]).map(category => {
+          const config = parameterCategoryColors[category]
           const isActive = activeCategories.has(category)
           const count = stats.byCategory[category]
           return (
@@ -373,7 +337,7 @@ export function ParametersTable({ parameters }: ParametersTableProps) {
                 "hover:opacity-80"
               )}
             >
-              {config.label} ({count})
+              {categoryLabels[category]} ({count})
             </button>
           )
         })}
@@ -403,11 +367,11 @@ export function ParametersTable({ parameters }: ParametersTableProps) {
           <span className="text-2xl font-bold">{stats.improving}</span>
           <span className="text-xs text-muted-foreground uppercase tracking-wide">Improving</span>
         </div>
-        {(Object.keys(categoryConfig) as ParameterCategory[]).map(cat => (
+        {(Object.keys(parameterCategoryColors) as ParameterCategory[]).map(cat => (
           <div key={cat} className={cn("flex flex-col border-l-2 pl-3", categoryBorderColors[cat])}>
             <span className="text-2xl font-bold">{stats.byCategory[cat]}</span>
             <span className="text-xs text-muted-foreground uppercase tracking-wide">
-              {categoryConfig[cat].label}
+              {categoryLabels[cat]}
             </span>
           </div>
         ))}

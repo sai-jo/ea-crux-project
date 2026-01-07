@@ -10,6 +10,7 @@ import React from 'react';
 import { getCruxData } from '../../data';
 import { Card } from '../ui/card';
 import { cn } from '../../lib/utils';
+import { importanceColors, resolvabilityLabels, type ImportanceLevel } from './shared/style-config';
 
 interface CruxPosition {
   view: string;
@@ -41,19 +42,6 @@ interface DataCruxProps {
   relevantResearch?: RelevantResearch[];
 }
 
-const importanceStyles: Record<string, string> = {
-  low: 'bg-gray-500',
-  medium: 'bg-yellow-500',
-  high: 'bg-orange-500',
-  critical: 'bg-red-600',
-};
-
-const resolvabilityLabels: Record<string, string> = {
-  soon: 'Potentially soon (months)',
-  years: 'Years of research',
-  decades: 'Decades',
-  never: 'May never resolve',
-};
 
 export function DataCrux({
   dataId,
@@ -129,7 +117,7 @@ export function DataCrux({
           <span className="text-xs px-2 py-0.5 bg-muted rounded">{domain}</span>
         )}
         {importance && (
-          <span className={cn("text-xs px-2 py-0.5 text-white rounded ml-auto", importanceStyles[importance])}>
+          <span className={cn("text-xs px-2 py-0.5 text-white rounded ml-auto", importanceColors[importance as ImportanceLevel]?.bg)}>
             {importance}
           </span>
         )}

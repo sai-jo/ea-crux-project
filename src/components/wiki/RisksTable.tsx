@@ -6,6 +6,8 @@ import { DataTable, SortableHeader } from "@/components/ui/data-table"
 import { cn } from "@/lib/utils"
 import { categoryConfig, type RiskCategory } from "./RiskCategoryIcon"
 import type { RiskTableLikelihood, RiskTableTimeframe, RiskTableSolution } from "@/data/index"
+import { Badge } from "./shared/Badge"
+import { riskCategoryColors, causalLevelColors, getImportanceScoreColor, type BadgeVariant } from "./shared/style-config"
 
 interface Risk {
   id: string
@@ -24,68 +26,32 @@ interface RisksTableProps {
   risks: Risk[]
 }
 
-function Badge({ children, variant = "default" }: { children: React.ReactNode; variant?: "default" | "danger" | "warning" | "success" | "info" }) {
-  const variants = {
-    default: "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300",
-    danger: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300",
-    warning: "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300",
-    success: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300",
-    info: "bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-300",
-  }
-  return (
-    <span className={cn("inline-block px-2 py-0.5 rounded text-xs font-medium", variants[variant])}>
-      {children}
-    </span>
-  )
-}
-
 function ImportanceCell({ value }: { value: number | null }) {
   if (value === null) return <span className="text-muted-foreground">—</span>
 
-  // 0-100 scale: 90+ essential, 70-89 high, 50-69 useful, 30-49 reference, <30 peripheral
-  const colorClass = value >= 90
-    ? "bg-purple-200 text-purple-900 dark:bg-purple-900/50 dark:text-purple-200"
-    : value >= 70
-    ? "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300"
-    : value >= 50
-    ? "bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-300"
-    : value >= 30
-    ? "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300"
-    : "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300"
-
   return (
-    <span className={cn("inline-flex items-center justify-center min-w-[2rem] px-1 h-6 rounded text-sm font-medium", colorClass)}>
+    <span className={cn("inline-flex items-center justify-center min-w-[2rem] px-1 h-6 rounded text-sm font-medium", getImportanceScoreColor(value))}>
       {Math.round(value)}
     </span>
   )
 }
 
 function CategoryBadge({ category }: { category: string }) {
-  const variants: Record<string, "danger" | "warning" | "info" | "default"> = {
-    accident: "warning",
-    misuse: "danger",
-    structural: "info",
-    epistemic: "default",
-  }
   const config = categoryConfig[category as RiskCategory]
-  return <Badge variant={variants[category] || "default"}>{config?.label || category}</Badge>
+  const colorConfig = riskCategoryColors[category as keyof typeof riskCategoryColors]
+  return <Badge variant={colorConfig?.variant || "default"}>{config?.label || category}</Badge>
 }
 
 function CausalLevelBadge({ level }: { level?: 'outcome' | 'pathway' | 'amplifier' | null }) {
   if (!level) return <span className="text-muted-foreground">—</span>
-  const config: Record<string, { label: string; variant: "danger" | "warning" | "info" }> = {
-    outcome: { label: "Outcome", variant: "danger" },
-    pathway: { label: "Pathway", variant: "warning" },
-    amplifier: { label: "Amplifier", variant: "info" },
-  }
-  const { label, variant } = config[level] || { label: level, variant: "info" as const }
-  return <Badge variant={variant}>{label}</Badge>
+  const config = causalLevelColors[level]
+  return <Badge variant={config?.variant || "info"}>{config?.label || level}</Badge>
 }
 
 function SeverityBadge({ severity }: { severity?: string }) {
   if (!severity) return <span className="text-muted-foreground">—</span>
   const normalized = severity.toLowerCase()
-  let variant: "danger" | "warning" | "info" | "success" | "default" = "default"
+  let variant: BadgeVariant = "default"
   if (normalized.includes("catastrophic") || normalized.includes("critical")) variant = "danger"
   else if (normalized.includes("high") && !normalized.includes("medium")) variant = "warning"
   else if (normalized.includes("medium")) variant = "info"
