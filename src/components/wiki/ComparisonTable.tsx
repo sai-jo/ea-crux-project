@@ -1,5 +1,7 @@
 import React from 'react';
-import './wiki.css';
+import { Card } from '../ui/card';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
+import { cn } from '../../lib/utils';
 
 interface ComparisonRow {
   name: string;
@@ -16,6 +18,12 @@ interface ComparisonTableProps {
   highlightColumn?: string;
 }
 
+const badgeStyles = {
+  high: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300',
+  medium: 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300',
+  low: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300',
+};
+
 export function ComparisonTable({ title, columns, rows, items, highlightColumn }: ComparisonTableProps) {
   // Use rows or items (backwards compatibility)
   const tableRows = rows || items || [];
@@ -29,76 +37,84 @@ export function ComparisonTable({ title, columns, rows, items, highlightColumn }
 
   if (tableRows.length === 0) {
     return (
-      <div className="comparison-table">
-        <div className="comparison-table__header">
+      <Card className="my-6 overflow-hidden">
+        <div className="flex items-center gap-2 px-4 py-3 bg-muted border-b border-border font-semibold">
           <span>📊</span>
           <span>{title}</span>
         </div>
-        <div className="comparison-table__content">
-          <p>No data available</p>
+        <div className="p-4">
+          <p className="text-muted-foreground">No data available</p>
         </div>
-      </div>
+      </Card>
     );
   }
 
   return (
-    <div className="comparison-table">
-      <div className="comparison-table__header">
+    <Card className="my-6 overflow-hidden">
+      <div className="flex items-center gap-2 px-4 py-3 bg-muted border-b border-border font-semibold">
         <span>📊</span>
         <span>{title}</span>
       </div>
-      <div className="comparison-table__content">
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
+      <div className="overflow-x-auto">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
               {tableColumns.map(col => (
-                <th key={col} className={col === highlightColumn ? 'comparison-table__highlight' : ''}>
+                <TableHead
+                  key={col}
+                  className={cn(col === highlightColumn && 'bg-sky-500/10')}
+                >
                   {col}
-                </th>
+                </TableHead>
               ))}
-            </tr>
-          </thead>
-          <tbody>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {tableRows.map((row, i) => {
               // Support both values and attributes
               const rowData = row.values || row.attributes || {};
 
               return (
-                <tr key={i}>
-                  <td>
+                <TableRow key={i}>
+                  <TableCell>
                     {row.link ? (
-                      <a href={row.link}>{row.name}</a>
+                      <a href={row.link} className="text-accent-foreground hover:underline">
+                        {row.name}
+                      </a>
                     ) : (
                       <strong>{row.name}</strong>
                     )}
-                  </td>
+                  </TableCell>
                   {tableColumns.map(col => {
                     const cellValue = rowData[col];
-                    if (!cellValue) return <td key={col}>—</td>;
+                    if (!cellValue) return <TableCell key={col}>—</TableCell>;
 
                     if (typeof cellValue === 'string') {
-                      return <td key={col}>{cellValue}</td>;
+                      return <TableCell key={col}>{cellValue}</TableCell>;
                     }
 
                     return (
-                      <td key={col}>
+                      <TableCell key={col}>
                         {cellValue.value}
                         {cellValue.badge && (
-                          <span className={`comparison-table__badge comparison-table__badge--${cellValue.badge}`}>
+                          <span className={cn(
+                            'inline-block ml-2 px-2 py-0.5 text-xs font-medium rounded',
+                            badgeStyles[cellValue.badge]
+                          )}>
                             {cellValue.badge}
                           </span>
                         )}
-                      </td>
+                      </TableCell>
                     );
                   })}
-                </tr>
+                </TableRow>
               );
             })}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
-    </div>
+    </Card>
   );
 }
 

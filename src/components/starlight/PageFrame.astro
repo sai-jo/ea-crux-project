@@ -1,30 +1,19 @@
 ---
 /**
- * Custom PageFrame that auto-injects PageStatus from frontmatter
+ * Custom PageFrame for AI Transition Model pages
  *
- * This overrides Starlight's default PageFrame to add the PageStatus
- * component at the top of content pages when quality/llmSummary/etc
- * are defined in frontmatter.
- *
- * Also provides ?meta view that replaces page content with metadata.
+ * Provides ?meta view that replaces page content with metadata debugging.
  */
 import type { Props } from '@astrojs/starlight/props';
 import Default from '@astrojs/starlight/components/PageFrame.astro';
-import { PageStatus } from '../wiki/PageStatus';
 import { MetaView } from '../MetaView';
 import database from '../../data/database.json';
 
 // Extract frontmatter from the entry data
-// Starlight uses Astro.locals.starlightRoute for page info
 const starlightRoute = Astro.locals.starlightRoute;
 const entry = starlightRoute?.entry;
 const frontmatter = entry?.data || {};
 const slug = entry?.slug || '';
-
-// Check if this is a knowledge-base page with editorial metadata
-const hasEditorialMeta = frontmatter.quality || frontmatter.llmSummary || frontmatter.todo;
-const isKnowledgeBasePage = Astro.url.pathname.includes('/knowledge-base/');
-const showPageStatus = hasEditorialMeta && isKnowledgeBasePage;
 
 // Check if this is an ai-transition-model page (for meta view)
 const isAiTransitionModelPage = slug.startsWith('ai-transition-model/') || slug === 'ai-transition-model';
@@ -51,18 +40,6 @@ const backlinks = database.backlinks?.[entityId] || [];
 
   {/* Regular content view */}
   <div id="content-view" class="view-content">
-    {showPageStatus && (
-      <div class="page-status-wrapper">
-        <PageStatus
-          client:load
-          quality={frontmatter.quality}
-          llmSummary={frontmatter.llmSummary}
-          lastEdited={frontmatter.lastEdited}
-          todo={frontmatter.todo}
-          devOnly={true}
-        />
-      </div>
-    )}
     <slot />
   </div>
 
@@ -201,8 +178,3 @@ const backlinks = database.backlinks?.[entityId] || [];
   </style>
 )}
 
-<style>
-  .page-status-wrapper {
-    margin-bottom: 1rem;
-  }
-</style>

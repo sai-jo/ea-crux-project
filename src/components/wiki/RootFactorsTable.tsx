@@ -1,21 +1,19 @@
 "use client"
 
 import * as React from "react"
-import { getRootFactors, getScenarios, getOutcomes, type RootFactor } from "@/data/parameter-graph-data"
+import {
+  getRootFactors,
+  getScenarios,
+  getOutcomes,
+  getFactorScenarioLabels,
+  getScenarioFactorLabels,
+  getScenarioOutcomeLabels,
+  getOutcomeScenarioLabels,
+  type RootFactor
+} from "@/data/parameter-graph-data"
 
 interface RootFactorsTableProps {
   showSubItems?: boolean
-}
-
-// Mapping from factor IDs to scenarios they influence
-const factorScenarios: Record<string, string[]> = {
-  'misalignment-potential': ['AI Takeover ↑'],
-  'ai-capabilities': ['AI Takeover ↑'],
-  'ai-uses': ['All scenarios'],
-  'ai-ownership': ['Long-term Lock-in ↑'],
-  'civilizational-competence': ['AI Takeover ↓', 'Human-Caused Catastrophe ↓', 'Lock-in (shapes)'],
-  'transition-turbulence': ['AI Takeover ↑', 'Human-Caused Catastrophe ↑'],
-  'misuse-potential': ['Human-Caused Catastrophe ↑'],
 }
 
 export function RootFactorsTable({ showSubItems = true }: RootFactorsTableProps) {
@@ -57,7 +55,7 @@ export function RootFactorsTable({ showSubItems = true }: RootFactorsTableProps)
                 )}
               </td>
               <td className="py-2 px-3 text-slate-600 dark:text-slate-400">
-                {factorScenarios[factor.id]?.join(', ') || '—'}
+                {getFactorScenarioLabels(factor.id).join(', ')}
               </td>
             </tr>
           ))}
@@ -69,22 +67,6 @@ export function RootFactorsTable({ showSubItems = true }: RootFactorsTableProps)
 
 interface ScenariosTableProps {
   showDescription?: boolean
-}
-
-// Mapping from scenario IDs to factors and outcomes
-const scenarioDetails: Record<string, { factors: string; outcomes: string }> = {
-  'ai-takeover': {
-    factors: 'Misalignment Potential ↑, AI Capabilities ↑, Civilizational Competence ↓',
-    outcomes: 'Existential Catastrophe, Long-term Trajectory'
-  },
-  'human-catastrophe': {
-    factors: 'Misuse Potential ↑, Transition Turbulence ↑, Civilizational Competence ↓',
-    outcomes: 'Existential Catastrophe'
-  },
-  'lock-in': {
-    factors: 'Civilizational Competence shapes outcome',
-    outcomes: 'Long-term Trajectory'
-  },
 }
 
 export function ScenariosTable({ showDescription = true }: ScenariosTableProps) {
@@ -102,33 +84,30 @@ export function ScenariosTable({ showDescription = true }: ScenariosTableProps) 
           </tr>
         </thead>
         <tbody>
-          {scenarios.map((scenario) => {
-            const details = scenarioDetails[scenario.id] || { factors: '—', outcomes: '—' }
-            return (
-              <tr key={scenario.id} className="border-b border-slate-100 dark:border-slate-800">
-                <td className="py-2 px-3">
-                  {scenario.href ? (
-                    <a href={scenario.href} className="text-primary hover:underline font-medium">
-                      {scenario.label}
-                    </a>
-                  ) : (
-                    <span className="font-medium">{scenario.label}</span>
-                  )}
-                </td>
-                {showDescription && (
-                  <td className="py-2 px-3 text-slate-600 dark:text-slate-400">
-                    {scenario.description || '—'}
-                  </td>
+          {scenarios.map((scenario) => (
+            <tr key={scenario.id} className="border-b border-slate-100 dark:border-slate-800">
+              <td className="py-2 px-3">
+                {scenario.href ? (
+                  <a href={scenario.href} className="text-primary hover:underline font-medium">
+                    {scenario.label}
+                  </a>
+                ) : (
+                  <span className="font-medium">{scenario.label}</span>
                 )}
+              </td>
+              {showDescription && (
                 <td className="py-2 px-3 text-slate-600 dark:text-slate-400">
-                  {details.factors}
+                  {scenario.description || '—'}
                 </td>
-                <td className="py-2 px-3 text-slate-600 dark:text-slate-400">
-                  {details.outcomes}
-                </td>
-              </tr>
-            )
-          })}
+              )}
+              <td className="py-2 px-3 text-slate-600 dark:text-slate-400">
+                {getScenarioFactorLabels(scenario.id)}
+              </td>
+              <td className="py-2 px-3 text-slate-600 dark:text-slate-400">
+                {getScenarioOutcomeLabels(scenario.id)}
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
@@ -137,18 +116,6 @@ export function ScenariosTable({ showDescription = true }: ScenariosTableProps) 
 
 interface OutcomesTableProps {
   showScenarios?: boolean
-}
-
-// Mapping from outcome IDs to their details
-const outcomeDetails: Record<string, { question: string; scenarios: string }> = {
-  'existential-catastrophe': {
-    question: 'Does civilization-ending harm occur?',
-    scenarios: 'AI Takeover, Human-Caused Catastrophe'
-  },
-  'long-term-trajectory': {
-    question: "What's the quality of the post-transition future?",
-    scenarios: 'AI Takeover, Long-term Lock-in'
-  },
 }
 
 export function OutcomesTable({ showScenarios = true }: OutcomesTableProps) {
@@ -165,30 +132,27 @@ export function OutcomesTable({ showScenarios = true }: OutcomesTableProps) {
           </tr>
         </thead>
         <tbody>
-          {outcomes.map((outcome) => {
-            const details = outcomeDetails[outcome.id] || { question: '—', scenarios: '—' }
-            return (
-              <tr key={outcome.id} className="border-b border-slate-100 dark:border-slate-800">
-                <td className="py-2 px-3">
-                  {outcome.href ? (
-                    <a href={outcome.href} className="text-primary hover:underline font-medium">
-                      {outcome.label}
-                    </a>
-                  ) : (
-                    <span className="font-medium">{outcome.label}</span>
-                  )}
-                </td>
-                <td className="py-2 px-3 text-slate-600 dark:text-slate-400">
-                  {details.question}
-                </td>
-                {showScenarios && (
-                  <td className="py-2 px-3 text-slate-600 dark:text-slate-400">
-                    {details.scenarios}
-                  </td>
+          {outcomes.map((outcome) => (
+            <tr key={outcome.id} className="border-b border-slate-100 dark:border-slate-800">
+              <td className="py-2 px-3">
+                {outcome.href ? (
+                  <a href={outcome.href} className="text-primary hover:underline font-medium">
+                    {outcome.label}
+                  </a>
+                ) : (
+                  <span className="font-medium">{outcome.label}</span>
                 )}
-              </tr>
-            )
-          })}
+              </td>
+              <td className="py-2 px-3 text-slate-600 dark:text-slate-400">
+                {outcome.question || '—'}
+              </td>
+              {showScenarios && (
+                <td className="py-2 px-3 text-slate-600 dark:text-slate-400">
+                  {getOutcomeScenarioLabels(outcome.id)}
+                </td>
+              )}
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

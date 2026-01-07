@@ -337,11 +337,11 @@ export function InfoBox({
   const hasITN = tractability !== undefined || neglectedness !== undefined || uncertainty !== undefined;
 
   return (
-    <Card className="float-right w-[280px] mb-4 ml-6 overflow-hidden text-sm max-md:float-none max-md:w-full max-md:ml-0 max-md:mb-6">
+    <Card className="wiki-infobox float-right w-[280px] mb-4 ml-6 overflow-hidden text-sm max-md:float-none max-md:w-full max-md:ml-0 max-md:mb-6">
       {/* Header */}
-      <div className="px-4 py-3 text-white" style={{ backgroundColor: typeInfo.color }}>
-        <span className="block text-[0.7rem] uppercase tracking-wide opacity-90 mb-1">{typeInfo.label}</span>
-        {title && <h3 className="m-0 text-[1.1rem] font-semibold text-white">{title}</h3>}
+      <div className="px-3 py-2.5 text-white" style={{ backgroundColor: typeInfo.color }}>
+        <span className="block text-[10px] uppercase tracking-wide opacity-90 mb-0.5">{typeInfo.label}</span>
+        {title && <h3 className="m-0 text-sm font-semibold leading-tight text-white">{title}</h3>}
       </div>
 
       {/* Image */}

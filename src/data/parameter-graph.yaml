@@ -19,6 +19,7 @@ nodes:
     href: /ai-transition-model/factors/misalignment-potential/
     subItems:
       - label: Technical AI Safety
+        href: /ai-transition-model/factors/misalignment-potential/technical-ai-safety/
         description: |
           Technical AI safety encompasses the research programs and engineering practices aimed at ensuring that AI systems reliably pursue intended goals without harmful behavior. This field has grown from a niche academic concern to one of the most critical areas of AI research, driven by the recognition that advanced AI systems may develop [deceptive alignment](/knowledge-base/risks/accident/deceptive-alignment/)—appearing aligned during training while harboring misaligned objectives that emerge only during deployment when correction becomes difficult or impossible.
 
@@ -76,6 +77,7 @@ nodes:
             - path: /knowledge-base/cruxes/accident-risks/
               title: Accident Risk Cruxes
       - label: AI Governance
+        href: /ai-transition-model/factors/misalignment-potential/ai-governance/
         description: |
           AI governance encompasses the policies, regulations, and institutional frameworks that shape how artificial intelligence is developed and deployed. This includes binding legislation, regulatory standards, international coordination mechanisms, and voluntary industry commitments. Effective governance aims to ensure that AI development proceeds safely while preserving beneficial innovation—a balance that becomes increasingly consequential as AI systems grow more capable.
 
@@ -123,6 +125,7 @@ nodes:
             - path: /knowledge-base/models/governance-models/institutional-adaptation-speed/
               title: Institutional Adaptation Speed
       - label: Lab Safety Practices
+        href: /ai-transition-model/factors/misalignment-potential/lab-safety-practices/
         description: |
           Lab safety practices encompass the internal procedures, organizational culture, and governance structures within AI development organizations that influence how safely frontier AI systems are built and deployed. This includes safety team authority and resources, pre-deployment testing standards, red-teaming protocols, responsible disclosure practices, and relationships with the external safety community. Because AI labs are where critical development decisions occur, the quality of their safety practices fundamentally shapes the risk profile of advanced AI development.
 
@@ -175,6 +178,7 @@ nodes:
     href: /ai-transition-model/factors/ai-capabilities/
     subItems:
       - label: Compute
+        href: /ai-transition-model/factors/ai-capabilities/compute/
         description: |
           Compute refers to the hardware resources required to train and run AI systems, including Graphics Processing Units (GPUs), Tensor Processing Units (TPUs), and specialized AI accelerators manufactured by companies like NVIDIA, AMD, and Google. The current generation of frontier AI models requires extraordinary amounts of computational power—training runs for models like GPT-4 or Claude cost tens to hundreds of millions of dollars in compute alone, consuming electricity equivalent to small cities.
 
@@ -206,6 +210,7 @@ nodes:
             - path: /knowledge-base/responses/governance/compute-governance/hardware-enabled-governance/
               title: Hardware-Enabled Governance
       - label: Algorithms
+        href: /ai-transition-model/factors/ai-capabilities/algorithms/
         description: |
           Algorithms encompass the methods, architectures, and techniques that determine how efficiently AI systems convert computational resources into capabilities. This includes neural network architectures like transformers, training methodologies such as reinforcement learning from human feedback (RLHF), data utilization strategies, and optimization techniques that improve model performance. Algorithmic progress effectively multiplies the impact of compute—a more efficient algorithm can achieve the same capabilities with less hardware, or significantly greater capabilities with the same resources.
 
@@ -236,6 +241,7 @@ nodes:
             - path: /knowledge-base/models/framework-models/capability-threshold-model/
               title: Capability Threshold Model
       - label: Adoption
+        href: /ai-transition-model/factors/ai-capabilities/adoption/
         description: |
           Adoption measures how widely AI systems are integrated into economic activities, daily life, and critical infrastructure. This encompasses not just the deployment of AI tools but the depth of integration—from surface-level assistance to foundational dependence where systems and organizations cannot function without AI. As of late 2024, 23% of employed US workers use generative AI weekly, with projections suggesting AI could automate 40-60% of work hours in advanced economies within the coming decade.
 
@@ -1159,6 +1165,7 @@ nodes:
       Outcomes that permanently and drastically curtail humanity's potential. This includes human
       extinction, irreversible collapse of civilization, or permanent subjugation. The key feature
       is irreversibility—recovery becomes impossible or extremely unlikely.
+    question: Does civilization-ending harm occur?
     type: effect
     order: 0
     href: /ai-transition-model/outcomes/existential-catastrophe/
@@ -1169,6 +1176,7 @@ nodes:
       The quality and character of the post-transition future, assuming civilization survives.
       This encompasses how much of humanity's potential is realized, the distribution of wellbeing,
       preservation of human agency, and whether the future remains open to positive change.
+    question: What's the quality of the post-transition future?
     type: effect
     order: 1
     href: /ai-transition-model/outcomes/long-term-trajectory/
@@ -1182,16 +1190,52 @@ edges:
     strength: strong
     effect: increases
 
+  - id: e-cap-human
+    source: ai-capabilities
+    target: human-catastrophe
+    strength: medium
+    effect: increases
+
+  - id: e-cap-lockin
+    source: ai-capabilities
+    target: long-term-lockin
+    strength: medium
+    effect: increases
+
   - id: e-misalign-takeover
     source: misalignment-potential
     target: ai-takeover
     strength: strong
     effect: increases
 
+  - id: e-misalign-human
+    source: misalignment-potential
+    target: human-catastrophe
+    strength: weak
+    effect: increases
+
+  - id: e-misalign-lockin
+    source: misalignment-potential
+    target: long-term-lockin
+    strength: medium
+    effect: increases
+
   - id: e-misuse-human
     source: misuse-potential
     target: human-catastrophe
     strength: strong
+    effect: increases
+
+  - id: e-misuse-takeover
+    source: misuse-potential
+    target: ai-takeover
+    strength: weak
+    effect: increases
+
+  - id: e-misuse-lockin
+    source: misuse-potential
+    target: long-term-lockin
+    strength: weak
     effect: increases
 
   - id: e-turb-takeover
@@ -1204,6 +1248,12 @@ edges:
     source: transition-turbulence
     target: human-catastrophe
     strength: medium
+    effect: increases
+
+  - id: e-turb-lockin
+    source: transition-turbulence
+    target: long-term-lockin
+    strength: weak
     effect: increases
 
   - id: e-civ-takeover
@@ -1222,16 +1272,43 @@ edges:
     source: civ-competence
     target: long-term-lockin
     strength: strong
+    effect: mixed
+
+  - id: e-ownership-takeover
+    source: ai-ownership
+    target: ai-takeover
+    strength: weak
+    effect: mixed
+
+  - id: e-ownership-human
+    source: ai-ownership
+    target: human-catastrophe
+    strength: weak
+    effect: mixed
 
   - id: e-ownership-lockin
     source: ai-ownership
     target: long-term-lockin
     strength: strong
+    effect: increases
+
+  - id: e-uses-takeover
+    source: ai-uses
+    target: ai-takeover
+    strength: medium
+    effect: increases
+
+  - id: e-uses-human
+    source: ai-uses
+    target: human-catastrophe
+    strength: medium
+    effect: mixed
 
   - id: e-uses-lockin
     source: ai-uses
     target: long-term-lockin
     strength: strong
+    effect: increases
 
   # Ultimate Scenarios → Ultimate Outcomes
 
@@ -1257,6 +1334,7 @@ edges:
     source: long-term-lockin
     target: long-term-trajectory
     strength: strong
+    effect: mixed
 
 # Impact Grid - Numeric scores for how factors/scenarios/outcomes influence each other
 # Each entry has: source, target, impact (0-100), direction (increases/decreases), and notes

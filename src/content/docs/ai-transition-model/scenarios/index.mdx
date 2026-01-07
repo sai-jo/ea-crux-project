@@ -7,7 +7,7 @@ sidebar:
 lastEdited: "2026-01-04"
 ---
 
-import {Mermaid, ScenariosTable} from '../../../../components/wiki';
+import {ScenariosTable, FullModelDiagram} from '../../../../components/wiki';
 
 ## Overview
 
@@ -25,51 +25,7 @@ Each ultimate scenario has sub-variants that describe more specific pathways (e.
 
 ## The Three-Layer Model
 
-<Mermaid client:load chart={`
-flowchart TD
-    subgraph Outcomes["Ultimate Outcomes"]
-        EXCAT[Existential Catastrophe]
-        TRAJ[Long-term Trajectory]
-    end
-
-    subgraph Scenarios["Ultimate Scenarios"]
-        TAKEOVER[AI Takeover]
-        HUMAN[Human-Caused Catastrophe]
-        LOCKIN[Long-term Lock-in]
-    end
-
-    subgraph RootFactors["Root Factors"]
-        MISALIGN[Misalignment Potential]
-        CAPS[AI Capabilities]
-        CIV[Civilizational Competence]
-        TURB[Transition Turbulence]
-        MISUSE[Misuse Potential]
-    end
-
-    %% Root Factors to Ultimate Scenarios
-    MISALIGN -->|"increases"| TAKEOVER
-    CAPS -->|"increases"| TAKEOVER
-    TURB -->|"increases"| TAKEOVER
-    CIV -->|"decreases"| TAKEOVER
-
-    MISUSE -->|"increases"| HUMAN
-    TURB -->|"increases"| HUMAN
-    CIV -->|"decreases"| HUMAN
-
-    CIV -->|"shapes"| LOCKIN
-
-    %% Ultimate Scenarios to Ultimate Outcomes
-    TAKEOVER -->|"increases"| EXCAT
-    HUMAN -->|"increases"| EXCAT
-    TAKEOVER -->|"shapes"| TRAJ
-    LOCKIN -->|"shapes"| TRAJ
-
-    style EXCAT fill:#ff6b6b
-    style TRAJ fill:#4ecdc4
-    style TAKEOVER fill:#ffb6c1
-    style HUMAN fill:#ffb6c1
-    style LOCKIN fill:#ffe4b5
-`} />
+<FullModelDiagram client:load />
 
 **Color coding:**
 - **Red**: Ultimate negative outcome (existential catastrophe)

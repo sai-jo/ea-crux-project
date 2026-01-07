@@ -6,7 +6,7 @@ sidebar:
   order: 0
 lastEdited: "2026-01-03"
 ---
-import {DataInfoBox} from '../../../../../components/wiki';
+import {DataInfoBox, FactorSubItemsList, FactorRelationshipDiagram, ImpactList} from '../../../../../components/wiki';
 
 <DataInfoBox entityId="long-term-lockin" />
 
@@ -16,19 +16,15 @@ Long-term Lock-in refers to scenarios where AI enables the permanent entrenchmen
 
 ## Variants
 
-| Variant | Description |
-|---------|-------------|
-| [**Values**](/ai-transition-model/scenarios/long-term-lockin/values/) | Permanent entrenchment of particular value systems |
-| [**Power**](/ai-transition-model/scenarios/long-term-lockin/power/) | Concentration of power that becomes impossible to reverse |
-| [**Epistemics**](/ai-transition-model/scenarios/long-term-lockin/epistemics/) | Permanent degradation or ossification of collective reasoning |
+<FactorSubItemsList factorId="long-term-lockin" client:load />
 
 ## Key Root Factors
 
-Long-term Lock-in is primarily shaped by:
+<FactorRelationshipDiagram nodeId="long-term-lockin" direction="incoming" client:load />
 
-| Factor | Relationship | Mechanism |
-|--------|--------------|-----------|
-| [Civilizational Competence](/ai-transition-model/factors/civilizational-competence/) | Shapes character | Determines whether lock-in is beneficial or harmful |
+### Factor Impact Scores
+
+<ImpactList nodeId="long-term-lockin" direction="to" client:load />
 
 ## Dual Nature
 

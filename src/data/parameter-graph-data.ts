@@ -19,6 +19,7 @@ interface RawNode {
   subItems?: Array<{ label: string; probability?: string }>;
   confidence?: number;
   confidenceLabel?: string;
+  question?: string;  // For outcome nodes - the key question they address
 }
 
 interface RawEdge {
@@ -183,6 +184,7 @@ export interface RootFactor {
   subgroup?: string;
   order?: number;
   subItems?: SubItem[];
+  question?: string;  // For outcome nodes - the key question they address
 }
 
 // Get all root factors (cause nodes) with their sub-items
@@ -247,6 +249,7 @@ export function getOutcomes(): RootFactor[] {
       label: node.label,
       description: node.description,
       href: (node as any).href,
+      question: node.question,
     }));
 }
 
@@ -295,4 +298,154 @@ export function getSubItemRelatedContent(nodeId: string, subItemLabel: string): 
 export function getSubItemScope(nodeId: string, subItemLabel: string): string | undefined {
   const subItem = getSubItem(nodeId, subItemLabel);
   return subItem?.scope;
+}
+
+// === RELATIONSHIP QUERY HELPERS ===
+// These derive relationships from the YAML edges instead of hardcoding them
+
+export interface ScenarioInfluence {
+  scenarioId: string;
+  scenarioLabel: string;
+  effect: 'increases' | 'decreases' | undefined;
+  strength: 'strong' | 'medium' | 'weak' | undefined;
+}
+
+export interface FactorInfluence {
+  factorId: string;
+  factorLabel: string;
+  effect: 'increases' | 'decreases' | undefined;
+  strength: 'strong' | 'medium' | 'weak' | undefined;
+}
+
+export interface OutcomeConnection {
+  outcomeId: string;
+  outcomeLabel: string;
+  effect: 'increases' | 'decreases' | undefined;
+}
+
+// Get all scenarios that a root factor influences (with direction)
+export function getFactorScenarioInfluences(factorId: string): ScenarioInfluence[] {
+  const edges = rawData.edges.filter(e => e.source === factorId);
+  const scenarios = getScenarios();
+
+  return edges
+    .map(edge => {
+      const scenario = scenarios.find(s => s.id === edge.target);
+      if (!scenario) return null;
+      return {
+        scenarioId: edge.target,
+        scenarioLabel: scenario.label,
+        effect: edge.effect,
+        strength: edge.strength,
+      };
+    })
+    .filter((s): s is ScenarioInfluence => s !== null);
+}
+
+// Get formatted scenario influences as a string array (for display)
+export function getFactorScenarioLabels(factorId: string): string[] {
+  const influences = getFactorScenarioInfluences(factorId);
+
+  if (influences.length === 0) return ['—'];
+
+  // Check if this factor affects all scenarios
+  const scenarios = getScenarios();
+  if (influences.length === scenarios.length) {
+    return ['All scenarios'];
+  }
+
+  return influences.map(inf => {
+    const arrow = inf.effect === 'increases' ? '↑' : inf.effect === 'decreases' ? '↓' : '';
+    return `${inf.scenarioLabel} ${arrow}`.trim();
+  });
+}
+
+// Get all factors that influence a scenario (with direction)
+export function getScenarioFactorInfluences(scenarioId: string): FactorInfluence[] {
+  const edges = rawData.edges.filter(e => e.target === scenarioId);
+  const factors = getRootFactors();
+
+  return edges
+    .map(edge => {
+      const factor = factors.find(f => f.id === edge.source);
+      if (!factor) return null;
+      return {
+        factorId: edge.source,
+        factorLabel: factor.label,
+        effect: edge.effect,
+        strength: edge.strength,
+      };
+    })
+    .filter((f): f is FactorInfluence => f !== null);
+}
+
+// Get formatted factor influences for a scenario as a string
+export function getScenarioFactorLabels(scenarioId: string): string {
+  const influences = getScenarioFactorInfluences(scenarioId);
+
+  if (influences.length === 0) return '—';
+
+  return influences.map(inf => {
+    const arrow = inf.effect === 'increases' ? '↑' : inf.effect === 'decreases' ? '↓' : '';
+    return `${inf.factorLabel} ${arrow}`.trim();
+  }).join(', ');
+}
+
+// Get all outcomes that a scenario leads to
+export function getScenarioOutcomeConnections(scenarioId: string): OutcomeConnection[] {
+  const edges = rawData.edges.filter(e => e.source === scenarioId);
+  const outcomes = getOutcomes();
+
+  return edges
+    .map(edge => {
+      const outcome = outcomes.find(o => o.id === edge.target);
+      if (!outcome) return null;
+      return {
+        outcomeId: edge.target,
+        outcomeLabel: outcome.label,
+        effect: edge.effect,
+      };
+    })
+    .filter((o): o is OutcomeConnection => o !== null);
+}
+
+// Get formatted outcome labels for a scenario as a string
+export function getScenarioOutcomeLabels(scenarioId: string): string {
+  const connections = getScenarioOutcomeConnections(scenarioId);
+
+  if (connections.length === 0) return '—';
+
+  return connections.map(c => c.outcomeLabel).join(', ');
+}
+
+// Get all scenarios that lead to an outcome
+export function getOutcomeScenarioConnections(outcomeId: string): { scenarioId: string; scenarioLabel: string }[] {
+  const edges = rawData.edges.filter(e => e.target === outcomeId);
+  const scenarios = getScenarios();
+
+  return edges
+    .map(edge => {
+      const scenario = scenarios.find(s => s.id === edge.source);
+      if (!scenario) return null;
+      return {
+        scenarioId: edge.source,
+        scenarioLabel: scenario.label,
+      };
+    })
+    .filter((s): s is { scenarioId: string; scenarioLabel: string } => s !== null);
+}
+
+// Get formatted scenario labels for an outcome as a string
+export function getOutcomeScenarioLabels(outcomeId: string): string {
+  const connections = getOutcomeScenarioConnections(outcomeId);
+
+  if (connections.length === 0) return '—';
+
+  return connections.map(c => c.scenarioLabel).join(', ');
+}
+
+// Get a node by ID (any type)
+export function getNodeById(nodeId: string): RootFactor | undefined {
+  const allNodes = getAllNodes();
+  return allNodes.find(n => n.id === nodeId);
 }

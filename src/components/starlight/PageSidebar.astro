@@ -2,11 +2,13 @@
 /**
  * Custom PageSidebar that shows the MiniModelDiagram for AI Transition Model pages
  * above the default table of contents, plus a compact info box.
+ * Also shows SidebarInfoBox for knowledge-base pages with entity definitions.
  */
 import MobileTableOfContents from '@astrojs/starlight/components/MobileTableOfContents.astro';
 import TableOfContents from '@astrojs/starlight/components/TableOfContents.astro';
 import MiniModelDiagramStatic from './MiniModelDiagramStatic.astro';
 import SidebarInfoBox from './SidebarInfoBox.astro';
+import { getEntityById } from '../../data';
 
 // Get current route info
 const route = Astro.locals.starlightRoute;
@@ -15,6 +17,9 @@ const frontmatter = route?.entry?.data || {};
 
 // Check if this is an AI Transition Model page
 const isAITransitionModelPage = pathname.includes('/ai-transition-model/');
+
+// Check if this is a knowledge-base page
+const isKnowledgeBasePage = pathname.includes('/knowledge-base/');
 
 // Check frontmatter for full-width layout (keeping for potential future use)
 const isFullWidth = (frontmatter as any).fullWidth === true;
@@ -83,32 +88,43 @@ function getModelNodeId(): string | null {
 
 // Get the entity ID for the info box (derived from URL path)
 function getEntityId(): string | null {
-  if (!isAITransitionModelPage) return null;
-
   const pathParts = pathname.split('/').filter(Boolean);
 
-  // Handle outcomes: /ai-transition-model/outcomes/existential-catastrophe/
-  if (pathname.includes('/outcomes/')) {
-    const outcomeIndex = pathParts.indexOf('outcomes');
-    return pathParts[outcomeIndex + 1] || null;
+  // Handle AI Transition Model pages
+  if (isAITransitionModelPage) {
+    // Handle outcomes: /ai-transition-model/outcomes/existential-catastrophe/
+    if (pathname.includes('/outcomes/')) {
+      const outcomeIndex = pathParts.indexOf('outcomes');
+      return pathParts[outcomeIndex + 1] || null;
+    }
+
+    // Handle scenarios: /ai-transition-model/scenarios/ai-takeover/
+    if (pathname.includes('/scenarios/')) {
+      const scenarioIndex = pathParts.indexOf('scenarios');
+      return pathParts[scenarioIndex + 1] || null;
+    }
+
+    // Handle factors: /ai-transition-model/factors/transition-turbulence/
+    if (pathname.includes('/factors/')) {
+      const factorIndex = pathParts.indexOf('factors');
+      return pathParts[factorIndex + 1] || null;
+    }
+
+    // Handle parameters: /ai-transition-model/parameters/racing-intensity/
+    if (pathname.includes('/parameters/')) {
+      const paramIndex = pathParts.indexOf('parameters');
+      return pathParts[paramIndex + 1] || null;
+    }
   }
 
-  // Handle scenarios: /ai-transition-model/scenarios/ai-takeover/
-  if (pathname.includes('/scenarios/')) {
-    const scenarioIndex = pathParts.indexOf('scenarios');
-    return pathParts[scenarioIndex + 1] || null;
-  }
-
-  // Handle factors: /ai-transition-model/factors/transition-turbulence/
-  if (pathname.includes('/factors/')) {
-    const factorIndex = pathParts.indexOf('factors');
-    return pathParts[factorIndex + 1] || null;
-  }
-
-  // Handle parameters: /ai-transition-model/parameters/racing-intensity/
-  if (pathname.includes('/parameters/')) {
-    const paramIndex = pathParts.indexOf('parameters');
-    return pathParts[paramIndex + 1] || null;
+  // Handle Knowledge Base pages - extract slug from last path segment
+  if (isKnowledgeBasePage) {
+    // Get the last non-empty path segment as potential entity ID
+    const lastSegment = pathParts[pathParts.length - 1];
+    // Skip index pages
+    if (lastSegment && lastSegment !== 'index' && lastSegment !== 'knowledge-base') {
+      return lastSegment;
+    }
   }
 
   return null;
@@ -116,8 +132,12 @@ function getEntityId(): string | null {
 
 const nodeId = getModelNodeId();
 const entityId = getEntityId();
+
+// Check if entity exists in database (for knowledge-base pages)
+const entityExists = entityId ? !!getEntityById(entityId) : false;
+
 const showMinimap = isAITransitionModelPage && nodeId;
-const showInfoBox = isAITransitionModelPage && entityId;
+const showInfoBox = (isAITransitionModelPage && entityId) || (isKnowledgeBasePage && entityId && entityExists);
 const showToc = route?.toc;
 ---
 
@@ -255,8 +275,13 @@ const showToc = route?.toc;
     .sl-markdown-content {
       max-width: none !important;
     }
+  </style>
+)}
 
-    /* Hide the inline DataInfoBox on AI Transition Model pages since it's now in sidebar */
+{/* Hide inline InfoBox when sidebar version is shown */}
+{showInfoBox && (
+  <style is:global>
+    /* Hide the inline InfoBox since it's now in sidebar */
     .wiki-infobox {
       display: none !important;
     }

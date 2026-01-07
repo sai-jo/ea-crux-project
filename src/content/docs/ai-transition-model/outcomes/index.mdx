@@ -6,7 +6,7 @@ sidebar:
   label: Overview
 lastEdited: "2026-01-03"
 ---
-import {Mermaid, OutcomesTable} from '../../../../components/wiki';
+import {Mermaid, OutcomesTable, FullModelDiagram} from '../../../../components/wiki';
 
 ## Overview
 
@@ -72,45 +72,7 @@ This independence means:
 
 ## How Ultimate Scenarios Flow to Ultimate Outcomes
 
-<Mermaid client:load chart={`
-flowchart TD
-    subgraph Scenarios["Ultimate Scenarios"]
-        TAKEOVER[AI Takeover]
-        HUMAN[Human-Caused Catastrophe]
-        LOCKIN[Long-term Lock-in]
-    end
-
-    subgraph RootFactors["Root Factors"]
-        TURB[Transition Turbulence]
-    end
-
-    subgraph Outcomes["Ultimate Outcomes"]
-        ACUTE[Existential Catastrophe]
-        VALUE[Long-term Trajectory]
-    end
-
-    %% Root Factor effects
-    TURB -->|"increases"| TAKEOVER
-    TURB -->|"increases"| HUMAN
-
-    %% Scenarios to Outcomes
-    TAKEOVER --> ACUTE
-    HUMAN --> ACUTE
-    TAKEOVER -->|"shapes"| VALUE
-    LOCKIN -->|"shapes"| VALUE
-
-    style ACUTE fill:#ff6b6b
-    style VALUE fill:#4ecdc4
-    style TAKEOVER fill:#ffb6c1
-    style HUMAN fill:#ffb6c1
-    style LOCKIN fill:#ffe4b5
-`} />
-
-| Ultimate Scenario | Affects Existential Catastrophe | Affects Long-term Trajectory |
-|---------------------|--------------------------------|------------------------------|
-| [AI Takeover](/ai-transition-model/scenarios/ai-takeover/) | Yes (primary pathway) | Yes (shapes future) |
-| [Human-Caused Catastrophe](/ai-transition-model/scenarios/human-catastrophe/) | Yes (primary pathway) | — |
-| [Long-term Lock-in](/ai-transition-model/scenarios/long-term-lockin/) | Yes (bad lock-in) | Yes (primary determinant) |
+<FullModelDiagram client:load />
 
 Each ultimate scenario has sub-variants with different probability estimates. See the [Ultimate Scenarios](/ai-transition-model/scenarios/) section for details.
 

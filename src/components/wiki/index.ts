@@ -29,7 +29,6 @@ export { GlossaryTerm, GlossaryList } from './Glossary';
 export { ComparisonTable } from './ComparisonTable';
 export { TimelineViz } from './TimelineViz';
 export { RiskDependencyGraph } from './RiskDependencyGraph';
-export { ArgumentMap } from './ArgumentMap';
 
 // Data-aware wrapper components (support both inline and YAML data)
 export { DataDisagreementMap } from './DataDisagreementMap';
@@ -86,4 +85,7 @@ export { FactorKeyDebates } from './FactorKeyDebates';
 export { FactorRatings } from './FactorRatings';
 export { FactorRelatedContent } from './FactorRelatedContent';
 export { FactorScope } from './FactorScope';
+export { FactorSubItemsList, AllFactorsSubItems } from './FactorSubItemsList';
+export { FactorRelationshipDiagram, FullModelDiagram } from './FactorRelationshipDiagram';
+export { ImpactGrid, ImpactList } from './ImpactGrid';
 

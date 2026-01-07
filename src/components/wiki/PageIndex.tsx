@@ -3,9 +3,9 @@
 import * as React from "react"
 import type { ColumnDef } from "@tanstack/react-table"
 import { DataTable, SortableHeader } from "@/components/ui/data-table"
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 import { cn } from "@/lib/utils"
 import { pages, type Page } from "../../data"
-import "./wiki.css"
 
 interface SimilarPage {
   id: string
@@ -218,31 +218,39 @@ function RedundancyCell({ value, similarPages }: { value: number, similarPages: 
     ? "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300"
     : "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300"
 
+  const badge = (
+    <span className={cn("inline-flex items-center justify-center min-w-[2.5rem] px-1 h-6 rounded text-sm font-medium", similarPages.length > 0 && "cursor-help", colorClass)}>
+      {value}%
+    </span>
+  )
+
   if (similarPages.length === 0) {
-    return (
-      <span className={cn("inline-flex items-center justify-center min-w-[2.5rem] px-1 h-6 rounded text-sm font-medium", colorClass)}>
-        {value}%
-      </span>
-    )
+    return badge
   }
 
   return (
-    <span className="redundancy-cell">
-      <span className={cn("inline-flex items-center justify-center min-w-[2.5rem] px-1 h-6 rounded text-sm font-medium cursor-help", colorClass)}>
-        {value}%
-      </span>
-      <span className="redundancy-cell__popup">
-        <div className="redundancy-cell__popup-content">
-          <div className="redundancy-cell__popup-header">Similar pages:</div>
+    <HoverCard openDelay={200} closeDelay={100}>
+      <HoverCardTrigger asChild>
+        {badge}
+      </HoverCardTrigger>
+      <HoverCardContent className="w-64 p-0" align="start">
+        <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground px-3 py-2 border-b border-border">
+          Similar pages:
+        </div>
+        <div className="flex flex-col">
           {similarPages.map((p, i) => (
-            <a key={i} href={p.path} className="redundancy-cell__popup-item">
-              <span className="redundancy-cell__popup-title">{p.title}</span>
-              <span className="redundancy-cell__popup-score">{p.similarity}%</span>
+            <a
+              key={i}
+              href={p.path}
+              className="flex items-center justify-between px-3 py-2 text-sm no-underline hover:bg-muted transition-colors"
+            >
+              <span className="text-foreground truncate mr-2">{p.title}</span>
+              <span className="font-semibold text-accent-foreground flex-shrink-0">{p.similarity}%</span>
             </a>
           ))}
         </div>
-      </span>
-    </span>
+      </HoverCardContent>
+    </HoverCard>
   )
 }
 

@@ -6,7 +6,7 @@ sidebar:
   label: Long-term Trajectory
 lastEdited: "2026-01-02"
 ---
-import {Mermaid, Backlinks, DataInfoBox} from '../../../../components/wiki';
+import {Backlinks, DataInfoBox, FactorRelationshipDiagram, ImpactList} from '../../../../components/wiki';
 
 <DataInfoBox entityId="long-term-trajectory" />
 
@@ -36,41 +36,11 @@ Even if we avoid catastrophe entirely, we could end up in a world where humans l
 
 ## What Shapes Long-term Trajectory
 
-<Mermaid client:load chart={`
-flowchart TD
-    subgraph Scenarios["Ultimate Scenarios"]
-        TAKEOVER[AI Takeover]
-        LOCKIN[Long-term Lock-in]
-    end
+<FactorRelationshipDiagram nodeId="long-term-trajectory" direction="incoming" client:load />
 
-    subgraph RootFactors["Root Factors"]
-        TURB[Transition Turbulence]
-        CIV[Civilizational Competence]
-    end
+### Scenario Impact Scores
 
-    subgraph Dimensions["Value Dimensions"]
-        AGENCY[Human Agency]
-        BENEFITS[Benefit Distribution]
-        MEANING[Purpose and Meaning]
-        OPTIONS[Option Value]
-    end
-
-    LOCKIN -->|"determines"| OPTIONS
-    LOCKIN -->|"shapes"| AGENCY
-    CIV -->|"enables"| AGENCY
-    CIV -->|"shapes"| LOCKIN
-    TAKEOVER -->|"erodes"| AGENCY
-    TURB -->|"path dependence"| OPTIONS
-
-    AGENCY --> VALUE[Long-term Trajectory]
-    BENEFITS --> VALUE
-    MEANING --> VALUE
-    OPTIONS --> VALUE
-
-    style VALUE fill:#4ecdc4
-    style LOCKIN fill:#ffe4b5
-    style TAKEOVER fill:#ffb6c1
-`} />
+<ImpactList nodeId="long-term-trajectory" direction="to" client:load />
 
 ### Ultimate Scenarios That Affect This
 
