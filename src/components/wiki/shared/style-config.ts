@@ -33,6 +33,7 @@ export const riskCategoryColors = {
     text: "text-amber-700 dark:text-amber-300",
     border: "border-amber-300 dark:border-amber-700",
     iconBg: "bg-amber-100 dark:bg-amber-900/50",
+    borderColor: "border-l-amber-500",
     hex: "#f59e0b",
   },
   misuse: {
@@ -41,6 +42,7 @@ export const riskCategoryColors = {
     text: "text-red-700 dark:text-red-300",
     border: "border-red-300 dark:border-red-700",
     iconBg: "bg-red-100 dark:bg-red-900/50",
+    borderColor: "border-l-red-500",
     hex: "#ef4444",
   },
   structural: {
@@ -49,6 +51,7 @@ export const riskCategoryColors = {
     text: "text-indigo-700 dark:text-indigo-300",
     border: "border-indigo-300 dark:border-indigo-700",
     iconBg: "bg-indigo-100 dark:bg-indigo-900/50",
+    borderColor: "border-l-indigo-500",
     hex: "#6366f1",
   },
   epistemic: {
@@ -57,6 +60,7 @@ export const riskCategoryColors = {
     text: "text-purple-700 dark:text-purple-300",
     border: "border-purple-300 dark:border-purple-700",
     iconBg: "bg-purple-100 dark:bg-purple-900/50",
+    borderColor: "border-l-slate-500",
     hex: "#a855f7",
   },
 } as const;
@@ -72,21 +76,25 @@ export const parameterCategoryColors = {
     variant: "purple" as BadgeVariant,
     color: "border-purple-300 text-purple-700 dark:border-purple-700 dark:text-purple-300",
     activeColor: "bg-purple-100 border-purple-500 text-purple-800 dark:bg-purple-900/50 dark:border-purple-500 dark:text-purple-200",
+    borderColor: "border-l-purple-500",
   },
   governance: {
     variant: "blue" as BadgeVariant,
     color: "border-blue-300 text-blue-700 dark:border-blue-700 dark:text-blue-300",
     activeColor: "bg-blue-100 border-blue-500 text-blue-800 dark:bg-blue-900/50 dark:border-blue-500 dark:text-blue-200",
+    borderColor: "border-l-blue-500",
   },
   societal: {
     variant: "success" as BadgeVariant,
     color: "border-emerald-300 text-emerald-700 dark:border-emerald-700 dark:text-emerald-300",
     activeColor: "bg-emerald-100 border-emerald-500 text-emerald-800 dark:bg-emerald-900/50 dark:border-emerald-500 dark:text-emerald-200",
+    borderColor: "border-l-emerald-500",
   },
   resilience: {
     variant: "warning" as BadgeVariant,
     color: "border-amber-300 text-amber-700 dark:border-amber-700 dark:text-amber-300",
     activeColor: "bg-amber-100 border-amber-500 text-amber-800 dark:bg-amber-900/50 dark:border-amber-500 dark:text-amber-200",
+    borderColor: "border-l-amber-500",
   },
 } as const;
 
@@ -147,6 +155,27 @@ export const directionColors = {
   higher: { icon: "▲", color: "#10b981", variant: "success" as BadgeVariant },
   lower: { icon: "▼", color: "#3b82f6", variant: "info" as BadgeVariant },
   context: { icon: "◆", color: "#f59e0b", variant: "warning" as BadgeVariant },
+} as const;
+
+export const directionLabels = {
+  higher: {
+    icon: "▲",
+    text: "Higher is better",
+    iconColor: "text-emerald-500 dark:text-emerald-400",
+    textColor: "text-slate-600 dark:text-slate-400",
+  },
+  lower: {
+    icon: "▼",
+    text: "Lower is better",
+    iconColor: "text-blue-500 dark:text-blue-400",
+    textColor: "text-slate-600 dark:text-slate-400",
+  },
+  context: {
+    icon: "◆",
+    text: "Context-dependent",
+    iconColor: "text-amber-500 dark:text-amber-400",
+    textColor: "text-slate-600 dark:text-slate-400",
+  },
 } as const;
 
 export type Direction = keyof typeof directionColors;
@@ -239,3 +268,132 @@ export const layoutClasses = {
   row: "flex items-center justify-between py-2",
   tableCell: "px-3 py-2 text-sm",
 } as const;
+
+// ============================================================================
+// RESOURCE TYPES - Labels, icons, and colors for resource types
+// ============================================================================
+
+export const resourceTypeLabels: Record<string, string> = {
+  paper: 'Paper',
+  book: 'Book',
+  blog: 'Blog Post',
+  report: 'Report',
+  talk: 'Talk',
+  podcast: 'Podcast',
+  government: 'Government',
+  reference: 'Reference',
+  web: 'Web',
+};
+
+export const resourceTypeIcons: Record<string, string> = {
+  paper: '📄',
+  book: '📚',
+  blog: '✏️',
+  report: '📋',
+  talk: '🎤',
+  podcast: '🎧',
+  government: '🏛️',
+  reference: '📖',
+  web: '🔗',
+};
+
+export const resourceTypeBadgeColors: Record<string, string> = {
+  paper: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300',
+  book: 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300',
+  blog: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300',
+  report: 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300',
+  government: 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300',
+};
+
+export function getResourceTypeLabel(type: string): string {
+  return resourceTypeLabels[type] || 'Link';
+}
+
+export function getResourceTypeIcon(type: string): string {
+  return resourceTypeIcons[type] || '🔗';
+}
+
+// ============================================================================
+// SORTING ORDER CONFIGS - For table sorting functions
+// ============================================================================
+
+export const severitySortOrder: Record<string, number> = {
+  low: 1, medium: 2, "medium-high": 3, high: 4, critical: 5, catastrophic: 6,
+};
+
+export const maturitySortOrder: Record<string, number> = {
+  neglected: 1, "under-researched": 1, minimal: 1,
+  emerging: 2, early: 2, nascent: 2,
+  growing: 3, developing: 3, active: 3,
+  mature: 4, established: 4, "well-studied": 4,
+};
+
+export const likelihoodSortOrder: Record<string, number> = {
+  low: 1, medium: 2, "medium-high": 3, high: 4, "very-high": 5, "near-certain": 6,
+};
+
+export const trendSortOrder: Record<string, number> = {
+  declining: 1, widening: 1, accelerating: 1, stressed: 1,
+  mixed: 2, fragile: 2,
+  improving: 3, stable: 3,
+};
+
+export const causalLevelSortOrder: Record<string, number> = {
+  outcome: 3, pathway: 2, amplifier: 1,
+};
+
+// Helper to create sorting function from order map
+export function createOrderedSortFn<T>(
+  orderMap: Record<string, number>,
+  getValue: (item: T) => string | undefined | null,
+  defaultOrder = 0
+): (a: T, b: T) => number {
+  return (a, b) => {
+    const aVal = getValue(a);
+    const bVal = getValue(b);
+    const aOrder = aVal ? (orderMap[aVal.toLowerCase()] ?? defaultOrder) : defaultOrder;
+    const bOrder = bVal ? (orderMap[bVal.toLowerCase()] ?? defaultOrder) : defaultOrder;
+    return aOrder - bOrder;
+  };
+}
+
+// ============================================================================
+// TREND TEXT COLORS - For parameter trend display
+// ============================================================================
+
+export const trendTextColors = {
+  negative: "text-red-600 dark:text-red-400",
+  positive: "text-emerald-600 dark:text-emerald-400",
+  mixed: "text-amber-600 dark:text-amber-400",
+  neutral: "text-slate-600 dark:text-slate-400",
+} as const;
+
+// Keywords that map to each trend category
+export const trendKeywords: Record<keyof typeof trendTextColors, string[]> = {
+  negative: ["declining", "widening", "accelerating", "stressed", "worsening"],
+  positive: ["improving", "stable", "strengthening"],
+  mixed: ["mixed", "fragile", "uncertain"],
+  neutral: [],
+};
+
+export function getTrendTextColor(trend: string): string {
+  const normalized = trend.toLowerCase();
+  for (const [category, keywords] of Object.entries(trendKeywords)) {
+    if (keywords.some(keyword => normalized.includes(keyword))) {
+      return trendTextColors[category as keyof typeof trendTextColors];
+    }
+  }
+  return trendTextColors.neutral;
+}
+
+// ============================================================================
+// TEXT UTILITIES
+// ============================================================================
+
+/**
+ * Truncate text with ellipsis
+ */
+export function truncateText(text: string, maxLength: number): string {
+  if (text.length <= maxLength) return text;
+  return text.slice(0, maxLength).trimEnd() + "…";
+}

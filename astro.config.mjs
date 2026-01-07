@@ -26,6 +26,8 @@ export default defineConfig({
               PageSidebar: './src/components/starlight/PageSidebar.astro',
               // Add MetaPanel for ?meta debugging on AI Transition Model pages
               PageFrame: './src/components/starlight/PageFrame.astro',
+              // Add breadcrumbs for AI Transition Model pages
+              PageTitle: './src/components/starlight/PageTitle.astro',
           },
           tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 2 },
           social: [
@@ -54,10 +56,11 @@ export default defineConfig({
                           { slug: 'ai-transition-model/scenarios/human-catastrophe/state-actor' },
                           { slug: 'ai-transition-model/scenarios/human-catastrophe/rogue-actor' },
                           { label: 'Long-term Lock-in', slug: 'ai-transition-model/scenarios/long-term-lockin' },
-                          { slug: 'ai-transition-model/scenarios/long-term-lockin/values' },
-                          { slug: 'ai-transition-model/scenarios/long-term-lockin/power' },
+                          { slug: 'ai-transition-model/scenarios/long-term-lockin/economic-power' },
+                          { slug: 'ai-transition-model/scenarios/long-term-lockin/political-power' },
                           { slug: 'ai-transition-model/scenarios/long-term-lockin/epistemics' },
-                          { slug: 'ai-transition-model/scenarios/long-term-lockin/suffering' },
+                          { slug: 'ai-transition-model/scenarios/long-term-lockin/values' },
+                          { slug: 'ai-transition-model/scenarios/long-term-lockin/suffering-lock-in' },
                       ]},
                       { label: 'AI Factors', collapsed: true, items: [
                           { label: 'Misalignment Potential', slug: 'ai-transition-model/factors/misalignment-potential' },

@@ -5,7 +5,12 @@ import type { ColumnDef } from "@tanstack/react-table"
 import { DataTable, SortableHeader } from "@/components/ui/data-table"
 import { cn } from "@/lib/utils"
 import { Badge } from "./shared/Badge"
-import { parameterCategoryColors, directionColors, type ParameterCategory } from "./shared/style-config"
+import { EmptyCell } from "./shared/EmptyCell"
+import { RiskItemsCell, InterventionItemsCell } from "./shared/ItemsCell"
+import { TrendCell } from "./shared/TrendCell"
+import { StatBox, PrimaryStatBox, StatsSummary } from "./shared/StatBox"
+import { useToggleSet } from "./shared/useToggleSet"
+import { parameterCategoryColors, directionLabels, trendSortOrder, type ParameterCategory } from "./shared/style-config"
 
 interface RelatedItem {
   id: string
@@ -46,70 +51,12 @@ function CategoryBadge({ category }: { category: ParameterCategory }) {
 }
 
 function DirectionCell({ direction }: { direction: 'higher' | 'lower' | 'context' }) {
-  const labels: Record<string, { icon: string; text: string; iconColor: string; textColor: string }> = {
-    higher: {
-      icon: "▲",
-      text: "Higher is better",
-      iconColor: "text-emerald-500 dark:text-emerald-400",
-      textColor: "text-slate-600 dark:text-slate-400"
-    },
-    lower: {
-      icon: "▼",
-      text: "Lower is better",
-      iconColor: "text-blue-500 dark:text-blue-400",
-      textColor: "text-slate-600 dark:text-slate-400"
-    },
-    context: {
-      icon: "◆",
-      text: "Context-dependent",
-      iconColor: "text-amber-500 dark:text-amber-400",
-      textColor: "text-slate-600 dark:text-slate-400"
-    },
-  }
-  const config = labels[direction] || labels.higher
+  const config = directionLabels[direction] || directionLabels.higher
   return (
     <span className="text-sm font-medium flex items-center gap-1.5">
       <span className={cn("text-base", config.iconColor)}>{config.icon}</span>
       <span className={config.textColor}>{config.text}</span>
     </span>
-  )
-}
-
-function TrendCell({ trend }: { trend: string }) {
-  const normalized = trend.toLowerCase()
-  let color = "text-slate-600 dark:text-slate-400"
-  if (normalized.includes("declining") || normalized.includes("widening") || normalized.includes("accelerating") || normalized.includes("stressed")) {
-    color = "text-red-600 dark:text-red-400"
-  } else if (normalized.includes("improving")) {
-    color = "text-emerald-600 dark:text-emerald-400"
-  } else if (normalized.includes("mixed") || normalized.includes("fragile")) {
-    color = "text-amber-600 dark:text-amber-400"
-  }
-  return <span className={cn("text-sm", color)}>{trend}</span>
-}
-
-function RelatedItemsCell({ items, variant }: { items: RelatedItem[]; variant: 'risk' | 'intervention' }) {
-  if (!items || items.length === 0) return <span className="text-muted-foreground">—</span>
-
-  const colorClass = variant === 'risk'
-    ? "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300 hover:bg-red-200 dark:hover:bg-red-900/50"
-    : "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300 hover:bg-emerald-200 dark:hover:bg-emerald-900/50"
-
-  return (
-    <div className="flex flex-wrap gap-1">
-      {items.slice(0, 3).map((item) => (
-        <a
-          key={item.id}
-          href={item.href}
-          className={cn("inline-block px-2 py-0.5 rounded text-xs font-medium transition-colors", colorClass)}
-        >
-          {item.title}
-        </a>
-      ))}
-      {items.length > 3 && (
-        <span className="text-xs text-muted-foreground">+{items.length - 3}</span>
-      )}
-    </div>
   )
 }
 
@@ -158,7 +105,7 @@ function PriorityCell({ importance, tractability, neglectedness, uncertainty }: 
   const score = computePriorityScore(importance, tractability, neglectedness, uncertainty)
 
   if (score === null) {
-    return <span className="text-muted-foreground text-sm">—</span>
+    return <EmptyCell />
   }
 
   return (
@@ -235,14 +182,9 @@ const columns: ColumnDef<Parameter>[] = [
     header: ({ column }) => <SortableHeader column={column}>Trend</SortableHeader>,
     cell: ({ row }) => <TrendCell trend={row.getValue("trend")} />,
     sortingFn: (rowA, rowB) => {
-      const order: Record<string, number> = {
-        "declining": 1, "widening": 1, "accelerating": 1, "stressed": 1,
-        "mixed": 2, "fragile": 2,
-        "improving": 3, "stable": 3,
-      }
       const getScore = (val: string) => {
         const lower = val.toLowerCase()
-        for (const [key, score] of Object.entries(order)) {
+        for (const [key, score] of Object.entries(trendSortOrder)) {
           if (lower.includes(key)) return score
         }
         return 2
@@ -253,7 +195,7 @@ const columns: ColumnDef<Parameter>[] = [
   {
     accessorKey: "risks",
     header: "Threatened By",
-    cell: ({ row }) => <RelatedItemsCell items={row.getValue("risks")} variant="risk" />,
+    cell: ({ row }) => <RiskItemsCell items={row.getValue("risks")} />,
     sortingFn: (rowA, rowB) => {
       const a = (rowA.getValue("risks") as RelatedItem[] || []).length
       const b = (rowB.getValue("risks") as RelatedItem[] || []).length
@@ -263,7 +205,7 @@ const columns: ColumnDef<Parameter>[] = [
   {
     accessorKey: "interventions",
     header: "Supported By",
-    cell: ({ row }) => <RelatedItemsCell items={row.getValue("interventions")} variant="intervention" />,
+    cell: ({ row }) => <InterventionItemsCell items={row.getValue("interventions")} />,
     sortingFn: (rowA, rowB) => {
       const a = (rowA.getValue("interventions") as RelatedItem[] || []).length
       const b = (rowB.getValue("interventions") as RelatedItem[] || []).length
@@ -272,24 +214,10 @@ const columns: ColumnDef<Parameter>[] = [
   },
 ]
 
-export function ParametersTable({ parameters }: ParametersTableProps) {
-  const [activeCategories, setActiveCategories] = React.useState<Set<ParameterCategory>>(
-    new Set(['alignment', 'governance', 'societal', 'resilience'])
-  )
+const allCategories: ParameterCategory[] = ['alignment', 'governance', 'societal', 'resilience']
 
-  const toggleCategory = (category: ParameterCategory) => {
-    setActiveCategories(prev => {
-      const next = new Set(prev)
-      if (next.has(category)) {
-        if (next.size > 1) {
-          next.delete(category)
-        }
-      } else {
-        next.add(category)
-      }
-      return next
-    })
-  }
+export function ParametersTable({ parameters }: ParametersTableProps) {
+  const { active: activeCategories, toggle: toggleCategory, reset: resetCategories, isAllActive } = useToggleSet(allCategories)
 
   const filteredParameters = React.useMemo(() => {
     return parameters.filter(p => activeCategories.has(p.category))
@@ -310,13 +238,6 @@ export function ParametersTable({ parameters }: ParametersTableProps) {
 
     return { total: filteredParameters.length, fullTotal: parameters.length, byCategory, declining, improving }
   }, [parameters, filteredParameters])
-
-  const categoryBorderColors: Record<ParameterCategory, string> = {
-    alignment: "border-l-purple-500",
-    governance: "border-l-blue-500",
-    societal: "border-l-emerald-500",
-    resilience: "border-l-amber-500",
-  }
 
   return (
     <div className="space-y-6">
@@ -341,9 +262,9 @@ export function ParametersTable({ parameters }: ParametersTableProps) {
             </button>
           )
         })}
-        {activeCategories.size < 4 && (
+        {!isAllActive && (
           <button
-            onClick={() => setActiveCategories(new Set(['alignment', 'governance', 'societal', 'resilience']))}
+            onClick={resetCategories}
             className="px-3 py-1.5 rounded-full text-sm font-medium border border-slate-300 text-slate-600 dark:border-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
           >
             Show All
@@ -352,30 +273,19 @@ export function ParametersTable({ parameters }: ParametersTableProps) {
       </div>
 
       {/* Stats Summary */}
-      <div className="flex flex-wrap gap-6 p-4 bg-muted/30 rounded-lg">
-        <div className="flex flex-col">
-          <span className="text-2xl font-bold">{stats.total}</span>
-          <span className="text-xs text-muted-foreground uppercase tracking-wide">
-            {stats.total !== stats.fullTotal ? 'Showing' : 'Total'}
-          </span>
-        </div>
-        <div className="flex flex-col border-l-2 border-l-red-500 pl-3">
-          <span className="text-2xl font-bold">{stats.declining}</span>
-          <span className="text-xs text-muted-foreground uppercase tracking-wide">Declining</span>
-        </div>
-        <div className="flex flex-col border-l-2 border-l-emerald-500 pl-3">
-          <span className="text-2xl font-bold">{stats.improving}</span>
-          <span className="text-xs text-muted-foreground uppercase tracking-wide">Improving</span>
-        </div>
+      <StatsSummary>
+        <PrimaryStatBox value={stats.total} label={stats.total !== stats.fullTotal ? 'Showing' : 'Total'} />
+        <StatBox value={stats.declining} label="Declining" borderColor="border-l-red-500" />
+        <StatBox value={stats.improving} label="Improving" borderColor="border-l-emerald-500" />
         {(Object.keys(parameterCategoryColors) as ParameterCategory[]).map(cat => (
-          <div key={cat} className={cn("flex flex-col border-l-2 pl-3", categoryBorderColors[cat])}>
-            <span className="text-2xl font-bold">{stats.byCategory[cat]}</span>
-            <span className="text-xs text-muted-foreground uppercase tracking-wide">
-              {categoryLabels[cat]}
-            </span>
-          </div>
+          <StatBox
+            key={cat}
+            value={stats.byCategory[cat]}
+            label={categoryLabels[cat]}
+            borderColor={parameterCategoryColors[cat].borderColor}
+          />
         ))}
-      </div>
+      </StatsSummary>
 
       <DataTable columns={columns} data={filteredParameters} searchPlaceholder="Search parameters..." />
     </div>

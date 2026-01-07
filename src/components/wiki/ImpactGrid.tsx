@@ -165,9 +165,11 @@ interface ImpactListProps {
   nodeId: string
   /** Direction: 'from' shows what this node affects, 'to' shows what affects it */
   direction?: 'from' | 'to'
+  /** Compact table format instead of cards */
+  compact?: boolean
 }
 
-export function ImpactList({ nodeId, direction = 'from' }: ImpactListProps) {
+export function ImpactList({ nodeId, direction = 'from', compact = false }: ImpactListProps) {
   const entries = direction === 'from'
     ? impactGrid.filter(e => e.source === nodeId)
     : impactGrid.filter(e => e.target === nodeId)
@@ -179,6 +181,50 @@ export function ImpactList({ nodeId, direction = 'from' }: ImpactListProps) {
   // Sort by impact score descending
   const sorted = [...entries].sort((a, b) => b.impact - a.impact)
 
+  // Compact table format
+  if (compact) {
+    return (
+      <table className="w-full text-sm">
+        <thead>
+          <tr className="border-b border-slate-200 dark:border-slate-700">
+            <th className="text-left py-1.5 pr-3 font-medium w-16">Score</th>
+            <th className="text-left py-1.5 pr-3 font-medium">Factor</th>
+            <th className="text-left py-1.5 font-medium text-slate-500">Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sorted.map((entry, i) => {
+            const label = direction === 'from'
+              ? getNodeLabel(entry.target)
+              : getNodeLabel(entry.source)
+            return (
+              <tr key={i} className="border-b border-slate-100 dark:border-slate-800 last:border-0">
+                <td className="py-1.5 pr-3">
+                  <span
+                    className="inline-block px-2 py-0.5 rounded text-xs font-bold"
+                    style={{
+                      backgroundColor: getImpactColor(entry.impact, entry.direction),
+                      color: getTextColor(entry.impact)
+                    }}
+                  >
+                    {entry.impact}
+                  </span>
+                </td>
+                <td className="py-1.5 pr-3 font-medium">
+                  {getDirectionSymbol(entry.direction)} {label}
+                </td>
+                <td className="py-1.5 text-xs text-slate-500 dark:text-slate-400">
+                  {entry.notes}
+                </td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+    )
+  }
+
+  // Card format (original)
   return (
     <div className="space-y-2">
       {sorted.map((entry, i) => {
