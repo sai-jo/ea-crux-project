@@ -49,6 +49,8 @@ export const collections = {
         maturity: z.string().optional(),
         // Layout options
         fullWidth: z.boolean().optional(),
+        // Entity ID for sidebar InfoBox (when filename doesn't match entity ID)
+        entityId: z.string().optional(),
       }),
     }),
   }),

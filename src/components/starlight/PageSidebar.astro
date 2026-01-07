@@ -86,8 +86,13 @@ function getModelNodeId(): string | null {
   return null;
 }
 
-// Get the entity ID for the info box (derived from URL path)
+// Get the entity ID for the info box (from frontmatter or URL path)
 function getEntityId(): string | null {
+  // First check for explicit entityId in frontmatter
+  if ((frontmatter as any).entityId) {
+    return (frontmatter as any).entityId;
+  }
+
   const pathParts = pathname.split('/').filter(Boolean);
 
   // Handle AI Transition Model pages
