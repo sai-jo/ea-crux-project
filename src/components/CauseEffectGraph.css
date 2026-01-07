@@ -367,6 +367,12 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   white-space: normal;
   line-height: 1.5;
+  /* Limit height for long descriptions */
+  max-height: 120px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
 }
 
 .ceg-node__tooltip-arrow {
@@ -389,8 +395,10 @@
   transform: translateY(-50%);
   margin-top: 0;
   margin-right: 12px;
-  min-width: 250px;
-  max-width: 350px;
+  min-width: 200px;
+  max-width: 280px;
+  max-height: 100px;
+  -webkit-line-clamp: 4;
 }
 
 .ceg-node__tooltip--subitem .ceg-node__tooltip-arrow {

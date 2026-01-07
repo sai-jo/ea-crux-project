@@ -3,6 +3,15 @@ import { Handle, Position, type NodeProps, type Node } from '@xyflow/react';
 import type { CauseEffectNodeData } from '../types';
 import { NODE_TYPE_CONFIG, OUTCOME_COLORS, NODE_BORDER_RADIUS } from '../config';
 
+// Truncate description to reasonable tooltip length
+function truncateDescription(text: string | undefined, maxLength: number = 180): string {
+  if (!text) return '';
+  // Strip markdown links and formatting
+  const cleaned = text.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/[*_`]/g, '');
+  if (cleaned.length <= maxLength) return cleaned;
+  return cleaned.slice(0, maxLength).trim() + '...';
+}
+
 export function CauseEffectNode({ data, selected, id }: NodeProps<Node<CauseEffectNodeData>>) {
   const [showTooltip, setShowTooltip] = useState(false);
   const [hoveredSubItemIndex, setHoveredSubItemIndex] = useState<number | null>(null);
@@ -92,7 +101,7 @@ export function CauseEffectNode({ data, selected, id }: NodeProps<Node<CauseEffe
               )}
               {hoveredSubItemIndex === i && item.description && (
                 <div className="ceg-node__tooltip ceg-node__tooltip--subitem">
-                  {item.description}
+                  {truncateDescription(item.description)}
                   <div className="ceg-node__tooltip-arrow" />
                 </div>
               )}
@@ -103,7 +112,7 @@ export function CauseEffectNode({ data, selected, id }: NodeProps<Node<CauseEffe
 
       {showTooltip && data.description && hoveredSubItemIndex === null && (
         <div className="ceg-node__tooltip">
-          {data.description}
+          {truncateDescription(data.description, 250)}
           <div className="ceg-node__tooltip-arrow" />
         </div>
       )}
