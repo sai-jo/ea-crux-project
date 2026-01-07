@@ -9,6 +9,92 @@ import yaml from 'js-yaml';
 import graphYaml from './parameter-graph.yaml?raw';
 
 // Types for the raw YAML structure
+// All metadata lives in YAML - MDX files just contain custom content
+
+interface RawSubItemRatings {
+  changeability?: number;
+  xriskImpact?: number;
+  trajectoryImpact?: number;
+  uncertainty?: number;
+}
+
+interface RawKeyDebate {
+  topic: string;
+  description: string;
+}
+
+interface RawRelatedContentLink {
+  path: string;
+  title: string;
+}
+
+interface RawRelatedContent {
+  risks?: RawRelatedContentLink[];
+  responses?: RawRelatedContentLink[];
+  models?: RawRelatedContentLink[];
+  cruxes?: RawRelatedContentLink[];
+}
+
+// NEW: Current state tracking
+interface RawCurrentAssessment {
+  level: number;                    // 0-100 current level
+  trend: 'improving' | 'stable' | 'declining' | 'unknown';
+  confidence?: number;              // 0-1 confidence in assessment
+  lastUpdated?: string;             // YYYY-MM format
+  notes?: string;                   // Brief explanation
+}
+
+// NEW: Intervention mapping
+interface RawAddressedBy {
+  path: string;
+  title?: string;
+  effect: 'positive' | 'negative' | 'mixed';
+  strength?: 'strong' | 'medium' | 'weak';
+}
+
+// NEW: Metrics linkage
+interface RawMetricLink {
+  path: string;
+  title?: string;
+  type?: 'leading' | 'lagging' | 'proxy';
+}
+
+// NEW: Expert estimates (primarily for scenarios)
+interface RawEstimate {
+  source: string;
+  probability: number;              // 0-1
+  confidence?: [number, number];    // 80% CI as [low, high]
+  asOf?: string;                    // YYYY-MM format
+  url?: string;
+}
+
+// NEW: Warning indicators for tracking status
+interface RawWarningIndicator {
+  indicator: string;
+  status: string;
+  trend?: 'improving' | 'stable' | 'worsening';
+  concern?: 'low' | 'medium' | 'high';
+}
+
+interface RawSubItem {
+  id?: string;           // Slug identifier
+  label?: string;        // Display label (auto-derived from id if missing)
+  description?: string;  // Full description
+  probability?: string;  // Optional probability estimate (legacy)
+  href?: string;         // Optional explicit href (auto-generated from id if missing)
+  entityId?: string;     // Reference to entity in entities.yaml for full data
+  ratings?: RawSubItemRatings;
+  scope?: string;
+  keyDebates?: RawKeyDebate[];
+  relatedContent?: RawRelatedContent;
+  // NEW fields
+  currentAssessment?: RawCurrentAssessment;
+  addressedBy?: RawAddressedBy[];
+  metrics?: RawMetricLink[];
+  estimates?: RawEstimate[];
+  warningIndicators?: RawWarningIndicator[];
+}
+
 interface RawNode {
   id: string;
   label: string;
@@ -16,7 +102,7 @@ interface RawNode {
   type: 'cause' | 'intermediate' | 'effect';
   order?: number;  // Manual ordering within layer (0 = leftmost)
   subgroup?: string;  // Cluster within layer (e.g., 'ai' vs 'society')
-  subItems?: Array<{ label: string; probability?: string }>;
+  subItems?: RawSubItem[];
   confidence?: number;
   confidenceLabel?: string;
   question?: string;  // For outcome nodes - the key question they address
@@ -94,6 +180,48 @@ if (validationErrors.length > 0) {
   }
 }
 
+// Convert kebab-case id to Title Case label
+function idToLabel(id: string): string {
+  return id
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
+// Generate href for sub-item based on node type and id
+function generateSubItemHref(nodeType: string, nodeId: string, itemId: string): string {
+  const typePathMap: Record<string, string> = {
+    cause: 'factors',
+    intermediate: 'scenarios',
+    effect: 'outcomes',
+  };
+  const typePath = typePathMap[nodeType] || 'factors';
+  return `/ai-transition-model/${typePath}/${nodeId}/${itemId}/`;
+}
+
+// Enrich a sub-item with metadata from MDX frontmatter
+function enrichSubItem(item: RawSubItem, nodeType: string, nodeId: string): SubItem {
+  // Get ID from item (new DRY format) or derive from label (legacy format)
+  const itemId = item.id || item.label?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || '';
+
+  // All data comes from YAML - MDX files just contain custom prose content
+  return {
+    label: item.label || idToLabel(itemId),
+    description: item.description,
+    href: item.href || generateSubItemHref(nodeType, nodeId, itemId),
+    ratings: item.ratings,
+    scope: item.scope,
+    keyDebates: item.keyDebates,
+    relatedContent: item.relatedContent,
+    // NEW: Extended schema fields
+    currentAssessment: item.currentAssessment,
+    addressedBy: item.addressedBy,
+    metrics: item.metrics,
+    estimates: item.estimates,
+    warningIndicators: item.warningIndicators,
+  };
+}
+
 // Transform to React Flow format
 export const parameterNodes: Node<CauseEffectNodeData>[] = rawData.nodes.map(node => ({
   id: node.id,
@@ -105,7 +233,7 @@ export const parameterNodes: Node<CauseEffectNodeData>[] = rawData.nodes.map(nod
     type: node.type,
     order: node.order,  // Manual ordering for layout
     subgroup: node.subgroup,  // Cluster within layer
-    subItems: node.subItems,
+    subItems: node.subItems?.map(item => enrichSubItem(item, node.type, node.id)),
     confidence: node.confidence,
     confidenceLabel: node.confidenceLabel,
   },
@@ -159,6 +287,43 @@ export interface RelatedContentLink {
   title: string;
 }
 
+// NEW: Exported types for extended schema
+export interface CurrentAssessment {
+  level: number;
+  trend: 'improving' | 'stable' | 'declining' | 'unknown';
+  confidence?: number;
+  lastUpdated?: string;
+  notes?: string;
+}
+
+export interface AddressedBy {
+  path: string;
+  title?: string;
+  effect: 'positive' | 'negative' | 'mixed';
+  strength?: 'strong' | 'medium' | 'weak';
+}
+
+export interface MetricLink {
+  path: string;
+  title?: string;
+  type?: 'leading' | 'lagging' | 'proxy';
+}
+
+export interface Estimate {
+  source: string;
+  probability: number;
+  confidence?: [number, number];
+  asOf?: string;
+  url?: string;
+}
+
+export interface WarningIndicator {
+  indicator: string;
+  status: string;
+  trend?: 'improving' | 'stable' | 'worsening';
+  concern?: 'low' | 'medium' | 'high';
+}
+
 export interface RelatedContent {
   risks?: RelatedContentLink[];
   responses?: RelatedContentLink[];
@@ -174,6 +339,12 @@ export interface SubItem {
   scope?: string;
   keyDebates?: KeyDebate[];
   relatedContent?: RelatedContent;
+  // NEW: Extended schema fields
+  currentAssessment?: CurrentAssessment;
+  addressedBy?: AddressedBy[];
+  metrics?: MetricLink[];
+  estimates?: Estimate[];
+  warningIndicators?: WarningIndicator[];
 }
 
 export interface RootFactor {
@@ -205,15 +376,7 @@ export function getRootFactors(): RootFactor[] {
       href: (node as any).href,
       subgroup: node.subgroup,
       order: node.order,
-      subItems: node.subItems?.map(item => ({
-        label: item.label,
-        description: (item as any).description,
-        href: (item as any).href,
-        ratings: (item as any).ratings,
-        scope: (item as any).scope,
-        keyDebates: (item as any).keyDebates,
-        relatedContent: (item as any).relatedContent,
-      })),
+      subItems: node.subItems?.map(item => enrichSubItem(item, node.type, node.id)),
     }));
 }
 
@@ -227,15 +390,7 @@ export function getScenarios(): RootFactor[] {
       label: node.label,
       description: node.description,
       href: (node as any).href,
-      subItems: node.subItems?.map(item => ({
-        label: item.label,
-        description: (item as any).description,
-        href: (item as any).href,
-        ratings: (item as any).ratings,
-        scope: (item as any).scope,
-        keyDebates: (item as any).keyDebates,
-        relatedContent: (item as any).relatedContent,
-      })),
+      subItems: node.subItems?.map(item => enrichSubItem(item, node.type, node.id)),
     }));
 }
 

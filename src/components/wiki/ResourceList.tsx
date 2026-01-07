@@ -3,6 +3,7 @@ import { getResourcesByIds, getResourceById, resources } from '../../data';
 import type { Resource } from '../../data/schema';
 import { Badge } from '../ui/badge';
 import { cn } from '../../lib/utils';
+import { getResourceTypeLabel } from './shared/style-config';
 
 /**
  * Get icon for resource type
@@ -62,23 +63,6 @@ function getResourceTypeIcon(type: string): React.ReactNode {
   }
 }
 
-/**
- * Get human-readable label for resource type
- */
-function getResourceTypeLabel(type: string): string {
-  const labels: Record<string, string> = {
-    paper: 'Paper',
-    book: 'Book',
-    blog: 'Blog Post',
-    report: 'Report',
-    talk: 'Talk',
-    podcast: 'Podcast',
-    government: 'Government',
-    reference: 'Reference',
-    web: 'Web',
-  };
-  return labels[type] || 'Link';
-}
 
 interface ResourceListProps {
   /**

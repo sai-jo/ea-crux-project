@@ -90,4 +90,11 @@ export { FactorScope } from './FactorScope';
 export { FactorSubItemsList, AllFactorsSubItems } from './FactorSubItemsList';
 export { FactorRelationshipDiagram, FullModelDiagram } from './FactorRelationshipDiagram';
 export { ImpactGrid, ImpactList } from './ImpactGrid';
+export { TransitionModelContent } from './TransitionModelContent';
+
+// AI Transition Model - Extended schema components
+export { FactorStatusBadge, FactorStatusCard } from './FactorStatusBadge';
+export { InterventionsList, InterventionsCard } from './InterventionsList';
+export { EstimatesPanel, EstimatesCard } from './EstimatesPanel';
+export { WarningIndicatorsTable, WarningIndicatorsCard } from './WarningIndicatorsTable';
 

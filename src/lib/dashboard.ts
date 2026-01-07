@@ -159,9 +159,14 @@ export function getRecentlyUpdated(limit = 10): { id: string; title: string; dat
 /**
  * Find risks without any responses linked to them
  */
+// Helper to check if a type is a risk-like type
+function isRiskType(type: string): boolean {
+  return type === 'risk' || type === 'risk-factor' || type === 'ai-transition-model-factor';
+}
+
 export function findRisksWithoutResponses(): EntityGap[] {
   const entities = getEntities();
-  const risks = entities.filter(e => e.type === 'risk' || e.type === 'risk-factor');
+  const risks = entities.filter(e => isRiskType(e.type));
   const responses = entities.filter(e =>
     e.type === 'safety-agenda' || e.type === 'intervention' || e.type === 'policy'
   );
@@ -172,7 +177,7 @@ export function findRisksWithoutResponses(): EntityGap[] {
   for (const response of responses) {
     if (response.relatedEntries) {
       for (const rel of response.relatedEntries) {
-        if (rel.type === 'risk' || rel.type === 'risk-factor') {
+        if (isRiskType(rel.type)) {
           risksWithResponses.add(rel.id);
         }
       }
@@ -201,9 +206,7 @@ export function findResponsesWithoutRisks(): EntityGap[] {
   return responses
     .filter(response => {
       if (!response.relatedEntries) return true;
-      return !response.relatedEntries.some(
-        rel => rel.type === 'risk' || rel.type === 'risk-factor'
-      );
+      return !response.relatedEntries.some(rel => isRiskType(rel.type));
     })
     .map(response => ({
       id: response.id,
@@ -326,9 +329,9 @@ export function getSummaryStats(): {
   const byType = countByType();
 
   const getRiskCount = () => {
-    const riskEntry = byType.find(t => t.type === 'risk');
-    const riskFactorEntry = byType.find(t => t.type === 'risk-factor');
-    return (riskEntry?.count || 0) + (riskFactorEntry?.count || 0);
+    return byType
+      .filter(t => isRiskType(t.type))
+      .reduce((sum, t) => sum + t.count, 0);
   };
 
   const getResponseCount = () => {
@@ -402,12 +405,12 @@ export function getWikiStats(): WikiStats {
     avgQuality: computeAverageQuality().toFixed(1),
     qualitySummary: { low, adequate, high },
     entityBreakdown: {
-      risks: getCount(['risk', 'risk-factor']),
+      risks: getCount(['risk', 'risk-factor', 'ai-transition-model-factor']),
       responses: getCount(['safety-agenda', 'intervention', 'policy']),
       orgs: getCount(['organization', 'lab', 'lab-academic', 'lab-research']),
       people: getCount(['researcher']),
       models: getCount(['model']),
-      concepts: getCount(['concept', 'crux', 'capability']),
+      concepts: getCount(['concept', 'crux', 'capability', 'ai-transition-model-parameter', 'ai-transition-model-metric', 'ai-transition-model-scenario', 'ai-transition-model-subitem']),
     },
     createdDate: 'December 2024',
     lastBuildDate: (stats as any).lastBuilt ? new Date((stats as any).lastBuilt).toLocaleDateString() : 'Unknown',

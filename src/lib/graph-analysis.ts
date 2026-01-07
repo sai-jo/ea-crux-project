@@ -68,6 +68,12 @@ export const TYPE_COLORS: Record<string, string> = {
   'lab-frontier': '#0369a1',
   researcher: '#7c3aed',     // violet
   funder: '#84cc16',         // lime
+  // AI Transition Model types
+  'ai-transition-model-parameter': '#8b5cf6',  // violet
+  'ai-transition-model-metric': '#a78bfa',     // lighter violet
+  'ai-transition-model-scenario': '#f97316',   // orange
+  'ai-transition-model-factor': '#ef4444',     // red (like risk-factor)
+  'ai-transition-model-subitem': '#fb923c',    // lighter orange
   default: '#6b7280',        // gray
 };
 

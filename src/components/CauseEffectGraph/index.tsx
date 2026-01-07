@@ -16,7 +16,7 @@ import '../CauseEffectGraph.css';
 
 import type { CauseEffectNodeData, CauseEffectEdgeData, GraphConfig } from './types';
 import { GroupNode, SubgroupNode, CauseEffectNode } from './nodes';
-import { DetailsPanel, Legend, DataView, OutlineView, InteractiveView, generateOutlineText, CopyIcon, CheckIcon, ExpandIcon, ShrinkIcon } from './components';
+import { Legend, DataView, OutlineView, InteractiveView, generateOutlineText, CopyIcon, CheckIcon, ExpandIcon, ShrinkIcon } from './components';
 import { getLayoutedElements, toYaml } from './layout';
 
 // Re-export types for external use
@@ -47,7 +47,6 @@ export default function CauseEffectGraph({
 }: CauseEffectGraphProps) {
   const [nodes, setNodes, onNodesChange] = useNodesState<Node<CauseEffectNodeData>>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge<CauseEffectEdgeData>>([]);
-  const [selectedNode, setSelectedNode] = useState<Node<CauseEffectNodeData> | null>(null);
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
   const [isLayouting, setIsLayouting] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -88,12 +87,6 @@ export default function CauseEffectGraph({
     [setEdges]
   );
 
-  const onNodeClick: NodeMouseHandler<Node<CauseEffectNodeData>> = useCallback(
-    (_, node) => setSelectedNode(node),
-    []
-  );
-
-  const onPaneClick = useCallback(() => setSelectedNode(null), []);
   const toggleFullscreen = useCallback(() => setIsFullscreen((prev) => !prev), []);
 
   const onNodeMouseEnter: NodeMouseHandler<Node<CauseEffectNodeData>> = useCallback(
@@ -262,10 +255,8 @@ export default function CauseEffectGraph({
               onNodesChange={onNodesChange}
               onEdgesChange={onEdgesChange}
               onConnect={onConnect}
-              onNodeClick={onNodeClick}
               onNodeMouseEnter={onNodeMouseEnter}
               onNodeMouseLeave={onNodeMouseLeave}
-              onPaneClick={onPaneClick}
               nodeTypes={nodeTypes}
               fitView
               fitViewOptions={{ padding: fitViewPadding }}
@@ -278,7 +269,6 @@ export default function CauseEffectGraph({
               <Controls />
             </ReactFlow>
             <Legend typeLabels={graphConfig?.typeLabels} customItems={graphConfig?.legendItems} />
-            <DetailsPanel node={selectedNode} onClose={() => setSelectedNode(null)} />
           </div>
         )}
         {activeTab === 'interactive' && (

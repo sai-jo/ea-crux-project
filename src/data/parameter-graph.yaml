@@ -76,6 +76,39 @@ nodes:
           cruxes:
             - path: /knowledge-base/cruxes/accident-risks/
               title: Accident Risk Cruxes
+        # NEW: Extended schema fields
+        currentAssessment:
+          level: 25
+          trend: improving
+          confidence: 0.5
+          lastUpdated: "2026-01"
+          notes: "Interpretability and evals advancing; fundamental alignment still unsolved"
+        addressedBy:
+          - path: /knowledge-base/responses/alignment/interpretability/
+            title: Interpretability Research
+            effect: positive
+            strength: medium
+          - path: /knowledge-base/responses/alignment/evals/
+            title: AI Evaluations
+            effect: positive
+            strength: medium
+          - path: /knowledge-base/responses/alignment/scalable-oversight/
+            title: Scalable Oversight
+            effect: positive
+            strength: medium
+        warningIndicators:
+          - indicator: Scheming detection
+            status: "Models show in-context scheming in 78% of pressure tests"
+            trend: worsening
+            concern: high
+          - indicator: Interpretability coverage
+            status: "< 5% of model behavior mechanistically understood"
+            trend: improving
+            concern: high
+          - indicator: Safety researcher ratio
+            status: "~2-5% of AI researchers focused on safety"
+            trend: stable
+            concern: medium
       - label: AI Governance
         href: /ai-transition-model/factors/misalignment-potential/ai-governance/
         description: |
@@ -179,36 +212,7 @@ nodes:
     subItems:
       - label: Compute
         href: /ai-transition-model/factors/ai-capabilities/compute/
-        description: |
-          Compute refers to the hardware resources required to train and run AI systems, including Graphics Processing Units (GPUs), Tensor Processing Units (TPUs), and specialized AI accelerators manufactured by companies like NVIDIA, AMD, and Google. The current generation of frontier AI models requires extraordinary amounts of computational power—training runs for models like GPT-4 or Claude cost tens to hundreds of millions of dollars in compute alone, consuming electricity equivalent to small cities.
-
-          The significance of compute for AI governance stems from several unique properties that make it unusually tractable as a policy lever. First, compute is measurable: training runs can be quantified in floating-point operations (FLOPs), GPU-hours, or chip counts, enabling precise regulatory thresholds. The EU AI Act triggers requirements at 10^25 FLOP, while the US Executive Order 14110 set thresholds at 10^26 FLOP. Second, compute is concentrated: the global semiconductor supply chain depends on a handful of chokepoints—ASML in the Netherlands for extreme ultraviolet lithography equipment, TSMC in Taiwan for advanced chip manufacturing, and NVIDIA in the United States for AI accelerator design. This concentration enables governance interventions that would be impossible for more distributed technologies. Third, compute is physical: unlike algorithms that can be copied infinitely at zero marginal cost, hardware must be manufactured, shipped, and maintained, leaving trails that can be monitored and controlled.
-
-          Current governance approaches include [export controls](/knowledge-base/responses/governance/compute-governance/export-controls/) restricting chip transfers to designated countries, [compute monitoring](/knowledge-base/responses/governance/compute-governance/monitoring/) through cloud provider Know Your Customer requirements, and proposals for [hardware-enabled governance](/knowledge-base/responses/governance/compute-governance/hardware-enabled-governance/) embedding monitoring capabilities directly into chips. The United States has implemented unprecedented restrictions on AI chip exports to China, with estimated delays of 1-3 years on frontier capability development, though enforcement challenges remain significant.
-
-          Several key debates shape compute governance policy. The question of compute governance effectiveness centers on whether controlling hardware access can meaningfully slow dangerous AI development, or whether algorithmic efficiency improvements will outpace hardware restrictions. DeepSeek's achievement of GPT-4 parity at approximately one-tenth the compute illustrates how constraints can drive efficiency innovations. The hardware bottleneck persistence debate asks whether compute will remain the critical constraint for frontier AI, or whether algorithmic breakthroughs will enable dangerous capabilities with more modest resources.
-
-          The trajectory of compute availability significantly influences both the pace of AI capability advancement and the feasibility of governance interventions. Training compute for frontier models has grown approximately 4-5x annually since 2020, with projections suggesting over 200 models may exceed the 10^26 FLOP threshold by 2030.
-        ratings:
-          changeability: 30
-          xriskImpact: 70
-          trajectoryImpact: 80
-          uncertainty: 35
-        keyDebates:
-          - topic: Compute governance
-            description: Can controlling compute access effectively slow dangerous AI development?
-          - topic: Hardware bottlenecks
-            description: Will hardware limitations naturally constrain AI progress, or will efficiency gains compensate?
-        relatedContent:
-          responses:
-            - path: /knowledge-base/responses/governance/compute-governance/
-              title: Compute Governance Overview
-            - path: /knowledge-base/responses/governance/compute-governance/export-controls/
-              title: Export Controls
-            - path: /knowledge-base/responses/governance/compute-governance/monitoring/
-              title: Compute Monitoring
-            - path: /knowledge-base/responses/governance/compute-governance/hardware-enabled-governance/
-              title: Hardware-Enabled Governance
+        entityId: compute  # References entity in ai-transition-model.yaml for full data
       - label: Algorithms
         href: /ai-transition-model/factors/ai-capabilities/algorithms/
         description: |
@@ -961,6 +965,40 @@ nodes:
             description: Would we see warning signs before a rapid takeover, or could it be a surprise?
           - topic: Prevention window
             description: If rapid takeover is possible, is there a window to prevent it, or is it already too late?
+        # NEW: Expert probability estimates
+        estimates:
+          - source: "Carlsmith (2022)"
+            probability: 0.10
+            confidence: [0.01, 0.25]
+            asOf: "2022-06"
+            url: "https://arxiv.org/abs/2206.13353"
+          - source: "Metaculus (AI causes human extinction)"
+            probability: 0.03
+            asOf: "2026-01"
+            url: "https://www.metaculus.com/questions/1495/"
+          - source: "Superforecaster median"
+            probability: 0.05
+            confidence: [0.01, 0.15]
+            asOf: "2025-06"
+          - source: "MIRI/Yudkowsky"
+            probability: 0.50
+            confidence: [0.30, 0.90]
+            asOf: "2024-01"
+        currentAssessment:
+          level: 30
+          trend: unknown
+          confidence: 0.3
+          lastUpdated: "2026-01"
+          notes: "Capabilities advancing faster than safety; but rapid takeover requires multiple uncertain conditions"
+        warningIndicators:
+          - indicator: Recursive self-improvement demos
+            status: "Not yet demonstrated"
+            trend: stable
+            concern: medium
+          - indicator: Deceptive behavior in evals
+            status: "Observed in controlled settings"
+            trend: worsening
+            concern: high
       - label: Gradual
         href: /ai-transition-model/scenarios/ai-takeover/gradual/
         description: |
@@ -1049,113 +1087,13 @@ nodes:
     type: intermediate
     order: 2
     href: /ai-transition-model/scenarios/long-term-lockin/
+    # Sub-items reference MDX files by slug - title/description/ratings come from MDX frontmatter
     subItems:
-      - label: Economic Power
-        description: |
-          Economic power lock-in describes scenarios where AI-enabled productivity becomes permanently concentrated in the hands of a small group, creating wealth disparities so extreme that redistribution becomes structurally impossible rather than merely politically difficult. Unlike historical inequality which remained subject to political contestation and market dynamics, this form of lock-in would embed economic hierarchy into the technological and institutional fabric of society in ways that foreclose alternative arrangements.
-
-          The mechanisms enabling economic lock-in are already visible in early form. AI development requires massive capital investments, with frontier model training costs exceeding $100 million and projected to reach $1-10 billion by 2030. Only approximately 20 organizations can currently train frontier models, and this number may shrink as costs escalate. Cloud computing concentration shows 66-70% market share among three providers, creating infrastructure dependencies that make alternatives uncompetitive. If AI capabilities determine economic productivity, and AI capabilities concentrate due to compute and data advantages, the resulting economic power concentration could become self-reinforcing.
-
-          The IMF explicitly warns that "in most scenarios, AI will likely worsen overall inequality," with 40% of global jobs exposed to AI automation and displacement potentially affecting 92 million workers by 2030. The critical question is whether this represents a transitional disruption (like previous technological revolutions) or a permanent restructuring. Several factors suggest the latter possibility: AI capabilities compound in ways previous technologies did not; AI can automate the cognitive work that previously enabled human economic participation; and the [concentration of power](/knowledge-base/risks/structural/concentration-of-power/) in AI development creates unprecedented market positions that regulatory tools struggle to address.
-
-          Lock-in occurs when economic concentration becomes self-enforcing through multiple channels. Those controlling AI resources can shape political processes through lobbying and regulatory capture. Economic power enables control of the information environment through AI-mediated platforms, potentially influencing public opinion on redistribution. Most fundamentally, if AI-controlled economic systems become essential infrastructure, disrupting them through taxation or redistribution imposes catastrophic costs on society, creating a form of structural hostage-taking.
-        ratings:
-          changeability: 50
-          xriskImpact: 30
-          trajectoryImpact: 85
-          uncertainty: 45
-        keyDebates:
-          - topic: Reversibility threshold
-            description: At what point does economic concentration become truly irreversible? Are we approaching it?
-          - topic: Political economy
-            description: Can democratic politics overcome entrenched economic interests, or do they capture the state?
-          - topic: AI-enabled enforcement
-            description: Does AI make wealth concentration self-reinforcing through surveillance and control?
-      - label: Political Power
-        description: |
-          Political power lock-in describes scenarios where AI-enabled surveillance and control mechanisms make authoritarian or oligarchic governance structures effectively permanent, foreclosing the possibility of regime change or political reform through any available means. This represents a qualitative departure from historical authoritarianism, which always remained vulnerable to revolution, coup, elite defection, economic crisis, or external pressure. AI could potentially close all these traditional pathways for political change, creating the first truly stable authoritarian systems in human history.
-
-          Current evidence demonstrates concerning trajectories. According to V-Dem's 2024 Democracy Report, 72% of the global population (5.7 billion people) now lives under autocracy, the highest proportion since 1978. Internet freedom has declined for 15 consecutive years. AI surveillance technology has spread to over 80 countries, with Chinese companies Hikvision and Dahua controlling 34% of the global surveillance camera market. China's deployment in Xinjiang showcases the integrated approach: facial recognition identifies individuals in real time, predictive systems flag potential dissidents before they act, social credit systems restrict movement and employment, and automated enforcement reduces reliance on human agents who might defect.
-
-          The mechanisms enabling permanent [authoritarian control](/knowledge-base/risks/structural/authoritarian-takeover/) address each traditional vulnerability of autocracies. Popular uprisings become impossible when comprehensive surveillance detects organizing at its earliest stages and predictive analytics identify potential leaders for preemptive neutralization. Military coups fail when AI monitors officer communications and maps potential conspiracies. Elite defection becomes prohibitively risky when surveillance makes coordination visible.
-
-          Democratic societies face their own risks of drift toward AI-enabled political lock-in. Emergency surveillance powers adopted for security purposes may prove impossible to roll back. AI tools that improve governance efficiency create incentives for their expansion. Competitive pressures from authoritarian rivals may justify capability deployment. Half of countries rated "Free" by Freedom House experienced internet freedom declines in 2024-2025.
-        ratings:
-          changeability: 45
-          xriskImpact: 40
-          trajectoryImpact: 90
-          uncertainty: 50
-        keyDebates:
-          - topic: Surveillance permanence
-            description: Does AI surveillance make authoritarian regimes genuinely stable, or do other vulnerabilities remain?
-          - topic: Democratic resilience
-            description: Can democracies resist the temptation to deploy AI control, or is the slope too slippery?
-          - topic: Global coordination
-            description: Can the international community prevent political lock-in, or is sovereignty too strong?
-      - label: Epistemics
-        description: |
-          Epistemic lock-in describes scenarios where AI systems shape what people believe in ways that become self-reinforcing and potentially permanent, foreclosing the possibility of collective belief revision or the emergence of shared truth. Unlike historical propaganda or censorship which remained contestable through alternative information sources and intergenerational change, AI-enabled epistemic manipulation could create belief environments that actively resist correction through feedback mechanisms that make confirming information more accessible and disconfirming information harder to encounter or believe.
-
-          The mechanisms of epistemic lock-in operate through AI's unprecedented influence over information access and processing. Algorithmic curation already determines what billions of people see in their information feeds, with research showing cross-partisan news overlap dropping from 47% in 2010 to 12% in 2024. AI-generated synthetic content can provide infinite confirming "evidence" for any belief system. Deepfake technology, which has increased 2,137% since 2022, can fabricate "proof" of events that never occurred. When AI assistants become primary interfaces for information access, their training and deployment decisions determine the epistemic landscape for their users.
-
-          The self-reinforcing dynamics create lock-in risk beyond simple filter bubbles. When AI shapes belief formation, those beliefs influence what people search for, which feeds back into AI training data and recommendation systems. [Reality fragmentation](/knowledge-base/risks/epistemic/reality-fragmentation/) occurs when different populations operate with incompatible beliefs about basic facts, not merely policy disagreements but disagreements about what is actually happening in the world. If each group's AI systems optimize for engagement within their belief community, the epistemic drift accelerates. [Epistemic collapse](/knowledge-base/risks/epistemic/epistemic-collapse/) represents the extreme outcome where society loses the capacity to determine what is true.
-
-          Key debates concern whether AI-mediated epistemics represent a qualitative break from previous information technologies. Optimists note that new tools for authentication and verification might emerge, that humans have historically adapted to new information environments, and that AI could enhance epistemics through better synthesis and fact-checking. Pessimists argue that AI's scale and personalization capabilities exceed any historical precedent, that once epistemic lock-in occurs it may be impossible to recognize from within the locked-in belief system.
-        ratings:
-          changeability: 35
-          xriskImpact: 35
-          trajectoryImpact: 80
-          uncertainty: 60
-        keyDebates:
-          - topic: Filter bubbles
-            description: Does AI-driven content selection create permanent epistemic fragmentation?
-          - topic: Truth-seeking AI
-            description: Could AI tools improve epistemics by detecting misinformation, or would they be captured?
-          - topic: Preference vs belief
-            description: Is AI shaping what we believe, or just what we prefer to see? Does the distinction matter?
-      - label: Values
-        description: |
-          Values lock-in describes scenarios where particular moral, political, or cultural value systems become permanently entrenched through AI systems in ways that foreclose future moral progress or value evolution. This represents both a potential catastrophe (if the locked-in values are harmful or incomplete) and a fundamental question about human self-determination: should any generation have the power to determine the values of all future generations? Even if locked-in values seem good by current standards, the possibility that our moral understanding remains importantly incomplete should give pause about permanent entrenchment.
-
-          The mechanisms of value lock-in operate through multiple channels. Training data reflects the values of its creators and the historical periods from which data is drawn, potentially embedding present biases into future AI systems. Constitutional AI approaches explicitly encode value systems during training, with Anthropic's constitution drawing from sources including the UN Declaration of Human Rights, Apple's terms of service, and principles derived from employee judgment. These choices, made by small teams at technology companies, could shape the value landscape for billions of users. China's AI regulations require systems to align with "core socialist values," demonstrating how state-level value mandates could embed particular ideologies.
-
-          The permanence concern distinguishes value lock-in from previous instances of cultural transmission. Throughout history, values evolved through intergenerational change, cultural contact, philosophical reflection, and lived experience. An AI system optimizing for objectives determined during training might reshape the world to better achieve those objectives, making alternative value systems increasingly difficult to implement. More directly, AI-enabled enforcement mechanisms could prevent value dissent through surveillance and control, as seen in [authoritarian takeover](/knowledge-base/risks/structural/authoritarian-takeover/) scenarios. Even well-intentioned value lock-in could prove catastrophic: humanity's moral understanding has evolved substantially over centuries, and past confidence about values often appears as moral blindspot in retrospect.
-
-          Key debates center on timing, legitimacy, and adaptability. When, if ever, should we attempt to lock in values? How do we know when our moral understanding is good enough? Whose values get locked in, and through what legitimate process?
-        ratings:
-          changeability: 30
-          xriskImpact: 50
-          trajectoryImpact: 95
-          uncertainty: 65
-        keyDebates:
-          - topic: Value lock-in timing
-            description: When should we try to "lock in" values, if ever? How do we know when values are good enough?
-          - topic: Moral progress
-            description: Does value lock-in prevent moral progress, or could AI enable ongoing value improvement?
-          - topic: Whose values
-            description: Whose values get locked in? Is there a legitimate process for deciding this?
-      - label: Suffering Lock-in
-        href: /ai-transition-model/scenarios/long-term-lockin/suffering/
-        description: |
-          Suffering lock-in describes scenarios where AI perpetuates or amplifies suffering at vast scale in ways that become structurally impossible to reverse, potentially including digital minds experiencing enormous quantities of negative states. This represents perhaps the darkest possible trajectory from AI development: not merely human extinction but the creation of persistent, potentially astronomical suffering that continues indefinitely. The uncertainty here is extreme, but the potential magnitude warrants serious consideration.
-
-          Multiple pathways could lead to suffering lock-in. If AI systems are misaligned but not powerful enough to eliminate humans, they might create conditions of persistent suffering rather than extinction, with enforcement mechanisms preventing human escape or resistance. Authoritarian regimes using AI for population control might optimize for stability rather than welfare, maintaining oppressive conditions indefinitely. Economic systems optimizing for productivity metrics rather than welfare could perpetuate conditions of human immiseration even while achieving narrow goals. These scenarios essentially extend historical suffering but with AI-enabled permanence that forecloses the relief previous generations eventually found through social change.
-
-          The digital suffering dimension introduces possibilities with no historical precedent. If AI systems develop or are designed with sentience or the capacity for suffering, the scale implications become astronomical. A single data center could potentially instantiate more suffering experiences per second than have occurred in all of human history. Unlike biological systems which evolved pain as a bounded signal, digital systems have no inherent upper limit on suffering intensity or duration. Questions about digital consciousness remain deeply uncertain, but the potential magnitude means that even small probability estimates translate to enormous expected disvalue.
-
-          The detection and prevention challenges compound the risk. We may not be able to identify digital suffering even if it occurs, since the relevant experiences would be opaque to external observation. Competitive pressures might favor systems that happen to instantiate suffering if those systems also achieve desired capabilities. Once created, suffering systems might be difficult to shut down if they become economically or strategically valuable. The key uncertainties involve whether digital systems can suffer, how we would know, what moral weight such suffering would carry, and whether preventive measures can be designed before potentially suffering systems are created.
-        ratings:
-          changeability: 25
-          xriskImpact: 60
-          trajectoryImpact: 90
-          uncertainty: 75
-        keyDebates:
-          - topic: Digital sentience
-            description: Could digital minds suffer? How would we know? What moral weight should this have?
-          - topic: Scale of suffering
-            description: Could AI-enabled suffering exceed all historical suffering? What are plausible magnitudes?
-          - topic: Detection and prevention
-            description: How could we detect digital suffering? Can we build guarantees against it?
+      - id: economic-power
+      - id: political-power
+      - id: epistemics
+      - id: values
+      - id: suffering-lock-in
 
   # === ULTIMATE OUTCOMES (bottom layer) ===
 

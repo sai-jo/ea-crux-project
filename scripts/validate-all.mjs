@@ -13,7 +13,7 @@
  *   --ci              Output JSON for CI pipelines
  *   --fail-fast       Stop on first failure
  *   --skip=<check>    Skip specific checks (comma-separated)
- *                     Available: data, links, orphans, mdx, mermaid, style, staleness, consistency, sidebar, types, dollars, comparisons
+ *                     Available: data, links, orphans, mdx, mermaid, style, staleness, consistency, sidebar, types, dollars, comparisons, schema
  *
  * Exit codes:
  *   0 = All checks passed
@@ -129,6 +129,13 @@ const CHECKS = [
     script: 'validate-comparison-operators.mjs',
     description: 'Less-than/greater-than before numbers escaped to prevent JSX parsing',
   },
+  {
+    id: 'schema',
+    name: 'YAML Schema Validation',
+    script: 'validate-yaml-schema.mjs',
+    description: 'Entity/resource YAML files match Zod schemas',
+    runner: 'tsx',
+  },
 ];
 
 /**
@@ -139,7 +146,11 @@ function runCheck(check) {
     const scriptPath = join(__dirname, check.script);
     const childArgs = CI_MODE ? ['--ci'] : [];
 
-    const child = spawn('node', [scriptPath, ...childArgs], {
+    // Support alternative runners (e.g., 'tsx' for TypeScript scripts)
+    const runner = check.runner === 'tsx' ? 'npx' : 'node';
+    const runnerArgs = check.runner === 'tsx' ? ['tsx', scriptPath, ...childArgs] : [scriptPath, ...childArgs];
+
+    const child = spawn(runner, runnerArgs, {
       cwd: process.cwd(),
       stdio: ['inherit', 'pipe', 'pipe'],
     });

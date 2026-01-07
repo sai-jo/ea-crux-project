@@ -1,0 +1,554 @@
+/**
+ * TransitionModelContent - Auto-generates page content from entity data
+ *
+ * Single component that renders all standard sections for AI Transition Model pages:
+ * - Current assessment (status level and trend)
+ * - Ratings table
+ * - Scope definition
+ * - Key debates
+ * - Warning indicators
+ * - Interventions
+ * - Influence relationships
+ * - Related content links
+ *
+ * Usage: <TransitionModelContent entityId="tmc-compute" client:load />
+ */
+
+import React from 'react';
+import { getEntityById } from '../../data';
+import {
+  getFactorScenarioInfluences,
+  getScenarioFactorInfluences,
+  getScenarioOutcomeConnections,
+} from '../../data/parameter-graph-data';
+import { FactorStatusCard } from './FactorStatusBadge';
+import { InterventionsCard } from './InterventionsList';
+import { EstimatesCard } from './EstimatesPanel';
+import { WarningIndicatorsCard } from './WarningIndicatorsTable';
+
+// Types for TMC entity data
+interface TMCRatings {
+  changeability?: number;
+  xriskImpact?: number;
+  trajectoryImpact?: number;
+  uncertainty?: number;
+}
+
+interface TMCKeyDebate {
+  topic: string;
+  description: string;
+}
+
+interface TMCRelatedContentLink {
+  path: string;
+  title: string;
+}
+
+interface TMCRelatedContent {
+  risks?: TMCRelatedContentLink[];
+  responses?: TMCRelatedContentLink[];
+  models?: TMCRelatedContentLink[];
+  cruxes?: TMCRelatedContentLink[];
+}
+
+interface TMCCurrentAssessment {
+  level: number;
+  trend: 'improving' | 'stable' | 'declining' | 'unknown';
+  confidence?: number;
+  lastUpdated?: string;
+  notes?: string;
+}
+
+interface TMCAddressedBy {
+  id?: string;
+  path?: string;
+  title?: string;
+  effect: 'positive' | 'negative' | 'mixed';
+  strength?: 'strong' | 'medium' | 'weak';
+}
+
+interface TMCWarningIndicator {
+  indicator: string;
+  status: string;
+  trend?: 'improving' | 'stable' | 'worsening';
+  concern?: 'low' | 'medium' | 'high';
+}
+
+interface TMCEstimate {
+  source: string;
+  probability: number;
+  confidence?: [number, number];
+  asOf?: string;
+  url?: string;
+}
+
+// Extended entity type for TMC entities
+interface TMCEntity {
+  id: string;
+  type: string;
+  title: string;
+  description?: string;
+  parentFactor?: string;
+  path?: string;
+  ratings?: TMCRatings;
+  scope?: string;
+  keyDebates?: TMCKeyDebate[];
+  relatedContent?: TMCRelatedContent;
+  currentAssessment?: TMCCurrentAssessment;
+  addressedBy?: TMCAddressedBy[];
+  warningIndicators?: TMCWarningIndicator[];
+  estimates?: TMCEstimate[];
+}
+
+interface TransitionModelContentProps {
+  // Primary: Provide entityId (e.g., "tmc-compute")
+  entityId?: string;
+  // Legacy: slug is converted to tmc-{slug} for backward compatibility
+  slug?: string;
+  // Control what sections to show
+  showRatings?: boolean;
+  showScope?: boolean;
+  showDebates?: boolean;
+  showRelated?: boolean;
+  showInfluences?: boolean;
+  showDescription?: boolean;
+  // Extended schema sections
+  showCurrentAssessment?: boolean;
+  showInterventions?: boolean;
+  showEstimates?: boolean;
+  showWarningIndicators?: boolean;
+}
+
+function RatingsSection({ ratings }: { ratings: TMCRatings }) {
+  const metrics = [
+    { key: 'changeability' as const, label: 'Changeability', desc: (v: number) => v <= 33 ? 'Very difficult to influence' : v <= 66 ? 'Moderately changeable' : 'Relatively tractable' },
+    { key: 'xriskImpact' as const, label: 'X-risk Impact', desc: (v: number) => v <= 33 ? 'Low direct x-risk impact' : v <= 66 ? 'Moderate x-risk impact' : 'High direct x-risk impact' },
+    { key: 'trajectoryImpact' as const, label: 'Trajectory Impact', desc: (v: number) => v <= 33 ? 'Low long-term effects' : v <= 66 ? 'Moderate long-term effects' : 'High long-term effects' },
+    { key: 'uncertainty' as const, label: 'Uncertainty', desc: (v: number) => v <= 33 ? 'Lower uncertainty' : v <= 66 ? 'Moderate uncertainty' : 'High uncertainty' },
+  ];
+
+  return (
+    <div className="tm-section tm-ratings">
+      <table className="tm-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Score</th>
+            <th>Interpretation</th>
+          </tr>
+        </thead>
+        <tbody>
+          {metrics.map(({ key, label, desc }) => {
+            const value = ratings[key];
+            if (value === undefined) return null;
+            return (
+              <tr key={key}>
+                <td className="tm-metric-name">{label}</td>
+                <td className="tm-metric-value">{value}/100</td>
+                <td className="tm-metric-desc">{desc(value)}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function ScopeSection({ scope }: { scope: string }) {
+  const lines = scope.split('\n').filter(line => line.trim());
+  const includes: string[] = [];
+  const excludes: string[] = [];
+  let currentSection: 'includes' | 'excludes' | null = null;
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (trimmed.toLowerCase().startsWith('includes:')) {
+      currentSection = 'includes';
+      const content = trimmed.slice('includes:'.length).trim();
+      if (content) includes.push(content);
+    } else if (trimmed.toLowerCase().startsWith('excludes:')) {
+      currentSection = 'excludes';
+      const content = trimmed.slice('excludes:'.length).trim();
+      if (content) excludes.push(content);
+    } else if (currentSection === 'includes') {
+      includes.push(trimmed);
+    } else if (currentSection === 'excludes') {
+      excludes.push(trimmed);
+    }
+  }
+
+  if (includes.length === 0 && excludes.length === 0) return null;
+
+  return (
+    <div className="tm-section tm-scope">
+      <h3>Scope</h3>
+      {includes.length > 0 && (
+        <div className="tm-scope-group">
+          <strong>Includes:</strong>
+          <ul>
+            {includes.map((item, i) => <li key={i}>{item}</li>)}
+          </ul>
+        </div>
+      )}
+      {excludes.length > 0 && (
+        <div className="tm-scope-group">
+          <strong>Excludes:</strong>
+          <ul>
+            {excludes.map((item, i) => <li key={i}>{item}</li>)}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function DebatesSection({ debates }: { debates: TMCKeyDebate[] }) {
+  if (debates.length === 0) return null;
+
+  return (
+    <div className="tm-section tm-debates">
+      <h3>Key Debates</h3>
+      <table className="tm-table">
+        <thead>
+          <tr>
+            <th>Debate</th>
+            <th>Core Question</th>
+          </tr>
+        </thead>
+        <tbody>
+          {debates.map((debate, i) => (
+            <tr key={i}>
+              <td className="tm-debate-topic">{debate.topic}</td>
+              <td>{debate.description}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function RelatedContentSection({ related }: { related: TMCRelatedContent }) {
+  const sections = [
+    { key: 'risks' as const, label: 'Related Risks', icon: '' },
+    { key: 'responses' as const, label: 'Related Responses', icon: '' },
+    { key: 'models' as const, label: 'Related Models', icon: '' },
+    { key: 'cruxes' as const, label: 'Related Cruxes', icon: '' },
+  ];
+
+  const hasAny = sections.some(s => related[s.key]?.length);
+  if (!hasAny) return null;
+
+  return (
+    <div className="tm-section tm-related">
+      <h3>Related Content</h3>
+      <div className="tm-related-grid">
+        {sections.map(({ key, label, icon }) => {
+          const items = related[key];
+          if (!items?.length) return null;
+          return (
+            <div key={key} className="tm-related-group">
+              <h4>{icon} {label}</h4>
+              <ul>
+                {items.map((item, i) => (
+                  <li key={i}>
+                    <a href={item.path}>{item.title}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function InfluencesSection({ parentFactor }: { parentFactor: string }) {
+  // Use parentFactor to determine which influences to show
+  // For factors (cause nodes), show scenarios influenced
+  // For scenarios (intermediate nodes), show factors that influence and outcomes affected
+
+  // Try as a factor first (cause node)
+  const factorInfluences = getFactorScenarioInfluences(parentFactor);
+  if (factorInfluences.length > 0) {
+    return (
+      <div className="tm-section tm-influences">
+        <h3>Scenarios Influenced</h3>
+        <table className="tm-table">
+          <thead>
+            <tr>
+              <th>Scenario</th>
+              <th>Effect</th>
+              <th>Strength</th>
+            </tr>
+          </thead>
+          <tbody>
+            {factorInfluences.map((inf, i) => (
+              <tr key={i}>
+                <td>
+                  <a href={`/ai-transition-model/scenarios/${inf.scenarioId}/`}>
+                    {inf.scenarioLabel}
+                  </a>
+                </td>
+                <td>{inf.effect === 'increases' ? '↑ Increases' : inf.effect === 'decreases' ? '↓ Decreases' : '—'}</td>
+                <td>{inf.strength || '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+
+  // Try as a scenario (intermediate node)
+  const scenarioFactorInfluences = getScenarioFactorInfluences(parentFactor);
+  const outcomeConnections = getScenarioOutcomeConnections(parentFactor);
+
+  if (scenarioFactorInfluences.length > 0 || outcomeConnections.length > 0) {
+    return (
+      <>
+        {scenarioFactorInfluences.length > 0 && (
+          <div className="tm-section tm-influences">
+            <h3>Influenced By</h3>
+            <table className="tm-table">
+              <thead>
+                <tr>
+                  <th>Factor</th>
+                  <th>Effect</th>
+                  <th>Strength</th>
+                </tr>
+              </thead>
+              <tbody>
+                {scenarioFactorInfluences.map((inf, i) => (
+                  <tr key={i}>
+                    <td>
+                      <a href={`/ai-transition-model/factors/${inf.factorId}/`}>
+                        {inf.factorLabel}
+                      </a>
+                    </td>
+                    <td>{inf.effect === 'increases' ? '↑ Increases' : inf.effect === 'decreases' ? '↓ Decreases' : '—'}</td>
+                    <td>{inf.strength || '—'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+        {outcomeConnections.length > 0 && (
+          <div className="tm-section tm-outcomes">
+            <h3>Outcomes Affected</h3>
+            <ul className="tm-outcome-list">
+              {outcomeConnections.map((conn, i) => (
+                <li key={i}>
+                  <a href={`/ai-transition-model/outcomes/${conn.outcomeId}/`}>
+                    {conn.outcomeLabel}
+                  </a>
+                  {conn.effect && (
+                    <span className="tm-effect">
+                      {conn.effect === 'increases' ? ' ↑' : conn.effect === 'decreases' ? ' ↓' : ''}
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </>
+    );
+  }
+
+  return null;
+}
+
+export function TransitionModelContent({
+  entityId,
+  slug,
+  showRatings = true,
+  showScope = true,
+  showDebates = true,
+  showRelated = true,
+  showInfluences = true,
+  showDescription = false,
+  showCurrentAssessment = true,
+  showInterventions = true,
+  showEstimates = true,
+  showWarningIndicators = true,
+}: TransitionModelContentProps) {
+  // Support legacy slug prop by converting to tmc-{slug}
+  let effectiveEntityId = entityId;
+  if (!effectiveEntityId && slug) {
+    effectiveEntityId = `tmc-${slug}`;
+  }
+
+  if (!effectiveEntityId) {
+    return <div className="tm-error">No entityId provided. Use entityId="tmc-compute" format.</div>;
+  }
+
+  // Direct entity lookup from database
+  const rawEntity = getEntityById(effectiveEntityId);
+
+  if (!rawEntity) {
+    return <div className="tm-error">No entity found for ID "{effectiveEntityId}". Ensure the entity exists in ai-transition-model.yaml.</div>;
+  }
+
+  // Cast to TMC entity type for TypeScript
+  const entity = rawEntity as unknown as TMCEntity;
+
+  return (
+    <div className="tm-content">
+      {showDescription && entity.description && (
+        <div className="tm-section tm-description">
+          <p>{entity.description}</p>
+        </div>
+      )}
+
+      {/* Current Assessment - shows status level and trend */}
+      {showCurrentAssessment && entity.currentAssessment && (
+        <FactorStatusCard assessment={entity.currentAssessment} />
+      )}
+
+      {showRatings && entity.ratings && <RatingsSection ratings={entity.ratings} />}
+
+      {showScope && entity.scope && <ScopeSection scope={entity.scope} />}
+
+      {showDebates && entity.keyDebates && entity.keyDebates.length > 0 && (
+        <DebatesSection debates={entity.keyDebates} />
+      )}
+
+      {/* Probability Estimates (primarily for scenarios) */}
+      {showEstimates && entity.estimates && entity.estimates.length > 0 && (
+        <EstimatesCard estimates={entity.estimates} />
+      )}
+
+      {/* Warning Indicators */}
+      {showWarningIndicators && entity.warningIndicators && entity.warningIndicators.length > 0 && (
+        <WarningIndicatorsCard indicators={entity.warningIndicators} />
+      )}
+
+      {/* Interventions that address this factor */}
+      {showInterventions && entity.addressedBy && entity.addressedBy.length > 0 && (
+        <InterventionsCard interventions={entity.addressedBy} />
+      )}
+
+      {/* Show influences based on parentFactor */}
+      {showInfluences && entity.parentFactor && (
+        <InfluencesSection parentFactor={entity.parentFactor} />
+      )}
+
+      {showRelated && entity.relatedContent && <RelatedContentSection related={entity.relatedContent} />}
+
+      <style>{`
+        .tm-content {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+        .tm-section h3 {
+          font-size: 1.1rem;
+          font-weight: 600;
+          margin: 0 0 0.75rem 0;
+          color: var(--sl-color-white);
+        }
+        .tm-table {
+          width: 100%;
+          border-collapse: collapse;
+          font-size: 0.9rem;
+        }
+        .tm-table th,
+        .tm-table td {
+          padding: 0.5rem 0.75rem;
+          text-align: left;
+          border-bottom: 1px solid var(--sl-color-gray-5);
+        }
+        .tm-table th {
+          font-weight: 600;
+          color: var(--sl-color-gray-2);
+          font-size: 0.8rem;
+          text-transform: uppercase;
+          letter-spacing: 0.03em;
+        }
+        .tm-table tr:last-child td {
+          border-bottom: none;
+        }
+        .tm-metric-name,
+        .tm-debate-topic {
+          font-weight: 500;
+        }
+        .tm-metric-value {
+          font-family: var(--sl-font-mono);
+          color: var(--sl-color-text-accent);
+        }
+        .tm-metric-desc {
+          color: var(--sl-color-gray-3);
+        }
+        .tm-scope-group {
+          margin-bottom: 0.75rem;
+        }
+        .tm-scope-group:last-child {
+          margin-bottom: 0;
+        }
+        .tm-scope-group ul {
+          margin: 0.25rem 0 0 1.25rem;
+          padding: 0;
+        }
+        .tm-scope-group li {
+          margin: 0.25rem 0;
+        }
+        .tm-related-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 1rem;
+        }
+        .tm-related-group h4 {
+          font-size: 0.9rem;
+          font-weight: 600;
+          margin: 0 0 0.5rem 0;
+        }
+        .tm-related-group ul {
+          margin: 0;
+          padding: 0 0 0 1rem;
+          list-style: disc;
+        }
+        .tm-related-group li {
+          margin: 0.25rem 0;
+        }
+        .tm-related-group a {
+          color: var(--sl-color-text-accent);
+          text-decoration: none;
+        }
+        .tm-related-group a:hover {
+          text-decoration: underline;
+        }
+        .tm-outcome-list {
+          margin: 0;
+          padding: 0 0 0 1.25rem;
+        }
+        .tm-outcome-list li {
+          margin: 0.5rem 0;
+        }
+        .tm-outcome-list a {
+          color: var(--sl-color-text-accent);
+          text-decoration: none;
+        }
+        .tm-outcome-list a:hover {
+          text-decoration: underline;
+        }
+        .tm-effect {
+          color: var(--sl-color-gray-3);
+          margin-left: 0.25rem;
+        }
+        .tm-error {
+          padding: 1rem;
+          background: var(--sl-color-red-low);
+          border: 1px solid var(--sl-color-red);
+          border-radius: 0.5rem;
+          color: var(--sl-color-red-high);
+        }
+      `}</style>
+    </div>
+  );
+}
+
+export default TransitionModelContent;

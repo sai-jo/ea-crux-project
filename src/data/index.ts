@@ -705,6 +705,12 @@ export function getEntityHref(id: string, type?: string): string {
     'intervention': '/knowledge-base/responses/',
     'historical': '/knowledge-base/history/',
     'model': '/knowledge-base/models/',
+    // AI Transition Model types
+    'ai-transition-model-parameter': '/ai-transition-model/parameters/',
+    'ai-transition-model-metric': '/ai-transition-model/metrics/',
+    'ai-transition-model-scenario': '/ai-transition-model/scenarios/',
+    'ai-transition-model-factor': '/ai-transition-model/factors/',
+    'ai-transition-model-subitem': '/ai-transition-model/factors/',
   };
 
   const basePath = pathMapping[type || ''] || '/knowledge-base/';

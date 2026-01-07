@@ -5,6 +5,7 @@ import { CredibilityBadge } from './CredibilityBadge';
 import { ResourceTags } from './ResourceTags';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import { cn } from '../../lib/utils';
+import { getResourceTypeLabel, getResourceTypeIcon, resourceTypeBadgeColors } from './shared/style-config';
 
 interface ResourcesIndexProps {
   showSearch?: boolean;
@@ -37,49 +38,6 @@ function getContentStatus(resource: Resource): { level: 'full' | 'partial' | 'me
   return { level: 'none', label: 'None', color: '#9e9e9e' };
 }
 
-/**
- * Get human-readable label for resource type
- */
-function getResourceTypeLabel(type: string): string {
-  const labels: Record<string, string> = {
-    paper: 'Paper',
-    book: 'Book',
-    blog: 'Blog Post',
-    report: 'Report',
-    talk: 'Talk',
-    podcast: 'Podcast',
-    government: 'Government',
-    reference: 'Reference',
-    web: 'Web',
-  };
-  return labels[type] || 'Link';
-}
-
-/**
- * Get icon for resource type
- */
-function getResourceTypeIcon(type: string): string {
-  const icons: Record<string, string> = {
-    paper: '📄',
-    book: '📚',
-    blog: '✏️',
-    report: '📋',
-    talk: '🎤',
-    podcast: '🎧',
-    government: '🏛️',
-    reference: '📖',
-    web: '🔗',
-  };
-  return icons[type] || '🔗';
-}
-
-const typeBadgeColors: Record<string, string> = {
-  paper: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300',
-  book: 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300',
-  blog: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300',
-  report: 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300',
-  government: 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300',
-};
 
 export function ResourcesIndex({
   showSearch = true,
@@ -293,7 +251,7 @@ export function ResourcesIndex({
                     <span
                       className={cn(
                         "inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded whitespace-nowrap",
-                        typeBadgeColors[resource.type] || "bg-muted text-foreground"
+                        resourceTypeBadgeColors[resource.type] || "bg-muted text-foreground"
                       )}
                       title={getResourceTypeLabel(resource.type)}
                     >

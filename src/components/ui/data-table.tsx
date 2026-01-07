@@ -5,6 +5,7 @@ import {
   type ColumnDef,
   type ColumnFiltersState,
   type SortingState,
+  type Row,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -21,6 +22,8 @@ interface DataTableProps<TData, TValue> {
   searchKey?: string
   searchPlaceholder?: string
   defaultSorting?: SortingState
+  renderExpandedRow?: (row: Row<TData>) => React.ReactNode
+  getRowClassName?: (row: Row<TData>) => string
 }
 
 export function DataTable<TData, TValue>({
@@ -29,6 +32,8 @@ export function DataTable<TData, TValue>({
   searchKey,
   searchPlaceholder = "Search...",
   defaultSorting = [],
+  renderExpandedRow,
+  getRowClassName,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>(defaultSorting)
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -96,15 +101,28 @@ export function DataTable<TData, TValue>({
           </thead>
           <tbody className="divide-y divide-gray-200 bg-white">
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <tr key={row.id} className="hover:bg-gray-50 transition-colors">
-                  {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className="px-4 py-3 text-gray-900">
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </td>
-                  ))}
-                </tr>
-              ))
+              table.getRowModel().rows.map((row) => {
+                const rowClassName = getRowClassName ? getRowClassName(row) : '';
+                const expandedContent = renderExpandedRow ? renderExpandedRow(row) : null;
+                return (
+                  <React.Fragment key={row.id}>
+                    <tr className={cn("hover:bg-gray-50 transition-colors", rowClassName)}>
+                      {row.getVisibleCells().map((cell) => (
+                        <td key={cell.id} className="px-4 py-3 text-gray-900">
+                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        </td>
+                      ))}
+                    </tr>
+                    {expandedContent && (
+                      <tr>
+                        <td colSpan={columns.length} className="p-0">
+                          {expandedContent}
+                        </td>
+                      </tr>
+                    )}
+                  </React.Fragment>
+                );
+              })
             ) : (
               <tr>
                 <td colSpan={columns.length} className="h-24 text-center text-gray-500">

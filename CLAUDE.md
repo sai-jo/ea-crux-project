@@ -267,6 +267,59 @@ seeAlso: "comprehensive-topic"  # Optional: points to primary coverage
 
 **Note:** The grading script (`scripts/grade-content.mjs`) automatically skips overview and stub pages.
 
+### AI Transition Model Data Architecture
+
+**YAML is the single source of truth** for AI Transition Model pages:
+
+| Data | Source | NOT in MDX |
+|------|--------|------------|
+| Ratings (changeability, xriskImpact, etc.) | `parameter-graph.yaml` | ❌ |
+| Descriptions | `parameter-graph.yaml` | ❌ |
+| Scope (includes/excludes) | `parameter-graph.yaml` | ❌ |
+| Key debates | `parameter-graph.yaml` | ❌ |
+| Related content links | `parameter-graph.yaml` | ❌ |
+| Title (for sidebar/SEO) | MDX frontmatter | ✅ |
+| Custom prose content | MDX body | ✅ |
+
+**MDX files should be minimal:**
+```yaml
+---
+title: "Compute (AI Capabilities)"
+sidebar:
+  order: 1
+---
+import {TransitionModelContent} from '../../../../../components/wiki';
+
+## Overview
+
+[Custom prose content here]
+
+---
+
+<TransitionModelContent slug="compute" client:load />
+```
+
+The `TransitionModelContent` component reads all metadata from YAML via `parameter-graph-data.ts`.
+
+### Page Template System
+
+Pages can optionally declare which template/style guide they follow via the `template` frontmatter field. Templates define expected structure.
+
+| Template ID | Description | Path Pattern |
+|-------------|-------------|--------------|
+| `ai-transition-model-sub-item` | Factor sub-items or scenario variants | `/ai-transition-model/*/*.mdx` |
+| `knowledge-base-risk` | Risk analysis pages | `/knowledge-base/risks/**/*.mdx` |
+| `knowledge-base-response` | Intervention pages | `/knowledge-base/responses/**/*.mdx` |
+| `knowledge-base-model` | Analytical model pages | `/knowledge-base/models/**/*.mdx` |
+
+**Validate templates:**
+```bash
+npm run validate:templates           # Check pages with declared templates
+npm run validate:templates --suggest # Suggest templates for pages without them
+```
+
+Template definitions are in `src/data/page-templates.ts`.
+
 ### Available Validators
 
 Run all validators:
@@ -287,6 +340,7 @@ npm run validate:sidebar      # Sidebar configuration (index pages)
 npm run validate:types        # UI components handle all schema entity types
 npm run validate:dollars      # Currency values escaped for LaTeX
 npm run validate:comparisons  # Less-than/greater-than escaped for JSX
+npm run validate:templates    # Page template compliance
 ```
 
 ### Workflow: Validate Content

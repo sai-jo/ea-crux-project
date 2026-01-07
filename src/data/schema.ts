@@ -270,8 +270,10 @@ export const EntityType = z.enum([
   'risk-factor',
   'capability',
   'safety-agenda',
+  'safety-approaches', // Safety research approaches/agendas
   'intervention',  // Technical or policy interventions
   'policy',
+  'policies',      // Policy categories (alias for grouping)
   'organization',  // Generic organization
   'lab',           // AI lab (generic)
   'lab-frontier',
@@ -280,23 +282,36 @@ export const EntityType = z.enum([
   'lab-academic',
   'crux',
   'concept',       // Abstract concepts, ideas, or theoretical constructs
+  'concepts',      // Plural alias
   'case-study',
   'researcher',
   'scenario',
   'resource',
   'funder',
   'historical',    // Historical era or timeline event
+  'events',        // Events or milestones
   'analysis',      // Analysis or comparison pages
   'model',         // Analytical model for risks/scenarios (has MDX content)
-  'parameter',     // Key societal/structural variable that can increase or decrease
-  'metric',        // Measurable indicator for tracking parameters or outcomes
+  'models',        // Plural alias
+  'parameter',     // Key societal/structural variable (generic)
+  'metric',        // Measurable indicator (generic)
+  'argument',      // Arguments for/against a position
+  // AI Transition Model specific types (prefixed for clarity)
+  'ai-transition-model-parameter',  // Parameters in the AI transition model
+  'ai-transition-model-metric',     // Metrics tracking AI transition parameters
+  'ai-transition-model-scenario',   // Scenarios/outcomes in the transition model
+  'ai-transition-model-factor',     // Root factors (was risk-factor in ATM context)
+  'ai-transition-model-subitem',    // Sub-items within factors (e.g., compute, algorithms)
 ]);
 export type EntityType = z.infer<typeof EntityType>;
 
 export const RelationshipType = z.enum([
   'related',      // Generic relationship
   'causes',       // A causes B
+  'cause',        // Alias for causes
   'mitigates',    // A reduces/prevents B
+  'mitigated-by', // Inverse: A is mitigated by B
+  'mitigation',   // A is a mitigation for B
   'requires',     // A needs B to work
   'enables',      // A makes B possible
   'blocks',       // A prevents B
@@ -306,6 +321,36 @@ export const RelationshipType = z.enum([
   'decreases',    // Risk decreases parameter
   'supports',     // Intervention supports/stabilizes parameter
   'measures',     // Metric measures parameter
+  'measured-by',  // Inverse of measures
+  'analyzed-by',  // Entity is analyzed by a model/analysis
+  'analyzes',     // Entity analyzes another
+  // Structural relationships
+  'child-of',     // A is a child/sub-item of B
+  'composed-of',  // A is composed of B
+  'component',    // A is a component of B
+  // Causal/influence relationships
+  'addresses',    // A addresses/deals with B
+  'affects',      // A affects B
+  'amplifies',    // A amplifies B
+  'contributes-to', // A contributes to B
+  'driven-by',    // A is driven by B
+  'driver',       // A is a driver of B
+  'drives',       // A drives B
+  'leads-to',     // A leads to B
+  'shaped-by',    // A is shaped by B
+  // Classification relationships
+  'consequence',  // A is a consequence of B
+  'example',      // A is an example of B
+  'key-factor',   // A is a key factor in B
+  'manifestation', // A is a manifestation of B
+  'mechanism',    // A is a mechanism for B
+  'outcome',      // A is an outcome of B
+  'prerequisite', // A is a prerequisite for B
+  'research',     // A is research related to B
+  'scenario',     // A is a scenario type
+  'sub-scenario', // A is a sub-scenario of B
+  'vulnerable-technique', // A is vulnerable to technique B
+  'models',       // A models B
 ]);
 export type RelationshipType = z.infer<typeof RelationshipType>;
 
@@ -415,7 +460,7 @@ export const Resource = z.object({
   review: z.string().optional(),                // Longer 1-4 paragraph review
   key_points: z.array(z.string()).optional(),
   // Metadata
-  cited_by: z.array(z.string()).optional(),     // Entity IDs that cite this
+  cited_by: z.array(z.string()).nullable().optional(), // Entity IDs that cite this
   fetched_at: z.string().optional(),
   // Publication & credibility
   publication_id: z.string().optional(),        // Reference to publications.yaml
@@ -496,7 +541,11 @@ export const Entity = z.object({
   lastUpdated: z.string().optional(),           // ISO date "2024-12"
   tags: z.array(z.string()).optional(),         // Standardized tags for filtering
   // InfoBox fields
-  severity: z.enum(['low', 'medium', 'high', 'catastrophic']).optional(),
+  severity: z.enum([
+    'low', 'medium', 'medium-high', 'high', 'critical', 'catastrophic',
+    // Case variants found in data
+    'Low', 'Medium', 'High', 'Catastrophic',
+  ]).optional(),
   // Likelihood can be string (legacy) or structured object
   likelihood: z.union([z.string(), StructuredLikelihood]).optional(),
   // Timeframe can be string (legacy) or structured object
