@@ -184,14 +184,18 @@ const showToc = route?.toc;
   @layer starlight.core {
     .right-sidebar-panel {
       padding: 1rem var(--sl-sidebar-pad-x);
+      /* Ensure sidebar doesn't overflow */
+      overflow: hidden;
     }
     .sl-container {
       width: calc(var(--sl-sidebar-width) - 2 * var(--sl-sidebar-pad-x));
+      /* Prevent text overflow */
+      overflow: hidden;
     }
     /* Wider container when showing minimap */
     .right-sidebar-panel.has-minimap .sl-container {
       width: 100%;
-      max-width: 320px;
+      max-width: 280px;
     }
     .right-sidebar-panel :global(h2) {
       color: var(--sl-color-white);
@@ -206,11 +210,34 @@ const showToc = route?.toc;
       text-decoration: none;
       color: var(--sl-color-gray-3);
       overflow-wrap: anywhere;
+      /* Truncate long links */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .right-sidebar-panel :global(:where(a):hover) {
       color: var(--sl-color-white);
     }
-    @media (min-width: 72rem) {
+    /* At medium-large screens (72-85rem), use much narrower sidebar */
+    @media (min-width: 72rem) and (max-width: 85rem) {
+      .sl-container {
+        max-width: 160px;
+      }
+      .right-sidebar-panel.has-minimap .sl-container {
+        max-width: 180px;
+      }
+    }
+    /* At larger-medium screens (85-100rem), slightly wider */
+    @media (min-width: 85rem) and (max-width: 100rem) {
+      .sl-container {
+        max-width: 200px;
+      }
+      .right-sidebar-panel.has-minimap .sl-container {
+        max-width: 240px;
+      }
+    }
+    /* At large screens (100rem+), give more room */
+    @media (min-width: 100rem) {
       .sl-container {
         max-width: calc(
           (
@@ -223,7 +250,7 @@ const showToc = route?.toc;
       }
       /* Override for minimap - give it more room */
       .right-sidebar-panel.has-minimap .sl-container {
-        max-width: 320px;
+        max-width: 300px;
       }
     }
   }
@@ -251,6 +278,10 @@ const showToc = route?.toc;
     color: var(--sl-color-gray-3);
     text-decoration: none;
     margin-top: 8px;
+    /* Handle truncation */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .view-model-link:hover {
@@ -284,6 +315,30 @@ const showToc = route?.toc;
     /* Hide the inline InfoBox since it's now in sidebar */
     .wiki-infobox {
       display: none !important;
+    }
+  </style>
+)}
+
+{/* Fix right sidebar overflow at all widths */}
+{(showMinimap || showInfoBox) && (
+  <style is:global>
+    /* Constrain the right sidebar container to prevent viewport overflow */
+    .right-sidebar-container {
+      overflow: hidden;
+    }
+    /* At medium screens (72-90rem), use narrow sidebar */
+    @media (min-width: 72rem) and (max-width: 90rem) {
+      .right-sidebar-container {
+        width: 200px !important;
+        min-width: 200px !important;
+      }
+    }
+    /* At larger screens (90rem+), slightly wider */
+    @media (min-width: 90rem) {
+      .right-sidebar-container {
+        width: 280px !important;
+        min-width: 280px !important;
+      }
     }
   </style>
 )}

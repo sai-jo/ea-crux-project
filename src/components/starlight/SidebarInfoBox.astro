@@ -119,6 +119,10 @@ if (data?.relatedEntries && data.relatedEntries.length > 0) {
     font-size: 14px;
     font-weight: 600;
     line-height: 1.3;
+    /* Handle long titles */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .sidebar-info-box__content {
@@ -152,6 +156,10 @@ if (data?.relatedEntries && data.relatedEntries.length > 0) {
   .sidebar-info-box__value {
     color: var(--sl-color-white);
     line-height: 1.4;
+    /* Handle long values */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .sidebar-info-box__value a {
@@ -206,6 +214,11 @@ if (data?.relatedEntries && data.relatedEntries.length > 0) {
     color: var(--sl-color-text-accent);
     text-decoration: none;
     font-size: 11px;
+    /* Truncate long link text */
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .sidebar-info-box__list a:hover {
