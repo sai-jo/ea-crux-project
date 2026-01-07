@@ -13,10 +13,14 @@ const pathParts = pathname.split('/').filter(Boolean);
 // Skip if not AI Transition Model or at root level
 const showBreadcrumbs = isAITransitionModelPage && pathParts.length > 1;
 
+// AI Factors vs Civilizational Factors
+const aiFactors = ['misalignment-potential', 'ai-capabilities', 'ai-uses', 'ai-ownership'];
+const civFactors = ['civilizational-competence', 'transition-turbulence', 'misuse-potential'];
+
 // Map slugs to readable display names
 const displayNames: Record<string, string> = {
   'ai-transition-model': 'AI Transition Model',
-  'factors': 'Factors',
+  'factors': 'Factors', // Will be overridden dynamically
   'scenarios': 'Scenarios',
   'outcomes': 'Outcomes',
   'parameters': 'Parameters',
@@ -90,7 +94,18 @@ function buildBreadcrumbs(): BreadcrumbItem[] {
     // Skip 'index' in the path
     if (part === 'index') continue;
 
-    const label = displayNames[part] || part.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    let label = displayNames[part] || part.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
+    // Dynamically determine "AI Factors" vs "Civilizational Factors"
+    if (part === 'factors' && i + 1 < pathParts.length) {
+      const nextPart = pathParts[i + 1];
+      if (aiFactors.includes(nextPart)) {
+        label = 'AI Factors';
+      } else if (civFactors.includes(nextPart)) {
+        label = 'Civilizational Factors';
+      }
+    }
+
     const isCurrent = i === pathParts.length - 1;
 
     items.push({
