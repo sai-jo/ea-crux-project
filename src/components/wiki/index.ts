@@ -78,6 +78,7 @@ export { PageStatus } from './PageStatus';
 
 // Diagrams
 export { Mermaid } from './Mermaid';
+export { default as EntityGraph } from './EntityGraph';
 
 // AI Transition Model
 export { ModelPosition } from './ModelPosition';
