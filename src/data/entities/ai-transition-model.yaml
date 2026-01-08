@@ -1601,6 +1601,168 @@
       title: Export Controls
       effect: positive
       strength: medium
+  causeEffectGraph:
+    title: "Factors Affecting Compute Availability"
+    description: "Causal relationships between factors that influence compute availability and its downstream effects"
+    nodes:
+      # CAUSES - what affects compute availability
+      - id: chip-manufacturing
+        label: "Chip Manufacturing Capacity"
+        type: cause
+        confidence: 0.85
+        description: "TSMC produces 90%+ of advanced AI chips. Capacity expansion takes 3-5 years and costs $20B+ per fab."
+        details: "The semiconductor supply chain is highly concentrated. TSMC in Taiwan dominates advanced node production, with Samsung a distant second. Intel is attempting to catch up but remains years behind. This concentration creates both risk and governance opportunity."
+        sources: ["Semiconductor Industry Association", "TSMC annual reports"]
+        relatedConcepts: ["Supply chain", "TSMC", "Fab capacity", "Moore's Law"]
+      - id: export-controls
+        label: "Export Controls"
+        type: cause
+        confidence: 0.75
+        description: "US restrictions on advanced chip exports to China. Creates 1-3 year delays but drives efficiency innovation."
+        details: "The October 2022 and subsequent US export controls restrict sale of advanced AI chips and manufacturing equipment to China. Evidence suggests 1-3 year delays in Chinese frontier capabilities, though circumvention through cloud access and smuggling occurs."
+        sources: ["BIS export control rules", "CSET analysis"]
+        relatedConcepts: ["Geopolitics", "China", "Sanctions", "Technology transfer"]
+      - id: energy-infrastructure
+        label: "Energy & Power Availability"
+        type: cause
+        confidence: 0.70
+        description: "Data centers require 50-100+ MW. Grid constraints and permitting limit geographic expansion."
+        details: "Training runs for frontier models require enormous power. A single H100 cluster of 10,000 GPUs draws ~4MW. Grid interconnection and power purchase agreements increasingly constrain where large training runs can occur."
+        sources: ["IEA data center reports", "Utility filings"]
+        relatedConcepts: ["Data centers", "Power grid", "Sustainability", "Nuclear"]
+      - id: algorithmic-efficiency
+        label: "Algorithmic Efficiency"
+        type: cause
+        confidence: 0.80
+        description: "~4x efficiency gains per year historically. DeepSeek achieved GPT-4 parity at ~1/10 compute."
+        details: "Algorithmic improvements consistently reduce compute requirements for given capability levels. This includes architecture innovations (transformers, MoE), training efficiency (better optimizers, curricula), and inference optimizations (quantization, distillation)."
+        sources: ["Epoch AI efficiency trends", "DeepSeek technical report"]
+        relatedConcepts: ["Scaling laws", "Architecture", "Training efficiency", "Chinchilla"]
+      - id: capital-investment
+        label: "Capital Investment in AI"
+        type: cause
+        confidence: 0.75
+        description: "Training runs cost $100M+. Only ~20 organizations can afford frontier training."
+        details: "The capital requirements for frontier AI training create natural barriers to entry. Microsoft, Google, Amazon, and a few others can fund $1B+ training runs. This concentrates frontier development among well-resourced actors."
+        sources: ["Company financial reports", "Industry estimates"]
+        relatedConcepts: ["VC funding", "Big Tech", "Compute costs", "Barriers to entry"]
+      # INTERMEDIATE - compute itself
+      - id: effective-compute
+        label: "Effective Compute Availability"
+        type: intermediate
+        confidence: 0.70
+        description: "Net compute available for AI training after accounting for efficiency gains and access restrictions."
+        details: "The effective compute available combines raw hardware capacity with algorithmic efficiency. Even with export controls, global effective compute for AI continues to grow rapidly due to efficiency gains and new fab capacity coming online."
+        relatedConcepts: ["FLOP", "GPU-hours", "Training compute", "Inference compute"]
+      - id: compute-distribution
+        label: "Geographic Compute Distribution"
+        type: intermediate
+        confidence: 0.65
+        description: "Where compute is physically located affects who can train models and jurisdictional reach."
+        details: "Compute concentration in specific countries/regions affects governance options. US-based cloud providers control majority of accessible frontier compute. China is building domestic capacity but remains behind on cutting-edge chips."
+        relatedConcepts: ["Cloud providers", "Data sovereignty", "Jurisdiction"]
+      # EFFECTS - what compute affects
+      - id: capabilities-timeline
+        label: "AI Capabilities Timeline"
+        type: effect
+        confidence: 0.75
+        description: "When frontier AI capabilities emerge. Compute constraints could delay transformative AI by years."
+        details: "Compute availability is a key input to capability timelines. Constraints that reduce effective compute growth could meaningfully delay when transformative AI arrives, potentially providing more time for safety work."
+        relatedConcepts: ["TAI timelines", "AGI", "Transformative AI"]
+      - id: racing-dynamics
+        label: "Racing Dynamics"
+        type: effect
+        confidence: 0.70
+        description: "Intensity of competition between labs and nations. Compute scarcity has mixed effects on racing."
+        details: "Compute constraints can either intensify racing (scarcity drives competition for limited resources) or reduce it (high barriers limit competitors). The net effect depends on how constraints are implemented."
+        relatedConcepts: ["AI race", "Competition", "Cooperation"]
+      - id: actor-landscape
+        label: "Actor Landscape"
+        type: effect
+        confidence: 0.80
+        description: "Who can train frontier models. High costs exclude most actors, concentrating development."
+        details: "The set of actors capable of training frontier models depends heavily on compute access. Currently limited to ~20 organizations with sufficient capital and cloud/hardware access. This concentration affects both risks and governance options."
+        relatedConcepts: ["Labs", "Concentration", "Barriers to entry"]
+      - id: governance-tractability
+        label: "Governance Tractability"
+        type: effect
+        confidence: 0.65
+        description: "Whether compute-based governance is viable. Depends on concentration and measurability."
+        details: "Compute's physical nature and supply chain concentration make it unusually governable compared to algorithms or data. However, efficiency gains and potential for distributed training may erode this advantage over time."
+        relatedConcepts: ["Compute governance", "Regulation", "Chokepoints"]
+    edges:
+      # Causes → Intermediate
+      - source: chip-manufacturing
+        target: effective-compute
+        strength: strong
+        confidence: high
+        effect: increases
+      - source: export-controls
+        target: effective-compute
+        strength: medium
+        confidence: medium
+        effect: decreases
+        label: "for restricted actors"
+      - source: export-controls
+        target: algorithmic-efficiency
+        strength: weak
+        confidence: medium
+        effect: increases
+        label: "drives innovation"
+      - source: energy-infrastructure
+        target: effective-compute
+        strength: medium
+        confidence: medium
+        effect: increases
+      - source: algorithmic-efficiency
+        target: effective-compute
+        strength: strong
+        confidence: high
+        effect: increases
+      - source: capital-investment
+        target: effective-compute
+        strength: strong
+        confidence: high
+        effect: increases
+      - source: chip-manufacturing
+        target: compute-distribution
+        strength: medium
+        confidence: high
+        effect: increases
+      - source: export-controls
+        target: compute-distribution
+        strength: medium
+        confidence: medium
+        effect: mixed
+      # Intermediate → Effects
+      - source: effective-compute
+        target: capabilities-timeline
+        strength: strong
+        confidence: high
+        effect: increases
+        label: "more compute → faster progress"
+      - source: effective-compute
+        target: actor-landscape
+        strength: medium
+        confidence: medium
+        effect: increases
+        label: "more actors with access"
+      - source: effective-compute
+        target: racing-dynamics
+        strength: medium
+        confidence: medium
+        effect: mixed
+      - source: compute-distribution
+        target: governance-tractability
+        strength: medium
+        confidence: medium
+        effect: mixed
+        label: "concentrated → more tractable"
+      - source: compute-distribution
+        target: actor-landscape
+        strength: medium
+        confidence: high
+        effect: increases
   relatedEntries:
     - id: compute-governance
       type: intervention

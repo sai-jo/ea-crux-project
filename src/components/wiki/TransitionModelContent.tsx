@@ -25,6 +25,7 @@ import { FactorStatusCard } from './FactorStatusBadge';
 import { InterventionsCard } from './InterventionsList';
 import { EstimatesCard } from './EstimatesPanel';
 import { WarningIndicatorsCard } from './WarningIndicatorsTable';
+import CauseEffectGraph from '../CauseEffectGraph';
 
 // Types for TMC entity data
 interface TMCRatings {
@@ -82,6 +83,36 @@ interface TMCEstimate {
   url?: string;
 }
 
+// Cause-Effect Graph types
+interface TMCCauseEffectNode {
+  id: string;
+  label: string;
+  description?: string;
+  type: 'cause' | 'intermediate' | 'effect';
+  confidence?: number;
+  details?: string;
+  sources?: string[];
+  relatedConcepts?: string[];
+  entityRef?: string;
+}
+
+interface TMCCauseEffectEdge {
+  id?: string;
+  source: string;
+  target: string;
+  strength?: 'weak' | 'medium' | 'strong';
+  confidence?: 'low' | 'medium' | 'high';
+  effect?: 'increases' | 'decreases' | 'mixed';
+  label?: string;
+}
+
+interface TMCCauseEffectGraph {
+  title?: string;
+  description?: string;
+  nodes: TMCCauseEffectNode[];
+  edges: TMCCauseEffectEdge[];
+}
+
 // Extended entity type for TMC entities
 interface TMCEntity {
   id: string;
@@ -98,6 +129,7 @@ interface TMCEntity {
   addressedBy?: TMCAddressedBy[];
   warningIndicators?: TMCWarningIndicator[];
   estimates?: TMCEstimate[];
+  causeEffectGraph?: TMCCauseEffectGraph;
 }
 
 interface TransitionModelContentProps {
@@ -117,6 +149,7 @@ interface TransitionModelContentProps {
   showInterventions?: boolean;
   showEstimates?: boolean;
   showWarningIndicators?: boolean;
+  showCauseEffectGraph?: boolean;
 }
 
 function RatingsSection({ ratings }: { ratings: TMCRatings }) {
@@ -375,6 +408,7 @@ export function TransitionModelContent({
   showInterventions = true,
   showEstimates = true,
   showWarningIndicators = true,
+  showCauseEffectGraph = true,
 }: TransitionModelContentProps) {
   // Support legacy slug prop by converting to tmc-{slug}
   let effectiveEntityId = entityId;
@@ -415,6 +449,46 @@ export function TransitionModelContent({
 
       {showDebates && entity.keyDebates && entity.keyDebates.length > 0 && (
         <DebatesSection debates={entity.keyDebates} />
+      )}
+
+      {/* Cause-Effect Graph - causal relationships visualization */}
+      {showCauseEffectGraph && entity.causeEffectGraph && entity.causeEffectGraph.nodes.length > 0 && (
+        <div className="tm-section tm-cause-effect">
+          {entity.causeEffectGraph.title && (
+            <h3>{entity.causeEffectGraph.title}</h3>
+          )}
+          {entity.causeEffectGraph.description && (
+            <p className="tm-graph-description">{entity.causeEffectGraph.description}</p>
+          )}
+          <CauseEffectGraph
+            height={600}
+            initialNodes={entity.causeEffectGraph.nodes.map((node, i) => ({
+              id: node.id,
+              type: 'causeEffect' as const,
+              position: { x: 0, y: 0 },
+              data: {
+                label: node.label,
+                description: node.description || '',
+                type: node.type,
+                confidence: node.confidence || 0.5,
+                details: node.details || '',
+                sources: node.sources || [],
+                relatedConcepts: node.relatedConcepts || [],
+              },
+            }))}
+            initialEdges={entity.causeEffectGraph.edges.map((edge, i) => ({
+              id: edge.id || `e-${edge.source}-${edge.target}`,
+              source: edge.source,
+              target: edge.target,
+              data: {
+                strength: edge.strength || 'medium',
+                confidence: edge.confidence || 'medium',
+                effect: edge.effect || 'increases',
+              },
+              label: edge.label,
+            }))}
+          />
+        </div>
       )}
 
       {/* Probability Estimates (primarily for scenarios) */}
@@ -482,6 +556,14 @@ export function TransitionModelContent({
         }
         .tm-metric-desc {
           color: var(--sl-color-gray-3);
+        }
+        .tm-graph-description {
+          color: var(--sl-color-gray-3);
+          font-size: 0.9rem;
+          margin: 0 0 1rem 0;
+        }
+        .tm-cause-effect {
+          margin-top: 1rem;
         }
         .tm-scope-group {
           margin-bottom: 0.75rem;

@@ -262,6 +262,53 @@ export const Graph = z.object({
 export type Graph = z.infer<typeof Graph>;
 
 // =============================================================================
+// CAUSE-EFFECT GRAPHS (For factor/parameter analysis)
+// =============================================================================
+
+/**
+ * A node in a cause-effect graph, representing a factor that influences
+ * or is influenced by other factors.
+ */
+export const CauseEffectNode = z.object({
+  id: z.string(),
+  label: z.string(),
+  description: z.string().optional(),
+  type: z.enum(['cause', 'intermediate', 'effect']),
+  confidence: z.number().min(0).max(1).optional(),  // 0-1 confidence in this factor
+  details: z.string().optional(),                    // Extended explanation
+  sources: z.array(z.string()).optional(),           // Source references
+  relatedConcepts: z.array(z.string()).optional(),   // Related concept tags
+  entityRef: z.string().optional(),                  // Link to entity ID
+});
+export type CauseEffectNode = z.infer<typeof CauseEffectNode>;
+
+/**
+ * An edge in a cause-effect graph, representing a causal relationship.
+ */
+export const CauseEffectEdge = z.object({
+  id: z.string().optional(),
+  source: z.string(),                                // Source node ID
+  target: z.string(),                                // Target node ID
+  strength: z.enum(['weak', 'medium', 'strong']).optional(),
+  confidence: z.enum(['low', 'medium', 'high']).optional(),
+  effect: z.enum(['increases', 'decreases', 'mixed']).optional(),
+  label: z.string().optional(),                      // Optional edge label
+});
+export type CauseEffectEdge = z.infer<typeof CauseEffectEdge>;
+
+/**
+ * A complete cause-effect graph that can be embedded in entities.
+ * Used for visualizing causal relationships around a factor/parameter.
+ */
+export const CauseEffectGraph = z.object({
+  title: z.string().optional(),
+  description: z.string().optional(),
+  nodes: z.array(CauseEffectNode),
+  edges: z.array(CauseEffectEdge),
+});
+export type CauseEffectGraph = z.infer<typeof CauseEffectGraph>;
+
+// =============================================================================
 // ENTITIES (Generic knowledge base entries with InfoBox data)
 // =============================================================================
 
