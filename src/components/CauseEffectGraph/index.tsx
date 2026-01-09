@@ -444,7 +444,7 @@ function CauseEffectGraphInner({
               onEdgeMouseLeave={onEdgeMouseLeave}
               onViewportChange={onViewportChange}
               nodeTypes={nodeTypes}
-              fitView
+              fitView={!defaultZoom}
               fitViewOptions={{ padding: fitViewPadding }}
               minZoom={minZoom}
               maxZoom={maxZoom}

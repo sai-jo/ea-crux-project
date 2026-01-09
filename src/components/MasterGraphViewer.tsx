@@ -31,10 +31,12 @@ type ViewLevel = 'overview' | 'detailed';
 
 interface MasterGraphViewerProps {
   initialLevel?: ViewLevel;
+  defaultZoom?: number;  // Initial zoom level (overrides fitView)
 }
 
 export default function MasterGraphViewer({
   initialLevel = 'overview',
+  defaultZoom,
 }: MasterGraphViewerProps) {
   const [level, setLevel] = useState<ViewLevel>(initialLevel);
   const [selectedSubgraph, setSelectedSubgraph] = useState<string>('');
@@ -229,6 +231,7 @@ export default function MasterGraphViewer({
           hideListView={true}
           minZoom={level === 'detailed' ? 0.05 : 0.15}
           maxZoom={2}
+          defaultZoom={defaultZoom}
           fitViewPadding={0.15}
           showMiniMap={false}
           enablePathHighlighting={level === 'detailed'}

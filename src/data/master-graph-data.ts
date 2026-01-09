@@ -214,6 +214,14 @@ function getNodeHref(
   return undefined;
 }
 
+/**
+ * Exported function to get href for a node ID based on master graph structure.
+ * Used by DiagramViewer to add link icons to nodes that correspond to pages.
+ */
+export function getNodeHrefFromMaster(nodeId: string): string | undefined {
+  return getNodeHref(nodeId);
+}
+
 export function getDetailedNodes(): Node<CauseEffectNodeData>[] {
   const data = getData();
 

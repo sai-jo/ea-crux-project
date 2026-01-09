@@ -2,9 +2,11 @@
 import MasterGraphViewer from '../../components/MasterGraphViewer';
 import '../../styles/global.css';
 
-// Get entity ID from query params for subgraph view
+// Get URL params for view configuration
 const entityId = Astro.url.searchParams.get('entity') || '';
 const showFull = Astro.url.searchParams.get('full') === 'true';
+const zoomParam = Astro.url.searchParams.get('zoom');
+const defaultZoom = zoomParam ? parseFloat(zoomParam) : undefined;
 ---
 <html lang="en">
   <head>
@@ -30,6 +32,7 @@ const showFull = Astro.url.searchParams.get('full') === 'true';
     <MasterGraphViewer
       entityId={entityId}
       startWithFullGraph={showFull || !entityId}
+      defaultZoom={defaultZoom}
       client:load
     />
   </body>

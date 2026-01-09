@@ -5,7 +5,8 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { getEntityById, entities } from '../data';
+import { getEntityById, getEntityHref, entities, pathRegistry } from '../data';
+import { getNodeHrefFromMaster } from '../data/master-graph-data';
 import CauseEffectGraph from './CauseEffectGraph';
 
 // Get all entities that have causeEffectGraph diagrams
@@ -41,6 +42,7 @@ interface EntityWithGraph {
       details?: string;
       sources?: string[];
       relatedConcepts?: string[];
+      entityRef?: string;
     }>;
     edges: Array<{
       id?: string;
@@ -171,20 +173,46 @@ export default function DiagramViewer({ entityId: propEntityId }: DiagramViewerP
               effect: 'Target',
             },
           }}
-          initialNodes={graph.nodes.map((node) => ({
-            id: node.id,
-            type: 'causeEffect' as const,
-            position: { x: 0, y: 0 },
-            data: {
-              label: node.label,
-              description: node.description || '',
-              type: node.type,
-              ...(node.confidence !== undefined && { confidence: node.confidence }),
-              details: node.details || '',
-              sources: node.sources || [],
-              relatedConcepts: node.relatedConcepts || [],
-            },
-          }))}
+          initialNodes={graph.nodes.map((node) => {
+            // Compute href from entityRef if available, or try to match node ID to path registry
+            let href: string | undefined;
+            if (node.entityRef) {
+              const refEntity = getEntityById(node.entityRef);
+              if (refEntity) {
+                href = getEntityHref(node.entityRef, refEntity.type);
+              }
+            }
+            // Fallback: check if node ID exists in path registry (matches a page)
+            if (!href && pathRegistry[node.id]) {
+              href = pathRegistry[node.id];
+            }
+            // Fallback: check if node ID matches an entity
+            if (!href) {
+              const matchingEntity = getEntityById(node.id);
+              if (matchingEntity) {
+                href = getEntityHref(node.id, matchingEntity.type);
+              }
+            }
+            // Fallback: check if node ID matches a master graph category or sub-item
+            if (!href) {
+              href = getNodeHrefFromMaster(node.id);
+            }
+            return {
+              id: node.id,
+              type: 'causeEffect' as const,
+              position: { x: 0, y: 0 },
+              data: {
+                label: node.label,
+                description: node.description || '',
+                type: node.type,
+                ...(node.confidence !== undefined && { confidence: node.confidence }),
+                details: node.details || '',
+                sources: node.sources || [],
+                relatedConcepts: node.relatedConcepts || [],
+                ...(href && { href }),
+              },
+            };
+          })}
           initialEdges={graph.edges.map((edge) => ({
             id: edge.id || `e-${edge.source}-${edge.target}`,
             source: edge.source,

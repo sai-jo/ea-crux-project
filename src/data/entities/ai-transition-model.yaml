@@ -2172,7 +2172,74 @@
     - outcome
     - x-risk
     - catastrophe
-  lastUpdated: 2025-12
+  lastUpdated: 2026-01
+  causeEffectGraph:
+    title: "Pathways to Existential Catastrophe"
+    description: "Major causal pathways leading to AI-related existential catastrophe. Two primary branches: AI takeover (misalignment) and human-caused catastrophe (misuse)."
+    primaryNodeId: existential-catastrophe
+    nodes:
+      # LAYER 1 (leaf): Root causes
+      - id: misalignment-potential
+        label: "Misalignment Potential"
+        type: leaf
+        description: "Risk that AI systems pursue goals different from human values. Driven by alignment difficulty and capability growth."
+        entityRef: misalignment-potential
+      - id: misuse-potential
+        label: "Misuse Potential"
+        type: leaf
+        description: "Risk that humans use AI capabilities for destructive purposes. Includes state and non-state actors."
+        entityRef: misuse-potential
+      - id: racing-dynamics
+        label: "Racing Dynamics"
+        type: leaf
+        description: "Competitive pressure that reduces safety margins and accelerates deployment without adequate testing."
+
+      # LAYER 2 (intermediate): Scenario branches
+      - id: ai-takeover-scenario
+        label: "AI Takeover"
+        type: intermediate
+        description: "AI systems gain and maintain power against human interests, either rapidly or gradually."
+        entityRef: ai-takeover
+      - id: human-catastrophe-scenario
+        label: "Human Catastrophe"
+        type: intermediate
+        description: "Humans deliberately cause mass harm using AI—state actors or rogue actors."
+        entityRef: human-catastrophe
+
+      # LAYER 3 (effect): Ultimate outcome
+      - id: existential-catastrophe
+        label: "Existential Catastrophe"
+        type: effect
+        description: "Extinction, permanent loss of potential, or irreversible harm to civilization."
+
+    edges:
+      # Root causes → Scenarios
+      - source: misalignment-potential
+        target: ai-takeover-scenario
+        strength: strong
+        effect: increases
+      - source: misuse-potential
+        target: human-catastrophe-scenario
+        strength: strong
+        effect: increases
+      - source: racing-dynamics
+        target: ai-takeover-scenario
+        strength: medium
+        effect: increases
+      - source: racing-dynamics
+        target: human-catastrophe-scenario
+        strength: medium
+        effect: increases
+
+      # Scenarios → Outcome
+      - source: ai-takeover-scenario
+        target: existential-catastrophe
+        strength: strong
+        effect: increases
+      - source: human-catastrophe-scenario
+        target: existential-catastrophe
+        strength: strong
+        effect: increases
 - id: long-term-trajectory
   type: ai-transition-model-scenario
   title: Long-term Trajectory
@@ -2207,7 +2274,90 @@
     - outcome
     - long-term
     - flourishing
-  lastUpdated: 2025-12
+  lastUpdated: 2026-01
+  causeEffectGraph:
+    title: "What Shapes Long-term Trajectory?"
+    description: "Major factors affecting humanity's long-term flourishing given successful AI transition. Focuses on value preservation, autonomy, and avoiding negative lock-in scenarios."
+    primaryNodeId: long-term-trajectory
+    nodes:
+      # LAYER 1 (leaf): Key input factors
+      - id: civilizational-competence
+        label: "Civilizational Competence"
+        type: leaf
+        description: "Humanity's collective capacity to navigate challenges—adaptability, governance quality, epistemic health."
+        entityRef: civilizational-competence
+      - id: ai-ownership-distribution
+        label: "AI Ownership Distribution"
+        type: leaf
+        description: "How AI capabilities and benefits are distributed. Concentration vs. broad access."
+        entityRef: ai-ownership
+      - id: human-agency
+        label: "Human Agency"
+        type: leaf
+        description: "Degree to which humans maintain meaningful control and autonomy over their lives."
+        entityRef: human-agency
+
+      # LAYER 2 (intermediate): Critical mediating factors
+      - id: value-preservation
+        label: "Value Preservation"
+        type: intermediate
+        description: "Whether beneficial human values are maintained and can evolve over time."
+      - id: autonomy-preservation
+        label: "Autonomy Preservation"
+        type: intermediate
+        description: "Whether humans retain genuine choice and self-determination."
+      - id: lock-in-prevention
+        label: "Lock-in Prevention"
+        type: intermediate
+        description: "Avoiding permanent entrenchment of harmful power structures or values."
+        entityRef: long-term-lockin
+
+      # LAYER 3 (effect): The outcome
+      - id: long-term-trajectory
+        label: "Long-term Trajectory"
+        type: effect
+        description: "Quality of humanity's long-term future—flourishing, autonomy, value realization across civilizational timescales."
+
+    edges:
+      # Inputs → Intermediate
+      - source: civilizational-competence
+        target: value-preservation
+        strength: strong
+        effect: increases
+      - source: civilizational-competence
+        target: lock-in-prevention
+        strength: strong
+        effect: increases
+      - source: ai-ownership-distribution
+        target: autonomy-preservation
+        strength: strong
+        effect: increases
+      - source: ai-ownership-distribution
+        target: lock-in-prevention
+        strength: medium
+        effect: increases
+      - source: human-agency
+        target: autonomy-preservation
+        strength: strong
+        effect: increases
+      - source: human-agency
+        target: value-preservation
+        strength: medium
+        effect: increases
+
+      # Intermediate → Outcome
+      - source: value-preservation
+        target: long-term-trajectory
+        strength: strong
+        effect: increases
+      - source: autonomy-preservation
+        target: long-term-trajectory
+        strength: strong
+        effect: increases
+      - source: lock-in-prevention
+        target: long-term-trajectory
+        strength: strong
+        effect: increases
 - id: ai-takeover
   type: ai-transition-model-scenario
   title: AI Takeover
@@ -2341,7 +2491,73 @@
     - factor
     - technical
     - alignment
-  lastUpdated: 2025-12
+  lastUpdated: 2026-01
+  causeEffectGraph:
+    title: "What Drives Misalignment Potential?"
+    description: "Factors affecting the risk that AI systems pursue misaligned goals. Primary driver of AI takeover scenarios."
+    primaryNodeId: misalignment-potential
+    nodes:
+      - id: alignment-difficulty
+        label: "Alignment Difficulty"
+        type: leaf
+        description: "How hard it is to specify and instill correct goals. May be fundamentally unsolvable or just very hard."
+      - id: capability-growth
+        label: "Capability Growth"
+        type: leaf
+        description: "Faster capability growth creates larger safety-capability gaps."
+        entityRef: ai-capabilities
+      - id: interpretability-gap
+        label: "Interpretability Gap"
+        type: leaf
+        description: "Inability to understand model internals. Can't verify alignment without understanding."
+        entityRef: interpretability-coverage
+      - id: safety-investment
+        label: "Safety Investment"
+        type: leaf
+        description: "Resources dedicated to alignment research. Currently ~1-3% of AI R&D budgets."
+      - id: alignment-robustness
+        label: "Alignment Robustness"
+        type: intermediate
+        description: "How reliably alignment holds as systems scale."
+        entityRef: alignment-robustness
+      - id: oversight-effectiveness
+        label: "Oversight Effectiveness"
+        type: intermediate
+        description: "How well humans can monitor and correct AI systems."
+        entityRef: human-oversight-quality
+      - id: misalignment-potential
+        label: "Misalignment Potential"
+        type: effect
+        description: "Aggregate risk that AI systems pursue misaligned goals."
+    edges:
+      - source: alignment-difficulty
+        target: alignment-robustness
+        strength: strong
+        effect: decreases
+      - source: capability-growth
+        target: alignment-robustness
+        strength: strong
+        effect: decreases
+      - source: interpretability-gap
+        target: oversight-effectiveness
+        strength: strong
+        effect: decreases
+      - source: safety-investment
+        target: alignment-robustness
+        strength: medium
+        effect: increases
+      - source: safety-investment
+        target: oversight-effectiveness
+        strength: medium
+        effect: increases
+      - source: alignment-robustness
+        target: misalignment-potential
+        strength: strong
+        effect: decreases
+      - source: oversight-effectiveness
+        target: misalignment-potential
+        strength: strong
+        effect: decreases
 - id: misuse-potential
   type: ai-transition-model-factor
   title: Misuse Potential
@@ -2379,7 +2595,80 @@
     - factor
     - misuse
     - weapons
-  lastUpdated: 2025-12
+  lastUpdated: 2026-01
+  causeEffectGraph:
+    title: "What Drives Misuse Potential?"
+    description: "Factors affecting the risk of deliberate harmful AI use. Primary driver of human catastrophe scenarios."
+    primaryNodeId: misuse-potential
+    nodes:
+      - id: ai-capability-access
+        label: "AI Capability Access"
+        type: leaf
+        description: "Who can access powerful AI. Open-source models, API access, compute availability."
+        entityRef: ai-capabilities
+      - id: malicious-actor-presence
+        label: "Malicious Actor Presence"
+        type: leaf
+        description: "State actors, terrorists, criminal organizations with intent to cause harm."
+      - id: defensive-capacity
+        label: "Defensive Capacity"
+        type: leaf
+        description: "Biosecurity, cybersecurity, physical security infrastructure."
+      - id: governance-effectiveness
+        label: "Governance Effectiveness"
+        type: leaf
+        description: "Export controls, liability frameworks, international coordination."
+      - id: bio-threat
+        label: "Biological Threat"
+        type: intermediate
+        description: "Risk of AI-enabled bioweapons. Current LLMs provide some uplift."
+        entityRef: biological-threat-exposure
+      - id: cyber-threat
+        label: "Cyber Threat"
+        type: intermediate
+        description: "Risk of AI-enhanced cyberattacks. Offensive advantage growing."
+        entityRef: cyber-threat-exposure
+      - id: misuse-potential
+        label: "Misuse Potential"
+        type: effect
+        description: "Aggregate risk from deliberate harmful AI use."
+    edges:
+      - source: ai-capability-access
+        target: bio-threat
+        strength: strong
+        effect: increases
+      - source: ai-capability-access
+        target: cyber-threat
+        strength: strong
+        effect: increases
+      - source: malicious-actor-presence
+        target: bio-threat
+        strength: medium
+        effect: increases
+      - source: malicious-actor-presence
+        target: cyber-threat
+        strength: medium
+        effect: increases
+      - source: defensive-capacity
+        target: bio-threat
+        strength: medium
+        effect: decreases
+      - source: defensive-capacity
+        target: cyber-threat
+        strength: medium
+        effect: decreases
+      - source: governance-effectiveness
+        target: misuse-potential
+        strength: medium
+        effect: decreases
+      - source: bio-threat
+        target: misuse-potential
+        strength: strong
+        effect: increases
+      - source: cyber-threat
+        target: misuse-potential
+        strength: strong
+        effect: increases
 - id: ai-capabilities
   type: ai-transition-model-factor
   title: AI Capabilities
@@ -2408,7 +2697,57 @@
     - factor
     - capabilities
     - scaling
-  lastUpdated: 2025-12
+  lastUpdated: 2026-01
+  causeEffectGraph:
+    title: "What Drives AI Capabilities?"
+    description: "Major factors driving AI capability advancement. Capabilities are growing rapidly, doubling roughly every 6-12 months on key benchmarks."
+    primaryNodeId: ai-capabilities
+    nodes:
+      - id: compute-investment
+        label: "Compute Investment"
+        type: leaf
+        description: "Hardware spending on AI training. ~$100B+ annually; frontier training runs cost $100M+."
+      - id: algorithmic-progress
+        label: "Algorithmic Progress"
+        type: leaf
+        description: "Efficiency gains from better architectures, training methods, and techniques."
+      - id: data-availability
+        label: "Data Availability"
+        type: leaf
+        description: "Training data quality and quantity. Internet-scale text, code, and synthetic data."
+      - id: talent-concentration
+        label: "Talent Concentration"
+        type: leaf
+        description: "Top AI researchers concentrated at frontier labs. ~1000 people drive most advances."
+      - id: scaling-effectiveness
+        label: "Scaling Effectiveness"
+        type: intermediate
+        description: "How well increased resources translate to capabilities. Scaling laws remain robust."
+      - id: ai-capabilities
+        label: "AI Capabilities"
+        type: effect
+        description: "Aggregate AI system power. Amplifies both benefits and risks."
+    edges:
+      - source: compute-investment
+        target: scaling-effectiveness
+        strength: strong
+        effect: increases
+      - source: algorithmic-progress
+        target: scaling-effectiveness
+        strength: strong
+        effect: increases
+      - source: data-availability
+        target: scaling-effectiveness
+        strength: medium
+        effect: increases
+      - source: talent-concentration
+        target: algorithmic-progress
+        strength: strong
+        effect: increases
+      - source: scaling-effectiveness
+        target: ai-capabilities
+        strength: strong
+        effect: increases
 - id: ai-uses
   type: ai-transition-model-factor
   title: AI Uses
@@ -2437,7 +2776,66 @@
     - factor
     - deployment
     - applications
-  lastUpdated: 2025-12
+  lastUpdated: 2026-01
+  causeEffectGraph:
+    title: "How AI Gets Deployed"
+    description: "Factors shaping AI deployment patterns across sectors. Deployment choices determine who benefits and what risks emerge."
+    primaryNodeId: ai-uses
+    nodes:
+      - id: capability-level
+        label: "AI Capability Level"
+        type: leaf
+        description: "What AI can do determines where it can be deployed. Higher capability enables more applications."
+        entityRef: ai-capabilities
+      - id: economic-incentives
+        label: "Economic Incentives"
+        type: leaf
+        description: "Profit motives drive commercial deployment. Productivity gains estimated at $2.6-4.4T annually."
+      - id: regulatory-environment
+        label: "Regulatory Environment"
+        type: leaf
+        description: "Rules governing AI deployment. EU AI Act, sector-specific regulations, liability frameworks."
+      - id: industry-adoption
+        label: "Industry Adoption"
+        type: intermediate
+        description: "AI deployed in manufacturing, finance, healthcare, etc. Variable by sector."
+      - id: government-adoption
+        label: "Government Adoption"
+        type: intermediate
+        description: "AI in military, surveillance, services. Dual-use concerns prominent."
+      - id: ai-uses
+        label: "AI Uses"
+        type: effect
+        description: "Aggregate deployment pattern across sectors and applications."
+    edges:
+      - source: capability-level
+        target: industry-adoption
+        strength: strong
+        effect: increases
+      - source: capability-level
+        target: government-adoption
+        strength: strong
+        effect: increases
+      - source: economic-incentives
+        target: industry-adoption
+        strength: strong
+        effect: increases
+      - source: regulatory-environment
+        target: industry-adoption
+        strength: medium
+        effect: mixed
+      - source: regulatory-environment
+        target: government-adoption
+        strength: medium
+        effect: mixed
+      - source: industry-adoption
+        target: ai-uses
+        strength: strong
+        effect: increases
+      - source: government-adoption
+        target: ai-uses
+        strength: strong
+        effect: increases
 - id: ai-ownership
   type: ai-transition-model-factor
   title: AI Ownership
@@ -2466,7 +2864,69 @@
     - factor
     - ownership
     - concentration
-  lastUpdated: 2025-12
+  lastUpdated: 2026-01
+  causeEffectGraph:
+    title: "Who Controls AI?"
+    description: "Factors determining AI control distribution. Concentration creates both coordination opportunities and power risks."
+    primaryNodeId: ai-ownership
+    nodes:
+      - id: development-costs
+        label: "Development Costs"
+        type: leaf
+        description: "High costs ($100M+ for frontier models) limit who can develop. Favors concentration."
+      - id: compute-access
+        label: "Compute Access"
+        type: leaf
+        description: "Hardware availability determines who can train. Top 3 cloud providers control 66%+ of market."
+      - id: talent-distribution
+        label: "Talent Distribution"
+        type: leaf
+        description: "Where AI researchers work. Currently concentrated at ~20 frontier labs."
+      - id: policy-interventions
+        label: "Policy Interventions"
+        type: leaf
+        description: "Antitrust, export controls, open-source mandates. Can shift concentration."
+      - id: corporate-concentration
+        label: "Corporate Concentration"
+        type: intermediate
+        description: "Power in few companies. Top 5 control most frontier development."
+      - id: geographic-concentration
+        label: "Geographic Concentration"
+        type: intermediate
+        description: "Power in few countries. US and China dominate frontier AI."
+      - id: ai-ownership
+        label: "AI Ownership"
+        type: effect
+        description: "Distribution of control over AI systems across actors."
+    edges:
+      - source: development-costs
+        target: corporate-concentration
+        strength: strong
+        effect: increases
+      - source: compute-access
+        target: corporate-concentration
+        strength: strong
+        effect: increases
+      - source: compute-access
+        target: geographic-concentration
+        strength: strong
+        effect: increases
+      - source: talent-distribution
+        target: corporate-concentration
+        strength: medium
+        effect: increases
+      - source: policy-interventions
+        target: corporate-concentration
+        strength: medium
+        effect: mixed
+      - source: corporate-concentration
+        target: ai-ownership
+        strength: strong
+        effect: increases
+      - source: geographic-concentration
+        target: ai-ownership
+        strength: strong
+        effect: increases
 - id: civilizational-competence
   type: ai-transition-model-factor
   title: Civilizational Competence
@@ -2510,7 +2970,61 @@
     - factor
     - governance
     - institutions
-  lastUpdated: 2025-12
+  lastUpdated: 2026-01
+  causeEffectGraph:
+    title: "What Determines Civilizational Competence?"
+    description: "Factors affecting society's capacity to navigate AI transition well. Higher competence improves both transition quality and long-term outcomes."
+    primaryNodeId: civilizational-competence
+    nodes:
+      - id: institutional-quality
+        label: "Institutional Quality"
+        type: leaf
+        description: "Effectiveness of governance institutions. Rule of law, regulatory capacity, democratic health."
+        entityRef: institutional-quality
+      - id: epistemic-health
+        label: "Epistemic Health"
+        type: leaf
+        description: "Society's truth-finding capacity. Trust in expertise, information quality, shared reality."
+        entityRef: epistemic-health
+      - id: coordination-capacity
+        label: "Coordination Capacity"
+        type: leaf
+        description: "Ability to achieve collective action. International cooperation, domestic consensus."
+        entityRef: coordination-capacity
+      - id: societal-resilience
+        label: "Societal Resilience"
+        type: leaf
+        description: "Capacity to absorb shocks. Economic buffers, social cohesion, adaptive capacity."
+        entityRef: societal-resilience
+      - id: governance-effectiveness
+        label: "Governance Effectiveness"
+        type: intermediate
+        description: "How well governance systems respond to AI challenges."
+      - id: civilizational-competence
+        label: "Civilizational Competence"
+        type: effect
+        description: "Aggregate capacity to navigate AI transition successfully."
+    edges:
+      - source: institutional-quality
+        target: governance-effectiveness
+        strength: strong
+        effect: increases
+      - source: epistemic-health
+        target: governance-effectiveness
+        strength: strong
+        effect: increases
+      - source: coordination-capacity
+        target: governance-effectiveness
+        strength: medium
+        effect: increases
+      - source: societal-resilience
+        target: civilizational-competence
+        strength: strong
+        effect: increases
+      - source: governance-effectiveness
+        target: civilizational-competence
+        strength: strong
+        effect: increases
 - id: transition-turbulence
   type: ai-transition-model-factor
   title: Transition Turbulence
@@ -2542,7 +3056,66 @@
     - factor
     - transition
     - disruption
-  lastUpdated: 2025-12
+  lastUpdated: 2026-01
+  causeEffectGraph:
+    title: "What Causes Transition Turbulence?"
+    description: "Factors driving disruption during the AI transition period. Higher turbulence increases short-term harm even if long-term outcomes are good."
+    primaryNodeId: transition-turbulence
+    nodes:
+      - id: ai-deployment-speed
+        label: "AI Deployment Speed"
+        type: leaf
+        description: "How fast AI is adopted across sectors. Faster deployment = less adaptation time."
+      - id: labor-displacement
+        label: "Labor Displacement"
+        type: leaf
+        description: "Job losses from automation. IMF estimates 40% of jobs exposed; 92M displaced by 2030."
+      - id: safety-net-strength
+        label: "Safety Net Strength"
+        type: leaf
+        description: "Social protections for displaced workers. UBI, retraining programs, unemployment insurance."
+      - id: governance-lag
+        label: "Governance Lag"
+        type: leaf
+        description: "Gap between AI advancement and regulatory response. Regulators consistently behind."
+      - id: economic-disruption
+        label: "Economic Disruption"
+        type: intermediate
+        description: "Aggregate economic instability from AI transition."
+        entityRef: economic-stability
+      - id: social-instability
+        label: "Social Instability"
+        type: intermediate
+        description: "Social cohesion breakdown from rapid change."
+      - id: transition-turbulence
+        label: "Transition Turbulence"
+        type: effect
+        description: "Overall severity of transition-period disruption."
+    edges:
+      - source: ai-deployment-speed
+        target: labor-displacement
+        strength: strong
+        effect: increases
+      - source: labor-displacement
+        target: economic-disruption
+        strength: strong
+        effect: increases
+      - source: safety-net-strength
+        target: economic-disruption
+        strength: medium
+        effect: decreases
+      - source: governance-lag
+        target: social-instability
+        strength: medium
+        effect: increases
+      - source: economic-disruption
+        target: transition-turbulence
+        strength: strong
+        effect: increases
+      - source: social-instability
+        target: transition-turbulence
+        strength: strong
+        effect: increases
 - id: misaligned-catastrophe
   type: ai-transition-model-scenario
   title: Misaligned Catastrophe - The Bad Ending
@@ -2752,6 +3325,7 @@
         label: "Algorithmic Efficiency"
         type: intermediate
         description: "Software improvements. Historically ~4x/year."
+        entityRef: tmc-algorithms
       - id: datacenter-capacity
         label: "Datacenter Capacity"
         type: intermediate
@@ -5458,4 +6032,265 @@
       - source: detection-lag
         target: surprise-exposure
         strength: strong
+        effect: increases
+
+# Human Catastrophe Sub-Items
+- id: tmc-state-actor
+  type: ai-transition-model-subitem
+  title: State-Caused Catastrophe
+  parentFactor: human-catastrophe
+  path: /ai-transition-model/scenarios/human-catastrophe/state-actor/
+  description: >-
+    Catastrophic outcomes caused by state actors using AI as a weapon—including AI-enabled great power
+    conflict, permanent AI-enabled authoritarianism, and state-deployed weapons of mass destruction.
+    Unlike AI takeover, humans remain in control but use that control destructively.
+  lastUpdated: 2026-01
+  relatedContent:
+    risks:
+      - path: /knowledge-base/risks/structural/authoritarian-takeover/
+        title: Authoritarian Takeover
+      - path: /knowledge-base/risks/misuse/bioweapons/
+        title: AI-Enabled Bioweapons
+      - path: /knowledge-base/risks/misuse/cyberweapons/
+        title: AI Cyberweapons
+      - path: /knowledge-base/risks/misuse/autonomous-weapons/
+        title: Autonomous Weapons
+  causeEffectGraph:
+    title: "How State-Caused AI Catastrophe Happens"
+    description: "Causal factors driving state misuse of AI for mass harm. State actors have resources and legitimacy that non-state actors lack."
+    primaryNodeId: state-catastrophe
+    nodes:
+      # LAYER 1 (leaf): Exogenous factors
+      - id: great-power-tensions
+        label: "Great Power Tensions"
+        type: leaf
+        description: "US-China competition, Russia-NATO tensions. Creates pressure for military AI deployment."
+      - id: authoritarian-regimes
+        label: "Authoritarian Regimes"
+        type: leaf
+        description: "72% of humanity lives under autocracy (2024). Creates demand for AI control technologies."
+      - id: ai-military-capability
+        label: "AI Military Capability"
+        type: leaf
+        description: "Autonomous weapons, cyber capabilities, WMD enhancement. Technical enablers for state harm."
+      - id: coordination-failure
+        label: "International Coordination Failure"
+        type: leaf
+        description: "No binding agreements on military AI. Verification and enforcement gaps."
+
+      # LAYER 2 (cause): Core mechanisms
+      - id: ai-arms-race
+        label: "AI Arms Race"
+        type: cause
+        description: "Military AI development pressure between major powers. Safety concerns secondary to capability."
+      - id: surveillance-proliferation
+        label: "Surveillance Proliferation"
+        type: cause
+        description: "AI surveillance deployed in 80+ countries. Chinese tech exports spreading control technology."
+      - id: deterrence-instability
+        label: "Deterrence Instability"
+        type: cause
+        description: "AI may undermine nuclear deterrence or create first-strike incentives."
+
+      # LAYER 3 (intermediate): Catastrophe pathways
+      - id: great-power-war
+        label: "AI-Enhanced Great Power War"
+        type: intermediate
+        description: "Conflict between major powers escalated by autonomous systems, speed of AI decision-making."
+      - id: permanent-tyranny
+        label: "Permanent AI-Enabled Tyranny"
+        type: intermediate
+        description: "Authoritarian control so comprehensive it forecloses regime change through any mechanism."
+      - id: state-wmd
+        label: "State WMD Programs"
+        type: intermediate
+        description: "AI-designed bioweapons, cyberweapons, or novel weapons deployed by state actors."
+
+      # LAYER 4 (effect): The outcome
+      - id: state-catastrophe
+        label: "State-Caused Catastrophe"
+        type: effect
+        description: "Mass casualties, civilizational damage, or permanent loss of human freedom from state misuse of AI."
+
+    edges:
+      # Leaf → Cause
+      - source: great-power-tensions
+        target: ai-arms-race
+        strength: strong
+        effect: increases
+      - source: authoritarian-regimes
+        target: surveillance-proliferation
+        strength: strong
+        effect: increases
+      - source: ai-military-capability
+        target: ai-arms-race
+        strength: strong
+        effect: increases
+      - source: ai-military-capability
+        target: deterrence-instability
+        strength: medium
+        effect: increases
+      - source: coordination-failure
+        target: ai-arms-race
+        strength: strong
+        effect: increases
+
+      # Cause → Intermediate
+      - source: ai-arms-race
+        target: great-power-war
+        strength: strong
+        effect: increases
+      - source: ai-arms-race
+        target: state-wmd
+        strength: medium
+        effect: increases
+      - source: surveillance-proliferation
+        target: permanent-tyranny
+        strength: strong
+        effect: increases
+      - source: deterrence-instability
+        target: great-power-war
+        strength: strong
+        effect: increases
+
+      # Intermediate → Effect
+      - source: great-power-war
+        target: state-catastrophe
+        strength: strong
+        effect: increases
+      - source: permanent-tyranny
+        target: state-catastrophe
+        strength: strong
+        effect: increases
+      - source: state-wmd
+        target: state-catastrophe
+        strength: strong
+        effect: increases
+
+- id: tmc-rogue-actor
+  type: ai-transition-model-subitem
+  title: Rogue Actor Catastrophe
+  parentFactor: human-catastrophe
+  path: /ai-transition-model/scenarios/human-catastrophe/rogue-actor/
+  description: >-
+    Catastrophic outcomes caused by non-state actors using AI—including terrorists, lone wolves,
+    criminal organizations, or apocalyptic cults. AI lowers barriers to acquiring dangerous capabilities,
+    potentially enabling small groups to cause harm previously requiring nation-state resources.
+  lastUpdated: 2026-01
+  relatedContent:
+    risks:
+      - path: /knowledge-base/risks/misuse/bioweapons/
+        title: AI-Enabled Bioweapons
+      - path: /knowledge-base/risks/misuse/cyberweapons/
+        title: AI Cyberweapons
+  causeEffectGraph:
+    title: "How Rogue Actor AI Catastrophe Happens"
+    description: "Causal factors enabling non-state actors to cause mass harm with AI assistance. The 'democratization of destruction' problem."
+    primaryNodeId: rogue-catastrophe
+    nodes:
+      # LAYER 1 (leaf): Exogenous factors
+      - id: ai-capability-democratization
+        label: "AI Capability Democratization"
+        type: leaf
+        description: "Open-source models, accessible APIs. Lowers barriers to dangerous capability access."
+      - id: dual-use-knowledge
+        label: "Dual-Use Knowledge"
+        type: leaf
+        description: "LLMs can provide WMD synthesis guidance. Tacit knowledge requirements reduced."
+      - id: radicalization-potential
+        label: "Radicalization Potential"
+        type: leaf
+        description: "AI-optimized recruitment and radicalization. Extremist content harder to counter."
+      - id: attribution-difficulty
+        label: "Attribution Difficulty"
+        type: leaf
+        description: "Hard to identify attackers. Reduces deterrence effectiveness."
+
+      # LAYER 2 (cause): Core mechanisms
+      - id: bio-capability-uplift
+        label: "Bio Capability Uplift"
+        type: cause
+        description: "AI helps non-experts design pathogens. Current LLMs provide some uplift; future models more concerning."
+      - id: cyber-capability-uplift
+        label: "Cyber Capability Uplift"
+        type: cause
+        description: "Automated vulnerability discovery, AI-generated social engineering. Offensive advantage."
+      - id: coordination-enhancement
+        label: "Coordination Enhancement"
+        type: cause
+        description: "AI helps rogue actors plan, recruit, and evade detection."
+
+      # LAYER 3 (intermediate): Catastrophe pathways
+      - id: engineered-pandemic
+        label: "Engineered Pandemic"
+        type: intermediate
+        description: "AI-designed pathogen released by non-state actor. Potential billions of casualties."
+      - id: infrastructure-collapse
+        label: "Infrastructure Collapse"
+        type: intermediate
+        description: "AI-enhanced cyberattacks on critical infrastructure causing cascading failures."
+      - id: mass-casualty-attack
+        label: "Mass Casualty Attack"
+        type: intermediate
+        description: "Novel attack vectors enabled by AI planning and execution."
+
+      # LAYER 4 (effect): The outcome
+      - id: rogue-catastrophe
+        label: "Rogue Actor Catastrophe"
+        type: effect
+        description: "Civilizational-scale harm from non-state actors empowered by AI capabilities."
+
+    edges:
+      # Leaf → Cause
+      - source: ai-capability-democratization
+        target: bio-capability-uplift
+        strength: strong
+        effect: increases
+      - source: ai-capability-democratization
+        target: cyber-capability-uplift
+        strength: strong
+        effect: increases
+      - source: dual-use-knowledge
+        target: bio-capability-uplift
+        strength: strong
+        effect: increases
+      - source: radicalization-potential
+        target: coordination-enhancement
+        strength: medium
+        effect: increases
+      - source: attribution-difficulty
+        target: coordination-enhancement
+        strength: medium
+        effect: increases
+
+      # Cause → Intermediate
+      - source: bio-capability-uplift
+        target: engineered-pandemic
+        strength: strong
+        effect: increases
+      - source: cyber-capability-uplift
+        target: infrastructure-collapse
+        strength: strong
+        effect: increases
+      - source: coordination-enhancement
+        target: engineered-pandemic
+        strength: medium
+        effect: increases
+      - source: coordination-enhancement
+        target: mass-casualty-attack
+        strength: medium
+        effect: increases
+
+      # Intermediate → Effect
+      - source: engineered-pandemic
+        target: rogue-catastrophe
+        strength: strong
+        effect: increases
+      - source: infrastructure-collapse
+        target: rogue-catastrophe
+        strength: strong
+        effect: increases
+      - source: mass-casualty-attack
+        target: rogue-catastrophe
+        strength: medium
         effect: increases

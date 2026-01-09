@@ -493,9 +493,9 @@ function getGroupedLayout(
     height: number;
   }>();
 
-  // Grid layout settings - prefer tall narrow clusters
-  const GRID_NODE_GAP_X = 12;
-  const GRID_NODE_GAP_Y = 10;
+  // Grid layout settings - prefer tall narrow clusters with breathing room
+  const GRID_NODE_GAP_X = 25; // Horizontal gap between nodes in grid
+  const GRID_NODE_GAP_Y = 20; // Vertical gap between nodes in grid
   const MAX_NODES_PER_ROW = 3; // Force narrow clusters
 
   nodesByCluster.forEach((clusterNodes, clusterId) => {
@@ -539,12 +539,12 @@ function getGroupedLayout(
   });
 
   // Step 4: Arrange clusters using improved Sugiyama-style crossing reduction
-  const CLUSTER_PADDING = 20;
-  const CLUSTER_HEADER = 30;
-  const CLUSTER_GAP_X = 25; // Horizontal gap between clusters
-  const CLUSTER_GAP_Y = 50; // Vertical gap between layers
-  const ROW_GAP = 30; // Gap between rows within a layer
-  const MAX_ROW_WIDTH = 4000; // Wide enough for multiple narrow clusters side-by-side
+  const CLUSTER_PADDING = 25;
+  const CLUSTER_HEADER = 35;
+  const CLUSTER_GAP_X = 40; // Horizontal gap between clusters
+  const CLUSTER_GAP_Y = 70; // Vertical gap between layers
+  const ROW_GAP = 45; // Gap between rows within a layer
+  const MAX_ROW_WIDTH = 4500; // Wide enough for multiple narrow clusters side-by-side
 
   // Group clusters by their pre-determined layer
   const clustersByLayer = new Map<number, string[]>();
