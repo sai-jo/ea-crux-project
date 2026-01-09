@@ -468,24 +468,163 @@ Cause-effect graphs visualize causal relationships between factors using ReactFl
 - **Cause-effect graphs**: For entity-specific causal models showing what affects a particular factor
 - **Mermaid diagrams**: For general flowcharts, sequences, or simpler relationship diagrams
 
-### Node Selection
+### Graph Structure Pattern
 
-**Minimize nodes, especially outputs:**
-- Focus on the key causal factors (typically 4-8 nodes)
-- Outputs should link to existing ATM entities when possible
-- Avoid generic effect nodes like "AI Progress" - link to specific ATM factors instead
+For factor-level pages, use a **three-tier structure**:
 
-**Use entityRef for ATM links:**
+1. **Upstream drivers** (leaf nodes): What drives each sub-component
+2. **Sub-components** (intermediate nodes): The model's defined sub-items (use entityRef)
+3. **Critical questions** (leaf nodes): Key uncertainties that affect the outcome
+4. **Output** (effect node): The factor being explained
+
+**Example: AI Capabilities factor**
+```
+UPSTREAM DRIVERS          SUB-COMPONENTS         CRITICAL QUESTIONS
+─────────────────         ──────────────         ──────────────────
+Chip Supply Chain    ──→  Compute
+Energy Infrastructure──→
+Capital Investment   ──→                         Will scaling hit a ceiling? ──→
+                                                                                  AI Capabilities
+Research Talent Pool ──→  Algorithms
+Paradigm Discoveries ──→                         Can AI accelerate AI research?──→
+
+Economic Incentives  ──→  Adoption
+Regulatory Friction  ──→
+```
+
+### Node Content Guidelines
+
+**DO use:**
+- Conceptually interesting causal factors (e.g., "Paradigm Discoveries", "Chip Supply Chain")
+- The model's existing sub-components with entityRef links
+- Critical questions phrased as questions (e.g., "Will scaling hit a ceiling?")
+- Factors someone with domain knowledge would identify as important
+
+**DON'T use:**
+- Arbitrary statistics as node names (e.g., "IMF: 40% Jobs Exposed")
+- Generic labels (e.g., "Global Politics" instead of "Taiwan Strait Tension")
+- Data points pulled from reports without conceptual framing
+
+### Example: Factor-Level Graph
+
 ```yaml
-nodes:
-  - id: algorithmic-efficiency
-    label: "Algorithmic Efficiency"
-    type: cause
-    entityRef: algorithms  # Links to ATM algorithms sub-item
-  - id: ai-capabilities-factor
-    label: "AI Capabilities"
-    type: effect
-    entityRef: ai-capabilities  # Links to ATM factor
+causeEffectGraph:
+  title: "What Drives AI Capabilities?"
+  description: "The three pillars of AI capability, their drivers, and key uncertainties."
+  primaryNodeId: ai-capabilities
+  nodes:
+    # Upstream drivers of Compute
+    - id: chip-supply-chain
+      label: "Chip Supply Chain"
+      type: leaf
+      description: "TSMC/ASML concentration, Taiwan geopolitical risk, fab construction timelines."
+    - id: energy-infrastructure
+      label: "Energy Infrastructure"
+      type: leaf
+      description: "Data center power availability, grid capacity, nuclear/renewable buildout."
+    - id: capital-investment
+      label: "Capital Investment"
+      type: leaf
+      description: "Willingness of investors to fund $1B+ training runs, hyperscaler budgets."
+
+    # Upstream drivers of Algorithms
+    - id: research-talent-pool
+      label: "Research Talent Pool"
+      type: leaf
+      description: "Number of top ML researchers, PhD pipeline, brain drain dynamics."
+    - id: paradigm-discoveries
+      label: "Paradigm Discoveries"
+      type: leaf
+      description: "Transformers, RLHF, chain-of-thought - unpredictable breakthroughs."
+
+    # Upstream drivers of Adoption
+    - id: economic-incentives
+      label: "Economic Incentives"
+      type: leaf
+      description: "Productivity gains, labor cost arbitrage, competitive pressure to adopt."
+    - id: regulatory-friction
+      label: "Regulatory Friction"
+      type: leaf
+      description: "EU AI Act, sector-specific rules, liability concerns slowing deployment."
+
+    # Sub-components (from the model)
+    - id: compute
+      label: "Compute"
+      type: intermediate
+      entityRef: tmc-compute
+      description: "Hardware and energy available for training and inference."
+    - id: algorithms
+      label: "Algorithms"
+      type: intermediate
+      entityRef: tmc-algorithms
+      description: "Architectures, training methods, and efficiency improvements."
+    - id: adoption
+      label: "Adoption"
+      type: intermediate
+      entityRef: tmc-adoption
+      description: "How quickly and broadly AI gets deployed and iterated on."
+
+    # Critical questions/uncertainties
+    - id: scaling-ceiling-question
+      label: "Will scaling hit a ceiling?"
+      type: leaf
+      description: "Core uncertainty: are we near diminishing returns or far from limits?"
+    - id: recursive-improvement-question
+      label: "Can AI accelerate AI research?"
+      type: leaf
+      description: "If AI improves AI development, capabilities could accelerate non-linearly."
+
+    # Output
+    - id: ai-capabilities
+      label: "AI Capabilities"
+      type: effect
+      description: "Aggregate frontier AI capability level."
+
+  edges:
+    # Upstream → Sub-components
+    - source: chip-supply-chain
+      target: compute
+      strength: strong
+    - source: energy-infrastructure
+      target: compute
+      strength: strong
+    - source: capital-investment
+      target: compute
+      strength: strong
+    - source: research-talent-pool
+      target: algorithms
+      strength: strong
+    - source: paradigm-discoveries
+      target: algorithms
+      strength: strong
+    - source: economic-incentives
+      target: adoption
+      strength: strong
+    - source: regulatory-friction
+      target: adoption
+      strength: medium
+      effect: decreases
+
+    # Sub-components → Output
+    - source: compute
+      target: ai-capabilities
+      strength: strong
+    - source: algorithms
+      target: ai-capabilities
+      strength: strong
+    - source: adoption
+      target: ai-capabilities
+      strength: medium
+
+    # Critical questions → Output (use mixed effect for uncertainties)
+    - source: scaling-ceiling-question
+      target: ai-capabilities
+      strength: medium
+      effect: mixed
+    - source: recursive-improvement-question
+      target: ai-capabilities
+      strength: medium
+      effect: mixed
 ```
 
 ### Edge Styling
@@ -498,65 +637,24 @@ nodes:
 **Effect direction:**
 - `increases` (default): Normal arrow
 - `decreases`: Red-tinted line
-- `mixed`: Dashed line
-
-```yaml
-edges:
-  - source: chip-manufacturing
-    target: compute-availability
-    strength: strong  # Critical dependency
-  - source: export-controls
-    target: compute-availability
-    strength: medium
-    effect: decreases  # Limits availability
-```
-
-### Visual Configuration for Embedded Graphs
-
-When embedding in entity pages via TransitionModelContent, use minimal chrome:
-
-```typescript
-<CauseEffectGraph
-  hideListView={true}  // Hide "List View" tab
-  graphConfig={{
-    hideGroupBackgrounds: true,  // No section backgrounds (CAUSES, INTERMEDIATE, etc.)
-  }}
-/>
-```
+- `mixed`: Dashed line (use for critical questions/uncertainties)
 
 ### Node Types
 
 | Type | Position | Purpose |
 |------|----------|---------|
-| `cause` | Left side | Input factors that influence the target |
-| `intermediate` | Center | Mediating factors (use sparingly) |
-| `effect` | Right side | Outcomes, ideally linking to ATM entities |
+| `leaf` | Top/sides | Upstream drivers and critical questions |
+| `intermediate` | Middle | Sub-components from the model (use entityRef) |
+| `effect` | Bottom | The factor/outcome being explained |
 
 ### Best Practices
 
-1. **Keep graphs focused**: Each graph should answer one question (e.g., "What affects compute availability?")
-2. **Set primaryNodeId**: The graph should highlight the node representing the current page
-3. **Link to ATM entities**: Use `entityRef` to connect nodes to existing factors/scenarios
-4. **Show relative importance**: Use `strength` on edges to distinguish critical vs minor relationships
-5. **Avoid intermediate nodes**: Unless truly needed for clarity, connect causes directly to effects
-6. **Add confidence**: Use `confidence: 0.0-1.0` on nodes to indicate uncertainty
-
-### Primary Node Selection
-
-Use `primaryNodeId` to highlight the node representing the current entity:
-
-```yaml
-causeEffectGraph:
-  title: "What Affects Compute Availability?"
-  primaryNodeId: compute-availability  # This node will be visually highlighted
-  nodes:
-    - id: compute-availability
-      label: "Compute Availability"
-      type: intermediate
-      ...
-```
-
-This creates a visual anchor showing "you are here" in the causal graph.
+1. **Use the model's structure**: Check for existing sub-components (parentFactor relationships) and use them as intermediate nodes
+2. **Add critical questions**: Include 1-3 key uncertainties as leaf nodes with `effect: mixed`
+3. **Set primaryNodeId**: Highlight the node representing the current page
+4. **Link to ATM entities**: Use `entityRef` to connect sub-components to their pages
+5. **Show relative importance**: Use `strength` on edges to distinguish critical vs minor relationships
+6. **Aim for 10-15 nodes**: Enough depth to be informative, not so many it's overwhelming
 
 ### Schema Location
 

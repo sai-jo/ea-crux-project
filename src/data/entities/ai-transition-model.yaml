@@ -2494,70 +2494,121 @@
   lastUpdated: 2026-01
   causeEffectGraph:
     title: "What Drives Misalignment Potential?"
-    description: "Factors affecting the risk that AI systems pursue misaligned goals. Primary driver of AI takeover scenarios."
+    description: "The three pillars of alignment assurance, their drivers, and key uncertainties."
     primaryNodeId: misalignment-potential
     nodes:
-      - id: alignment-difficulty
-        label: "Alignment Difficulty"
+      # Upstream drivers of Technical AI Safety
+      - id: interpretability-progress
+        label: "Interpretability Progress"
         type: leaf
-        description: "How hard it is to specify and instill correct goals. May be fundamentally unsolvable or just very hard."
-      - id: capability-growth
-        label: "Capability Growth"
+        description: "Ability to understand model internals. SAEs, probes, mechanistic interpretability research."
+      - id: alignment-techniques
+        label: "Alignment Techniques"
         type: leaf
-        description: "Faster capability growth creates larger safety-capability gaps."
-        entityRef: ai-capabilities
-      - id: interpretability-gap
-        label: "Interpretability Gap"
+        description: "RLHF, constitutional AI, debate, scalable oversight methods."
+      - id: safety-research-talent
+        label: "Safety Research Talent"
         type: leaf
-        description: "Inability to understand model internals. Can't verify alignment without understanding."
-        entityRef: interpretability-coverage
-      - id: safety-investment
-        label: "Safety Investment"
+        description: "Number of researchers working on alignment. Currently small relative to capabilities."
+      # Upstream drivers of AI Governance
+      - id: regulatory-frameworks
+        label: "Regulatory Frameworks"
         type: leaf
-        description: "Resources dedicated to alignment research. Currently ~1-3% of AI R&D budgets."
-      - id: alignment-robustness
-        label: "Alignment Robustness"
+        description: "EU AI Act, US executive orders, sector-specific rules for high-risk AI."
+      - id: liability-regimes
+        label: "Liability Regimes"
+        type: leaf
+        description: "Legal accountability for AI harms. Currently unclear who's responsible."
+      # Upstream drivers of Lab Safety
+      - id: safety-culture
+        label: "Safety Culture"
+        type: leaf
+        description: "Organizational prioritization of safety vs speed. Varies significantly across labs."
+      - id: deployment-incentives
+        label: "Deployment Incentives"
+        type: leaf
+        description: "Competitive pressure to release quickly. Racing dynamics undermine caution."
+      # Sub-components
+      - id: technical-ai-safety
+        label: "Technical AI Safety"
         type: intermediate
-        description: "How reliably alignment holds as systems scale."
-        entityRef: alignment-robustness
-      - id: oversight-effectiveness
-        label: "Oversight Effectiveness"
+        entityRef: tmc-technical-ai-safety
+        description: "Technical methods to ensure AI systems remain aligned."
+      - id: ai-governance
+        label: "AI Governance"
         type: intermediate
-        description: "How well humans can monitor and correct AI systems."
-        entityRef: human-oversight-quality
+        entityRef: tmc-ai-governance
+        description: "Rules, institutions, and oversight mechanisms for AI development."
+      - id: lab-safety
+        label: "Lab Safety Practices"
+        type: intermediate
+        entityRef: tmc-lab-safety
+        description: "How individual labs approach safety in development and deployment."
+      # Critical questions
+      - id: alignment-scalability-question
+        label: "Does alignment scale with capability?"
+        type: leaf
+        description: "Core uncertainty: will current techniques work for much more capable systems?"
+      - id: deception-detection-question
+        label: "Can we detect deceptive alignment?"
+        type: leaf
+        description: "If models learn to fake alignment, can we catch them before deployment?"
       - id: misalignment-potential
         label: "Misalignment Potential"
         type: effect
-        description: "Aggregate risk that AI systems pursue misaligned goals."
+        description: "Risk that AI systems pursue goals misaligned with human values."
     edges:
-      - source: alignment-difficulty
-        target: alignment-robustness
+      # Upstream → Sub-components
+      - source: interpretability-progress
+        target: technical-ai-safety
         strength: strong
-        effect: decreases
-      - source: capability-growth
-        target: alignment-robustness
+        effect: increases
+      - source: alignment-techniques
+        target: technical-ai-safety
         strength: strong
-        effect: decreases
-      - source: interpretability-gap
-        target: oversight-effectiveness
-        strength: strong
-        effect: decreases
-      - source: safety-investment
-        target: alignment-robustness
+        effect: increases
+      - source: safety-research-talent
+        target: technical-ai-safety
         strength: medium
         effect: increases
-      - source: safety-investment
-        target: oversight-effectiveness
+      - source: regulatory-frameworks
+        target: ai-governance
+        strength: strong
+        effect: increases
+      - source: liability-regimes
+        target: ai-governance
         strength: medium
         effect: increases
-      - source: alignment-robustness
+      - source: safety-culture
+        target: lab-safety
+        strength: strong
+        effect: increases
+      - source: deployment-incentives
+        target: lab-safety
+        strength: strong
+        effect: decreases
+      # Sub-components → Output (note: these DECREASE misalignment potential)
+      - source: technical-ai-safety
         target: misalignment-potential
         strength: strong
         effect: decreases
-      - source: oversight-effectiveness
+      - source: ai-governance
+        target: misalignment-potential
+        strength: medium
+        effect: decreases
+      - source: lab-safety
+        target: misalignment-potential
+        strength: medium
+        effect: decreases
+      # Critical questions
+      - source: alignment-scalability-question
         target: misalignment-potential
         strength: strong
-        effect: decreases
+        effect: mixed
+      - source: deception-detection-question
+        target: misalignment-potential
+        strength: medium
+        effect: mixed
 - id: misuse-potential
   type: ai-transition-model-factor
   title: Misuse Potential
@@ -2598,69 +2649,107 @@
   lastUpdated: 2026-01
   causeEffectGraph:
     title: "What Drives Misuse Potential?"
-    description: "Factors affecting the risk of deliberate harmful AI use. Primary driver of human catastrophe scenarios."
+    description: "The threat domains, their drivers, and key uncertainties about AI-enabled harm."
     primaryNodeId: misuse-potential
     nodes:
-      - id: ai-capability-access
-        label: "AI Capability Access"
+      # Upstream drivers of Biological Threat
+      - id: ai-biology-knowledge
+        label: "AI Biology Knowledge"
         type: leaf
-        description: "Who can access powerful AI. Open-source models, API access, compute availability."
-        entityRef: ai-capabilities
-      - id: malicious-actor-presence
-        label: "Malicious Actor Presence"
+        description: "LLM knowledge of virology, synthesis routes, and lab techniques. Growing with each generation."
+      - id: dna-synthesis-access
+        label: "DNA Synthesis Access"
         type: leaf
-        description: "State actors, terrorists, criminal organizations with intent to cause harm."
-      - id: defensive-capacity
-        label: "Defensive Capacity"
+        description: "Ease of ordering genetic material. Screening exists but has gaps."
+      - id: biosecurity-defenses
+        label: "Biosecurity Defenses"
         type: leaf
-        description: "Biosecurity, cybersecurity, physical security infrastructure."
-      - id: governance-effectiveness
-        label: "Governance Effectiveness"
+        description: "Metagenomic surveillance, mRNA vaccine platforms, broad-spectrum countermeasures."
+      # Upstream drivers of Cyber Threat
+      - id: ai-hacking-capability
+        label: "AI Hacking Capability"
         type: leaf
-        description: "Export controls, liability frameworks, international coordination."
+        description: "AI vulnerability discovery, exploit generation, social engineering automation."
+      - id: attack-surface-growth
+        label: "Attack Surface Growth"
+        type: leaf
+        description: "More connected systems, IoT proliferation, critical infrastructure digitization."
+      - id: cybersecurity-workforce
+        label: "Cybersecurity Workforce"
+        type: leaf
+        description: "Defender talent pool. Currently 3.5M unfilled positions globally."
+      # Upstream drivers of Actor Access
+      - id: model-access-controls
+        label: "Model Access Controls"
+        type: leaf
+        description: "API restrictions, KYC requirements, open-weight availability."
+      - id: actor-intent
+        label: "Actor Intent"
+        type: leaf
+        description: "Presence of state, terrorist, criminal actors motivated to cause harm."
+      # Sub-components (threat domains)
       - id: bio-threat
-        label: "Biological Threat"
+        label: "Biological Threat Exposure"
         type: intermediate
-        description: "Risk of AI-enabled bioweapons. Current LLMs provide some uplift."
         entityRef: biological-threat-exposure
+        description: "Risk from AI-enabled bioweapons development."
       - id: cyber-threat
-        label: "Cyber Threat"
+        label: "Cyber Threat Exposure"
         type: intermediate
-        description: "Risk of AI-enhanced cyberattacks. Offensive advantage growing."
         entityRef: cyber-threat-exposure
+        description: "Risk from AI-enhanced cyberattacks."
+      - id: actor-capability
+        label: "Malicious Actor Capability"
+        type: intermediate
+        description: "What bad actors can actually do with AI access."
+      # Critical questions
+      - id: offense-defense-balance
+        label: "Does offense or defense win?"
+        type: leaf
+        description: "Core uncertainty: will AI-enhanced attacks outpace AI-enhanced defenses?"
+      - id: democratization-question
+        label: "Does AI democratize WMD?"
+        type: leaf
+        description: "Can small groups cause harm previously requiring state resources?"
       - id: misuse-potential
         label: "Misuse Potential"
         type: effect
-        description: "Aggregate risk from deliberate harmful AI use."
+        description: "Aggregate risk from deliberate harmful use of AI."
     edges:
-      - source: ai-capability-access
+      # Upstream → Sub-components
+      - source: ai-biology-knowledge
         target: bio-threat
         strength: strong
         effect: increases
-      - source: ai-capability-access
+      - source: dna-synthesis-access
+        target: bio-threat
+        strength: strong
+        effect: increases
+      - source: biosecurity-defenses
+        target: bio-threat
+        strength: medium
+        effect: decreases
+      - source: ai-hacking-capability
         target: cyber-threat
         strength: strong
         effect: increases
-      - source: malicious-actor-presence
-        target: bio-threat
-        strength: medium
-        effect: increases
-      - source: malicious-actor-presence
+      - source: attack-surface-growth
         target: cyber-threat
         strength: medium
         effect: increases
-      - source: defensive-capacity
-        target: bio-threat
-        strength: medium
-        effect: decreases
-      - source: defensive-capacity
+      - source: cybersecurity-workforce
         target: cyber-threat
         strength: medium
         effect: decreases
-      - source: governance-effectiveness
-        target: misuse-potential
+      - source: model-access-controls
+        target: actor-capability
         strength: medium
         effect: decreases
+      - source: actor-intent
+        target: actor-capability
+        strength: strong
+        effect: increases
+      # Sub-components → Output
       - source: bio-threat
         target: misuse-potential
         strength: strong
@@ -2669,6 +2758,19 @@
         target: misuse-potential
         strength: strong
         effect: increases
+      - source: actor-capability
+        target: misuse-potential
+        strength: strong
+        effect: increases
+      # Critical questions
+      - source: offense-defense-balance
+        target: misuse-potential
+        strength: strong
+        effect: mixed
+      - source: democratization-question
+        target: misuse-potential
+        strength: medium
+        effect: mixed
 - id: ai-capabilities
   type: ai-transition-model-factor
   title: AI Capabilities
@@ -2700,54 +2802,121 @@
   lastUpdated: 2026-01
   causeEffectGraph:
     title: "What Drives AI Capabilities?"
-    description: "Major factors driving AI capability advancement. Capabilities are growing rapidly, doubling roughly every 6-12 months on key benchmarks."
+    description: "The three pillars of AI capability, their drivers, and key uncertainties."
     primaryNodeId: ai-capabilities
     nodes:
-      - id: compute-investment
-        label: "Compute Investment"
+      # Upstream drivers of Compute
+      - id: chip-supply-chain
+        label: "Chip Supply Chain"
         type: leaf
-        description: "Hardware spending on AI training. ~$100B+ annually; frontier training runs cost $100M+."
-      - id: algorithmic-progress
-        label: "Algorithmic Progress"
+        description: "TSMC/ASML concentration, Taiwan geopolitical risk, fab construction timelines."
+      - id: energy-infrastructure
+        label: "Energy Infrastructure"
         type: leaf
-        description: "Efficiency gains from better architectures, training methods, and techniques."
-      - id: data-availability
-        label: "Data Availability"
+        description: "Data center power availability, grid capacity, nuclear/renewable buildout."
+      - id: capital-investment
+        label: "Capital Investment"
         type: leaf
-        description: "Training data quality and quantity. Internet-scale text, code, and synthetic data."
-      - id: talent-concentration
-        label: "Talent Concentration"
+        description: "Willingness of investors to fund $1B+ training runs, hyperscaler budgets."
+      # Upstream drivers of Algorithms
+      - id: research-talent-pool
+        label: "Research Talent Pool"
         type: leaf
-        description: "Top AI researchers concentrated at frontier labs. ~1000 people drive most advances."
-      - id: scaling-effectiveness
-        label: "Scaling Effectiveness"
+        description: "Number of top ML researchers, PhD pipeline, brain drain dynamics."
+      - id: paradigm-discoveries
+        label: "Paradigm Discoveries"
+        type: leaf
+        description: "Transformers, RLHF, chain-of-thought - unpredictable breakthroughs that reshape the field."
+      # Upstream drivers of Adoption
+      - id: economic-incentives
+        label: "Economic Incentives"
+        type: leaf
+        description: "Productivity gains, labor cost arbitrage, competitive pressure to adopt."
+      - id: regulatory-friction
+        label: "Regulatory Friction"
+        type: leaf
+        description: "EU AI Act, sector-specific rules, liability concerns slowing deployment."
+      # The three sub-components
+      - id: compute
+        label: "Compute"
         type: intermediate
-        description: "How well increased resources translate to capabilities. Scaling laws remain robust."
+        entityRef: tmc-compute
+        description: "Hardware and energy available for training and inference."
+      - id: algorithms
+        label: "Algorithms"
+        type: intermediate
+        entityRef: tmc-algorithms
+        description: "Architectures, training methods, and efficiency improvements."
+      - id: adoption
+        label: "Adoption"
+        type: intermediate
+        entityRef: tmc-adoption
+        description: "How quickly and broadly AI gets deployed and iterated on."
+      # Critical questions/uncertainties
+      - id: scaling-ceiling-question
+        label: "Will scaling hit a ceiling?"
+        type: leaf
+        description: "Core uncertainty: are we near diminishing returns or far from limits?"
+      - id: recursive-improvement-question
+        label: "Can AI accelerate AI research?"
+        type: leaf
+        description: "If AI improves AI development, capabilities could accelerate non-linearly."
       - id: ai-capabilities
         label: "AI Capabilities"
         type: effect
-        description: "Aggregate AI system power. Amplifies both benefits and risks."
+        description: "Aggregate frontier AI capability level."
     edges:
-      - source: compute-investment
-        target: scaling-effectiveness
+      # Upstream → Sub-components
+      - source: chip-supply-chain
+        target: compute
         strength: strong
         effect: increases
-      - source: algorithmic-progress
-        target: scaling-effectiveness
+      - source: energy-infrastructure
+        target: compute
         strength: strong
         effect: increases
-      - source: data-availability
-        target: scaling-effectiveness
+      - source: capital-investment
+        target: compute
+        strength: strong
+        effect: increases
+      - source: research-talent-pool
+        target: algorithms
+        strength: strong
+        effect: increases
+      - source: paradigm-discoveries
+        target: algorithms
+        strength: strong
+        effect: increases
+      - source: economic-incentives
+        target: adoption
+        strength: strong
+        effect: increases
+      - source: regulatory-friction
+        target: adoption
         strength: medium
-        effect: increases
-      - source: talent-concentration
-        target: algorithmic-progress
-        strength: strong
-        effect: increases
-      - source: scaling-effectiveness
+        effect: decreases
+      # Sub-components → Output
+      - source: compute
         target: ai-capabilities
         strength: strong
         effect: increases
+      - source: algorithms
+        target: ai-capabilities
+        strength: strong
+        effect: increases
+      - source: adoption
+        target: ai-capabilities
+        strength: medium
+        effect: increases
+      # Critical questions affect the output
+      - source: scaling-ceiling-question
+        target: ai-capabilities
+        strength: medium
+        effect: mixed
+      - source: recursive-improvement-question
+        target: ai-capabilities
+        strength: medium
+        effect: mixed
 - id: ai-uses
   type: ai-transition-model-factor
   title: AI Uses
@@ -2779,63 +2948,139 @@
   lastUpdated: 2026-01
   causeEffectGraph:
     title: "How AI Gets Deployed"
-    description: "Factors shaping AI deployment patterns across sectors. Deployment choices determine who benefits and what risks emerge."
+    description: "The four deployment domains, their drivers, and key uncertainties."
     primaryNodeId: ai-uses
     nodes:
-      - id: capability-level
-        label: "AI Capability Level"
+      # Upstream drivers of Recursive AI
+      - id: ai-coding-ability
+        label: "AI Coding Ability"
         type: leaf
-        description: "What AI can do determines where it can be deployed. Higher capability enables more applications."
-        entityRef: ai-capabilities
-      - id: economic-incentives
-        label: "Economic Incentives"
+        description: "AI's capacity to write, debug, and improve code. Key enabler for accelerating AI development itself."
+      - id: ai-research-ability
+        label: "AI Research Ability"
         type: leaf
-        description: "Profit motives drive commercial deployment. Productivity gains estimated at $2.6-4.4T annually."
-      - id: regulatory-environment
-        label: "Regulatory Environment"
+        description: "AI's capacity for scientific reasoning, experiment design, and hypothesis generation."
+      # Upstream drivers of Industries
+      - id: productivity-pressure
+        label: "Productivity Pressure"
         type: leaf
-        description: "Rules governing AI deployment. EU AI Act, sector-specific regulations, liability frameworks."
-      - id: industry-adoption
-        label: "Industry Adoption"
+        description: "Competitive pressure to adopt AI for efficiency gains. Varies by sector."
+      - id: workflow-compatibility
+        label: "Workflow Compatibility"
+        type: leaf
+        description: "How easily AI integrates into existing work processes. Easier for digital, harder for physical."
+      # Upstream drivers of Governments
+      - id: procurement-processes
+        label: "Procurement Processes"
+        type: leaf
+        description: "Government acquisition rules, compliance requirements, multi-year budget cycles."
+      - id: public-trust-concerns
+        label: "Public Trust Concerns"
+        type: leaf
+        description: "Citizen expectations for transparency, due process, and accountability in government AI."
+      # Upstream drivers of Coordination
+      - id: collective-action-problems
+        label: "Collective Action Problems"
+        type: leaf
+        description: "Challenges requiring coordination: climate, pandemics, AI governance itself."
+      - id: coordination-technology
+        label: "Coordination Technology"
+        type: leaf
+        description: "AI tools for negotiation, prediction markets, mechanism design, information aggregation."
+      # Sub-components
+      - id: recursive-ai
+        label: "Recursive AI"
         type: intermediate
-        description: "AI deployed in manufacturing, finance, healthcare, etc. Variable by sector."
-      - id: government-adoption
-        label: "Government Adoption"
+        entityRef: tmc-recursive-ai
+        description: "AI used to improve AI development. Potential for acceleration."
+      - id: industries
+        label: "AI in Industries"
         type: intermediate
-        description: "AI in military, surveillance, services. Dual-use concerns prominent."
+        entityRef: tmc-industries
+        description: "Commercial adoption across sectors. High variability."
+      - id: governments
+        label: "AI in Governments"
+        type: intermediate
+        entityRef: tmc-governments
+        description: "Public sector use. Slower adoption, high stakes."
+      - id: coordination
+        label: "AI for Coordination"
+        type: intermediate
+        entityRef: tmc-coordination
+        description: "AI to solve collective action problems."
+      # Critical questions
+      - id: recursive-takeoff-question
+        label: "Will recursive improvement accelerate?"
+        type: leaf
+        description: "If AI improves AI, could development speed increase dramatically?"
+      - id: deployment-governance-gap
+        label: "Can governance keep pace with deployment?"
+        type: leaf
+        description: "Deployment often outpaces regulatory frameworks."
       - id: ai-uses
         label: "AI Uses"
         type: effect
-        description: "Aggregate deployment pattern across sectors and applications."
+        description: "Aggregate pattern of AI deployment across all domains."
     edges:
-      - source: capability-level
-        target: industry-adoption
+      # Upstream → Sub-components
+      - source: ai-coding-ability
+        target: recursive-ai
         strength: strong
         effect: increases
-      - source: capability-level
-        target: government-adoption
+      - source: ai-research-ability
+        target: recursive-ai
         strength: strong
         effect: increases
-      - source: economic-incentives
-        target: industry-adoption
+      - source: productivity-pressure
+        target: industries
         strength: strong
         effect: increases
-      - source: regulatory-environment
-        target: industry-adoption
+      - source: workflow-compatibility
+        target: industries
         strength: medium
-        effect: mixed
-      - source: regulatory-environment
-        target: government-adoption
+        effect: increases
+      - source: procurement-processes
+        target: governments
         strength: medium
-        effect: mixed
-      - source: industry-adoption
+        effect: decreases
+      - source: public-trust-concerns
+        target: governments
+        strength: medium
+        effect: decreases
+      - source: collective-action-problems
+        target: coordination
+        strength: medium
+        effect: increases
+      - source: coordination-technology
+        target: coordination
+        strength: strong
+        effect: increases
+      # Sub-components → Output
+      - source: recursive-ai
         target: ai-uses
         strength: strong
         effect: increases
-      - source: government-adoption
+      - source: industries
         target: ai-uses
         strength: strong
         effect: increases
+      - source: governments
+        target: ai-uses
+        strength: medium
+        effect: increases
+      - source: coordination
+        target: ai-uses
+        strength: medium
+        effect: increases
+      # Critical questions
+      - source: recursive-takeoff-question
+        target: ai-uses
+        strength: strong
+        effect: mixed
+      - source: deployment-governance-gap
+        target: ai-uses
+        strength: medium
+        effect: mixed
 - id: ai-ownership
   type: ai-transition-model-factor
   title: AI Ownership
@@ -2867,66 +3112,129 @@
   lastUpdated: 2026-01
   causeEffectGraph:
     title: "Who Controls AI?"
-    description: "Factors determining AI control distribution. Concentration creates both coordination opportunities and power risks."
+    description: "The three dimensions of AI control, their drivers, and key uncertainties."
     primaryNodeId: ai-ownership
     nodes:
-      - id: development-costs
-        label: "Development Costs"
+      # Upstream drivers of Companies
+      - id: capital-requirements
+        label: "Capital Requirements"
         type: leaf
-        description: "High costs ($100M+ for frontier models) limit who can develop. Favors concentration."
-      - id: compute-access
-        label: "Compute Access"
+        description: "Training costs of $100M-1B+ create high barriers to entry. Favors well-funded incumbents."
+      - id: talent-concentration
+        label: "Talent Concentration"
         type: leaf
-        description: "Hardware availability determines who can train. Top 3 cloud providers control 66%+ of market."
-      - id: talent-distribution
-        label: "Talent Distribution"
+        description: "Top researchers cluster at few labs. Network effects and compensation drive concentration."
+      - id: cloud-partnerships
+        label: "Cloud Partnerships"
         type: leaf
-        description: "Where AI researchers work. Currently concentrated at ~20 frontier labs."
-      - id: policy-interventions
-        label: "Policy Interventions"
+        description: "Azure-OpenAI, AWS-Anthropic, GCP-DeepMind. Compute access tied to big tech."
+      # Upstream drivers of Countries
+      - id: chip-manufacturing-geography
+        label: "Chip Manufacturing Geography"
         type: leaf
-        description: "Antitrust, export controls, open-source mandates. Can shift concentration."
-      - id: corporate-concentration
-        label: "Corporate Concentration"
+        description: "TSMC in Taiwan, ASML in Netherlands. Critical supply chain concentration."
+      - id: export-controls
+        label: "Export Controls"
+        type: leaf
+        description: "US restrictions on chips to China. Fragmenting global AI development."
+      - id: national-ai-strategies
+        label: "National AI Strategies"
+        type: leaf
+        description: "Government investments, industrial policy, sovereignty concerns."
+      # Upstream drivers of Shareholders
+      - id: corporate-structures
+        label: "Corporate Structures"
+        type: leaf
+        description: "OpenAI's capped-profit, Anthropic's PBC, DeepMind as subsidiary. Varied governance."
+      - id: investor-influence
+        label: "Investor Influence"
+        type: leaf
+        description: "Microsoft, Amazon, Google as major funders. Potential mission drift pressure."
+      # Sub-components
+      - id: companies
+        label: "Company Ownership"
         type: intermediate
-        description: "Power in few companies. Top 5 control most frontier development."
-      - id: geographic-concentration
-        label: "Geographic Concentration"
+        entityRef: tmc-companies
+        description: "Which companies control frontier AI development."
+      - id: countries
+        label: "Country Control"
         type: intermediate
-        description: "Power in few countries. US and China dominate frontier AI."
+        entityRef: tmc-countries
+        description: "Which nations have AI capabilities and influence."
+      - id: shareholders
+        label: "Shareholder Power"
+        type: intermediate
+        entityRef: tmc-shareholders
+        description: "Who actually owns and governs AI companies."
+      # Critical questions
+      - id: concentration-stability
+        label: "Will concentration persist?"
+        type: leaf
+        description: "Open-source, efficiency gains, new entrants could disrupt. Or concentration could increase."
+      - id: power-alignment
+        label: "Are controllers aligned with humanity?"
+        type: leaf
+        description: "Even if AI is aligned, are its controllers acting in broad interest?"
       - id: ai-ownership
         label: "AI Ownership"
         type: effect
-        description: "Distribution of control over AI systems across actors."
+        description: "Distribution of control over AI systems."
     edges:
-      - source: development-costs
-        target: corporate-concentration
+      # Upstream → Sub-components
+      - source: capital-requirements
+        target: companies
         strength: strong
         effect: increases
-      - source: compute-access
-        target: corporate-concentration
+      - source: talent-concentration
+        target: companies
         strength: strong
         effect: increases
-      - source: compute-access
-        target: geographic-concentration
-        strength: strong
-        effect: increases
-      - source: talent-distribution
-        target: corporate-concentration
+      - source: cloud-partnerships
+        target: companies
         strength: medium
         effect: increases
-      - source: policy-interventions
-        target: corporate-concentration
+      - source: chip-manufacturing-geography
+        target: countries
+        strength: strong
+        effect: increases
+      - source: export-controls
+        target: countries
+        strength: medium
+        effect: increases
+      - source: national-ai-strategies
+        target: countries
+        strength: medium
+        effect: increases
+      - source: corporate-structures
+        target: shareholders
+        strength: strong
+        effect: increases
+      - source: investor-influence
+        target: shareholders
+        strength: medium
+        effect: increases
+      # Sub-components → Output
+      - source: companies
+        target: ai-ownership
+        strength: strong
+        effect: increases
+      - source: countries
+        target: ai-ownership
+        strength: strong
+        effect: increases
+      - source: shareholders
+        target: ai-ownership
+        strength: medium
+        effect: increases
+      # Critical questions
+      - source: concentration-stability
+        target: ai-ownership
         strength: medium
         effect: mixed
-      - source: corporate-concentration
+      - source: power-alignment
         target: ai-ownership
-        strength: strong
-        effect: increases
-      - source: geographic-concentration
-        target: ai-ownership
-        strength: strong
-        effect: increases
+        strength: medium
+        effect: mixed
 - id: civilizational-competence
   type: ai-transition-model-factor
   title: Civilizational Competence
@@ -2973,58 +3281,129 @@
   lastUpdated: 2026-01
   causeEffectGraph:
     title: "What Determines Civilizational Competence?"
-    description: "Factors affecting society's capacity to navigate AI transition well. Higher competence improves both transition quality and long-term outcomes."
+    description: "The three pillars of societal capacity, their drivers, and key uncertainties."
     primaryNodeId: civilizational-competence
     nodes:
-      - id: institutional-quality
-        label: "Institutional Quality"
+      # Upstream drivers of Governance
+      - id: institutional-trust
+        label: "Institutional Trust"
         type: leaf
-        description: "Effectiveness of governance institutions. Rule of law, regulatory capacity, democratic health."
-        entityRef: institutional-quality
-      - id: epistemic-health
-        label: "Epistemic Health"
+        description: "Public confidence in government, experts, and institutions. Enables collective action."
+      - id: regulatory-expertise
+        label: "Regulatory Expertise"
         type: leaf
-        description: "Society's truth-finding capacity. Trust in expertise, information quality, shared reality."
-        entityRef: epistemic-health
-      - id: coordination-capacity
-        label: "Coordination Capacity"
+        description: "Government capacity to understand and regulate AI. Currently limited."
+      - id: international-cooperation
+        label: "International Cooperation"
         type: leaf
-        description: "Ability to achieve collective action. International cooperation, domestic consensus."
-        entityRef: coordination-capacity
-      - id: societal-resilience
-        label: "Societal Resilience"
+        description: "Ability of nations to coordinate on AI. US-China tensions a major obstacle."
+      # Upstream drivers of Epistemics
+      - id: information-environment
+        label: "Information Environment"
         type: leaf
-        description: "Capacity to absorb shocks. Economic buffers, social cohesion, adaptive capacity."
-        entityRef: societal-resilience
-      - id: governance-effectiveness
-        label: "Governance Effectiveness"
+        description: "Quality of public discourse. AI-generated content, deepfakes, polarization."
+      - id: scientific-consensus
+        label: "Scientific Consensus Processes"
+        type: leaf
+        description: "Mechanisms for establishing expert agreement. Under stress from AI-generated content."
+      - id: media-ecosystem
+        label: "Media Ecosystem"
+        type: leaf
+        description: "News, social media, information distribution. Fragmented and attention-optimized."
+      # Upstream drivers of Adaptability
+      - id: economic-flexibility
+        label: "Economic Flexibility"
+        type: leaf
+        description: "Labor mobility, retraining systems, safety nets. Capacity to absorb disruption."
+      - id: social-cohesion
+        label: "Social Cohesion"
+        type: leaf
+        description: "Shared identity, cross-group trust, willingness to cooperate despite differences."
+      # Sub-components
+      - id: governance
+        label: "Governance Capacity"
         type: intermediate
-        description: "How well governance systems respond to AI challenges."
+        entityRef: tmc-civ-governance
+        description: "Society's ability to make and enforce good AI policy."
+      - id: epistemics
+        label: "Epistemic Health"
+        type: intermediate
+        entityRef: tmc-civ-epistemics
+        description: "Society's truth-finding and sense-making capacity."
+      - id: adaptability
+        label: "Adaptability"
+        type: intermediate
+        entityRef: tmc-adaptability
+        description: "Society's ability to adjust to rapid change."
+      # Critical questions
+      - id: pace-question
+        label: "Can institutions keep pace with AI?"
+        type: leaf
+        description: "AI develops faster than governance. Is this gap closeable?"
+      - id: epistemics-collapse-question
+        label: "Will AI erode shared reality?"
+        type: leaf
+        description: "AI-generated content may make truth harder to establish."
       - id: civilizational-competence
         label: "Civilizational Competence"
         type: effect
-        description: "Aggregate capacity to navigate AI transition successfully."
+        description: "Society's aggregate capacity to navigate AI transition well."
     edges:
-      - source: institutional-quality
-        target: governance-effectiveness
+      # Upstream → Sub-components
+      - source: institutional-trust
+        target: governance
         strength: strong
         effect: increases
-      - source: epistemic-health
-        target: governance-effectiveness
+      - source: regulatory-expertise
+        target: governance
         strength: strong
         effect: increases
-      - source: coordination-capacity
-        target: governance-effectiveness
+      - source: international-cooperation
+        target: governance
         strength: medium
         effect: increases
-      - source: societal-resilience
+      - source: information-environment
+        target: epistemics
+        strength: strong
+        effect: increases
+      - source: scientific-consensus
+        target: epistemics
+        strength: medium
+        effect: increases
+      - source: media-ecosystem
+        target: epistemics
+        strength: medium
+        effect: mixed
+      - source: economic-flexibility
+        target: adaptability
+        strength: strong
+        effect: increases
+      - source: social-cohesion
+        target: adaptability
+        strength: medium
+        effect: increases
+      # Sub-components → Output
+      - source: governance
         target: civilizational-competence
         strength: strong
         effect: increases
-      - source: governance-effectiveness
+      - source: epistemics
         target: civilizational-competence
         strength: strong
         effect: increases
+      - source: adaptability
+        target: civilizational-competence
+        strength: medium
+        effect: increases
+      # Critical questions
+      - source: pace-question
+        target: civilizational-competence
+        strength: strong
+        effect: mixed
+      - source: epistemics-collapse-question
+        target: civilizational-competence
+        strength: medium
+        effect: mixed
 - id: transition-turbulence
   type: ai-transition-model-factor
   title: Transition Turbulence
@@ -3059,63 +3438,129 @@
   lastUpdated: 2026-01
   causeEffectGraph:
     title: "What Causes Transition Turbulence?"
-    description: "Factors driving disruption during the AI transition period. Higher turbulence increases short-term harm even if long-term outcomes are good."
+    description: "The three dimensions of disruption, their drivers, and key uncertainties."
     primaryNodeId: transition-turbulence
     nodes:
-      - id: ai-deployment-speed
-        label: "AI Deployment Speed"
+      # Upstream drivers of Economic Stability
+      - id: automation-speed
+        label: "Automation Speed"
         type: leaf
-        description: "How fast AI is adopted across sectors. Faster deployment = less adaptation time."
-      - id: labor-displacement
-        label: "Labor Displacement"
+        description: "How fast AI displaces human work. Faster = less time to adapt."
+      - id: job-displacement-scope
+        label: "Job Displacement Scope"
         type: leaf
-        description: "Job losses from automation. IMF estimates 40% of jobs exposed; 92M displaced by 2030."
-      - id: safety-net-strength
-        label: "Safety Net Strength"
+        description: "Which jobs affected. White-collar newly vulnerable, unlike previous automation."
+      - id: safety-net-adequacy
+        label: "Safety Net Adequacy"
         type: leaf
-        description: "Social protections for displaced workers. UBI, retraining programs, unemployment insurance."
-      - id: governance-lag
-        label: "Governance Lag"
+        description: "Unemployment insurance, retraining programs, potential UBI. Currently underdeveloped."
+      # Upstream drivers of Human Agency
+      - id: ai-decision-authority
+        label: "AI Decision Authority"
         type: leaf
-        description: "Gap between AI advancement and regulatory response. Regulators consistently behind."
-      - id: economic-disruption
-        label: "Economic Disruption"
+        description: "How much authority shifts from humans to AI systems. Hiring, loans, medical, legal."
+      - id: human-oversight-design
+        label: "Human Oversight Design"
+        type: leaf
+        description: "Whether AI systems are designed for human control. Automation bias concerns."
+      # Upstream drivers of Human Expertise
+      - id: skill-atrophy-pressure
+        label: "Skill Atrophy Pressure"
+        type: leaf
+        description: "Risk of human skills degrading from AI dependence. Pilots, doctors, programmers."
+      - id: education-adaptation
+        label: "Education Adaptation"
+        type: leaf
+        description: "How well education systems prepare for AI-changed economy."
+      - id: ai-augmentation-tools
+        label: "AI Augmentation Tools"
+        type: leaf
+        description: "AI that enhances rather than replaces human capabilities."
+      # Sub-components (parameters)
+      - id: economic-stability
+        label: "Economic Stability"
         type: intermediate
-        description: "Aggregate economic instability from AI transition."
         entityRef: economic-stability
-      - id: social-instability
-        label: "Social Instability"
+        description: "Labor market health, income distribution, growth patterns."
+      - id: human-agency
+        label: "Human Agency"
         type: intermediate
-        description: "Social cohesion breakdown from rapid change."
+        entityRef: human-agency
+        description: "Degree to which humans remain in control of important decisions."
+      - id: human-expertise
+        label: "Human Expertise"
+        type: intermediate
+        entityRef: human-expertise
+        description: "Preservation of human skills and knowledge."
+      # Critical questions
+      - id: adaptation-speed-question
+        label: "Can adaptation keep pace with disruption?"
+        type: leaf
+        description: "AI may change faster than humans/institutions can adapt."
+      - id: meaningful-work-question
+        label: "What replaces displaced work?"
+        type: leaf
+        description: "Even with UBI, will people have purpose and dignity?"
       - id: transition-turbulence
         label: "Transition Turbulence"
         type: effect
-        description: "Overall severity of transition-period disruption."
+        description: "Overall severity of disruption during AI transition."
     edges:
-      - source: ai-deployment-speed
-        target: labor-displacement
+      # Upstream → Sub-components
+      - source: automation-speed
+        target: economic-stability
         strength: strong
-        effect: increases
-      - source: labor-displacement
-        target: economic-disruption
+        effect: decreases
+      - source: job-displacement-scope
+        target: economic-stability
         strength: strong
+        effect: decreases
+      - source: safety-net-adequacy
+        target: economic-stability
+        strength: medium
         effect: increases
-      - source: safety-net-strength
-        target: economic-disruption
+      - source: ai-decision-authority
+        target: human-agency
+        strength: strong
+        effect: decreases
+      - source: human-oversight-design
+        target: human-agency
+        strength: medium
+        effect: increases
+      - source: skill-atrophy-pressure
+        target: human-expertise
+        strength: strong
+        effect: decreases
+      - source: education-adaptation
+        target: human-expertise
+        strength: medium
+        effect: increases
+      - source: ai-augmentation-tools
+        target: human-expertise
+        strength: medium
+        effect: increases
+      # Sub-components → Output (note: stability/agency/expertise REDUCE turbulence)
+      - source: economic-stability
+        target: transition-turbulence
+        strength: strong
+        effect: decreases
+      - source: human-agency
+        target: transition-turbulence
         strength: medium
         effect: decreases
-      - source: governance-lag
-        target: social-instability
+      - source: human-expertise
+        target: transition-turbulence
         strength: medium
-        effect: increases
-      - source: economic-disruption
+        effect: decreases
+      # Critical questions
+      - source: adaptation-speed-question
         target: transition-turbulence
         strength: strong
-        effect: increases
-      - source: social-instability
+        effect: mixed
+      - source: meaningful-work-question
         target: transition-turbulence
-        strength: strong
-        effect: increases
+        strength: medium
+        effect: mixed
 - id: misaligned-catastrophe
   type: ai-transition-model-scenario
   title: Misaligned Catastrophe - The Bad Ending
