@@ -1,31 +1,44 @@
-import { useCallback, useState, useEffect, useMemo } from 'react';
+import { useCallback, useState, useEffect, useMemo, useRef } from 'react';
 import {
   ReactFlow,
   Controls,
+  MiniMap,
   useNodesState,
   useEdgesState,
+  useReactFlow,
+  ReactFlowProvider,
   addEdge,
   MarkerType,
   type Node,
   type Edge,
   type Connection,
   type NodeMouseHandler,
+  type EdgeMouseHandler,
+  type ReactFlowInstance,
+  type Viewport,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import '../CauseEffectGraph.css';
 
 import type { CauseEffectNodeData, CauseEffectEdgeData, GraphConfig } from './types';
-import { GroupNode, SubgroupNode, CauseEffectNode } from './nodes';
-import { Legend, DataView, OutlineView, InteractiveView, generateOutlineText, CopyIcon, CheckIcon, ExpandIcon, ShrinkIcon } from './components';
+import { GroupNode, SubgroupNode, CauseEffectNode, ExpandableNode, ClusterNode, ClusterContainerNode } from './nodes';
+import { Legend, DataView, CopyIcon, CheckIcon, ExpandIcon, ShrinkIcon } from './components';
 import { getLayoutedElements, toYaml } from './layout';
+import { ZoomProvider } from './ZoomContext';
 
 // Re-export types for external use
-export type { CauseEffectNodeData, CauseEffectEdgeData, GraphConfig, LayoutOptions, TypeLabels, SubgroupConfig, LegendItem } from './types';
+export type { CauseEffectNodeData, CauseEffectEdgeData, GraphConfig, LayoutOptions, TypeLabels, SubgroupConfig, LegendItem, LayoutAlgorithm } from './types';
+export type { ExpandableNodeData } from './nodes/ExpandableNode';
+export type { ClusterNodeData } from './nodes/ClusterNode';
+export type { ClusterContainerData } from './nodes/ClusterContainerNode';
 
 const nodeTypes = {
   causeEffect: CauseEffectNode,
   group: GroupNode,
   subgroup: SubgroupNode,
+  expandable: ExpandableNode,
+  cluster: ClusterNode,
+  clusterContainer: ClusterContainerNode,
 };
 
 interface CauseEffectGraphProps {
@@ -35,35 +48,129 @@ interface CauseEffectGraphProps {
   fitViewPadding?: number;
   graphConfig?: GraphConfig;
   showFullscreenButton?: boolean;
+  hideListView?: boolean;  // Hide the "List View" tab link
+  selectedNodeId?: string;  // ID of node to highlight as selected (e.g., the current page's node)
+  minZoom?: number;  // Minimum zoom level (default 0.1 for large graphs)
+  maxZoom?: number;  // Maximum zoom level (default 2)
+  defaultZoom?: number;  // Initial zoom level (if not specified, fitView is used)
+  showMiniMap?: boolean;  // Show mini-map navigation (default false)
+  enablePathHighlighting?: boolean;  // Click nodes to highlight causal paths (default false)
 }
 
-export default function CauseEffectGraph({
+// Helper to compute all nodes in a causal path (BFS both directions)
+function computeCausalPath(
+  startNodeId: string,
+  edges: Edge<CauseEffectEdgeData>[],
+  maxDepth: number = 10
+): { nodeIds: Set<string>; edgeIds: Set<string> } {
+  const nodeIds = new Set<string>([startNodeId]);
+  const edgeIds = new Set<string>();
+
+  // Build adjacency maps
+  const downstream = new Map<string, { nodeId: string; edgeId: string }[]>();
+  const upstream = new Map<string, { nodeId: string; edgeId: string }[]>();
+
+  for (const edge of edges) {
+    if (!downstream.has(edge.source)) downstream.set(edge.source, []);
+    downstream.get(edge.source)!.push({ nodeId: edge.target, edgeId: edge.id });
+
+    if (!upstream.has(edge.target)) upstream.set(edge.target, []);
+    upstream.get(edge.target)!.push({ nodeId: edge.source, edgeId: edge.id });
+  }
+
+  // BFS downstream
+  let frontier = new Set([startNodeId]);
+  for (let d = 0; d < maxDepth && frontier.size > 0; d++) {
+    const nextFrontier = new Set<string>();
+    for (const nodeId of frontier) {
+      for (const { nodeId: nextId, edgeId } of downstream.get(nodeId) || []) {
+        if (!nodeIds.has(nextId)) {
+          nodeIds.add(nextId);
+          edgeIds.add(edgeId);
+          nextFrontier.add(nextId);
+        } else {
+          edgeIds.add(edgeId); // Still add the edge even if node already visited
+        }
+      }
+    }
+    frontier = nextFrontier;
+  }
+
+  // BFS upstream
+  frontier = new Set([startNodeId]);
+  for (let d = 0; d < maxDepth && frontier.size > 0; d++) {
+    const nextFrontier = new Set<string>();
+    for (const nodeId of frontier) {
+      for (const { nodeId: nextId, edgeId } of upstream.get(nodeId) || []) {
+        if (!nodeIds.has(nextId)) {
+          nodeIds.add(nextId);
+          edgeIds.add(edgeId);
+          nextFrontier.add(nextId);
+        } else {
+          edgeIds.add(edgeId);
+        }
+      }
+    }
+    frontier = nextFrontier;
+  }
+
+  return { nodeIds, edgeIds };
+}
+
+// Inner component that has access to ReactFlow instance
+function CauseEffectGraphInner({
   initialNodes,
   initialEdges,
   height = 500,
   fitViewPadding = 0.1,
   graphConfig,
   showFullscreenButton = true,
+  hideListView = false,
+  selectedNodeId,
+  minZoom = 0.1,
+  maxZoom = 2,
+  defaultZoom,
+  showMiniMap = false,
+  enablePathHighlighting = false,
 }: CauseEffectGraphProps) {
   const [nodes, setNodes, onNodesChange] = useNodesState<Node<CauseEffectNodeData>>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge<CauseEffectEdgeData>>([]);
   const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
+  const [hoveredEdgeId, setHoveredEdgeId] = useState<string | null>(null);
+  const [pathHighlightNodeId, setPathHighlightNodeId] = useState<string | null>(null);
   const [isLayouting, setIsLayouting] = useState(true);
+  const [currentZoom, setCurrentZoom] = useState(1);
+  const reactFlowInstance = useRef<ReactFlowInstance | null>(null);
+
+  // Track zoom level changes for semantic zoom
+  // Zoom levels: far (<0.25), medium (0.25-0.5), close (0.5-0.9), detail (>0.9)
+  const onViewportChange = useCallback((viewport: Viewport) => {
+    setCurrentZoom(viewport.zoom);
+  }, []);
+
+  // Compute zoom level class for CSS-based semantic zoom
+  const zoomLevelClass = useMemo(() => {
+    if (currentZoom < 0.25) return 'ceg-zoom-far';
+    if (currentZoom < 0.5) return 'ceg-zoom-medium';
+    if (currentZoom < 0.9) return 'ceg-zoom-close';
+    return 'ceg-zoom-detail';
+  }, [currentZoom]);
+
+  // Fit view handler for the "Fit All" button
+  const handleFitView = useCallback(() => {
+    if (reactFlowInstance.current) {
+      reactFlowInstance.current.fitView({ padding: fitViewPadding, duration: 300 });
+    }
+  }, [fitViewPadding]);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [activeTab, setActiveTab] = useState<'graph' | 'interactive' | 'outline' | 'data'>('graph');
+  const [activeTab, setActiveTab] = useState<'graph' | 'data'>('graph');
   const [copied, setCopied] = useState(false);
 
   const yamlData = toYaml(initialNodes, initialEdges);
 
-  // Generate outline text for copy/display
-  const outlineData = useMemo(() => {
-    return generateOutlineText(initialNodes, graphConfig?.typeLabels, graphConfig?.subgroups);
-  }, [initialNodes, graphConfig?.typeLabels, graphConfig?.subgroups]);
-
   const handleCopy = async () => {
-    const textToCopy = activeTab === 'outline' ? outlineData : yamlData;
     try {
-      await navigator.clipboard.writeText(textToCopy);
+      await navigator.clipboard.writeText(yamlData);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
@@ -71,15 +178,20 @@ export default function CauseEffectGraph({
     }
   };
 
-  // Layout effect
+  // Layout effect - uses JSON stringify to ensure deep comparison of graphConfig
+  const graphConfigKey = JSON.stringify(graphConfig);
   useEffect(() => {
     setIsLayouting(true);
     getLayoutedElements(initialNodes, initialEdges, graphConfig).then(({ nodes: layoutedNodes, edges: layoutedEdges }) => {
       setNodes(layoutedNodes);
       setEdges(layoutedEdges);
       setIsLayouting(false);
+    }).catch((error) => {
+      console.error('Layout failed:', error);
+      setIsLayouting(false);
     });
-  }, [initialNodes, initialEdges, graphConfig, setNodes, setEdges]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialNodes, initialEdges, graphConfigKey, setNodes, setEdges]);
 
   // Event handlers
   const onConnect = useCallback(
@@ -96,6 +208,32 @@ export default function CauseEffectGraph({
 
   const onNodeMouseLeave = useCallback(() => setHoveredNodeId(null), []);
 
+  // Edge hover handlers for showing labels
+  const onEdgeMouseEnter: EdgeMouseHandler<Edge<CauseEffectEdgeData>> = useCallback(
+    (_, edge) => setHoveredEdgeId(edge.id),
+    []
+  );
+
+  const onEdgeMouseLeave = useCallback(() => setHoveredEdgeId(null), []);
+
+  // Node click handler for path highlighting
+  const onNodeClick: NodeMouseHandler<Node<CauseEffectNodeData>> = useCallback(
+    (_, node) => {
+      if (!enablePathHighlighting) return;
+      // Toggle: if clicking same node, clear; otherwise set new
+      setPathHighlightNodeId((prev) => (prev === node.id ? null : node.id));
+    },
+    [enablePathHighlighting]
+  );
+
+  // Compute path highlight data
+  const pathHighlight = useMemo(() => {
+    if (!pathHighlightNodeId || !enablePathHighlighting) {
+      return { nodeIds: new Set<string>(), edgeIds: new Set<string>() };
+    }
+    return computeCausalPath(pathHighlightNodeId, edges);
+  }, [pathHighlightNodeId, edges, enablePathHighlighting]);
+
   // Compute connected nodes for hover highlighting
   const connectedNodeIds = useMemo(() => {
     if (!hoveredNodeId) return new Set<string>();
@@ -107,47 +245,93 @@ export default function CauseEffectGraph({
     return connected;
   }, [hoveredNodeId, edges]);
 
-  // Style edges based on hover state (no labels - color/thickness encode the relationship)
+  // Style edges based on hover, path highlighting, and edge hover states
   const styledEdges = useMemo(() => {
-    if (!hoveredNodeId) return edges;
     return edges.map((edge) => {
-      const isConnected = edge.source === hoveredNodeId || edge.target === hoveredNodeId;
+      const isHoveredEdge = hoveredEdgeId === edge.id;
+      const isConnectedToHoveredNode = edge.source === hoveredNodeId || edge.target === hoveredNodeId;
+      const isInPath = pathHighlight.edgeIds.has(edge.id);
+      const hasPathHighlight = pathHighlight.nodeIds.size > 0;
+      const hasHoveredNode = !!hoveredNodeId;
+
+      // Determine if this edge should be highlighted
+      const isHighlighted = isHoveredEdge || isConnectedToHoveredNode || isInPath;
+
+      // Determine opacity based on state
+      let opacity = 1;
+      if (hasPathHighlight && !isInPath) {
+        opacity = 0.15;
+      } else if (hasHoveredNode && !isConnectedToHoveredNode) {
+        opacity = 0.15;
+      }
+
+      // Show label on hover
+      const edgeData = edge.data as CauseEffectEdgeData | undefined;
+      const showLabel = isHoveredEdge && edgeData;
+      const effectLabel = edgeData?.effect === 'decreases' ? '−' : edgeData?.effect === 'mixed' ? '±' : '+';
+      const strengthLabel = edgeData?.strength === 'strong' ? 'Strong' : edgeData?.strength === 'weak' ? 'Weak' : '';
 
       return {
         ...edge,
-        // No labels on hover - visual encoding (color/thickness) is sufficient
-        label: undefined,
+        label: showLabel ? `${strengthLabel} ${effectLabel}`.trim() : undefined,
+        labelStyle: showLabel ? {
+          fill: '#f1f5f9',
+          fontSize: 11,
+          fontWeight: 500,
+        } : undefined,
+        labelBgStyle: showLabel ? {
+          fill: edgeData?.effect === 'decreases' ? '#991b1b' : edgeData?.effect === 'mixed' ? '#854d0e' : '#166534',
+          fillOpacity: 1,
+        } : undefined,
+        labelBgPadding: [4, 6] as [number, number],
+        labelBgBorderRadius: 4,
         style: {
           ...edge.style,
-          opacity: isConnected ? 1 : 0.15,
-          strokeWidth: isConnected
-            ? ((edge.style?.strokeWidth as number) || 2) * 1.3
+          opacity,
+          strokeWidth: isHighlighted
+            ? ((edge.style?.strokeWidth as number) || 2) * 1.5
             : edge.style?.strokeWidth,
         },
-        markerEnd: isConnected
+        markerEnd: isHighlighted
           ? edge.markerEnd
           : { ...(edge.markerEnd as object), color: '#d1d5db' },
-        zIndex: isConnected ? 1000 : 0,
+        zIndex: isHighlighted ? 1000 : 0,
+        className: isInPath ? 'react-flow__edge--path-highlighted' : undefined,
       };
     });
-  }, [edges, hoveredNodeId]);
+  }, [edges, hoveredNodeId, hoveredEdgeId, pathHighlight]);
 
-  // Style nodes based on hover state
+  // Style nodes based on hover state, selection, and path highlighting
   const styledNodes = useMemo(() => {
-    if (!hoveredNodeId) return nodes;
     return nodes.map((node) => {
-      if (node.type === 'group') return node;
-      const isConnected = connectedNodeIds.has(node.id);
+      if (node.type === 'group' || node.type === 'subgroup' || node.type === 'clusterContainer') return node;
+
+      const isSelected = selectedNodeId === node.id;
+      const isPathRoot = pathHighlightNodeId === node.id;
+      const isInPath = pathHighlight.nodeIds.has(node.id);
+      const hasPathHighlight = pathHighlight.nodeIds.size > 0;
+      const isConnected = hoveredNodeId ? connectedNodeIds.has(node.id) : true;
+
+      // Determine opacity
+      let opacity = 1;
+      if (hasPathHighlight && !isInPath) {
+        opacity = 0.3;
+      } else if (hoveredNodeId && !isConnected) {
+        opacity = 0.3;
+      }
+
       return {
         ...node,
+        selected: isSelected || isPathRoot,
         style: {
           ...node.style,
-          opacity: isConnected ? 1 : 0.3,
-          zIndex: isConnected ? 1001 : undefined,
+          opacity,
+          zIndex: isInPath || isConnected ? 1001 : undefined,
         },
+        className: isInPath ? 'react-flow__node--path-highlighted' : undefined,
       };
     });
-  }, [nodes, hoveredNodeId, connectedNodeIds]);
+  }, [nodes, hoveredNodeId, connectedNodeIds, selectedNodeId, pathHighlight, pathHighlightNodeId]);
 
   // Keyboard handler for ESC
   useEffect(() => {
@@ -189,7 +373,7 @@ export default function CauseEffectGraph({
     };
   }, [isFullscreen]);
 
-  const containerClass = `cause-effect-graph ${isFullscreen ? 'cause-effect-graph--fullscreen' : ''}`;
+  const containerClass = `cause-effect-graph ${isFullscreen ? 'cause-effect-graph--fullscreen' : ''} ${zoomLevelClass}`;
 
   return (
     <div className={containerClass} style={isFullscreen ? undefined : { height }}>
@@ -203,33 +387,31 @@ export default function CauseEffectGraph({
             Graph
           </button>
           <button
-            className={`ceg-segment-btn ${activeTab === 'interactive' ? 'ceg-segment-btn--active' : ''}`}
-            onClick={() => setActiveTab('interactive')}
-          >
-            Interactive
-          </button>
-          <button
-            className={`ceg-segment-btn ${activeTab === 'outline' ? 'ceg-segment-btn--active' : ''}`}
-            onClick={() => setActiveTab('outline')}
-          >
-            Outline
-          </button>
-          <button
             className={`ceg-segment-btn ${activeTab === 'data' ? 'ceg-segment-btn--active' : ''}`}
             onClick={() => setActiveTab('data')}
           >
             Data (YAML)
           </button>
-          <a
-            href="/ai-transition-model-list"
-            className="ceg-segment-btn ceg-segment-link"
-          >
-            List View
-          </a>
+          {!hideListView && (
+            <a
+              href="/ai-transition-model-list"
+              className="ceg-segment-btn ceg-segment-link"
+            >
+              List View
+            </a>
+          )}
         </div>
 
         <div className="ceg-button-group">
-          {(activeTab === 'outline' || activeTab === 'data') && (
+          {activeTab === 'graph' && (
+            <button className="ceg-action-btn" onClick={handleFitView} title="Fit all nodes in view">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+              </svg>
+              Fit All
+            </button>
+          )}
+          {activeTab === 'data' && (
             <button className="ceg-action-btn" onClick={handleCopy}>
               {copied ? <CheckIcon /> : <CopyIcon />}
               {copied ? 'Copied!' : 'Copy'}
@@ -257,9 +439,17 @@ export default function CauseEffectGraph({
               onConnect={onConnect}
               onNodeMouseEnter={onNodeMouseEnter}
               onNodeMouseLeave={onNodeMouseLeave}
+              onNodeClick={onNodeClick}
+              onEdgeMouseEnter={onEdgeMouseEnter}
+              onEdgeMouseLeave={onEdgeMouseLeave}
+              onViewportChange={onViewportChange}
               nodeTypes={nodeTypes}
               fitView
               fitViewOptions={{ padding: fitViewPadding }}
+              minZoom={minZoom}
+              maxZoom={maxZoom}
+              defaultViewport={defaultZoom ? { x: 0, y: 0, zoom: defaultZoom } : undefined}
+              onInit={(instance) => { reactFlowInstance.current = instance; }}
               defaultEdgeOptions={{
                 type: 'default',
                 style: { stroke: '#94a3b8', strokeWidth: 2 },
@@ -267,27 +457,34 @@ export default function CauseEffectGraph({
               }}
             >
               <Controls />
+              {showMiniMap && (
+                <MiniMap
+                  nodeStrokeWidth={3}
+                  zoomable
+                  pannable
+                  style={{ width: 150, height: 100 }}
+                />
+              )}
+              {/* Zoom level indicator */}
+              <div className="ceg-zoom-indicator">
+                <span className="ceg-zoom-indicator__value">{Math.round(currentZoom * 100)}%</span>
+                <span className="ceg-zoom-indicator__level">{zoomLevelClass.replace('ceg-zoom-', '')}</span>
+              </div>
             </ReactFlow>
             <Legend typeLabels={graphConfig?.typeLabels} customItems={graphConfig?.legendItems} />
           </div>
         )}
-        {activeTab === 'interactive' && (
-          <InteractiveView
-            nodes={initialNodes}
-            edges={initialEdges}
-            typeLabels={graphConfig?.typeLabels}
-            subgroups={graphConfig?.subgroups}
-          />
-        )}
-        {activeTab === 'outline' && (
-          <OutlineView
-            nodes={initialNodes}
-            typeLabels={graphConfig?.typeLabels}
-            subgroups={graphConfig?.subgroups}
-          />
-        )}
         {activeTab === 'data' && <DataView yaml={yamlData} />}
       </div>
     </div>
+  );
+}
+
+// Wrapper component that provides ReactFlow context
+export default function CauseEffectGraph(props: CauseEffectGraphProps) {
+  return (
+    <ReactFlowProvider>
+      <CauseEffectGraphInner {...props} />
+    </ReactFlowProvider>
   );
 }

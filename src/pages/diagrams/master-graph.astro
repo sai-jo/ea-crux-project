@@ -1,0 +1,36 @@
+---
+import MasterGraphViewer from '../../components/MasterGraphViewer';
+import '../../styles/global.css';
+
+// Get entity ID from query params for subgraph view
+const entityId = Astro.url.searchParams.get('entity') || '';
+const showFull = Astro.url.searchParams.get('full') === 'true';
+---
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {entityId
+        ? `Subgraph: ${entityId} | AI Transition Model`
+        : 'Master Graph | AI Transition Model'}
+    </title>
+    <meta name="description" content="Unified causal model of the AI Transition Model showing how factors influence capabilities, alignment, and outcomes." />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: #0f172a;
+        color: #e2e8f0;
+        font-family: system-ui, -apple-system, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <MasterGraphViewer
+      entityId={entityId}
+      startWithFullGraph={showFull || !entityId}
+      client:load
+    />
+  </body>
+</html>

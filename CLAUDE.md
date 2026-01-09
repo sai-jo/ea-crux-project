@@ -459,6 +459,146 @@ Required sections:
 - **Avoid comparison operators in labels**: Use "above 0.5" instead of "> 0.5"
 - Run `npm run validate:mermaid` to check diagram syntax
 
+## Cause-Effect Graph Guidelines
+
+Cause-effect graphs visualize causal relationships between factors using ReactFlow. Use these for AI Transition Model entity pages.
+
+### When to Use
+
+- **Cause-effect graphs**: For entity-specific causal models showing what affects a particular factor
+- **Mermaid diagrams**: For general flowcharts, sequences, or simpler relationship diagrams
+
+### Node Selection
+
+**Minimize nodes, especially outputs:**
+- Focus on the key causal factors (typically 4-8 nodes)
+- Outputs should link to existing ATM entities when possible
+- Avoid generic effect nodes like "AI Progress" - link to specific ATM factors instead
+
+**Use entityRef for ATM links:**
+```yaml
+nodes:
+  - id: algorithmic-efficiency
+    label: "Algorithmic Efficiency"
+    type: cause
+    entityRef: algorithms  # Links to ATM algorithms sub-item
+  - id: ai-capabilities-factor
+    label: "AI Capabilities"
+    type: effect
+    entityRef: ai-capabilities  # Links to ATM factor
+```
+
+### Edge Styling
+
+**Strength determines visual importance:**
+- `strong`: Thick line (primary causal relationships)
+- `medium`: Normal line (significant but secondary)
+- `weak`: Thin line (minor or uncertain relationships)
+
+**Effect direction:**
+- `increases` (default): Normal arrow
+- `decreases`: Red-tinted line
+- `mixed`: Dashed line
+
+```yaml
+edges:
+  - source: chip-manufacturing
+    target: compute-availability
+    strength: strong  # Critical dependency
+  - source: export-controls
+    target: compute-availability
+    strength: medium
+    effect: decreases  # Limits availability
+```
+
+### Visual Configuration for Embedded Graphs
+
+When embedding in entity pages via TransitionModelContent, use minimal chrome:
+
+```typescript
+<CauseEffectGraph
+  hideListView={true}  // Hide "List View" tab
+  graphConfig={{
+    hideGroupBackgrounds: true,  // No section backgrounds (CAUSES, INTERMEDIATE, etc.)
+  }}
+/>
+```
+
+### Node Types
+
+| Type | Position | Purpose |
+|------|----------|---------|
+| `cause` | Left side | Input factors that influence the target |
+| `intermediate` | Center | Mediating factors (use sparingly) |
+| `effect` | Right side | Outcomes, ideally linking to ATM entities |
+
+### Best Practices
+
+1. **Keep graphs focused**: Each graph should answer one question (e.g., "What affects compute availability?")
+2. **Set primaryNodeId**: The graph should highlight the node representing the current page
+3. **Link to ATM entities**: Use `entityRef` to connect nodes to existing factors/scenarios
+4. **Show relative importance**: Use `strength` on edges to distinguish critical vs minor relationships
+5. **Avoid intermediate nodes**: Unless truly needed for clarity, connect causes directly to effects
+6. **Add confidence**: Use `confidence: 0.0-1.0` on nodes to indicate uncertainty
+
+### Primary Node Selection
+
+Use `primaryNodeId` to highlight the node representing the current entity:
+
+```yaml
+causeEffectGraph:
+  title: "What Affects Compute Availability?"
+  primaryNodeId: compute-availability  # This node will be visually highlighted
+  nodes:
+    - id: compute-availability
+      label: "Compute Availability"
+      type: intermediate
+      ...
+```
+
+This creates a visual anchor showing "you are here" in the causal graph.
+
+### Schema Location
+
+Cause-effect graph schema is defined in `src/data/schema.ts`:
+- `CauseEffectNode`: Node with id, label, type, entityRef, confidence
+- `CauseEffectEdge`: Edge with source, target, strength, effect, confidence
+- `CauseEffectGraph`: Container with title, description, primaryNodeId, nodes, edges
+
+Data is stored in entity YAML files under the `causeEffectGraph` field.
+
+### Graph Sync Architecture
+
+**Two-tier system with single source of truth:**
+
+1. **Master Graph** (`src/data/graphs/ai-transition-model-master.yaml`)
+   - Contains ALL node definitions (categories, sub-items, detailed nodes)
+   - Single source of truth for node IDs, labels, descriptions
+   - Viewable at `/diagrams/master-graph/`
+
+2. **Individual Entity Diagrams** (`src/data/entities/ai-transition-model.yaml`)
+   - Each entity can have a `causeEffectGraph` field
+   - Define which nodes to include and their edge relationships
+   - Nodes MUST exist in master graph (enforced by validation)
+
+**Sync workflow:**
+```bash
+# Check sync status
+node scripts/analyze-graph-sync.mjs
+
+# Add missing nodes to master (if individual diagrams have new nodes)
+node scripts/add-missing-nodes-to-master.mjs --dry-run  # Preview
+node scripts/add-missing-nodes-to-master.mjs --apply    # Apply
+
+# Validate sync (runs as part of npm run validate)
+node scripts/validate-graph-sync.mjs
+```
+
+**When adding new diagram nodes:**
+1. Add nodes to the master graph first (or use sync script)
+2. Reference nodes by ID in individual entity diagrams
+3. Run `npm run validate` to ensure sync
+
 ## Data Layer
 
 ### Entity Types

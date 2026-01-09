@@ -13,7 +13,7 @@
  *   --ci              Output JSON for CI pipelines
  *   --fail-fast       Stop on first failure
  *   --skip=<check>    Skip specific checks (comma-separated)
- *                     Available: data, links, orphans, mdx, mermaid, style, staleness, consistency, sidebar, types, dollars, comparisons, schema
+ *                     Available: data, links, orphans, mdx, mermaid, style, staleness, consistency, sidebar, types, dollars, comparisons, schema, graph-sync
  *
  * Exit codes:
  *   0 = All checks passed
@@ -135,6 +135,12 @@ const CHECKS = [
     script: 'validate-yaml-schema.mjs',
     description: 'Entity/resource YAML files match Zod schemas',
     runner: 'tsx',
+  },
+  {
+    id: 'graph-sync',
+    name: 'Graph Node Sync',
+    script: 'validate-graph-sync.mjs',
+    description: 'Individual diagram nodes exist in master graph',
   },
 ];
 

@@ -1,0 +1,56 @@
+---
+import DiagramViewer from '../../components/DiagramViewer';
+import '../../styles/global.css';
+
+// Get entity ID from query params
+const entityId = Astro.url.searchParams.get('entity') || '';
+---
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{entityId ? `Diagram: ${entityId}` : 'Diagram Viewer'}</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: #0f172a;
+        color: #e2e8f0;
+        font-family: system-ui, -apple-system, sans-serif;
+      }
+      .master-graph-banner {
+        background: #1e3a5f;
+        border-bottom: 1px solid #334155;
+        padding: 0.75rem 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .master-graph-banner p {
+        margin: 0;
+        color: #94a3b8;
+        font-size: 0.9rem;
+      }
+      .master-graph-banner a {
+        color: #60a5fa;
+        text-decoration: none;
+        padding: 0.4rem 0.8rem;
+        background: #334155;
+        border-radius: 6px;
+        font-size: 0.9rem;
+      }
+      .master-graph-banner a:hover {
+        background: #475569;
+      }
+    </style>
+  </head>
+  <body>
+    {!entityId && (
+      <div class="master-graph-banner">
+        <p>Try the new unified Master Graph view (experimental)</p>
+        <a href="/diagrams/master-graph?full=true">View Master Graph →</a>
+      </div>
+    )}
+    <DiagramViewer entityId={entityId} client:load />
+  </body>
+</html>

@@ -1,11 +1,20 @@
 // Types for CauseEffectGraph
 
+// Color override for nodes - allows explicit color customization
+export interface NodeColors {
+  bg?: string;
+  border?: string;
+  text?: string;
+  accent?: string;
+}
+
 export interface CauseEffectNodeData extends Record<string, unknown> {
   label: string;
   description?: string;
   type?: 'leaf' | 'cause' | 'effect' | 'intermediate';
   subgroup?: string;
   order?: number;  // Manual ordering within layer (0 = leftmost)
+  nodeColors?: NodeColors;  // Optional color override for this specific node
   subItems?: Array<{
     label: string;
     probability?: string;
@@ -33,7 +42,7 @@ export interface CauseEffectEdgeData extends Record<string, unknown> {
   impact?: number;
   strength?: 'strong' | 'medium' | 'weak';
   confidence?: 'high' | 'medium' | 'low';
-  effect?: 'increases' | 'decreases';
+  effect?: 'increases' | 'decreases' | 'mixed';
 }
 
 // Layout configuration options (all optional, with sensible defaults)
@@ -76,6 +85,9 @@ export interface ElkLayoutOptions {
   layerSpacing?: number;
 }
 
+// Layout algorithm type
+export type LayoutAlgorithm = 'dagre' | 'grouped' | 'elk';
+
 // Complete graph configuration (combines all customization options)
 export interface GraphConfig {
   layout?: LayoutOptions;
@@ -83,4 +95,10 @@ export interface GraphConfig {
   subgroups?: Record<string, SubgroupConfig>;
   legendItems?: LegendItem[];
   elkOptions?: ElkLayoutOptions;
+  // Visual options
+  hideGroupBackgrounds?: boolean;  // Don't show section backgrounds (CAUSES, INTERMEDIATE, EFFECTS)
+  hideGroupLabels?: boolean;       // Don't show section labels
+  // Layout algorithm
+  useDagre?: boolean;              // Use Dagre instead of ELK for simpler, cleaner layouts (deprecated - use layoutAlgorithm)
+  layoutAlgorithm?: LayoutAlgorithm; // Layout algorithm to use: 'dagre' (hierarchical), 'grouped' (category sections), 'elk' (layered)
 }

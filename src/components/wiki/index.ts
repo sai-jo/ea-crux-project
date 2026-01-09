@@ -91,6 +91,7 @@ export { FactorSubItemsList, AllFactorsSubItems } from './FactorSubItemsList';
 export { FactorRelationshipDiagram, FullModelDiagram } from './FactorRelationshipDiagram';
 export { ImpactGrid, ImpactList } from './ImpactGrid';
 export { TransitionModelContent } from './TransitionModelContent';
+export { PageCauseEffectGraph } from './PageCauseEffectGraph';
 
 // AI Transition Model - Extended schema components
 export { FactorStatusBadge, FactorStatusCard } from './FactorStatusBadge';

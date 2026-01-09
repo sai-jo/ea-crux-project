@@ -5,7 +5,7 @@ import type { ColumnDef } from "@tanstack/react-table"
 import { DataTable, SortableHeader } from "@/components/ui/data-table"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 import { cn } from "@/lib/utils"
-import { pages, type Page } from "../../data"
+import { pages, entities, getEntityHref, type Page } from "../../data"
 import { getImportanceScoreColor, getQualityScoreColor, contentCategoryColors } from "./shared/style-config"
 
 interface SimilarPage {
@@ -15,7 +15,15 @@ interface SimilarPage {
   similarity: number
 }
 
+interface Attachment {
+  id: string
+  title: string
+  type: string
+  href: string
+}
+
 interface PageRow {
+  id: string
   path: string
   title: string
   category: string
@@ -31,6 +39,7 @@ interface PageRow {
   unconvertedLinkCount: number
   redundancyScore: number
   similarPages: SimilarPage[]
+  attachments: Attachment[]
 }
 
 interface PageIndexProps {
@@ -39,6 +48,18 @@ interface PageIndexProps {
   maxItems?: number
   title?: string
 }
+
+// Filter presets for quick filtering
+const filterPresets = [
+  { id: "all", label: "All", filter: () => true },
+  { id: "ai-transition-model", label: "AI Transition Model", filter: (p: PageRow) =>
+    p.path.startsWith("/ai-transition-model/") || p.path.startsWith("/knowledge-base/research-reports/")
+  },
+  { id: "risks", label: "Risks", filter: (p: PageRow) => p.path.includes("/risks/") },
+  { id: "responses", label: "Responses", filter: (p: PageRow) => p.path.includes("/responses/") },
+  { id: "models", label: "Models", filter: (p: PageRow) => p.category === "models" && !p.path.startsWith("/ai-transition-model/") },
+  { id: "knowledge-base", label: "Knowledge Base", filter: (p: PageRow) => p.path.startsWith("/knowledge-base/") },
+] as const
 
 function QualityCell({ value }: { value: number | null }) {
   if (value === null) return <span className="text-muted-foreground">—</span>
@@ -218,6 +239,74 @@ function RedundancyCell({ value, similarPages }: { value: number, similarPages: 
   )
 }
 
+// Icon components for attachment types
+function AttachmentIcon({ type }: { type: string }) {
+  if (type === 'model') {
+    return <span title="Model">📊</span>
+  }
+  if (type === 'research-report') {
+    return <span title="Research Report">📄</span>
+  }
+  return <span title={type}>📎</span>
+}
+
+function AttachmentsCell({ attachments }: { attachments: Attachment[] }) {
+  if (attachments.length === 0) return <span className="text-muted-foreground">—</span>
+
+  // Group by type for display
+  const models = attachments.filter(a => a.type === 'model')
+  const reports = attachments.filter(a => a.type === 'research-report')
+  const others = attachments.filter(a => a.type !== 'model' && a.type !== 'research-report')
+
+  const badge = (
+    <span className="inline-flex items-center gap-1 cursor-help">
+      {models.length > 0 && (
+        <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300 text-xs">
+          <AttachmentIcon type="model" />
+          {models.length}
+        </span>
+      )}
+      {reports.length > 0 && (
+        <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300 text-xs">
+          <AttachmentIcon type="research-report" />
+          {reports.length}
+        </span>
+      )}
+      {others.length > 0 && (
+        <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 text-xs">
+          <AttachmentIcon type="other" />
+          {others.length}
+        </span>
+      )}
+    </span>
+  )
+
+  return (
+    <HoverCard openDelay={200} closeDelay={100}>
+      <HoverCardTrigger asChild>
+        {badge}
+      </HoverCardTrigger>
+      <HoverCardContent className="w-72 p-0" align="start">
+        <div className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground px-3 py-2 border-b border-border">
+          Attachments:
+        </div>
+        <div className="flex flex-col max-h-48 overflow-y-auto">
+          {attachments.map((a, i) => (
+            <a
+              key={i}
+              href={a.href}
+              className="flex items-center gap-2 px-3 py-2 text-sm no-underline hover:bg-muted transition-colors"
+            >
+              <AttachmentIcon type={a.type} />
+              <span className="text-foreground truncate">{a.title}</span>
+            </a>
+          ))}
+        </div>
+      </HoverCardContent>
+    </HoverCard>
+  )
+}
+
 const columns: ColumnDef<PageRow>[] = [
   {
     accessorKey: "importance",
@@ -262,6 +351,16 @@ const columns: ColumnDef<PageRow>[] = [
     accessorKey: "category",
     header: ({ column }) => <SortableHeader column={column}>Category</SortableHeader>,
     cell: ({ row }) => <CategoryBadge category={row.getValue("category")} />,
+  },
+  {
+    accessorKey: "attachments",
+    header: () => <span>Attach</span>,
+    cell: ({ row }) => <AttachmentsCell attachments={row.original.attachments} />,
+    sortingFn: (rowA, rowB) => {
+      const a = rowA.original.attachments.length
+      const b = rowB.original.attachments.length
+      return a - b
+    },
   },
   {
     accessorKey: "wordCount",
@@ -344,8 +443,15 @@ const columns: ColumnDef<PageRow>[] = [
 ]
 
 export function PageIndex({ showSearch = true, filterCategory, maxItems, title }: PageIndexProps) {
+  const [activeFilter, setActiveFilter] = React.useState<string>("all")
+
   const data = React.useMemo(() => {
     const today = new Date()
+
+    // Build lookup for entity relationships and research reports
+    const entityMap = new Map(entities.map(e => [e.id, e]))
+    const researchReportPages = pages.filter(p => p.path.startsWith("/knowledge-base/research-reports/"))
+    const reportsByTopicId = new Map(researchReportPages.map(r => [r.id, r]))
 
     let result = pages.map(p => {
       const structuralScore = p.metrics?.structuralScore ?? null
@@ -364,7 +470,35 @@ export function PageIndex({ showSearch = true, filterCategory, maxItems, title }
         ageDays = Math.floor((today.getTime() - updated.getTime()) / (1000 * 60 * 60 * 24))
       }
 
+      // Compute attachments from entity relationships
+      const attachments: Attachment[] = []
+      const entity = entityMap.get(p.id)
+      if (entity?.relatedEntries) {
+        for (const rel of entity.relatedEntries) {
+          if (rel.type === 'model') {
+            const relatedEntity = entityMap.get(rel.id)
+            attachments.push({
+              id: rel.id,
+              title: relatedEntity?.title || rel.id,
+              type: 'model',
+              href: getEntityHref(rel.id, rel.type),
+            })
+          }
+        }
+      }
+      // Check if there's a research report for this page
+      const report = reportsByTopicId.get(p.id)
+      if (report && report.path !== p.path) {
+        attachments.push({
+          id: report.id,
+          title: 'Research Report',
+          type: 'research-report',
+          href: report.path,
+        })
+      }
+
       return {
+        id: p.id,
         path: p.path,
         title: p.title,
         category: p.category,
@@ -380,6 +514,7 @@ export function PageIndex({ showSearch = true, filterCategory, maxItems, title }
         unconvertedLinkCount: p.unconvertedLinkCount ?? 0,
         redundancyScore: p.redundancy?.maxSimilarity ?? 0,
         similarPages: p.redundancy?.similarPages ?? [],
+        attachments,
       }
     })
 
@@ -387,12 +522,18 @@ export function PageIndex({ showSearch = true, filterCategory, maxItems, title }
       result = result.filter(p => p.category === filterCategory)
     }
 
+    // Apply preset filter
+    const preset = filterPresets.find(f => f.id === activeFilter)
+    if (preset && preset.id !== "all") {
+      result = result.filter(preset.filter)
+    }
+
     if (maxItems) {
       result = result.slice(0, maxItems)
     }
 
     return result
-  }, [filterCategory, maxItems])
+  }, [filterCategory, maxItems, activeFilter])
 
   const stats = React.useMemo(() => {
     // Quality ranges on 0-100 scale
@@ -437,6 +578,24 @@ export function PageIndex({ showSearch = true, filterCategory, maxItems, title }
     <div className="space-y-6">
       {title && <h2 className="text-xl font-bold">{title}</h2>}
 
+      {/* Filter Presets */}
+      <div className="flex flex-wrap gap-2">
+        {filterPresets.map((preset) => (
+          <button
+            key={preset.id}
+            onClick={() => setActiveFilter(preset.id)}
+            className={cn(
+              "px-3 py-1.5 text-sm font-medium rounded-lg transition-colors",
+              activeFilter === preset.id
+                ? "bg-primary text-primary-foreground"
+                : "bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground"
+            )}
+          >
+            {preset.label}
+          </button>
+        ))}
+      </div>
+
       {/* Stats Summary */}
       <div className="flex flex-wrap gap-6 p-4 bg-muted/30 rounded-lg">
         <div className="flex flex-col">
@@ -464,6 +623,7 @@ export function PageIndex({ showSearch = true, filterCategory, maxItems, title }
           <span><strong>Imp</strong> = Importance (0-100)</span>
           <span><strong>Qual</strong> = Quality (0-100)</span>
           <span><strong>Struct</strong> = Structural score (tables, diagrams, sections)</span>
+          <span><strong>Attach</strong> = Related models and research reports</span>
           <span><strong>Words</strong> = Word count</span>
           <span><strong>Links</strong> = Backlinks from other pages</span>
           <span><strong>Gap</strong> = Priority score (high importance + low quality)</span>

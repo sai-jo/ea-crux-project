@@ -24,6 +24,11 @@ This section contains internal documentation for maintaining and contributing to
 - [Enhancement Queue](/internal/enhancement-queue/) - Track content enhancement progress across all page types
 - [Project Roadmap](/internal/project-roadmap/) - Future work, infrastructure improvements, and tracking
 
+## Technical Reports
+
+- [Internal Reports](/internal/reports/) - Technical research and design decisions
+  - [Causal Diagram Visualization](/internal/reports/causal-diagram-visualization/) - Tools, literature, and best practices
+
 ---
 
 ## Quick Commands

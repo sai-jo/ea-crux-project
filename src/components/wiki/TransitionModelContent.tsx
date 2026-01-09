@@ -14,13 +14,14 @@
  * Usage: <TransitionModelContent entityId="tmc-compute" client:load />
  */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { getEntityById } from '../../data';
 import {
   getFactorScenarioInfluences,
   getScenarioFactorInfluences,
   getScenarioOutcomeConnections,
 } from '../../data/parameter-graph-data';
+import { getEntitySubgraph, hasEntitySubgraph } from '../../data/master-graph-data';
 import { FactorStatusCard } from './FactorStatusBadge';
 import { InterventionsCard } from './InterventionsList';
 import { EstimatesCard } from './EstimatesPanel';
@@ -50,6 +51,7 @@ interface TMCRelatedContent {
   responses?: TMCRelatedContentLink[];
   models?: TMCRelatedContentLink[];
   cruxes?: TMCRelatedContentLink[];
+  researchReports?: TMCRelatedContentLink[];
 }
 
 interface TMCCurrentAssessment {
@@ -109,6 +111,7 @@ interface TMCCauseEffectEdge {
 interface TMCCauseEffectGraph {
   title?: string;
   description?: string;
+  primaryNodeId?: string;  // ID of the node representing this entity (highlighted)
   nodes: TMCCauseEffectNode[];
   edges: TMCCauseEffectEdge[];
 }
@@ -263,6 +266,9 @@ function DebatesSection({ debates }: { debates: TMCKeyDebate[] }) {
 }
 
 function RelatedContentSection({ related }: { related: TMCRelatedContent }) {
+  // Separate research reports from other content for special treatment
+  const researchReports = related.researchReports || [];
+
   const sections = [
     { key: 'risks' as const, label: 'Related Risks', icon: '' },
     { key: 'responses' as const, label: 'Related Responses', icon: '' },
@@ -270,30 +276,56 @@ function RelatedContentSection({ related }: { related: TMCRelatedContent }) {
     { key: 'cruxes' as const, label: 'Related Cruxes', icon: '' },
   ];
 
-  const hasAny = sections.some(s => related[s.key]?.length);
-  if (!hasAny) return null;
+  const hasOtherContent = sections.some(s => related[s.key]?.length);
+  const hasResearchReports = researchReports.length > 0;
+
+  if (!hasOtherContent && !hasResearchReports) return null;
 
   return (
     <div className="tm-section tm-related">
-      <h3>Related Content</h3>
-      <div className="tm-related-grid">
-        {sections.map(({ key, label, icon }) => {
-          const items = related[key];
-          if (!items?.length) return null;
-          return (
-            <div key={key} className="tm-related-group">
-              <h4>{icon} {label}</h4>
-              <ul>
-                {items.map((item, i) => (
-                  <li key={i}>
-                    <a href={item.path}>{item.title}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          );
-        })}
-      </div>
+      {/* Research Reports displayed prominently as cards */}
+      {hasResearchReports && (
+        <div className="tm-research-reports">
+          <h3>Research Report</h3>
+          {researchReports.map((report, i) => (
+            <a key={i} href={report.path} className="tm-research-card">
+              <div className="tm-research-card-icon">📄</div>
+              <div className="tm-research-card-content">
+                <div className="tm-research-card-title">{report.title}</div>
+                <div className="tm-research-card-desc">
+                  In-depth analysis with citations, causal factors, and open questions
+                </div>
+              </div>
+              <div className="tm-research-card-arrow">→</div>
+            </a>
+          ))}
+        </div>
+      )}
+
+      {/* Other related content in grid */}
+      {hasOtherContent && (
+        <>
+          <h3>Related Content</h3>
+          <div className="tm-related-grid">
+            {sections.map(({ key, label, icon }) => {
+              const items = related[key];
+              if (!items?.length) return null;
+              return (
+                <div key={key} className="tm-related-group">
+                  <h4>{icon} {label}</h4>
+                  <ul>
+                    {items.map((item, i) => (
+                      <li key={i}>
+                        <a href={item.path}>{item.title}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
+        </>
+      )}
     </div>
   );
 }
@@ -452,44 +484,110 @@ export function TransitionModelContent({
       )}
 
       {/* Cause-Effect Graph - causal relationships visualization */}
-      {showCauseEffectGraph && entity.causeEffectGraph && entity.causeEffectGraph.nodes.length > 0 && (
-        <div className="tm-section tm-cause-effect">
-          {entity.causeEffectGraph.title && (
-            <h3>{entity.causeEffectGraph.title}</h3>
-          )}
-          {entity.causeEffectGraph.description && (
-            <p className="tm-graph-description">{entity.causeEffectGraph.description}</p>
-          )}
-          <CauseEffectGraph
-            height={600}
-            initialNodes={entity.causeEffectGraph.nodes.map((node, i) => ({
-              id: node.id,
-              type: 'causeEffect' as const,
-              position: { x: 0, y: 0 },
-              data: {
-                label: node.label,
-                description: node.description || '',
-                type: node.type,
-                confidence: node.confidence || 0.5,
-                details: node.details || '',
-                sources: node.sources || [],
-                relatedConcepts: node.relatedConcepts || [],
-              },
-            }))}
-            initialEdges={entity.causeEffectGraph.edges.map((edge, i) => ({
-              id: edge.id || `e-${edge.source}-${edge.target}`,
-              source: edge.source,
-              target: edge.target,
-              data: {
-                strength: edge.strength || 'medium',
-                confidence: edge.confidence || 'medium',
-                effect: edge.effect || 'increases',
-              },
-              label: edge.label,
-            }))}
-          />
-        </div>
-      )}
+      {showCauseEffectGraph && (() => {
+        // First check for manually-defined graph
+        if (entity.causeEffectGraph && entity.causeEffectGraph.nodes.length > 0) {
+          // Calculate dynamic height based on layer count (nodes spread horizontally within layers)
+          const nodes = entity.causeEffectGraph!.nodes;
+          // Count unique layers (types) - this determines vertical extent
+          const layerCount = new Set(nodes.map(n => n.type)).size;
+          // Height formula: base + per-layer spacing, clamped
+          // ~150px per layer (node height + spacing), plus padding
+          const calculatedHeight = Math.min(800, Math.max(400, 100 + (layerCount * 150)));
+
+          return (
+            <div className="tm-section tm-cause-effect">
+              {entity.causeEffectGraph.title && (
+                <h3>{entity.causeEffectGraph.title}</h3>
+              )}
+              {entity.causeEffectGraph.description && (
+                <p className="tm-graph-description">{entity.causeEffectGraph.description}</p>
+              )}
+              <CauseEffectGraph
+                height={calculatedHeight}
+                hideListView={true}
+                selectedNodeId={entity.causeEffectGraph.primaryNodeId}
+                graphConfig={{
+                  hideGroupBackgrounds: true,
+                  useDagre: true,  // Cleaner layout for simple causal diagrams
+                  typeLabels: {
+                    leaf: 'Root Causes',
+                    cause: 'Derived',
+                    intermediate: 'Direct Factors',
+                    effect: 'Target',
+                  },
+                }}
+                initialNodes={entity.causeEffectGraph.nodes.map((node, i) => ({
+                  id: node.id,
+                  type: 'causeEffect' as const,
+                  position: { x: 0, y: 0 },
+                  data: {
+                    label: node.label,
+                    description: node.description || '',
+                    type: node.type,
+                    ...(node.confidence !== undefined && { confidence: node.confidence }),
+                    details: node.details || '',
+                    sources: node.sources || [],
+                    relatedConcepts: node.relatedConcepts || [],
+                  },
+                }))}
+                initialEdges={entity.causeEffectGraph.edges.map((edge, i) => ({
+                  id: edge.id || `e-${edge.source}-${edge.target}`,
+                  source: edge.source,
+                  target: edge.target,
+                  data: {
+                    strength: edge.strength || 'medium',
+                    confidence: edge.confidence || 'medium',
+                    effect: edge.effect || 'increases',
+                  },
+                  label: edge.label,
+                }))}
+              />
+            </div>
+          );
+        }
+
+        // Fall back to auto-generated subgraph from master graph
+        // Extract the base entity ID (strip "tmc-" prefix if present)
+        const baseId = effectiveEntityId?.startsWith('tmc-')
+          ? effectiveEntityId.slice(4)
+          : effectiveEntityId;
+
+        if (!baseId) return null;
+
+        // Try to get auto-generated subgraph
+        const autoSubgraph = getEntitySubgraph(baseId, 12);
+        if (!autoSubgraph || autoSubgraph.nodes.length === 0) return null;
+
+        // Calculate height based on node count
+        const layerCount = new Set(autoSubgraph.nodes.map(n => n.data.type)).size;
+        const calculatedHeight = Math.min(600, Math.max(350, 80 + (layerCount * 120)));
+
+        return (
+          <div className="tm-section tm-cause-effect tm-auto-graph">
+            <h3>Causal Relationships</h3>
+            <p className="tm-graph-description tm-auto-generated-note">
+              Auto-generated from the master graph. Shows key relationships.
+            </p>
+            <CauseEffectGraph
+              height={calculatedHeight}
+              hideListView={true}
+              selectedNodeId={autoSubgraph.primaryNodeId}
+              graphConfig={{
+                hideGroupBackgrounds: true,
+                useDagre: true,
+                typeLabels: {
+                  cause: 'Causes',
+                  intermediate: 'This Factor',
+                  effect: 'Effects',
+                },
+              }}
+              initialNodes={autoSubgraph.nodes}
+              initialEdges={autoSubgraph.edges}
+            />
+          </div>
+        );
+      })()}
 
       {/* Probability Estimates (primarily for scenarios) */}
       {showEstimates && entity.estimates && entity.estimates.length > 0 && (
@@ -562,6 +660,11 @@ export function TransitionModelContent({
           font-size: 0.9rem;
           margin: 0 0 1rem 0;
         }
+        .tm-auto-generated-note {
+          font-style: italic;
+          font-size: 0.85rem;
+          color: var(--sl-color-gray-4);
+        }
         .tm-cause-effect {
           margin-top: 1rem;
         }
@@ -602,6 +705,59 @@ export function TransitionModelContent({
         }
         .tm-related-group a:hover {
           text-decoration: underline;
+        }
+        .tm-research-reports {
+          margin-bottom: 1.5rem;
+        }
+        .tm-research-reports h3 {
+          font-size: 1rem;
+          font-weight: 600;
+          margin: 0 0 0.75rem 0;
+          color: var(--sl-color-white);
+        }
+        .tm-research-card {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          padding: 1rem 1.25rem;
+          background: linear-gradient(135deg, var(--sl-color-accent-low) 0%, var(--sl-color-gray-6) 100%);
+          border: 1px solid var(--sl-color-accent);
+          border-radius: 0.75rem;
+          text-decoration: none;
+          transition: all 0.2s ease;
+        }
+        .tm-research-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+          border-color: var(--sl-color-accent-high);
+        }
+        .tm-research-card-icon {
+          font-size: 1.75rem;
+          flex-shrink: 0;
+        }
+        .tm-research-card-content {
+          flex: 1;
+          min-width: 0;
+        }
+        .tm-research-card-title {
+          font-weight: 600;
+          color: var(--sl-color-white);
+          font-size: 1rem;
+          margin-bottom: 0.25rem;
+        }
+        .tm-research-card-desc {
+          font-size: 0.85rem;
+          color: var(--sl-color-gray-3);
+          line-height: 1.4;
+        }
+        .tm-research-card-arrow {
+          font-size: 1.25rem;
+          color: var(--sl-color-accent);
+          flex-shrink: 0;
+          transition: transform 0.2s ease;
+        }
+        .tm-research-card:hover .tm-research-card-arrow {
+          transform: translateX(4px);
         }
         .tm-outcome-list {
           margin: 0;

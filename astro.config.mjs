@@ -95,6 +95,9 @@ export default defineConfig({
                           { slug: 'ai-transition-model/factors/misuse-potential/robot-threat-exposure' },
                           { slug: 'ai-transition-model/factors/misuse-potential/surprise-threat-exposure' },
                       ]},
+                      { label: 'Models', collapsed: true, items: [
+                          { slug: 'ai-transition-model/models/compute-forecast-sketch' },
+                      ]},
                   ],
               },
               {
@@ -141,6 +144,7 @@ export default defineConfig({
                       { label: 'Future Projections', collapsed: true, autogenerate: { directory: 'knowledge-base/future-projections' } },
                       { label: 'Worldviews', collapsed: true, autogenerate: { directory: 'knowledge-base/worldviews' } },
                       { label: 'Key Debates', collapsed: true, autogenerate: { directory: 'knowledge-base/debates' } },
+                      { label: 'Research Reports', collapsed: true, autogenerate: { directory: 'knowledge-base/research-reports' } },
                   ],
               },
               {

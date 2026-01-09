@@ -7,6 +7,7 @@ import yaml from 'js-yaml';
 
 // Import YAML as raw text
 import graphYaml from './parameter-graph.yaml?raw';
+import entitiesYaml from './entities/ai-transition-model.yaml?raw';
 
 // Types for the raw YAML structure
 // All metadata lives in YAML - MDX files just contain custom content
@@ -33,6 +34,7 @@ interface RawRelatedContent {
   responses?: RawRelatedContentLink[];
   models?: RawRelatedContentLink[];
   cruxes?: RawRelatedContentLink[];
+  researchReports?: RawRelatedContentLink[];
 }
 
 // NEW: Current state tracking
@@ -134,6 +136,64 @@ interface RawGraphData {
 // Parse YAML
 const rawData = yaml.load(graphYaml) as RawGraphData;
 
+// Parse entities YAML for description lookups
+interface RawEntity {
+  id: string;
+  title?: string;
+  description?: string;
+  [key: string]: unknown;
+}
+const rawEntities = yaml.load(entitiesYaml) as RawEntity[];
+
+// Build a map of entity ID -> description for efficient lookup at build time
+const entityDescriptionMap = new Map<string, string>();
+for (const entity of rawEntities) {
+  if (entity.id && entity.description) {
+    entityDescriptionMap.set(entity.id, entity.description);
+  }
+}
+
+// Color schemes for subgroups and special types
+// These override the default type-based colors in config.ts
+const SUBGROUP_COLORS: Record<string, { bg: string; border: string; text: string; accent: string }> = {
+  // AI System Factors - blue tones
+  ai: {
+    bg: '#dbeafe',           // blue-100
+    border: 'rgba(59, 130, 246, 0.35)',  // blue-500
+    text: '#1e40af',         // blue-800
+    accent: '#3b82f6',       // blue-500
+  },
+  // Societal Factors - green tones
+  society: {
+    bg: '#dcfce7',           // green-100
+    border: 'rgba(34, 197, 94, 0.35)',   // green-500
+    text: '#166534',         // green-800
+    accent: '#22c55e',       // green-500
+  },
+};
+
+// Colors for intermediate type (scenarios) - purple tones
+const INTERMEDIATE_COLORS = {
+  bg: '#ede9fe',             // violet-100
+  border: 'rgba(139, 92, 246, 0.35)',   // violet-500
+  text: '#5b21b6',           // violet-800
+  accent: '#8b5cf6',         // violet-500
+};
+
+// Helper to get node colors based on type and subgroup
+function getNodeColors(type: string, subgroup?: string): { bg: string; border: string; text: string; accent: string } | undefined {
+  // For cause nodes, use subgroup-based colors if available
+  if (type === 'cause' && subgroup && SUBGROUP_COLORS[subgroup]) {
+    return SUBGROUP_COLORS[subgroup];
+  }
+  // For intermediate nodes (scenarios), use purple
+  if (type === 'intermediate') {
+    return INTERMEDIATE_COLORS;
+  }
+  // For effect nodes and others, use default config colors (no override)
+  return undefined;
+}
+
 // Validate edges reference valid node IDs
 function validateGraph(data: RawGraphData): string[] {
   const errors: string[] = [];
@@ -199,15 +259,30 @@ function generateSubItemHref(nodeType: string, nodeId: string, itemId: string): 
   return `/ai-transition-model/${typePath}/${nodeId}/${itemId}/`;
 }
 
-// Enrich a sub-item with metadata from MDX frontmatter
+// Look up description from entity definitions (single source of truth)
+// Entity IDs use 'tmc-' prefix for TransitionModelContent entities
+function getEntityDescription(itemId: string): string | undefined {
+  // Try with tmc- prefix first (standard convention)
+  const tmcId = `tmc-${itemId}`;
+  if (entityDescriptionMap.has(tmcId)) {
+    return entityDescriptionMap.get(tmcId);
+  }
+  // Fall back to direct ID lookup
+  return entityDescriptionMap.get(itemId);
+}
+
+// Enrich a sub-item with metadata from entity definitions
 function enrichSubItem(item: RawSubItem, nodeType: string, nodeId: string): SubItem {
   // Get ID from item (new DRY format) or derive from label (legacy format)
   const itemId = item.id || item.label?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || '';
 
-  // All data comes from YAML - MDX files just contain custom prose content
+  // Description priority: inline YAML > entity lookup
+  // This allows entity definitions to be the single source of truth
+  const description = item.description || getEntityDescription(itemId);
+
   return {
     label: item.label || idToLabel(itemId),
-    description: item.description,
+    description,
     href: item.href || generateSubItemHref(nodeType, nodeId, itemId),
     ratings: item.ratings,
     scope: item.scope,
@@ -236,6 +311,7 @@ export const parameterNodes: Node<CauseEffectNodeData>[] = rawData.nodes.map(nod
     subItems: node.subItems?.map(item => enrichSubItem(item, node.type, node.id)),
     confidence: node.confidence,
     confidenceLabel: node.confidenceLabel,
+    nodeColors: getNodeColors(node.type, node.subgroup),  // Custom colors based on subgroup/type
   },
 }));
 
@@ -329,6 +405,7 @@ export interface RelatedContent {
   responses?: RelatedContentLink[];
   models?: RelatedContentLink[];
   cruxes?: RelatedContentLink[];
+  researchReports?: RelatedContentLink[];
 }
 
 export interface SubItem {

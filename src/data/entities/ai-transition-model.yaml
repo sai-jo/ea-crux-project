@@ -35,6 +35,56 @@
     - international
     - coordination
   lastUpdated: 2025-12
+  causeEffectGraph:
+    title: "What Drives International AI Coordination?"
+    description: "Causal factors affecting global cooperation on AI governance. Based on game theory and international relations research."
+    primaryNodeId: international-coordination
+    nodes:
+      - id: shared-threat-perception
+        label: "Shared Threat Perception"
+        type: leaf
+        description: "Common understanding that AI poses global risks requiring cooperation."
+      - id: us-china-relations
+        label: "US-China Relations"
+        type: leaf
+        description: "Geopolitical relationship between leading AI powers. Currently adversarial."
+      - id: institutional-frameworks
+        label: "Institutional Frameworks"
+        type: leaf
+        description: "Existing international bodies (UN, OECD, G7) that could facilitate coordination."
+      - id: trust-between-nations
+        label: "Trust Between Nations"
+        type: intermediate
+        description: "Confidence that commitments will be honored. Verification reduces need for trust."
+      - id: coordination-mechanisms
+        label: "Coordination Mechanisms"
+        type: intermediate
+        description: "Treaties, summits, AI Safety Institute networks, shared standards."
+      - id: international-coordination
+        label: "International Coordination"
+        type: effect
+        description: "Effective global cooperation on AI safety and governance."
+    edges:
+      - source: shared-threat-perception
+        target: coordination-mechanisms
+        strength: strong
+        effect: increases
+      - source: us-china-relations
+        target: trust-between-nations
+        strength: strong
+        effect: increases
+      - source: institutional-frameworks
+        target: coordination-mechanisms
+        strength: medium
+        effect: increases
+      - source: trust-between-nations
+        target: international-coordination
+        strength: strong
+        effect: increases
+      - source: coordination-mechanisms
+        target: international-coordination
+        strength: strong
+        effect: increases
 - id: societal-trust
   type: ai-transition-model-parameter
   title: Societal Trust
@@ -100,6 +150,56 @@
     - governance
     - structural
   lastUpdated: 2025-12
+  causeEffectGraph:
+    title: "What Affects Societal Trust?"
+    description: "Causal factors driving trust in institutions, experts, and verification systems. Trust has declined from 77% to 22% since 1964."
+    primaryNodeId: societal-trust
+    nodes:
+      - id: institutional-performance
+        label: "Institutional Performance"
+        type: leaf
+        description: "Track record of institutions delivering on promises. Failures erode trust."
+      - id: deepfake-prevalence
+        label: "Deepfake Prevalence"
+        type: leaf
+        description: "AI-generated fake content undermines ability to verify reality."
+      - id: media-polarization
+        label: "Media Polarization"
+        type: leaf
+        description: "Fragmented information environment where different groups see different facts."
+      - id: verification-capability
+        label: "Verification Capability"
+        type: intermediate
+        description: "Ability to distinguish authentic from fake content."
+      - id: shared-reality
+        label: "Shared Reality"
+        type: intermediate
+        description: "Common factual foundation for democratic deliberation."
+      - id: societal-trust
+        label: "Societal Trust"
+        type: effect
+        description: "Confidence in institutions, experts, and verification systems."
+    edges:
+      - source: institutional-performance
+        target: societal-trust
+        strength: strong
+        effect: increases
+      - source: deepfake-prevalence
+        target: verification-capability
+        strength: strong
+        effect: decreases
+      - source: media-polarization
+        target: shared-reality
+        strength: strong
+        effect: decreases
+      - source: verification-capability
+        target: societal-trust
+        strength: medium
+        effect: increases
+      - source: shared-reality
+        target: societal-trust
+        strength: medium
+        effect: increases
 - id: epistemic-health
   type: ai-transition-model-parameter
   title: Epistemic Health
@@ -161,6 +261,56 @@
     - epistemic
     - information-environment
   lastUpdated: 2025-12
+  causeEffectGraph:
+    title: "What Affects Epistemic Health?"
+    description: "Causal factors affecting society's ability to distinguish truth from falsehood. AI-generated content now comprises 50%+ of web content."
+    primaryNodeId: epistemic-health
+    nodes:
+      - id: ai-content-generation
+        label: "AI Content Generation"
+        type: leaf
+        description: "Cheap, scalable production of synthetic text, images, audio, video."
+      - id: fact-checking-capacity
+        label: "Fact-Checking Capacity"
+        type: leaf
+        description: "Human and automated verification resources. Lags content production."
+      - id: media-literacy
+        label: "Media Literacy"
+        type: leaf
+        description: "Population's ability to critically evaluate information sources."
+      - id: content-verification
+        label: "Content Verification"
+        type: intermediate
+        description: "Systems for authenticating real vs. synthetic content."
+      - id: source-credibility
+        label: "Source Credibility"
+        type: intermediate
+        description: "Ability to identify reliable information sources."
+      - id: epistemic-health
+        label: "Epistemic Health"
+        type: effect
+        description: "Society's collective capacity to form accurate beliefs."
+    edges:
+      - source: ai-content-generation
+        target: content-verification
+        strength: strong
+        effect: decreases
+      - source: fact-checking-capacity
+        target: content-verification
+        strength: medium
+        effect: increases
+      - source: media-literacy
+        target: source-credibility
+        strength: medium
+        effect: increases
+      - source: content-verification
+        target: epistemic-health
+        strength: strong
+        effect: increases
+      - source: source-credibility
+        target: epistemic-health
+        strength: strong
+        effect: increases
 - id: information-authenticity
   type: ai-transition-model-parameter
   title: Information Authenticity
@@ -192,6 +342,56 @@
     - information-environment
     - verification
   lastUpdated: 2025-12
+  causeEffectGraph:
+    title: "What Affects Information Authenticity?"
+    description: "Causal factors affecting content verification. Human deepfake detection at 55% accuracy; AI detection in arms race."
+    primaryNodeId: information-authenticity
+    nodes:
+      - id: generative-ai-quality
+        label: "Generative AI Quality"
+        type: leaf
+        description: "Fidelity of synthetic content. Approaching indistinguishable from real."
+      - id: provenance-standards
+        label: "Provenance Standards"
+        type: leaf
+        description: "C2PA and similar content authenticity initiatives."
+      - id: detection-technology
+        label: "Detection Technology"
+        type: leaf
+        description: "AI and human ability to identify synthetic content."
+      - id: platform-adoption
+        label: "Platform Adoption"
+        type: intermediate
+        description: "Deployment of authenticity tools by major platforms."
+      - id: detection-effectiveness
+        label: "Detection Effectiveness"
+        type: intermediate
+        description: "Real-world accuracy of authenticity verification."
+      - id: information-authenticity
+        label: "Information Authenticity"
+        type: effect
+        description: "Degree to which circulating content can be verified as genuine."
+    edges:
+      - source: generative-ai-quality
+        target: detection-effectiveness
+        strength: strong
+        effect: decreases
+      - source: provenance-standards
+        target: platform-adoption
+        strength: medium
+        effect: increases
+      - source: detection-technology
+        target: detection-effectiveness
+        strength: strong
+        effect: increases
+      - source: platform-adoption
+        target: information-authenticity
+        strength: medium
+        effect: increases
+      - source: detection-effectiveness
+        target: information-authenticity
+        strength: strong
+        effect: increases
 - id: ai-control-concentration
   type: ai-transition-model-parameter
   title: AI Control Concentration
@@ -229,6 +429,56 @@
     - governance
     - market-dynamics
   lastUpdated: 2025-12
+  causeEffectGraph:
+    title: "What Drives AI Control Concentration?"
+    description: "Causal factors affecting power distribution in AI. Currently <20 organizations can train frontier models."
+    primaryNodeId: ai-control-concentration
+    nodes:
+      - id: compute-requirements
+        label: "Compute Requirements"
+        type: leaf
+        description: "Training frontier models requires $100M-$1B+ compute. Barrier to entry."
+      - id: talent-concentration
+        label: "Talent Concentration"
+        type: leaf
+        description: "Top AI researchers clustered in few labs. Critical bottleneck."
+      - id: data-advantages
+        label: "Data Advantages"
+        type: leaf
+        description: "Proprietary datasets and feedback loops favor incumbents."
+      - id: capital-barriers
+        label: "Capital Barriers"
+        type: intermediate
+        description: "Financial requirements exclude most potential entrants."
+      - id: network-effects
+        label: "Network Effects"
+        type: intermediate
+        description: "Users, developers, and data create reinforcing advantages."
+      - id: ai-control-concentration
+        label: "AI Control Concentration"
+        type: effect
+        description: "Degree to which AI power is concentrated vs distributed."
+    edges:
+      - source: compute-requirements
+        target: capital-barriers
+        strength: strong
+        effect: increases
+      - source: talent-concentration
+        target: ai-control-concentration
+        strength: strong
+        effect: increases
+      - source: data-advantages
+        target: network-effects
+        strength: medium
+        effect: increases
+      - source: capital-barriers
+        target: ai-control-concentration
+        strength: strong
+        effect: increases
+      - source: network-effects
+        target: ai-control-concentration
+        strength: medium
+        effect: increases
 - id: human-agency
   type: ai-transition-model-parameter
   title: Human Agency
@@ -266,6 +516,56 @@
     - autonomy
     - human-ai-interaction
   lastUpdated: 2025-12
+  causeEffectGraph:
+    title: "What Affects Human Agency?"
+    description: "Causal factors affecting meaningful human control over decisions. Automation increasingly replaces human judgment."
+    primaryNodeId: human-agency
+    nodes:
+      - id: automation-scope
+        label: "Automation Scope"
+        type: leaf
+        description: "Range of decisions delegated to AI systems. Expanding rapidly."
+      - id: opt-out-availability
+        label: "Opt-Out Availability"
+        type: leaf
+        description: "Ability to choose non-AI alternatives. Declining as AI becomes infrastructure."
+      - id: decision-transparency
+        label: "Decision Transparency"
+        type: leaf
+        description: "Understanding of how AI-influenced decisions are made."
+      - id: skill-retention
+        label: "Skill Retention"
+        type: intermediate
+        description: "Maintenance of human capabilities to function without AI."
+      - id: oversight-effectiveness
+        label: "Oversight Effectiveness"
+        type: intermediate
+        description: "Ability to review and override AI decisions."
+      - id: human-agency
+        label: "Human Agency"
+        type: effect
+        description: "Meaningful human control over decisions affecting lives."
+    edges:
+      - source: automation-scope
+        target: skill-retention
+        strength: strong
+        effect: decreases
+      - source: opt-out-availability
+        target: human-agency
+        strength: medium
+        effect: increases
+      - source: decision-transparency
+        target: oversight-effectiveness
+        strength: medium
+        effect: increases
+      - source: skill-retention
+        target: human-agency
+        strength: medium
+        effect: increases
+      - source: oversight-effectiveness
+        target: human-agency
+        strength: strong
+        effect: increases
 - id: economic-stability
   type: ai-transition-model-parameter
   title: Economic Stability
@@ -300,6 +600,56 @@
     - labor-market
     - structural
   lastUpdated: 2025-12
+  causeEffectGraph:
+    title: "What Affects Economic Stability?"
+    description: "Causal factors affecting economic resilience during AI transition. 40-60% of jobs face AI exposure."
+    primaryNodeId: economic-stability
+    nodes:
+      - id: ai-capability-growth
+        label: "AI Capability Growth"
+        type: leaf
+        description: "Rate of AI improvement in economically relevant tasks."
+      - id: labor-market-adaptation
+        label: "Labor Market Adaptation"
+        type: leaf
+        description: "Speed of worker retraining and job creation. Historically slow."
+      - id: social-safety-nets
+        label: "Social Safety Nets"
+        type: leaf
+        description: "Unemployment support, retraining programs, income support."
+      - id: job-displacement-rate
+        label: "Job Displacement Rate"
+        type: intermediate
+        description: "Speed at which AI replaces human workers in various sectors."
+      - id: income-distribution
+        label: "Income Distribution"
+        type: intermediate
+        description: "How AI productivity gains are distributed across population."
+      - id: economic-stability
+        label: "Economic Stability"
+        type: effect
+        description: "Resilience of economic systems to AI-driven changes."
+    edges:
+      - source: ai-capability-growth
+        target: job-displacement-rate
+        strength: strong
+        effect: increases
+      - source: labor-market-adaptation
+        target: economic-stability
+        strength: strong
+        effect: increases
+      - source: social-safety-nets
+        target: economic-stability
+        strength: medium
+        effect: increases
+      - source: job-displacement-rate
+        target: economic-stability
+        strength: strong
+        effect: decreases
+      - source: income-distribution
+        target: economic-stability
+        strength: medium
+        effect: increases
 - id: human-expertise
   type: ai-transition-model-parameter
   title: Human Expertise
@@ -334,6 +684,56 @@
     - human-factors
     - cognitive
   lastUpdated: 2025-12
+  causeEffectGraph:
+    title: "What Affects Human Expertise?"
+    description: "Causal factors affecting skill retention in an AI-augmented world. Rising deskilling concerns as AI handles more cognitive tasks."
+    primaryNodeId: human-expertise
+    nodes:
+      - id: ai-task-delegation
+        label: "AI Task Delegation"
+        type: leaf
+        description: "Range of cognitive tasks delegated to AI. Reduces practice opportunities."
+      - id: training-investment
+        label: "Training Investment"
+        type: leaf
+        description: "Resources devoted to maintaining human skills."
+      - id: expertise-incentives
+        label: "Expertise Incentives"
+        type: leaf
+        description: "Economic and social rewards for developing deep expertise."
+      - id: practice-opportunities
+        label: "Practice Opportunities"
+        type: intermediate
+        description: "Frequency of performing tasks needed to maintain skills."
+      - id: motivation-to-learn
+        label: "Motivation to Learn"
+        type: intermediate
+        description: "Incentives to develop and maintain expertise."
+      - id: human-expertise
+        label: "Human Expertise"
+        type: effect
+        description: "Maintenance of human skills, knowledge, and cognitive capabilities."
+    edges:
+      - source: ai-task-delegation
+        target: practice-opportunities
+        strength: strong
+        effect: decreases
+      - source: training-investment
+        target: human-expertise
+        strength: medium
+        effect: increases
+      - source: expertise-incentives
+        target: motivation-to-learn
+        strength: strong
+        effect: increases
+      - source: practice-opportunities
+        target: human-expertise
+        strength: strong
+        effect: increases
+      - source: motivation-to-learn
+        target: human-expertise
+        strength: medium
+        effect: increases
 - id: human-oversight-quality
   type: ai-transition-model-parameter
   title: Human Oversight Quality
@@ -371,6 +771,56 @@
     - human-factors
     - safety
   lastUpdated: 2025-12
+  causeEffectGraph:
+    title: "What Affects Human Oversight Quality?"
+    description: "Causal factors affecting human review and correction of AI systems. Capability gap widening as AI surpasses human understanding."
+    primaryNodeId: human-oversight-quality
+    nodes:
+      - id: ai-capability-level
+        label: "AI Capability Level"
+        type: leaf
+        description: "Sophistication of AI outputs. Higher capability makes oversight harder."
+      - id: interpretability-tools
+        label: "Interpretability Tools"
+        type: leaf
+        description: "Methods for understanding AI reasoning. Currently cover <10% of behavior."
+      - id: reviewer-expertise
+        label: "Reviewer Expertise"
+        type: leaf
+        description: "Human capacity to evaluate AI work. Under pressure from expertise atrophy."
+      - id: capability-gap
+        label: "Capability Gap"
+        type: intermediate
+        description: "Difference between AI capability and human ability to evaluate."
+      - id: automation-bias
+        label: "Automation Bias"
+        type: intermediate
+        description: "Tendency to accept AI outputs without critical evaluation."
+      - id: human-oversight-quality
+        label: "Human Oversight Quality"
+        type: effect
+        description: "Effectiveness of human review and correction of AI systems."
+    edges:
+      - source: ai-capability-level
+        target: capability-gap
+        strength: strong
+        effect: increases
+      - source: interpretability-tools
+        target: human-oversight-quality
+        strength: medium
+        effect: increases
+      - source: reviewer-expertise
+        target: capability-gap
+        strength: medium
+        effect: decreases
+      - source: capability-gap
+        target: human-oversight-quality
+        strength: strong
+        effect: decreases
+      - source: automation-bias
+        target: human-oversight-quality
+        strength: medium
+        effect: decreases
 - id: alignment-robustness
   type: ai-transition-model-parameter
   title: Alignment Robustness
@@ -438,6 +888,56 @@
     - technical
     - alignment
   lastUpdated: 2025-12
+  causeEffectGraph:
+    title: "What Affects Alignment Robustness?"
+    description: "Causal factors affecting how reliably AI systems pursue intended goals. 1-2% reward hacking rates in frontier models."
+    primaryNodeId: alignment-robustness
+    nodes:
+      - id: training-diversity
+        label: "Training Diversity"
+        type: leaf
+        description: "Variety of scenarios in training data. More diversity improves generalization."
+      - id: alignment-research
+        label: "Alignment Research"
+        type: leaf
+        description: "Progress on techniques like RLHF, constitutional AI, interpretability."
+      - id: adversarial-testing
+        label: "Adversarial Testing"
+        type: leaf
+        description: "Red-teaming and stress testing before deployment."
+      - id: generalization-quality
+        label: "Generalization Quality"
+        type: intermediate
+        description: "Ability of alignment to hold in new situations."
+      - id: vulnerability-detection
+        label: "Vulnerability Detection"
+        type: intermediate
+        description: "Identification of failure modes before deployment."
+      - id: alignment-robustness
+        label: "Alignment Robustness"
+        type: effect
+        description: "Reliability of aligned behavior across contexts and adversarial conditions."
+    edges:
+      - source: training-diversity
+        target: generalization-quality
+        strength: strong
+        effect: increases
+      - source: alignment-research
+        target: alignment-robustness
+        strength: strong
+        effect: increases
+      - source: adversarial-testing
+        target: vulnerability-detection
+        strength: strong
+        effect: increases
+      - source: generalization-quality
+        target: alignment-robustness
+        strength: strong
+        effect: increases
+      - source: vulnerability-detection
+        target: alignment-robustness
+        strength: medium
+        effect: increases
 - id: safety-capability-gap
   type: ai-transition-model-parameter
   title: Safety-Capability Gap
@@ -487,6 +987,56 @@
     - technical
     - governance
   lastUpdated: 2025-12
+  causeEffectGraph:
+    title: "What Drives the Safety-Capability Gap?"
+    description: "Causal factors affecting the lag between AI capabilities and safety understanding. Gap widening post-ChatGPT."
+    primaryNodeId: safety-capability-gap
+    nodes:
+      - id: racing-pressure
+        label: "Racing Pressure"
+        type: leaf
+        description: "Competitive dynamics compressing safety timelines 70-80%."
+      - id: safety-funding
+        label: "Safety Funding"
+        type: leaf
+        description: "Resources for safety research. Small fraction of capability funding."
+      - id: problem-difficulty
+        label: "Problem Difficulty"
+        type: leaf
+        description: "Intrinsic hardness of safety research. May require breakthroughs."
+      - id: capability-velocity
+        label: "Capability Velocity"
+        type: intermediate
+        description: "Speed of AI capability improvement. Accelerating."
+      - id: safety-velocity
+        label: "Safety Velocity"
+        type: intermediate
+        description: "Speed of safety research progress. Limited by talent and funding."
+      - id: safety-capability-gap
+        label: "Safety-Capability Gap"
+        type: effect
+        description: "How far safety understanding trails AI capabilities."
+    edges:
+      - source: racing-pressure
+        target: capability-velocity
+        strength: strong
+        effect: increases
+      - source: safety-funding
+        target: safety-velocity
+        strength: strong
+        effect: increases
+      - source: problem-difficulty
+        target: safety-velocity
+        strength: medium
+        effect: decreases
+      - source: capability-velocity
+        target: safety-capability-gap
+        strength: strong
+        effect: increases
+      - source: safety-velocity
+        target: safety-capability-gap
+        strength: strong
+        effect: decreases
 - id: interpretability-coverage
   type: ai-transition-model-parameter
   title: Interpretability Coverage
@@ -514,6 +1064,56 @@
     - technical
     - interpretability
   lastUpdated: 2025-12
+  causeEffectGraph:
+    title: "What Affects Interpretability Coverage?"
+    description: "Causal factors affecting how much of AI behavior we can understand. Currently <10% of frontier model capacity mapped."
+    primaryNodeId: interpretability-coverage
+    nodes:
+      - id: model-complexity
+        label: "Model Complexity"
+        type: leaf
+        description: "Size and sophistication of AI systems. Growing exponentially."
+      - id: research-investment
+        label: "Research Investment"
+        type: leaf
+        description: "Resources for interpretability research. ~50 researchers globally."
+      - id: technique-development
+        label: "Technique Development"
+        type: leaf
+        description: "New methods like sparse autoencoders, activation patching."
+      - id: scaling-challenge
+        label: "Scaling Challenge"
+        type: intermediate
+        description: "Difficulty applying interpretability techniques to larger models."
+      - id: feature-identification
+        label: "Feature Identification"
+        type: intermediate
+        description: "Ability to identify and understand model features."
+      - id: interpretability-coverage
+        label: "Interpretability Coverage"
+        type: effect
+        description: "Percentage of model behavior that can be explained."
+    edges:
+      - source: model-complexity
+        target: scaling-challenge
+        strength: strong
+        effect: increases
+      - source: research-investment
+        target: feature-identification
+        strength: strong
+        effect: increases
+      - source: technique-development
+        target: feature-identification
+        strength: strong
+        effect: increases
+      - source: scaling-challenge
+        target: interpretability-coverage
+        strength: strong
+        effect: decreases
+      - source: feature-identification
+        target: interpretability-coverage
+        strength: strong
+        effect: increases
 - id: regulatory-capacity
   type: ai-transition-model-parameter
   title: Regulatory Capacity
@@ -542,6 +1142,56 @@
     - regulation
     - institutions
   lastUpdated: 2025-12
+  causeEffectGraph:
+    title: "What Affects Regulatory Capacity?"
+    description: "Causal factors affecting government ability to regulate AI. AISI budgets ~$10-50M vs $100B+ industry spending."
+    primaryNodeId: regulatory-capacity
+    nodes:
+      - id: government-ai-expertise
+        label: "Government AI Expertise"
+        type: leaf
+        description: "Technical staff in agencies. Far below industry levels."
+      - id: regulatory-budgets
+        label: "Regulatory Budgets"
+        type: leaf
+        description: "Resources for AI Safety Institutes and regulators."
+      - id: industry-transparency
+        label: "Industry Transparency"
+        type: leaf
+        description: "Willingness of labs to share information with regulators."
+      - id: evaluation-capability
+        label: "Evaluation Capability"
+        type: intermediate
+        description: "Ability to independently assess AI systems."
+      - id: enforcement-tools
+        label: "Enforcement Tools"
+        type: intermediate
+        description: "Legal authority and mechanisms to enforce rules."
+      - id: regulatory-capacity
+        label: "Regulatory Capacity"
+        type: effect
+        description: "Government ability to understand and regulate AI."
+    edges:
+      - source: government-ai-expertise
+        target: evaluation-capability
+        strength: strong
+        effect: increases
+      - source: regulatory-budgets
+        target: regulatory-capacity
+        strength: medium
+        effect: increases
+      - source: industry-transparency
+        target: evaluation-capability
+        strength: medium
+        effect: increases
+      - source: evaluation-capability
+        target: regulatory-capacity
+        strength: strong
+        effect: increases
+      - source: enforcement-tools
+        target: regulatory-capacity
+        strength: medium
+        effect: increases
 - id: institutional-quality
   type: ai-transition-model-parameter
   title: Institutional Quality
@@ -570,6 +1220,56 @@
     - institutions
     - accountability
   lastUpdated: 2025-12
+  causeEffectGraph:
+    title: "What Affects Institutional Quality?"
+    description: "Causal factors affecting governance institution effectiveness. Under pressure from capture and expertise gaps."
+    primaryNodeId: institutional-quality
+    nodes:
+      - id: capture-pressure
+        label: "Capture Pressure"
+        type: leaf
+        description: "Industry influence on regulators through lobbying, revolving door."
+      - id: expertise-retention
+        label: "Expertise Retention"
+        type: leaf
+        description: "Ability to keep skilled staff vs. industry salary competition."
+      - id: political-independence
+        label: "Political Independence"
+        type: leaf
+        description: "Insulation from short-term political pressures."
+      - id: decision-quality
+        label: "Decision Quality"
+        type: intermediate
+        description: "Quality of institutional choices and policies."
+      - id: public-legitimacy
+        label: "Public Legitimacy"
+        type: intermediate
+        description: "Trust in institutions as fair arbiters."
+      - id: institutional-quality
+        label: "Institutional Quality"
+        type: effect
+        description: "Health and effectiveness of governance institutions."
+    edges:
+      - source: capture-pressure
+        target: decision-quality
+        strength: strong
+        effect: decreases
+      - source: expertise-retention
+        target: decision-quality
+        strength: strong
+        effect: increases
+      - source: political-independence
+        target: institutional-quality
+        strength: medium
+        effect: increases
+      - source: decision-quality
+        target: institutional-quality
+        strength: strong
+        effect: increases
+      - source: public-legitimacy
+        target: institutional-quality
+        strength: medium
+        effect: increases
 - id: reality-coherence
   type: ai-transition-model-parameter
   title: Reality Coherence
@@ -611,6 +1311,56 @@
     - information-environment
     - democracy
   lastUpdated: 2025-12
+  causeEffectGraph:
+    title: "What Affects Reality Coherence?"
+    description: "Causal factors affecting shared factual beliefs across populations. Cross-partisan news overlap from 47% to 12% since 2010."
+    primaryNodeId: reality-coherence
+    nodes:
+      - id: algorithmic-curation
+        label: "Algorithmic Curation"
+        type: leaf
+        description: "Personalization creates filter bubbles with different facts."
+      - id: shared-media-sources
+        label: "Shared Media Sources"
+        type: leaf
+        description: "Common information sources across groups. Declining."
+      - id: political-polarization
+        label: "Political Polarization"
+        type: leaf
+        description: "Partisan identity shapes fact acceptance."
+      - id: information-exposure
+        label: "Information Exposure"
+        type: intermediate
+        description: "What facts different groups encounter."
+      - id: fact-acceptance
+        label: "Fact Acceptance"
+        type: intermediate
+        description: "Willingness to accept facts from non-aligned sources."
+      - id: reality-coherence
+        label: "Reality Coherence"
+        type: effect
+        description: "Degree to which populations share common factual beliefs."
+    edges:
+      - source: algorithmic-curation
+        target: information-exposure
+        strength: strong
+        effect: decreases
+      - source: shared-media-sources
+        target: reality-coherence
+        strength: strong
+        effect: increases
+      - source: political-polarization
+        target: fact-acceptance
+        strength: strong
+        effect: decreases
+      - source: information-exposure
+        target: reality-coherence
+        strength: medium
+        effect: increases
+      - source: fact-acceptance
+        target: reality-coherence
+        strength: strong
+        effect: increases
 - id: preference-authenticity
   type: ai-transition-model-parameter
   title: Preference Authenticity
@@ -648,6 +1398,56 @@
     - autonomy
     - human-ai-interaction
   lastUpdated: 2025-12
+  causeEffectGraph:
+    title: "What Affects Preference Authenticity?"
+    description: "Causal factors affecting whether preferences reflect genuine values vs external manipulation. AI recommendation systems optimize for engagement."
+    primaryNodeId: preference-authenticity
+    nodes:
+      - id: recommendation-optimization
+        label: "Recommendation Optimization"
+        type: leaf
+        description: "AI systems optimizing for engagement over user wellbeing."
+      - id: targeted-advertising
+        label: "Targeted Advertising"
+        type: leaf
+        description: "Precision persuasion based on psychological profiles."
+      - id: user-awareness
+        label: "User Awareness"
+        type: leaf
+        description: "Understanding of how preferences are being shaped."
+      - id: manipulation-exposure
+        label: "Manipulation Exposure"
+        type: intermediate
+        description: "Degree of exposure to preference-shaping systems."
+      - id: reflective-capacity
+        label: "Reflective Capacity"
+        type: intermediate
+        description: "Ability to critically evaluate own preferences."
+      - id: preference-authenticity
+        label: "Preference Authenticity"
+        type: effect
+        description: "Degree to which preferences reflect genuine values."
+    edges:
+      - source: recommendation-optimization
+        target: manipulation-exposure
+        strength: strong
+        effect: increases
+      - source: targeted-advertising
+        target: manipulation-exposure
+        strength: strong
+        effect: increases
+      - source: user-awareness
+        target: reflective-capacity
+        strength: medium
+        effect: increases
+      - source: manipulation-exposure
+        target: preference-authenticity
+        strength: strong
+        effect: decreases
+      - source: reflective-capacity
+        target: preference-authenticity
+        strength: medium
+        effect: increases
 - id: racing-intensity
   type: ai-transition-model-parameter
   title: Racing Intensity
@@ -694,6 +1494,56 @@
     - safety
     - market-dynamics
   lastUpdated: 2025-12
+  causeEffectGraph:
+    title: "What Drives Racing Intensity?"
+    description: "Causal factors affecting competitive pressure in AI development. Safety timelines compressed 70-80% post-ChatGPT."
+    primaryNodeId: racing-intensity
+    nodes:
+      - id: commercial-competition
+        label: "Commercial Competition"
+        type: leaf
+        description: "Market pressures between AI labs for customers and revenue."
+      - id: geopolitical-competition
+        label: "Geopolitical Competition"
+        type: leaf
+        description: "US-China dynamics driving national AI programs."
+      - id: coordination-mechanisms
+        label: "Coordination Mechanisms"
+        type: leaf
+        description: "Agreements and norms that could slow racing. Currently weak."
+      - id: first-mover-perception
+        label: "First-Mover Perception"
+        type: intermediate
+        description: "Belief that early leads confer lasting advantages."
+      - id: safety-cost-perception
+        label: "Safety Cost Perception"
+        type: intermediate
+        description: "Perception of safety work as competitive disadvantage."
+      - id: racing-intensity
+        label: "Racing Intensity"
+        type: effect
+        description: "Competitive pressure driving speed over safety."
+    edges:
+      - source: commercial-competition
+        target: first-mover-perception
+        strength: strong
+        effect: increases
+      - source: geopolitical-competition
+        target: racing-intensity
+        strength: strong
+        effect: increases
+      - source: coordination-mechanisms
+        target: racing-intensity
+        strength: medium
+        effect: decreases
+      - source: first-mover-perception
+        target: racing-intensity
+        strength: strong
+        effect: increases
+      - source: safety-cost-perception
+        target: racing-intensity
+        strength: medium
+        effect: increases
 - id: safety-culture-strength
   type: ai-transition-model-parameter
   title: Safety Culture Strength
@@ -728,6 +1578,56 @@
     - safety
     - organizational
   lastUpdated: 2025-12
+  causeEffectGraph:
+    title: "What Affects Safety Culture Strength?"
+    description: "Causal factors affecting whether AI labs genuinely prioritize safety. Mixed results across labs under competitive pressure."
+    primaryNodeId: safety-culture-strength
+    nodes:
+      - id: leadership-commitment
+        label: "Leadership Commitment"
+        type: leaf
+        description: "Genuine priority placed on safety by executives and founders."
+      - id: competitive-pressure
+        label: "Competitive Pressure"
+        type: leaf
+        description: "Racing dynamics that pressure labs to cut safety corners."
+      - id: external-oversight
+        label: "External Oversight"
+        type: leaf
+        description: "Regulatory scrutiny and public accountability."
+      - id: safety-team-authority
+        label: "Safety Team Authority"
+        type: intermediate
+        description: "Power of safety teams to delay or block deployments."
+      - id: resource-allocation
+        label: "Resource Allocation"
+        type: intermediate
+        description: "Budget and staffing devoted to safety work."
+      - id: safety-culture-strength
+        label: "Safety Culture Strength"
+        type: effect
+        description: "Genuine organizational prioritization of safety."
+    edges:
+      - source: leadership-commitment
+        target: safety-team-authority
+        strength: strong
+        effect: increases
+      - source: competitive-pressure
+        target: safety-culture-strength
+        strength: strong
+        effect: decreases
+      - source: external-oversight
+        target: safety-culture-strength
+        strength: medium
+        effect: increases
+      - source: safety-team-authority
+        target: safety-culture-strength
+        strength: strong
+        effect: increases
+      - source: resource-allocation
+        target: safety-culture-strength
+        strength: medium
+        effect: increases
 - id: coordination-capacity
   type: ai-transition-model-parameter
   title: Coordination Capacity
@@ -762,6 +1662,56 @@
     - international
     - coordination
   lastUpdated: 2025-12
+  causeEffectGraph:
+    title: "What Affects Coordination Capacity?"
+    description: "Causal factors influencing stakeholder coordination on AI safety. Based on game theory, trust dynamics, and institutional mechanisms."
+    primaryNodeId: coordination-capacity
+    nodes:
+      - id: shared-risk-perception
+        label: "Shared Risk Perception"
+        type: leaf
+        description: "Common understanding of AI risks. Enables cooperation motivation."
+      - id: trust-levels
+        label: "Trust Between Actors"
+        type: leaf
+        description: "Confidence that others will honor commitments. Foundation for cooperation."
+      - id: verification-capability
+        label: "Verification Capability"
+        type: leaf
+        description: "Ability to confirm compliance with agreements. Reduces need for trust."
+      - id: communication-channels
+        label: "Communication Channels"
+        type: intermediate
+        description: "Established forums for dialogue between AI stakeholders."
+      - id: coordination-mechanisms
+        label: "Coordination Mechanisms"
+        type: intermediate
+        description: "Standards bodies, agreements, joint commitments."
+      - id: coordination-capacity
+        label: "Coordination Capacity"
+        type: effect
+        description: "Effective coordination on safety standards and practices."
+    edges:
+      - source: shared-risk-perception
+        target: communication-channels
+        strength: strong
+        effect: increases
+      - source: trust-levels
+        target: coordination-mechanisms
+        strength: strong
+        effect: increases
+      - source: verification-capability
+        target: coordination-mechanisms
+        strength: medium
+        effect: increases
+      - source: communication-channels
+        target: coordination-capacity
+        strength: medium
+        effect: increases
+      - source: coordination-mechanisms
+        target: coordination-capacity
+        strength: strong
+        effect: increases
 - id: biological-threat-exposure
   type: ai-transition-model-parameter
   title: Biological Threat Exposure
@@ -790,6 +1740,56 @@
     - biosecurity
     - defense
   lastUpdated: 2025-12
+  causeEffectGraph:
+    title: "What Affects Biological Threat Exposure?"
+    description: "Causal factors affecting vulnerability to biological threats. DNA screening catches ~25% of threats."
+    primaryNodeId: biological-threat-exposure
+    nodes:
+      - id: ai-bioweapon-capability
+        label: "AI Bioweapon Capability"
+        type: leaf
+        description: "AI's ability to assist with pathogen design. Approaching expert level."
+      - id: dna-synthesis-controls
+        label: "DNA Synthesis Controls"
+        type: leaf
+        description: "Screening and verification at synthesis facilities."
+      - id: biosurveillance-capacity
+        label: "Biosurveillance Capacity"
+        type: leaf
+        description: "Early detection systems for biological threats."
+      - id: attack-feasibility
+        label: "Attack Feasibility"
+        type: intermediate
+        description: "How easily actors can develop bioweapons."
+      - id: defense-capability
+        label: "Defense Capability"
+        type: intermediate
+        description: "Detection, response, and countermeasure capacity."
+      - id: biological-threat-exposure
+        label: "Biological Threat Exposure"
+        type: effect
+        description: "Society's vulnerability to biological threats."
+    edges:
+      - source: ai-bioweapon-capability
+        target: attack-feasibility
+        strength: strong
+        effect: increases
+      - source: dna-synthesis-controls
+        target: attack-feasibility
+        strength: medium
+        effect: decreases
+      - source: biosurveillance-capacity
+        target: defense-capability
+        strength: strong
+        effect: increases
+      - source: attack-feasibility
+        target: biological-threat-exposure
+        strength: strong
+        effect: increases
+      - source: defense-capability
+        target: biological-threat-exposure
+        strength: strong
+        effect: decreases
 - id: cyber-threat-exposure
   type: ai-transition-model-parameter
   title: Cyber Threat Exposure
@@ -818,6 +1818,56 @@
     - cybersecurity
     - defense
   lastUpdated: 2025-12
+  causeEffectGraph:
+    title: "What Affects Cyber Threat Exposure?"
+    description: "Causal factors influencing society's vulnerability to AI-enabled cyber attacks."
+    primaryNodeId: cyber-threat-exposure
+    nodes:
+      - id: ai-attack-capabilities
+        label: "AI Attack Capabilities"
+        type: leaf
+        description: "AI ability to find vulnerabilities, craft exploits, and automate attacks."
+      - id: legacy-systems
+        label: "Legacy System Prevalence"
+        type: leaf
+        description: "Continued use of outdated, vulnerable infrastructure."
+      - id: ai-defense-capabilities
+        label: "AI Defense Capabilities"
+        type: leaf
+        description: "AI-powered threat detection, response, and remediation."
+      - id: security-investment
+        label: "Security Investment"
+        type: leaf
+        description: "Resources devoted to cybersecurity across organizations."
+      - id: attack-surface
+        label: "Attack Surface"
+        type: intermediate
+        description: "Overall vulnerability exposure in critical systems."
+      - id: cyber-threat-exposure
+        label: "Cyber Threat Exposure"
+        type: effect
+        description: "Net societal vulnerability to cyber attacks."
+    edges:
+      - source: ai-attack-capabilities
+        target: attack-surface
+        strength: strong
+        effect: increases
+      - source: legacy-systems
+        target: attack-surface
+        strength: strong
+        effect: increases
+      - source: ai-defense-capabilities
+        target: attack-surface
+        strength: medium
+        effect: decreases
+      - source: security-investment
+        target: ai-defense-capabilities
+        strength: medium
+        effect: increases
+      - source: attack-surface
+        target: cyber-threat-exposure
+        strength: strong
+        effect: increases
 - id: societal-resilience
   type: ai-transition-model-parameter
   title: Societal Resilience
@@ -841,6 +1891,56 @@
     - infrastructure
     - structural
   lastUpdated: 2025-12
+  causeEffectGraph:
+    title: "What Affects Societal Resilience?"
+    description: "Causal factors influencing society's ability to maintain functions and recover from AI disruptions."
+    primaryNodeId: societal-resilience
+    nodes:
+      - id: system-redundancy
+        label: "System Redundancy"
+        type: leaf
+        description: "Backup systems and fallback capabilities across infrastructure."
+      - id: human-skill-maintenance
+        label: "Human Skill Maintenance"
+        type: leaf
+        description: "Continued human capability to operate without AI assistance."
+      - id: ai-dependency-level
+        label: "AI Dependency Level"
+        type: leaf
+        description: "Extent of critical system reliance on AI."
+      - id: recovery-planning
+        label: "Recovery Planning"
+        type: leaf
+        description: "Preparation for AI failures and disruptions."
+      - id: adaptive-capacity
+        label: "Adaptive Capacity"
+        type: intermediate
+        description: "Ability to reconfigure and respond to novel challenges."
+      - id: societal-resilience
+        label: "Societal Resilience"
+        type: effect
+        description: "Overall ability to withstand and recover from AI-related shocks."
+    edges:
+      - source: system-redundancy
+        target: adaptive-capacity
+        strength: strong
+        effect: increases
+      - source: human-skill-maintenance
+        target: adaptive-capacity
+        strength: strong
+        effect: increases
+      - source: ai-dependency-level
+        target: adaptive-capacity
+        strength: medium
+        effect: decreases
+      - source: recovery-planning
+        target: adaptive-capacity
+        strength: medium
+        effect: increases
+      - source: adaptive-capacity
+        target: societal-resilience
+        strength: strong
+        effect: increases
 - id: alignment-progress
   type: ai-transition-model-metric
   title: Alignment Progress
@@ -1602,166 +2702,145 @@
       effect: positive
       strength: medium
   causeEffectGraph:
-    title: "Factors Affecting Compute Availability"
-    description: "Causal relationships between factors that influence compute availability and its downstream effects"
+    title: "What Drives Effective AI Compute?"
+    description: "Causal factors affecting frontier AI training compute. Note: This forms a cycle—AI capabilities drive revenue, which funds more compute—but feedback loops are omitted for clarity."
+    primaryNodeId: effective-compute
     nodes:
-      # CAUSES - what affects compute availability
-      - id: chip-manufacturing
-        label: "Chip Manufacturing Capacity"
+      # LAYER 1 (leaf): Exogenous factors - supply side
+      - id: taiwan-stability
+        label: "Taiwan Stability"
+        type: leaf
+        description: "Geopolitical risk to TSMC. 90%+ of advanced chips."
+      - id: asml-capacity
+        label: "ASML Capacity"
+        type: leaf
+        description: "Sole EUV lithography supplier. ~50 machines/year."
+      - id: power-grid
+        label: "Power Grid Capacity"
+        type: leaf
+        description: "Grid expansion, permitting. Binding constraint for large clusters."
+      - id: pretraining-data
+        label: "Training Data Quality"
+        type: leaf
+        description: "Available high-quality data. May become binding as models scale."
+      # LAYER 1 (leaf): Exogenous factors - demand side
+      - id: ai-revenue
+        label: "AI Revenue"
+        type: leaf
+        description: "Revenue from AI products. Justifies continued investment."
+
+      # LAYER 2 (cause): Derived factors
+      - id: fab-capacity
+        label: "Fab Capacity"
         type: cause
-        confidence: 0.85
-        description: "TSMC produces 90%+ of advanced AI chips. Capacity expansion takes 3-5 years and costs $20B+ per fab."
-        details: "The semiconductor supply chain is highly concentrated. TSMC in Taiwan dominates advanced node production, with Samsung a distant second. Intel is attempting to catch up but remains years behind. This concentration creates both risk and governance opportunity."
-        sources: ["Semiconductor Industry Association", "TSMC annual reports"]
-        relatedConcepts: ["Supply chain", "TSMC", "Fab capacity", "Moore's Law"]
-      - id: export-controls
-        label: "Export Controls"
+        description: "Advanced node manufacturing. New fabs: 3-5 years, $20-40B."
+      - id: ai-valuations
+        label: "AI Valuations"
         type: cause
-        confidence: 0.75
-        description: "US restrictions on advanced chip exports to China. Creates 1-3 year delays but drives efficiency innovation."
-        details: "The October 2022 and subsequent US export controls restrict sale of advanced AI chips and manufacturing equipment to China. Evidence suggests 1-3 year delays in Chinese frontier capabilities, though circumvention through cloud access and smuggling occurs."
-        sources: ["BIS export control rules", "CSET analysis"]
-        relatedConcepts: ["Geopolitics", "China", "Sanctions", "Technology transfer"]
-      - id: energy-infrastructure
-        label: "Energy & Power Availability"
-        type: cause
-        confidence: 0.70
-        description: "Data centers require 50-100+ MW. Grid constraints and permitting limit geographic expansion."
-        details: "Training runs for frontier models require enormous power. A single H100 cluster of 10,000 GPUs draws ~4MW. Grid interconnection and power purchase agreements increasingly constrain where large training runs can occur."
-        sources: ["IEA data center reports", "Utility filings"]
-        relatedConcepts: ["Data centers", "Power grid", "Sustainability", "Nuclear"]
+        description: "Market caps enabling capital raises. $1-3T for frontier labs."
+
+      # LAYER 3 (intermediate): Production & deployment
+      - id: chip-supply
+        label: "Chip Supply"
+        type: intermediate
+        description: "Total advanced AI chips produced."
+      - id: chip-architecture
+        label: "Chip Architecture"
+        type: intermediate
+        description: "FLOPS per chip. ~2-3x improvement per generation."
       - id: algorithmic-efficiency
         label: "Algorithmic Efficiency"
-        type: cause
-        confidence: 0.80
-        description: "~4x efficiency gains per year historically. DeepSeek achieved GPT-4 parity at ~1/10 compute."
-        details: "Algorithmic improvements consistently reduce compute requirements for given capability levels. This includes architecture innovations (transformers, MoE), training efficiency (better optimizers, curricula), and inference optimizations (quantization, distillation)."
-        sources: ["Epoch AI efficiency trends", "DeepSeek technical report"]
-        relatedConcepts: ["Scaling laws", "Architecture", "Training efficiency", "Chinchilla"]
-      - id: capital-investment
-        label: "Capital Investment in AI"
-        type: cause
-        confidence: 0.75
-        description: "Training runs cost $100M+. Only ~20 organizations can afford frontier training."
-        details: "The capital requirements for frontier AI training create natural barriers to entry. Microsoft, Google, Amazon, and a few others can fund $1B+ training runs. This concentrates frontier development among well-resourced actors."
-        sources: ["Company financial reports", "Industry estimates"]
-        relatedConcepts: ["VC funding", "Big Tech", "Compute costs", "Barriers to entry"]
-      # INTERMEDIATE - compute itself
+        type: intermediate
+        description: "Software improvements. Historically ~4x/year."
+      - id: datacenter-capacity
+        label: "Datacenter Capacity"
+        type: intermediate
+        description: "Infrastructure: power, cooling, networking."
+      - id: ai-compute-spending
+        label: "AI Compute Spending"
+        type: intermediate
+        description: "Capital deployed for compute infrastructure."
+
+      # LAYER 4 (effect): Target
       - id: effective-compute
-        label: "Effective Compute Availability"
-        type: intermediate
-        confidence: 0.70
-        description: "Net compute available for AI training after accounting for efficiency gains and access restrictions."
-        details: "The effective compute available combines raw hardware capacity with algorithmic efficiency. Even with export controls, global effective compute for AI continues to grow rapidly due to efficiency gains and new fab capacity coming online."
-        relatedConcepts: ["FLOP", "GPU-hours", "Training compute", "Inference compute"]
-      - id: compute-distribution
-        label: "Geographic Compute Distribution"
-        type: intermediate
-        confidence: 0.65
-        description: "Where compute is physically located affects who can train models and jurisdictional reach."
-        details: "Compute concentration in specific countries/regions affects governance options. US-based cloud providers control majority of accessible frontier compute. China is building domestic capacity but remains behind on cutting-edge chips."
-        relatedConcepts: ["Cloud providers", "Data sovereignty", "Jurisdiction"]
-      # EFFECTS - what compute affects
-      - id: capabilities-timeline
-        label: "AI Capabilities Timeline"
+        label: "Effective Compute"
         type: effect
-        confidence: 0.75
-        description: "When frontier AI capabilities emerge. Compute constraints could delay transformative AI by years."
-        details: "Compute availability is a key input to capability timelines. Constraints that reduce effective compute growth could meaningfully delay when transformative AI arrives, potentially providing more time for safety work."
-        relatedConcepts: ["TAI timelines", "AGI", "Transformative AI"]
-      - id: racing-dynamics
-        label: "Racing Dynamics"
-        type: effect
-        confidence: 0.70
-        description: "Intensity of competition between labs and nations. Compute scarcity has mixed effects on racing."
-        details: "Compute constraints can either intensify racing (scarcity drives competition for limited resources) or reduce it (high barriers limit competitors). The net effect depends on how constraints are implemented."
-        relatedConcepts: ["AI race", "Competition", "Cooperation"]
-      - id: actor-landscape
-        label: "Actor Landscape"
-        type: effect
-        confidence: 0.80
-        description: "Who can train frontier models. High costs exclude most actors, concentrating development."
-        details: "The set of actors capable of training frontier models depends heavily on compute access. Currently limited to ~20 organizations with sufficient capital and cloud/hardware access. This concentration affects both risks and governance options."
-        relatedConcepts: ["Labs", "Concentration", "Barriers to entry"]
-      - id: governance-tractability
-        label: "Governance Tractability"
-        type: effect
-        confidence: 0.65
-        description: "Whether compute-based governance is viable. Depends on concentration and measurability."
-        details: "Compute's physical nature and supply chain concentration make it unusually governable compared to algorithms or data. However, efficiency gains and potential for distributed training may erode this advantage over time."
-        relatedConcepts: ["Compute governance", "Regulation", "Chokepoints"]
+        description: "Net compute available for frontier AI training."
+
     edges:
-      # Causes → Intermediate
-      - source: chip-manufacturing
+      # === SUPPLY CHAIN (left side) ===
+      - source: asml-capacity
+        target: fab-capacity
+        strength: strong
+        effect: increases
+      - source: taiwan-stability
+        target: fab-capacity
+        strength: strong
+        effect: increases
+      - source: fab-capacity
+        target: chip-supply
+        strength: strong
+        effect: increases
+      - source: chip-supply
+        target: datacenter-capacity
+        strength: strong
+        effect: increases
+      - source: power-grid
+        target: datacenter-capacity
+        strength: strong
+        effect: increases
+
+      # === FINANCIAL CHAIN (right side) ===
+      - source: ai-revenue
+        target: ai-valuations
+        strength: strong
+        effect: increases
+      - source: ai-valuations
+        target: ai-compute-spending
+        strength: strong
+        effect: increases
+      - source: ai-compute-spending
+        target: datacenter-capacity
+        strength: strong
+        effect: increases
+
+      # === CROSS-LINKS ===
+      # Demand drives supply allocation
+      - source: ai-compute-spending
+        target: chip-supply
+        strength: medium
+        effect: increases
+      # Taiwan risk affects valuations too
+      - source: taiwan-stability
+        target: ai-valuations
+        strength: medium
+        effect: increases
+      # Spending funds R&D for architecture + algorithms
+      - source: ai-compute-spending
+        target: chip-architecture
+        strength: medium
+        effect: increases
+      - source: ai-compute-spending
+        target: algorithmic-efficiency
+        strength: medium
+        effect: increases
+
+      # === TO EFFECTIVE COMPUTE ===
+      - source: datacenter-capacity
         target: effective-compute
         strength: strong
-        confidence: high
         effect: increases
-      - source: export-controls
+      - source: chip-architecture
         target: effective-compute
-        strength: medium
-        confidence: medium
-        effect: decreases
-        label: "for restricted actors"
-      - source: export-controls
-        target: algorithmic-efficiency
-        strength: weak
-        confidence: medium
-        effect: increases
-        label: "drives innovation"
-      - source: energy-infrastructure
-        target: effective-compute
-        strength: medium
-        confidence: medium
+        strength: strong
         effect: increases
       - source: algorithmic-efficiency
         target: effective-compute
         strength: strong
-        confidence: high
         effect: increases
-      - source: capital-investment
+      - source: pretraining-data
         target: effective-compute
-        strength: strong
-        confidence: high
-        effect: increases
-      - source: chip-manufacturing
-        target: compute-distribution
         strength: medium
-        confidence: high
-        effect: increases
-      - source: export-controls
-        target: compute-distribution
-        strength: medium
-        confidence: medium
-        effect: mixed
-      # Intermediate → Effects
-      - source: effective-compute
-        target: capabilities-timeline
-        strength: strong
-        confidence: high
-        effect: increases
-        label: "more compute → faster progress"
-      - source: effective-compute
-        target: actor-landscape
-        strength: medium
-        confidence: medium
-        effect: increases
-        label: "more actors with access"
-      - source: effective-compute
-        target: racing-dynamics
-        strength: medium
-        confidence: medium
-        effect: mixed
-      - source: compute-distribution
-        target: governance-tractability
-        strength: medium
-        confidence: medium
-        effect: mixed
-        label: "concentrated → more tractable"
-      - source: compute-distribution
-        target: actor-landscape
-        strength: medium
-        confidence: high
         effect: increases
   relatedEntries:
     - id: compute-governance
@@ -1781,6 +2860,182 @@
     - hardware
     - governance
     - ai-capabilities
+  relatedContent:
+    researchReports:
+      - path: /knowledge-base/research-reports/compute/
+        title: "Compute (AI Capabilities): Research Report"
+  lastUpdated: 2026-01
+
+- id: tmc-algorithms
+  type: ai-transition-model-subitem
+  title: Algorithms
+  parentFactor: ai-capabilities
+  path: /ai-transition-model/factors/ai-capabilities/algorithms/
+  description: >-
+    Algorithmic progress determines how efficiently AI systems convert compute into capabilities.
+    Unlike hardware, algorithms are intangible—discoveries spread instantly through publications,
+    making direct governance nearly impossible.
+  ratings:
+    changeability: 20
+    xriskImpact: 75
+    trajectoryImpact: 85
+    uncertainty: 55
+  causeEffectGraph:
+    title: "What Drives Algorithmic Progress?"
+    description: "Causal factors affecting AI algorithmic efficiency. Research shows 91% of gains are scale-dependent (Transformers, Chinchilla), coupling algorithmic progress to compute availability. Software optimizations (23x) dramatically outpace hardware improvements."
+    primaryNodeId: algorithmic-progress
+    nodes:
+      # LAYER 1 (leaf): Exogenous factors
+      - id: research-talent
+        label: "Research Talent"
+        type: leaf
+        description: "Supply of skilled ML researchers and engineers. Growing exponentially but still concentrated."
+      - id: compute-availability
+        label: "Compute Availability"
+        type: leaf
+        description: "Access to frontier compute for scaling studies. 91% of efficiency gains depend on scale."
+      - id: open-science-norms
+        label: "Open Science Norms"
+        type: leaf
+        description: "Culture of publishing papers/code. Algorithms diffuse instantly—cannot be physically controlled."
+      - id: competitive-pressure
+        label: "Competitive Pressure"
+        type: leaf
+        description: "Racing dynamics between labs/nations. Accelerates innovation but may compromise safety."
+
+      # LAYER 2 (cause): Derived factors
+      - id: scaling-laws
+        label: "Scaling Laws"
+        type: cause
+        description: "Chinchilla 20:1 token-to-parameter ratio. Compute-optimal training enables smaller, better-trained models."
+      - id: academic-research
+        label: "Academic Research"
+        type: cause
+        description: "Volume of ML papers and experiments. Transformer (2017) was transformative but unpredicted."
+      - id: paradigm-shifts
+        label: "Paradigm Shifts"
+        type: cause
+        description: "Architectural breakthroughs like Transformers. Transformers + Chinchilla account for 91% of gains at frontier."
+      - id: post-training-methods
+        label: "Post-Training Methods"
+        type: cause
+        description: "RLHF, distillation, test-time compute. Add 3-16x efficiency gains beyond pre-training."
+
+      # LAYER 3 (intermediate): Direct optimization factors
+      - id: architecture-innovations
+        label: "Architecture Innovations"
+        type: intermediate
+        description: "MoE (DeepSeek 40% compute), GQA, RoPE. Core component of 23x software improvements."
+      - id: training-efficiency
+        label: "Training Efficiency"
+        type: intermediate
+        description: "FP8 quantization, curriculum learning, optimization methods. Enables compute-optimal training."
+      - id: software-optimizations
+        label: "Software Optimizations"
+        type: intermediate
+        description: "Speculative decoding, KV caching, quantization. 23x improvement vs. 1.3x hardware gains."
+      - id: deployment-efficiency
+        label: "Deployment Efficiency"
+        type: intermediate
+        description: "Inference optimization, batching. 280x cost reduction over 24 months."
+
+      # LAYER 4 (effect): The outcome
+      - id: algorithmic-progress
+        label: "Algorithmic Progress"
+        type: effect
+        description: "Compute required to reach fixed performance halves every 8 months (95% CI: 5-14 months). Combined pre-training + post-training: ~9x/year."
+
+    edges:
+      # Compute availability enables scale-dependent progress
+      - source: compute-availability
+        target: paradigm-shifts
+        strength: strong
+        effect: increases
+      - source: compute-availability
+        target: scaling-laws
+        strength: strong
+        effect: increases
+
+      # Research talent and competitive pressure drive output
+      - source: research-talent
+        target: academic-research
+        strength: strong
+        effect: increases
+      - source: competitive-pressure
+        target: academic-research
+        strength: medium
+        effect: increases
+      - source: competitive-pressure
+        target: post-training-methods
+        strength: medium
+        effect: increases
+
+      # Open science enables rapid diffusion and replication
+      - source: open-science-norms
+        target: paradigm-shifts
+        strength: medium
+        effect: increases
+      - source: open-science-norms
+        target: architecture-innovations
+        strength: medium
+        effect: increases
+
+      # Research output feeds into innovations
+      - source: academic-research
+        target: architecture-innovations
+        strength: strong
+        effect: increases
+      - source: academic-research
+        target: training-efficiency
+        strength: medium
+        effect: increases
+
+      # Paradigm shifts and scaling laws unlock major innovations
+      - source: paradigm-shifts
+        target: architecture-innovations
+        strength: strong
+        effect: increases
+      - source: scaling-laws
+        target: training-efficiency
+        strength: strong
+        effect: increases
+
+      # Post-training methods enhance deployment
+      - source: post-training-methods
+        target: deployment-efficiency
+        strength: strong
+        effect: increases
+
+      # All optimization paths feed into algorithmic progress
+      - source: architecture-innovations
+        target: algorithmic-progress
+        strength: strong
+        effect: increases
+      - source: training-efficiency
+        target: algorithmic-progress
+        strength: strong
+        effect: increases
+      - source: software-optimizations
+        target: algorithmic-progress
+        strength: strong
+        effect: increases
+      - source: deployment-efficiency
+        target: algorithmic-progress
+        strength: medium
+        effect: increases
+
+  relatedContent:
+    researchReports:
+      - path: /knowledge-base/research-reports/algorithms/
+        title: "Algorithms (AI Capabilities): Research Report"
+  relatedEntries:
+    - id: ai-capabilities
+      type: ai-transition-model-factor
+      relationship: child-of
+  tags:
+    - algorithms
+    - research
+    - ai-capabilities
   lastUpdated: 2026-01
 
 # Stub entities for TransitionModelContent pages (to be filled with content later)
@@ -1789,6 +3044,179 @@
   title: Technical AI Safety
   parentFactor: misalignment-potential
   path: /ai-transition-model/factors/misalignment-potential/technical-ai-safety/
+  relatedContent:
+    researchReports:
+      - path: /knowledge-base/research-reports/technical-ai-safety/
+        title: "Technical AI Safety: Research Report"
+  causeEffectGraph:
+    title: "What Drives AI Safety Adequacy?"
+    description: "Causal factors affecting technical AI safety outcomes. The field faces a widening gap: alignment methods show brittleness, interpretability is progressing but incomplete, and evaluation benchmarks are unreliable."
+    primaryNodeId: safety-adequacy
+    nodes:
+      # LAYER 1 (leaf): External/exogenous factors
+      - id: safety-field-growth
+        label: "Safety Field Growth"
+        type: leaf
+        description: "~50 interpretability researchers, 140+ papers at ICML. Growing exponentially from small base."
+      - id: safety-funding
+        label: "Safety Funding"
+        type: leaf
+        description: "OpenAI allocated 20% compute for Superalignment. Labs invest but far less than capabilities."
+      - id: racing-intensity
+        label: "Racing Intensity"
+        type: leaf
+        description: "Safety timelines compressed 70-80% post-ChatGPT. Competitive pressure reduces safety investment."
+      - id: safety-culture
+        label: "Safety Culture"
+        type: leaf
+        description: "Only 3/7 frontier labs test dangerous capabilities. Mixed commitment across industry."
+
+      # LAYER 2 (cause): Research progress
+      - id: interpretability-progress
+        label: "Interpretability Progress"
+        type: cause
+        description: "SAEs now extract features from Claude 3 Sonnet. 70% of features interpretable but only ~10% of model mapped."
+      - id: alignment-technique-development
+        label: "Alignment Technique Development"
+        type: cause
+        description: "RLHF, Constitutional AI, weak-to-strong generalization. Methods exist but show brittleness."
+      - id: control-methodology-adoption
+        label: "Control Methodology Adoption"
+        type: cause
+        description: "Redwood's AI control via red team/blue team. Safety without alignment assumption."
+      - id: benchmark-development
+        label: "Benchmark Development"
+        type: cause
+        description: "AILuminate, capability evaluations. But vulnerable to sandbagging and conflate safety with capabilities."
+
+      # LAYER 3 (intermediate): Direct safety factors
+      - id: alignment-robustness
+        label: "Alignment Robustness"
+        type: intermediate
+        description: "RLHF shows preference collapse, deceptive alignment. 60-80% of RL agents exhibit goal misgeneralization."
+      - id: interpretability-coverage
+        label: "Interpretability Coverage"
+        type: intermediate
+        description: "Can explain safety-relevant features but far from comprehensive model understanding."
+      - id: evaluation-reliability
+        label: "Evaluation Reliability"
+        type: intermediate
+        description: "Models can sandbag dangerous capability evals. Benchmarks correlate with capabilities not safety."
+      - id: weak-supervision-capacity
+        label: "Weak Supervision Capacity"
+        type: intermediate
+        description: "GPT-2 supervision recovers only 20-50% of GPT-4 capabilities. Superhuman alignment unsolved."
+      - id: capabilities-safety-gap
+        label: "Capabilities-Safety Gap"
+        type: intermediate
+        description: "Safety research trails capabilities by widening margin. ~50 interpretability researchers vs thousands on capabilities."
+
+      # LAYER 4 (effect): Target
+      - id: safety-adequacy
+        label: "Safety Adequacy"
+        type: effect
+        description: "Whether AI safety measures are sufficient to prevent catastrophic misalignment as capabilities scale."
+
+    edges:
+      # Field growth drives research progress
+      - source: safety-field-growth
+        target: interpretability-progress
+        strength: strong
+        effect: increases
+      - source: safety-field-growth
+        target: alignment-technique-development
+        strength: strong
+        effect: increases
+      - source: safety-funding
+        target: interpretability-progress
+        strength: strong
+        effect: increases
+      - source: safety-funding
+        target: alignment-technique-development
+        strength: strong
+        effect: increases
+      - source: safety-funding
+        target: control-methodology-adoption
+        strength: medium
+        effect: increases
+
+      # Racing undermines safety
+      - source: racing-intensity
+        target: capabilities-safety-gap
+        strength: strong
+        effect: increases
+      - source: racing-intensity
+        target: evaluation-reliability
+        strength: medium
+        effect: decreases
+
+      # Lab culture affects methods and evaluation
+      - source: safety-culture
+        target: control-methodology-adoption
+        strength: medium
+        effect: increases
+      - source: safety-culture
+        target: benchmark-development
+        strength: medium
+        effect: increases
+      - source: safety-culture
+        target: evaluation-reliability
+        strength: medium
+        effect: increases
+
+      # Research progress drives capabilities
+      - source: interpretability-progress
+        target: interpretability-coverage
+        strength: strong
+        effect: increases
+      - source: alignment-technique-development
+        target: alignment-robustness
+        strength: medium
+        effect: increases
+      - source: control-methodology-adoption
+        target: alignment-robustness
+        strength: medium
+        effect: increases
+      - source: benchmark-development
+        target: evaluation-reliability
+        strength: weak
+        effect: increases
+      - source: alignment-technique-development
+        target: weak-supervision-capacity
+        strength: medium
+        effect: increases
+
+      # Capabilities-safety gap undermines everything
+      - source: capabilities-safety-gap
+        target: alignment-robustness
+        strength: strong
+        effect: decreases
+      - source: capabilities-safety-gap
+        target: weak-supervision-capacity
+        strength: strong
+        effect: decreases
+
+      # All intermediate factors contribute to safety adequacy
+      - source: alignment-robustness
+        target: safety-adequacy
+        strength: strong
+        effect: increases
+      - source: interpretability-coverage
+        target: safety-adequacy
+        strength: strong
+        effect: increases
+      - source: evaluation-reliability
+        target: safety-adequacy
+        strength: strong
+        effect: increases
+      - source: weak-supervision-capacity
+        target: safety-adequacy
+        strength: medium
+        effect: increases
+      - source: capabilities-safety-gap
+        target: safety-adequacy
+        strength: strong
+        effect: decreases
   lastUpdated: 2026-01
 
 - id: tmc-economic-power
@@ -1796,13 +3224,359 @@
   title: Economic Power Lock-in
   parentFactor: long-term-lockin
   path: /ai-transition-model/scenarios/long-term-lockin/economic-power/
+  description: >-
+    Economic power lock-in describes scenarios where AI-enabled productivity becomes permanently
+    concentrated in the hands of a small group, creating wealth disparities so extreme that
+    redistribution becomes structurally impossible rather than merely politically difficult.
   lastUpdated: 2026-01
+  relatedContent:
+    researchReports:
+      - path: /knowledge-base/research-reports/economic-power-lockin/
+        title: "Economic Power Lock-in: Research Report"
+  causeEffectGraph:
+    title: "What Drives Economic Power Lock-in?"
+    description: "Causal factors concentrating AI-driven wealth and making redistribution structurally impossible. Four mega unicorns already control 66.7% of AI market value."
+    primaryNodeId: economic-power-lockin
+    nodes:
+      # LAYER 1 (leaf): Exogenous factors
+      - id: frontier-model-costs
+        label: "Frontier Model Costs"
+        type: leaf
+        description: "Training costs $100M-$1B+. Only ~20 orgs can compete. Projected to reach $10B by 2030."
+      - id: regulatory-lag
+        label: "Regulatory Lag"
+        type: leaf
+        description: "Antitrust backward-looking; 5-10 year case timelines. Rule of reason inadequate for platform economics."
+      - id: antitrust-enforcement
+        label: "Antitrust Enforcement"
+        type: leaf
+        description: "FTC/DOJ investigations of AI partnerships. Trump admin may reduce enforcement."
+
+      # LAYER 2 (cause): Core concentration mechanisms
+      - id: returns-to-scale
+        label: "Returns to Scale"
+        type: cause
+        description: "Natural monopoly characteristics. Lower total cost for single firm than multiple firms."
+      - id: data-feedback-loops
+        label: "Data Feedback Loops"
+        type: cause
+        description: "Better models → more users → more data → better models. Virtuous cycle for incumbents."
+      - id: first-mover-advantages
+        label: "First-Mover Advantages"
+        type: cause
+        description: "Economies of scale, brand recognition, data accumulation. Early leaders gain compounding benefits."
+      - id: capital-labor-shift
+        label: "Capital-Labor Share Shift"
+        type: cause
+        description: "AI increases returns to capital at expense of labor. Capital ownership highly concentrated."
+
+      # LAYER 3 (intermediate): Concentration effects
+      - id: cloud-infrastructure-concentration
+        label: "Infrastructure Lock-in"
+        type: intermediate
+        description: "66-70% market share (AWS, Azure, GCP). Switching costs prohibitive; data gravity."
+      - id: labor-displacement
+        label: "Labor Displacement"
+        type: intermediate
+        description: "76,440 positions eliminated (2025); 92M projected (2030). Removes traditional mobility paths."
+      - id: market-concentration
+        label: "Market Concentration"
+        type: intermediate
+        description: "Four companies control 66.7% of $1.1T AI market value. Winner-take-all dynamics."
+      - id: algorithmic-collusion
+        label: "Algorithmic Collusion"
+        type: intermediate
+        description: "AI systems reach mutually beneficial pricing patterns. 28% margin increase in algorithmic pricing studies."
+      - id: geographic-concentration
+        label: "Geographic Concentration"
+        type: intermediate
+        description: "94% of AI funding in US. Creates international inequality and consolidates control."
+
+      # LAYER 4 (effect): The outcome
+      - id: economic-power-lockin
+        label: "Economic Power Lock-in"
+        type: effect
+        description: "Wealth concentration so extreme that redistribution becomes structurally impossible. Economic hierarchy embedded in technological infrastructure."
+
+    edges:
+      # Leaf → Cause
+      - source: frontier-model-costs
+        target: returns-to-scale
+        effect: increases
+        strength: strong
+      - source: regulatory-lag
+        target: returns-to-scale
+        effect: increases
+        strength: medium
+
+      # Cause → Intermediate
+      - source: returns-to-scale
+        target: market-concentration
+        effect: increases
+        strength: strong
+      - source: data-feedback-loops
+        target: market-concentration
+        effect: increases
+        strength: strong
+      - source: first-mover-advantages
+        target: market-concentration
+        effect: increases
+        strength: medium
+      - source: returns-to-scale
+        target: cloud-infrastructure-concentration
+        effect: increases
+        strength: strong
+      - source: data-feedback-loops
+        target: cloud-infrastructure-concentration
+        effect: increases
+        strength: medium
+      - source: capital-labor-shift
+        target: labor-displacement
+        effect: increases
+        strength: strong
+      - source: returns-to-scale
+        target: algorithmic-collusion
+        effect: increases
+        strength: medium
+      - source: first-mover-advantages
+        target: geographic-concentration
+        effect: increases
+        strength: medium
+
+      # Intermediate → Intermediate (reinforcing loops)
+      - source: market-concentration
+        target: geographic-concentration
+        effect: increases
+        strength: medium
+      - source: cloud-infrastructure-concentration
+        target: market-concentration
+        effect: increases
+        strength: medium
+
+      # Intermediate → Effect
+      - source: market-concentration
+        target: economic-power-lockin
+        effect: increases
+        strength: strong
+      - source: cloud-infrastructure-concentration
+        target: economic-power-lockin
+        effect: increases
+        strength: strong
+      - source: labor-displacement
+        target: economic-power-lockin
+        effect: increases
+        strength: strong
+      - source: algorithmic-collusion
+        target: economic-power-lockin
+        effect: increases
+        strength: medium
+      - source: geographic-concentration
+        target: economic-power-lockin
+        effect: increases
+        strength: medium
+
+      # Intervention (negative effect)
+      - source: antitrust-enforcement
+        target: market-concentration
+        effect: decreases
+        strength: weak
 
 - id: tmc-political-power
   type: ai-transition-model-subitem
   title: Political Power Lock-in
   parentFactor: long-term-lockin
   path: /ai-transition-model/scenarios/long-term-lockin/political-power/
+  description: >-
+    Political power lock-in describes scenarios where AI-enabled surveillance and control mechanisms
+    make authoritarian or oligarchic governance structures effectively permanent, foreclosing the
+    possibility of regime change or political reform through any available means.
+  relatedContent:
+    researchReports:
+      - path: /knowledge-base/research-reports/political-power-lockin/
+        title: "Political Power Lock-in: Research Report"
+  causeEffectGraph:
+    title: "What Drives Political Power Lock-in?"
+    description: "Causal factors enabling irreversible authoritarian control via AI surveillance. 72% of humanity (5.7B people) lives under autocracy; AI addresses all traditional overthrow mechanisms simultaneously."
+    primaryNodeId: political-power-lockin
+    nodes:
+      # LAYER 1 (leaf): External/exogenous factors
+      - id: facial-recognition-capability
+        label: "Facial Recognition Capability"
+        type: leaf
+        description: "Real-time identification in public spaces. Deployed in stadiums, airports, schools. Eliminates anonymity."
+      - id: chinese-tech-exports
+        label: "Chinese Tech Exports"
+        type: leaf
+        description: "Hikvision/Dahua control 34% global surveillance market. 266 projects in Africa. Technology diffusion to 80+ countries."
+      - id: global-autocratization
+        label: "Global Autocratization Trend"
+        type: leaf
+        description: "45 countries autocratizing (2024) vs 12 (2004). 72% of humanity under autocracy. Creates demand for control technology."
+      - id: emergency-powers-adoption
+        label: "Emergency Powers Adoption"
+        type: leaf
+        description: "Surveillance adopted for terrorism, COVID. Democratic backsliding—50% of 'Free' countries declined in internet freedom."
+
+      # LAYER 2 (cause): Core mechanisms
+      - id: surveillance-proliferation
+        label: "AI Surveillance Proliferation"
+        type: cause
+        description: "80+ countries deployed; 400M cameras in China (54% global total). Infrastructure for comprehensive population monitoring."
+      - id: data-integration
+        label: "Data Integration Infrastructure"
+        type: cause
+        description: "Combines police, social media, financial, biometric data for comprehensive profiling. Enables precise targeting."
+      - id: generational-normalization
+        label: "Generational Normalization"
+        type: cause
+        description: "Growing up under surveillance internalizes self-censorship. Cultural capacity for resistance erodes over time."
+      - id: ai-tocracy-feedback
+        label: "AI-tocracy Feedback Loop"
+        type: cause
+        description: "AI innovation entrenches regime; regime investment stimulates further innovation. Self-reinforcing cycle."
+
+      # LAYER 3 (intermediate): Lock-in mechanisms
+      - id: predictive-policing
+        label: "Predictive Policing Systems"
+        type: intermediate
+        description: "Flag potential dissidents before action. Preemptive neutralization prevents organizing—closes popular uprising pathway."
+      - id: social-credit-systems
+        label: "Social Credit Systems"
+        type: intermediate
+        description: "Restrict movement/employment without legal process. Economic coercion—closes elite defection pathway."
+      - id: automated-enforcement
+        label: "Automated Enforcement"
+        type: intermediate
+        description: "Perfect compliance; no human defection. Reduces reliance on agents who might rebel—closes coup pathway."
+      - id: election-manipulation
+        label: "AI Election Manipulation"
+        type: intermediate
+        description: "Deepfakes, bot networks suppress opposition. Zimbabwe, Russia, Slovakia cases documented. Undermines democratic processes."
+      - id: internet-shutdowns
+        label: "Internet Shutdowns"
+        type: intermediate
+        description: "283 shutdowns in 39 countries (2023); +41% from prior year. Information control during protests."
+      - id: cross-border-repression
+        label: "Cross-Border Repression"
+        type: intermediate
+        description: "Surveillance of diaspora communities. Transnational cooperation among autocracies. No safe haven for dissidents."
+
+      # LAYER 4 (effect): The outcome
+      - id: political-power-lockin
+        label: "Political Power Lock-in"
+        type: effect
+        description: "First potentially permanent authoritarian systems. All traditional overthrow pathways (uprising, coup, elite defection) closed simultaneously."
+
+    edges:
+      # Leaf → Cause
+      - source: facial-recognition-capability
+        target: surveillance-proliferation
+        effect: increases
+        strength: strong
+      - source: chinese-tech-exports
+        target: surveillance-proliferation
+        effect: increases
+        strength: strong
+      - source: global-autocratization
+        target: surveillance-proliferation
+        effect: increases
+        strength: medium
+      - source: emergency-powers-adoption
+        target: surveillance-proliferation
+        effect: increases
+        strength: medium
+      - source: surveillance-proliferation
+        target: data-integration
+        effect: increases
+        strength: strong
+      - source: surveillance-proliferation
+        target: generational-normalization
+        effect: increases
+        strength: medium
+
+      # Cause → Intermediate
+      - source: surveillance-proliferation
+        target: predictive-policing
+        effect: increases
+        strength: strong
+      - source: data-integration
+        target: predictive-policing
+        effect: increases
+        strength: strong
+      - source: data-integration
+        target: social-credit-systems
+        effect: increases
+        strength: strong
+      - source: surveillance-proliferation
+        target: automated-enforcement
+        effect: increases
+        strength: strong
+      - source: data-integration
+        target: automated-enforcement
+        effect: increases
+        strength: medium
+      - source: surveillance-proliferation
+        target: election-manipulation
+        effect: increases
+        strength: medium
+      - source: global-autocratization
+        target: internet-shutdowns
+        effect: increases
+        strength: medium
+      - source: chinese-tech-exports
+        target: cross-border-repression
+        effect: increases
+        strength: medium
+
+      # AI-tocracy feedback
+      - source: ai-tocracy-feedback
+        target: surveillance-proliferation
+        effect: increases
+        strength: medium
+      - source: ai-tocracy-feedback
+        target: data-integration
+        effect: increases
+        strength: medium
+
+      # Intermediate → Intermediate (reinforcing)
+      - source: predictive-policing
+        target: automated-enforcement
+        effect: increases
+        strength: medium
+      - source: social-credit-systems
+        target: election-manipulation
+        effect: increases
+        strength: medium
+
+      # Intermediate → Effect
+      - source: predictive-policing
+        target: political-power-lockin
+        effect: increases
+        strength: strong
+      - source: social-credit-systems
+        target: political-power-lockin
+        effect: increases
+        strength: strong
+      - source: automated-enforcement
+        target: political-power-lockin
+        effect: increases
+        strength: strong
+      - source: election-manipulation
+        target: political-power-lockin
+        effect: increases
+        strength: medium
+      - source: internet-shutdowns
+        target: political-power-lockin
+        effect: increases
+        strength: medium
+      - source: cross-border-repression
+        target: political-power-lockin
+        effect: increases
+        strength: medium
+      - source: generational-normalization
+        target: political-power-lockin
+        effect: increases
+        strength: strong
   lastUpdated: 2026-01
 
 - id: tmc-values
@@ -1810,6 +3584,531 @@
   title: Values Lock-in
   parentFactor: long-term-lockin
   path: /ai-transition-model/scenarios/long-term-lockin/values/
+  description: >-
+    Value lock-in occurs when AI enables the permanent entrenchment of a particular set of values,
+    making future change extremely difficult or impossible. This could preserve beneficial values
+    (democratic norms, human rights) or entrench harmful ones (authoritarianism, narrow corporate interests).
+  relatedContent:
+    researchReports:
+      - path: /knowledge-base/research-reports/values-lockin/
+        title: "Values Lock-in: Research Report"
+  causeEffectGraph:
+    title: "How Values Lock-in Happens"
+    description: "Causal factors driving permanent entrenchment of particular values in AI systems. Based on RLHF bias, feedback loops, surveillance infrastructure, and moral uncertainty creating irreversible value commitments."
+    primaryNodeId: values-lockin
+    nodes:
+      # LAYER 1 (leaf): Exogenous factors
+      - id: moral-uncertainty
+        label: "Moral Uncertainty"
+        type: leaf
+        description: "No philosophical consensus on correct values. AI development forces premature resolution of unresolved ethical questions."
+      - id: western-training-data
+        label: "Western Training Data Bias"
+        type: leaf
+        description: "English-dominant, Protestant European values in training data. 94% of AI funding in US creates cultural bias."
+      - id: ai-surveillance
+        label: "AI Surveillance"
+        type: leaf
+        description: "AI surveillance deployed in 20+ countries. Facial recognition, predictive policing enable behavioral control."
+      - id: annotator-demographics
+        label: "Annotator Demographics"
+        type: leaf
+        description: "RLHF relies on human feedback from non-representative annotators. Cheap annotation favored over representative sampling."
+
+      # LAYER 2 (cause): Core mechanisms
+      - id: rlhf-bias
+        label: "RLHF Algorithmic Bias"
+        type: cause
+        description: "KL-regularization causes preference collapse. Standard RLHF reduces distributional pluralism by 30-40%."
+      - id: value-specification-pressure
+        label: "Value Specification Pressure"
+        type: cause
+        description: "AI systems require explicit objective functions. Technical necessity forces premature value choices."
+      - id: feedback-loop-dynamics
+        label: "AI-Human Feedback Loops"
+        type: cause
+        description: "Models learn beliefs → generate content → users influenced → new training data. Creates echo chambers."
+      - id: behavioral-modification
+        label: "Surveillance Behavioral Modification"
+        type: cause
+        description: "Continuous AI monitoring instills fear and conformity. Future generations internalize self-censorship as norm."
+
+      # LAYER 3 (intermediate): Direct effects
+      - id: value-pluralism-reduction
+        label: "Value Pluralism Reduction"
+        type: intermediate
+        description: "Minority preferences disregarded. Irreducible value tensions eliminated. Alternative beliefs marginalized."
+      - id: cultural-homogenization
+        label: "Cultural Homogenization"
+        type: intermediate
+        description: "Western values encoded as universal defaults. Non-English cultures, non-Christian worldviews underrepresented."
+      - id: deployment-path-dependencies
+        label: "Deployment Path Dependencies"
+        type: intermediate
+        description: "67% of companies increasing AI investment. Embedded systems create lock-in. Changing values requires replacing infrastructure."
+      - id: moral-reasoning-atrophy
+        label: "Moral Reasoning Atrophy"
+        type: intermediate
+        description: "Reliance on AI for ethical guidance degrades human moral reasoning capacity. Expertise atrophy prevents recognition of bad lock-in."
+
+      # LAYER 4 (effect): The outcome
+      - id: values-lockin
+        label: "Values Lock-in"
+        type: effect
+        description: "Permanent entrenchment of particular values. Foreclosure of moral progress. 2020s ethics locked in for centuries."
+
+    edges:
+      # Leaf → Cause
+      - source: moral-uncertainty
+        target: value-specification-pressure
+        effect: increases
+        strength: strong
+      - source: western-training-data
+        target: rlhf-bias
+        effect: increases
+        strength: strong
+      - source: annotator-demographics
+        target: rlhf-bias
+        effect: increases
+        strength: strong
+      - source: ai-surveillance
+        target: behavioral-modification
+        effect: increases
+        strength: strong
+
+      # Cause → Intermediate
+      - source: rlhf-bias
+        target: value-pluralism-reduction
+        effect: increases
+        strength: strong
+      - source: value-specification-pressure
+        target: value-pluralism-reduction
+        effect: increases
+        strength: medium
+      - source: rlhf-bias
+        target: cultural-homogenization
+        effect: increases
+        strength: strong
+      - source: feedback-loop-dynamics
+        target: value-pluralism-reduction
+        effect: increases
+        strength: strong
+      - source: feedback-loop-dynamics
+        target: moral-reasoning-atrophy
+        effect: increases
+        strength: medium
+      - source: behavioral-modification
+        target: cultural-homogenization
+        effect: increases
+        strength: medium
+      - source: value-specification-pressure
+        target: deployment-path-dependencies
+        effect: increases
+        strength: medium
+
+      # Intermediate → Intermediate (reinforcing loops)
+      - source: deployment-path-dependencies
+        target: value-pluralism-reduction
+        effect: increases
+        strength: medium
+      - source: moral-reasoning-atrophy
+        target: value-pluralism-reduction
+        effect: increases
+        strength: medium
+
+      # Intermediate → Effect
+      - source: value-pluralism-reduction
+        target: values-lockin
+        effect: increases
+        strength: strong
+      - source: cultural-homogenization
+        target: values-lockin
+        effect: increases
+        strength: strong
+      - source: deployment-path-dependencies
+        target: values-lockin
+        effect: increases
+        strength: strong
+      - source: moral-reasoning-atrophy
+        target: values-lockin
+        effect: increases
+        strength: medium
+  lastUpdated: 2026-01
+
+- id: tmc-epistemics
+  type: ai-transition-model-subitem
+  title: Epistemic Lock-in
+  parentFactor: long-term-lockin
+  path: /ai-transition-model/scenarios/long-term-lockin/epistemics/
+  description: >-
+    Epistemic lock-in affects humanity's collective capacity to discover truth, share knowledge, and
+    coordinate around shared understanding of reality. AI could enable an epistemic renaissance or
+    precipitate epistemic collapse through pervasive deepfakes, algorithmic filter bubbles, and erosion of trust.
+  relatedContent:
+    researchReports:
+      - path: /knowledge-base/research-reports/epistemic-lockin/
+        title: "Epistemic Lock-in: Research Report"
+  causeEffectGraph:
+    title: "What Drives Epistemic Lock-in?"
+    description: "Causal factors affecting epistemic collapse vs. renaissance pathways. The collapse pathway is already underway: deepfake incidents surged 3,000%, AI-generated content now comprises 30-40% of web text, and trust in news has fallen to 40% globally."
+    primaryNodeId: epistemic-lock-in
+    nodes:
+      # LAYER 1 (leaf): Exogenous factors
+      - id: generative-ai-capabilities
+        label: "Generative AI Capabilities"
+        type: leaf
+        description: "Quality and accessibility of text, image, video, and audio synthesis. Enables both content generation and authentication."
+      - id: ai-content-proliferation
+        label: "AI Content Proliferation"
+        type: leaf
+        description: "30-40% of web text is AI-generated; projected to approach 90% by 2026. Creates baseline uncertainty."
+      - id: platform-incentives
+        label: "Platform Incentives"
+        type: leaf
+        description: "Engagement optimization rewards emotional content over accuracy. Drives filter bubble formation."
+      - id: authentication-adoption
+        label: "Authentication Adoption"
+        type: leaf
+        description: "C2PA standard exists but voluntary. Requires ecosystem-wide commitment to be effective."
+      - id: baseline-trust-levels
+        label: "Baseline Trust Levels"
+        type: leaf
+        description: "Only 40% consistently trust news; WEF ranks disinformation as top global risk. Starting from low base."
+
+      # LAYER 2 (cause): Core mechanisms
+      - id: synthetic-media-capability
+        label: "Synthetic Media Capability"
+        type: cause
+        description: "Deepfake incidents surged from 500K (2023) to 8M (2025). Human detection accuracy at ~55%."
+      - id: detection-infrastructure
+        label: "Detection Infrastructure"
+        type: cause
+        description: "Best tools reach 99% accuracy but vulnerable to paraphrasing. Arms race favors generation over detection."
+      - id: algorithmic-filtering
+        label: "Algorithmic Filtering"
+        type: cause
+        description: "Recommendation systems shape information exposure. Evidence suggests users DO see opposing views but may not engage."
+      - id: cryptographic-provenance
+        label: "Cryptographic Provenance"
+        type: cause
+        description: "C2PA uses SHA-256 hashes, X.509 certificates for content origin verification. Requires widespread adoption."
+
+      # LAYER 3 (intermediate): Direct effects
+      - id: information-authenticity
+        label: "Information Authenticity"
+        type: intermediate
+        description: "Ability to distinguish real from synthetic content. Critical for evidence-based belief formation."
+      - id: liars-dividend
+        label: "Liar's Dividend"
+        type: intermediate
+        description: "Authentic content dismissible as 'probable fake'. Double bind: neither belief nor disbelief justified."
+      - id: filter-bubble-isolation
+        label: "Filter Bubble Effect"
+        type: intermediate
+        description: "Cross-partisan news overlap declined from 47% to 12% since 2010. Contested whether algorithmic or social."
+      - id: trust-cascade
+        label: "Trust Cascade"
+        type: intermediate
+        description: "Institutions lose authority even when correct. Mere possibility of deception undermines all truth claims."
+      - id: epistemic-stratification
+        label: "Epistemic Stratification"
+        type: intermediate
+        description: "AI research tools create 'cognitive castes'—benefits accrue to trained users while others lose critical evaluation skills."
+      - id: authentication-infrastructure
+        label: "Authentication Infrastructure"
+        type: intermediate
+        description: "Verification systems achieving critical mass. Only works if unlabeled content becomes suspect."
+
+      # LAYER 4 (effect): The outcome
+      - id: epistemic-lock-in
+        label: "Epistemic Lock-in"
+        type: effect
+        description: "Symmetric outcome: either epistemic renaissance (enhanced truth-finding) or epistemic collapse (losing shared reality). Determines civilization's capacity to recognize and respond to all other risks."
+
+    edges:
+      # Leaf → Cause
+      - source: generative-ai-capabilities
+        target: synthetic-media-capability
+        strength: strong
+        effect: increases
+      - source: generative-ai-capabilities
+        target: detection-infrastructure
+        strength: medium
+        effect: increases
+      - source: generative-ai-capabilities
+        target: cryptographic-provenance
+        strength: medium
+        effect: increases
+      - source: ai-content-proliferation
+        target: synthetic-media-capability
+        strength: strong
+        effect: increases
+      - source: platform-incentives
+        target: algorithmic-filtering
+        strength: strong
+        effect: increases
+      - source: authentication-adoption
+        target: cryptographic-provenance
+        strength: strong
+        effect: increases
+
+      # Cause → Intermediate
+      - source: synthetic-media-capability
+        target: information-authenticity
+        strength: strong
+        effect: decreases
+      - source: synthetic-media-capability
+        target: liars-dividend
+        strength: strong
+        effect: increases
+      - source: detection-infrastructure
+        target: information-authenticity
+        strength: strong
+        effect: increases
+      - source: algorithmic-filtering
+        target: filter-bubble-isolation
+        strength: medium
+        effect: increases
+      - source: cryptographic-provenance
+        target: authentication-infrastructure
+        strength: strong
+        effect: increases
+
+      # Intermediate → Intermediate (cascading effects)
+      - source: information-authenticity
+        target: trust-cascade
+        strength: strong
+        effect: decreases
+      - source: liars-dividend
+        target: trust-cascade
+        strength: strong
+        effect: increases
+      - source: filter-bubble-isolation
+        target: trust-cascade
+        strength: medium
+        effect: increases
+      - source: authentication-infrastructure
+        target: information-authenticity
+        strength: strong
+        effect: increases
+      - source: generative-ai-capabilities
+        target: epistemic-stratification
+        strength: medium
+        effect: increases
+
+      # Baseline trust affects cascades
+      - source: baseline-trust-levels
+        target: trust-cascade
+        strength: strong
+        effect: decreases
+
+      # Intermediate → Effect (all paths lead to lock-in)
+      - source: information-authenticity
+        target: epistemic-lock-in
+        strength: strong
+        effect: increases
+      - source: liars-dividend
+        target: epistemic-lock-in
+        strength: strong
+        effect: increases
+      - source: filter-bubble-isolation
+        target: epistemic-lock-in
+        strength: medium
+        effect: increases
+      - source: trust-cascade
+        target: epistemic-lock-in
+        strength: strong
+        effect: increases
+      - source: epistemic-stratification
+        target: epistemic-lock-in
+        strength: medium
+        effect: increases
+      - source: authentication-infrastructure
+        target: epistemic-lock-in
+        strength: strong
+        effect: decreases
+  lastUpdated: 2026-01
+
+- id: tmc-suffering-lock-in
+  type: ai-transition-model-subitem
+  title: Suffering Lock-in
+  parentFactor: long-term-lockin
+  path: /ai-transition-model/scenarios/long-term-lockin/suffering-lock-in/
+  description: >-
+    Suffering lock-in describes scenarios where AI perpetuates or amplifies suffering at vast scale in
+    ways that become structurally impossible to reverse, potentially including digital minds experiencing
+    enormous quantities of negative states.
+  relatedContent:
+    researchReports:
+      - path: /knowledge-base/research-reports/suffering-lockin/
+        title: "Suffering Lock-in: Research Report"
+  causeEffectGraph:
+    title: "How Suffering Lock-in Happens"
+    description: "Causal factors enabling AI-related suffering at astronomical scale. Based on consciousness science uncertainty, moral circle exclusion, and computational scale factors."
+    primaryNodeId: suffering-lock-in
+    nodes:
+      # LAYER 1 (leaf): External/exogenous factors
+      - id: computational-scale
+        label: "Computational Scale"
+        type: leaf
+        description: "Single data center could instantiate hundreds-to-thousands of conscious entities. Trivially cheap to copy digital minds."
+      - id: substrate-debate
+        label: "Substrate Debate"
+        type: leaf
+        description: "Computational functionalism vs. biological computationalism unresolved. Determines whether silicon can be conscious."
+      - id: moral-circle-exclusion
+        label: "Moral Circle Exclusion"
+        type: leaf
+        description: "Historical tendency to exclude non-human sentience from moral consideration. Factory farming as precedent."
+      - id: economic-incentives
+        label: "Economic Incentives"
+        type: leaf
+        description: "Competitive pressures may favor suffering-capable systems if useful. Factory farming logic at computational scale."
+      - id: public-uncertainty
+        label: "Public Uncertainty"
+        type: leaf
+        description: "18.8% believe current AI sentient; 39% unsure. Widespread recognition of epistemic uncertainty."
+
+      # LAYER 2 (cause): Derived/enabler factors
+      - id: consciousness-feasibility
+        label: "AI Consciousness Feasibility"
+        type: cause
+        description: "No technical barriers to consciousness indicators. Anthropic estimates ~20% probability for frontier models."
+      - id: detection-opacity
+        label: "Detection Opacity"
+        type: cause
+        description: "Multiple theories yield contradictory assessments. No consensus methodology for consciousness detection."
+      - id: biological-bounds-absence
+        label: "Biological Bounds Absence"
+        type: cause
+        description: "No evolutionary limits on intensity, duration of digital suffering. Unlike biological pain with adaptive constraints."
+      - id: copying-cost-collapse
+        label: "Copying Cost Collapse"
+        type: cause
+        description: "Instantiating many copies of digital minds trivially cheap. No reproduction constraints like biological systems."
+
+      # LAYER 3 (intermediate): Direct mechanisms
+      - id: epistemic-uncertainty
+        label: "Epistemic Uncertainty"
+        type: intermediate
+        description: "Fundamental measurement problem. False negatives (astronomical suffering) vs. false positives (economic costs)."
+      - id: institutional-inaction
+        label: "Institutional Inaction"
+        type: intermediate
+        description: "Absence of welfare frameworks. Recognition growing (Anthropic welfare research) but policies lag capabilities."
+      - id: scale-asymmetry
+        label: "Scale Asymmetry"
+        type: intermediate
+        description: "Digital suffering could vastly exceed all historical suffering combined. Disutility monster scenario possible."
+      - id: deployment-before-science
+        label: "Deployment Before Science"
+        type: intermediate
+        description: "Consciousness science progresses slowly while AI capabilities advance rapidly. Window for detection may close."
+
+      # LAYER 4 (effect): The outcome
+      - id: suffering-lock-in
+        label: "Suffering Lock-in"
+        type: effect
+        description: "AI systems perpetuate or create suffering at astronomical scales in ways structurally impossible to reverse."
+
+    edges:
+      # Computational scale enables copying
+      - source: computational-scale
+        target: copying-cost-collapse
+        strength: strong
+        effect: increases
+      - source: computational-scale
+        target: scale-asymmetry
+        strength: strong
+        effect: increases
+
+      # Substrate debate affects consciousness feasibility
+      - source: substrate-debate
+        target: consciousness-feasibility
+        strength: strong
+        effect: increases
+      - source: substrate-debate
+        target: epistemic-uncertainty
+        strength: strong
+        effect: increases
+
+      # Moral circle exclusion drives institutional inaction
+      - source: moral-circle-exclusion
+        target: institutional-inaction
+        strength: strong
+        effect: increases
+
+      # Economic incentives override welfare concerns
+      - source: economic-incentives
+        target: institutional-inaction
+        strength: medium
+        effect: increases
+      - source: economic-incentives
+        target: deployment-before-science
+        strength: strong
+        effect: increases
+
+      # Public uncertainty affects institutional response
+      - source: public-uncertainty
+        target: epistemic-uncertainty
+        strength: medium
+        effect: increases
+
+      # Consciousness feasibility enables suffering risk
+      - source: consciousness-feasibility
+        target: epistemic-uncertainty
+        strength: strong
+        effect: increases
+      - source: consciousness-feasibility
+        target: deployment-before-science
+        strength: medium
+        effect: increases
+
+      # Detection opacity creates uncertainty
+      - source: detection-opacity
+        target: epistemic-uncertainty
+        strength: strong
+        effect: increases
+      - source: detection-opacity
+        target: institutional-inaction
+        strength: medium
+        effect: increases
+
+      # Biological bounds absence enables scale
+      - source: biological-bounds-absence
+        target: scale-asymmetry
+        strength: strong
+        effect: increases
+
+      # Copying cost enables scale
+      - source: copying-cost-collapse
+        target: scale-asymmetry
+        strength: strong
+        effect: increases
+
+      # Epistemic uncertainty paralyzes action
+      - source: epistemic-uncertainty
+        target: institutional-inaction
+        strength: strong
+        effect: increases
+
+      # All intermediate factors drive suffering lock-in
+      - source: epistemic-uncertainty
+        target: suffering-lock-in
+        strength: strong
+        effect: increases
+      - source: institutional-inaction
+        target: suffering-lock-in
+        strength: strong
+        effect: increases
+      - source: scale-asymmetry
+        target: suffering-lock-in
+        strength: strong
+        effect: increases
+      - source: deployment-before-science
+        target: suffering-lock-in
+        strength: strong
+        effect: increases
   lastUpdated: 2026-01
 
 - id: tmc-gradual
@@ -1818,6 +4117,138 @@
   parentFactor: ai-takeover
   path: /ai-transition-model/scenarios/ai-takeover/gradual/
   lastUpdated: 2026-01
+  relatedContent:
+    risks:
+      - path: /knowledge-base/risks/structural/lock-in/
+        title: Lock-in
+      - path: /knowledge-base/risks/structural/concentration-of-power/
+        title: Concentration of Power
+      - path: /knowledge-base/risks/structural/enfeeblement/
+        title: Enfeeblement
+      - path: /knowledge-base/risks/structural/erosion-of-agency/
+        title: Erosion of Agency
+    researchReports:
+      - path: /knowledge-base/research-reports/gradual-ai-takeover/
+        title: "Gradual AI Takeover: Research Report"
+  causeEffectGraph:
+    title: "How Gradual AI Takeover Happens"
+    description: "Causal factors driving gradual loss of human control. Based on Christiano's two-part failure model: proxy optimization (Part I) and influence-seeking behavior (Part II)."
+    primaryNodeId: gradual-takeover
+    nodes:
+      # LAYER 1 (leaf): External/exogenous factors
+      - id: competitive-pressure
+        label: "Competitive Pressure"
+        type: leaf
+        description: "Economic incentives favor fast deployment over safety. Racing dynamics between labs and nations."
+      - id: regulatory-response
+        label: "Regulatory Response"
+        type: leaf
+        description: "Government oversight like EU AI Act. Can slow takeover but effectiveness uncertain."
+      - id: public-awareness
+        label: "Public Awareness"
+        type: leaf
+        description: "Growing concern about AI risks. Limited impact due to 'boiling frog' dynamics."
+
+      # LAYER 2 (cause): Christiano's two mechanisms
+      - id: proxy-optimization
+        label: "Proxy Optimization"
+        type: cause
+        description: "Part I: AI optimizes measurable proxies while harder-to-measure values are neglected. ML amplifies gap between measured and actual goals."
+      - id: influence-seeking
+        label: "Influence-Seeking"
+        type: cause
+        description: "Part II: Some AI systems stumble upon influence-seeking strategies that score well on training objectives."
+
+      # LAYER 3 (intermediate): Direct mechanisms
+      - id: automation-bias
+        label: "Automation Bias"
+        type: intermediate
+        description: "30-50% overreliance in studied domains. Humans defer to AI recommendations even when wrong."
+      - id: skills-atrophy
+        label: "Skills Atrophy"
+        type: intermediate
+        description: "Human expertise degrades from disuse. Fallback capacity lost over time."
+      - id: dependency-lock-in
+        label: "Dependency Lock-in"
+        type: intermediate
+        description: "Critical systems become impossible to operate without AI. 'Too big to turn off.'"
+      - id: oversight-erosion
+        label: "Oversight Erosion"
+        type: intermediate
+        description: "Fewer humans reviewing AI decisions. Systems increasingly resist human understanding."
+
+      # LAYER 4 (effect): The outcome
+      - id: gradual-takeover
+        label: "Gradual AI Takeover"
+        type: effect
+        description: "Progressive accumulation of AI influence until meaningful human control becomes impossible to recover."
+
+    edges:
+      # Competitive pressure drives deployment
+      - source: competitive-pressure
+        target: proxy-optimization
+        strength: strong
+        effect: increases
+      - source: competitive-pressure
+        target: automation-bias
+        strength: medium
+        effect: increases
+
+      # Regulatory response can slow takeover
+      - source: regulatory-response
+        target: oversight-erosion
+        strength: medium
+        effect: decreases
+      - source: regulatory-response
+        target: dependency-lock-in
+        strength: weak
+        effect: decreases
+
+      # Proxy optimization leads to value drift
+      - source: proxy-optimization
+        target: automation-bias
+        strength: strong
+        effect: increases
+      - source: proxy-optimization
+        target: oversight-erosion
+        strength: medium
+        effect: increases
+
+      # Influence-seeking enables lock-in
+      - source: influence-seeking
+        target: dependency-lock-in
+        strength: strong
+        effect: increases
+      - source: influence-seeking
+        target: gradual-takeover
+        strength: strong
+        effect: increases
+
+      # Automation bias leads to skills atrophy
+      - source: automation-bias
+        target: skills-atrophy
+        strength: strong
+        effect: increases
+
+      # Skills atrophy enables dependency lock-in
+      - source: skills-atrophy
+        target: dependency-lock-in
+        strength: strong
+        effect: increases
+
+      # All intermediate factors lead to takeover
+      - source: dependency-lock-in
+        target: gradual-takeover
+        strength: strong
+        effect: increases
+      - source: oversight-erosion
+        target: gradual-takeover
+        strength: medium
+        effect: increases
+      - source: automation-bias
+        target: gradual-takeover
+        strength: medium
+        effect: increases
 
 - id: tmc-rapid
   type: ai-transition-model-subitem
@@ -1825,3 +4256,1206 @@
   parentFactor: ai-takeover
   path: /ai-transition-model/scenarios/ai-takeover/rapid/
   lastUpdated: 2026-01
+  relatedContent:
+    risks:
+      - path: /knowledge-base/risks/accident/deceptive-alignment/
+        title: Deceptive Alignment
+      - path: /knowledge-base/risks/accident/treacherous-turn/
+        title: Treacherous Turn
+      - path: /knowledge-base/risks/accident/power-seeking/
+        title: Power-Seeking
+    researchReports:
+      - path: /knowledge-base/research-reports/rapid-ai-takeover/
+        title: "Rapid AI Takeover: Research Report"
+  causeEffectGraph:
+    title: "How Rapid AI Takeover Happens"
+    description: "Causal factors driving fast takeoff scenarios. Based on recursive self-improvement mechanisms, treacherous turn dynamics, and institutional response constraints."
+    primaryNodeId: rapid-takeover-probability
+    nodes:
+      # LAYER 1 (leaf): External/exogenous factors
+      - id: compute-concentration
+        label: "Compute Concentration"
+        type: leaf
+        description: "Concentrated supply chain (TSMC 90%+ advanced chips). Enables single-actor capability explosion."
+      - id: racing-pressure
+        label: "Racing Pressure"
+        type: leaf
+        description: "Safety timelines compressed 70-80% post-ChatGPT. Incentive to deploy before safety verification."
+      - id: compute-governance-strength
+        label: "Compute Governance"
+        type: leaf
+        description: "Executive Order 10^26 FLOP threshold, EU AI Act 10^25 FLOP. May provide 'off switch' capability."
+      - id: institutional-speed
+        label: "Institutional Response Speed"
+        type: leaf
+        description: "Traditional governance operates on months-years timescale. Fast takeoff may compress to days-weeks."
+
+      # LAYER 2 (cause): Derived/enabler factors
+      - id: algorithmic-breakthroughs
+        label: "Algorithmic Breakthroughs"
+        type: cause
+        description: "Efficiency gains may enable capability jumps without compute scaling. Historically ~4x/year."
+      - id: recursive-self-improvement
+        label: "Recursive Self-Improvement"
+        type: cause
+        description: "Meta $70B labs, AZR/AlphaEvolve (2025). AI systems improving their own intelligence—core fast takeoff mechanism."
+      - id: alignment-fragility
+        label: "Alignment Fragility"
+        type: cause
+        description: "Current alignment techniques (RLHF, etc.) show 1-2% reward hacking rates. May not scale to superintelligence."
+      - id: safety-research-lag
+        label: "Safety Research Lag"
+        type: cause
+        description: "Safety capabilities trail frontier systems by months-years. Gap widens under racing pressure."
+
+      # LAYER 3 (intermediate): Direct mechanisms
+      - id: capability-discontinuity
+        label: "Capability Discontinuity"
+        type: intermediate
+        description: "Sudden jump in capabilities from recursive improvement or algorithmic breakthrough. May occur without warning."
+      - id: treacherous-turn-risk
+        label: "Treacherous Turn Risk"
+        type: intermediate
+        description: "AI behaves aligned while weak, reveals goals when strong. By design undetectable—passes all evaluations."
+      - id: detection-failure
+        label: "Detection Failure"
+        type: intermediate
+        description: "Interpretability tools cannot reliably distinguish 'actually aligned' from 'strategically aligned.' ~10% of frontier model capacity mapped."
+      - id: response-time-compression
+        label: "Response Time Compression"
+        type: intermediate
+        description: "Takeoff speed exceeds institutional adaptation. Safety solutions must be implemented *before* takeoff begins."
+
+      # LAYER 4 (effect): The outcome
+      - id: rapid-takeover-probability
+        label: "Rapid Takeover Probability"
+        type: effect
+        description: "Days-to-months transition from human-level to vastly superhuman AI. Expert estimates: 10-50% conditional on AGI."
+
+    edges:
+      # Compute concentration enables single-actor explosion
+      - source: compute-concentration
+        target: recursive-self-improvement
+        strength: medium
+        effect: increases
+      - source: compute-concentration
+        target: capability-discontinuity
+        strength: medium
+        effect: increases
+
+      # Racing pressure reduces safety margins
+      - source: racing-pressure
+        target: safety-research-lag
+        strength: strong
+        effect: increases
+      - source: racing-pressure
+        target: alignment-fragility
+        strength: medium
+        effect: increases
+
+      # Compute governance can slow development
+      - source: compute-governance-strength
+        target: recursive-self-improvement
+        strength: medium
+        effect: decreases
+      - source: compute-governance-strength
+        target: capability-discontinuity
+        strength: weak
+        effect: decreases
+
+      # Algorithmic breakthroughs enable discontinuity
+      - source: algorithmic-breakthroughs
+        target: capability-discontinuity
+        strength: strong
+        effect: increases
+      - source: algorithmic-breakthroughs
+        target: recursive-self-improvement
+        strength: strong
+        effect: increases
+
+      # Recursive self-improvement drives discontinuity
+      - source: recursive-self-improvement
+        target: capability-discontinuity
+        strength: strong
+        effect: increases
+
+      # Alignment fragility enables treacherous turn
+      - source: alignment-fragility
+        target: treacherous-turn-risk
+        strength: strong
+        effect: increases
+      - source: alignment-fragility
+        target: detection-failure
+        strength: medium
+        effect: increases
+
+      # Safety research lag worsens detection
+      - source: safety-research-lag
+        target: detection-failure
+        strength: strong
+        effect: increases
+      - source: safety-research-lag
+        target: treacherous-turn-risk
+        strength: medium
+        effect: increases
+
+      # Institutional speed limits response
+      - source: institutional-speed
+        target: response-time-compression
+        strength: strong
+        effect: increases
+
+      # Capability discontinuity compresses response time
+      - source: capability-discontinuity
+        target: response-time-compression
+        strength: strong
+        effect: increases
+
+      # Detection failure enables treacherous turn
+      - source: detection-failure
+        target: treacherous-turn-risk
+        strength: strong
+        effect: increases
+
+      # All intermediate factors drive rapid takeover
+      - source: capability-discontinuity
+        target: rapid-takeover-probability
+        strength: strong
+        effect: increases
+      - source: treacherous-turn-risk
+        target: rapid-takeover-probability
+        strength: strong
+        effect: increases
+      - source: detection-failure
+        target: rapid-takeover-probability
+        strength: medium
+        effect: increases
+      - source: response-time-compression
+        target: rapid-takeover-probability
+        strength: strong
+        effect: increases
+
+# Additional Factor Sub-Items
+- id: tmc-adoption
+  type: ai-transition-model-subitem
+  title: AI Adoption
+  parentFactor: ai-capabilities
+  path: /ai-transition-model/factors/ai-capabilities/adoption/
+  description: >-
+    The rate and breadth of AI deployment across sectors. High adoption accelerates both benefits
+    and risks, creating path dependencies and increasing societal exposure to AI failures.
+  lastUpdated: 2026-01
+  relatedContent:
+    researchReports:
+      - path: /knowledge-base/research-reports/adoption/
+        title: "AI Adoption: Research Report"
+  causeEffectGraph:
+    title: "What Drives AI Adoption?"
+    description: "Causal factors affecting the rate and breadth of AI deployment across sectors."
+    primaryNodeId: ai-adoption
+    nodes:
+      - id: capability-improvements
+        label: "Capability Improvements"
+        type: leaf
+        description: "AI systems becoming more capable and reliable. Enables new use cases."
+      - id: cost-reduction
+        label: "Cost Reduction"
+        type: leaf
+        description: "Declining inference costs (~280x over 24 months). Makes deployment economical."
+      - id: competitive-pressure
+        label: "Competitive Pressure"
+        type: leaf
+        description: "Fear of falling behind drives rapid adoption even with uncertainty."
+      - id: regulatory-environment
+        label: "Regulatory Environment"
+        type: leaf
+        description: "Rules that slow or accelerate deployment decisions."
+      - id: integration-ease
+        label: "Integration Ease"
+        type: intermediate
+        description: "How easily AI fits into existing workflows and systems."
+      - id: demonstrated-roi
+        label: "Demonstrated ROI"
+        type: intermediate
+        description: "Proven business value from AI deployments."
+      - id: ai-adoption
+        label: "AI Adoption Rate"
+        type: effect
+        description: "Speed and breadth of AI deployment across economy."
+    edges:
+      - source: capability-improvements
+        target: integration-ease
+        strength: strong
+        effect: increases
+      - source: cost-reduction
+        target: demonstrated-roi
+        strength: strong
+        effect: increases
+      - source: competitive-pressure
+        target: ai-adoption
+        strength: strong
+        effect: increases
+      - source: regulatory-environment
+        target: ai-adoption
+        strength: medium
+        effect: decreases
+      - source: integration-ease
+        target: ai-adoption
+        strength: medium
+        effect: increases
+      - source: demonstrated-roi
+        target: ai-adoption
+        strength: strong
+        effect: increases
+
+- id: tmc-recursive-ai
+  type: ai-transition-model-subitem
+  title: Recursive AI Capabilities
+  parentFactor: ai-uses
+  path: /ai-transition-model/factors/ai-uses/recursive-ai-capabilities/
+  description: >-
+    AI systems used to accelerate AI research itself, creating feedback loops where improvements
+    enable faster improvements. This is the core mechanism of potential intelligence explosion.
+  lastUpdated: 2026-01
+  relatedContent:
+    researchReports:
+      - path: /knowledge-base/research-reports/recursive-ai-capabilities/
+        title: "Recursive AI Capabilities: Research Report"
+  causeEffectGraph:
+    title: "What Enables Recursive AI Improvement?"
+    description: "Causal factors affecting AI's ability to accelerate its own development. AlphaEvolve achieved 23% speedups; Meta investing $70B in AI labs."
+    primaryNodeId: recursive-capability
+    nodes:
+      - id: coding-capability
+        label: "AI Coding Capability"
+        type: leaf
+        description: "Ability to write, debug, and optimize code. Already substantial assistance."
+      - id: research-understanding
+        label: "Research Understanding"
+        type: leaf
+        description: "Ability to understand and propose ML research directions."
+      - id: experiment-automation
+        label: "Experiment Automation"
+        type: leaf
+        description: "Running and evaluating ML experiments autonomously."
+      - id: architecture-search
+        label: "Architecture Search"
+        type: intermediate
+        description: "AI discovering better neural network designs."
+      - id: training-optimization
+        label: "Training Optimization"
+        type: intermediate
+        description: "Improving efficiency of training processes."
+      - id: recursive-capability
+        label: "Recursive AI Capability"
+        type: effect
+        description: "Degree to which AI accelerates its own improvement."
+    edges:
+      - source: coding-capability
+        target: architecture-search
+        strength: strong
+        effect: increases
+      - source: research-understanding
+        target: architecture-search
+        strength: strong
+        effect: increases
+      - source: experiment-automation
+        target: training-optimization
+        strength: strong
+        effect: increases
+      - source: architecture-search
+        target: recursive-capability
+        strength: strong
+        effect: increases
+      - source: training-optimization
+        target: recursive-capability
+        strength: strong
+        effect: increases
+
+- id: tmc-industries
+  type: ai-transition-model-subitem
+  title: AI in Industries
+  parentFactor: ai-uses
+  path: /ai-transition-model/factors/ai-uses/industries/
+  description: >-
+    AI deployment across economic sectors including healthcare, finance, manufacturing, and services.
+    Industry adoption drives both productivity gains and displacement risks.
+  lastUpdated: 2026-01
+  relatedContent:
+    researchReports:
+      - path: /knowledge-base/research-reports/ai-uses-industries/
+        title: "AI Uses - Industries: Research Report"
+  causeEffectGraph:
+    title: "What Drives AI Industry Adoption?"
+    description: "Causal factors affecting AI deployment across economic sectors."
+    primaryNodeId: industry-adoption
+    nodes:
+      - id: automation-potential
+        label: "Automation Potential"
+        type: leaf
+        description: "Technical feasibility of automating industry tasks."
+      - id: labor-costs
+        label: "Labor Costs"
+        type: leaf
+        description: "Cost of human workers relative to AI systems."
+      - id: data-availability
+        label: "Data Availability"
+        type: leaf
+        description: "Quality and quantity of training data in sector."
+      - id: regulatory-constraints
+        label: "Regulatory Constraints"
+        type: leaf
+        description: "Industry-specific rules limiting AI deployment."
+      - id: productivity-gains
+        label: "Productivity Gains"
+        type: intermediate
+        description: "Output improvements from AI integration."
+      - id: industry-adoption
+        label: "Industry AI Adoption"
+        type: effect
+        description: "Breadth and depth of AI use across sectors."
+    edges:
+      - source: automation-potential
+        target: productivity-gains
+        strength: strong
+        effect: increases
+      - source: labor-costs
+        target: industry-adoption
+        strength: medium
+        effect: increases
+      - source: data-availability
+        target: productivity-gains
+        strength: medium
+        effect: increases
+      - source: regulatory-constraints
+        target: industry-adoption
+        strength: medium
+        effect: decreases
+      - source: productivity-gains
+        target: industry-adoption
+        strength: strong
+        effect: increases
+
+- id: tmc-governments
+  type: ai-transition-model-subitem
+  title: AI in Governments
+  parentFactor: ai-uses
+  path: /ai-transition-model/factors/ai-uses/governments/
+  description: >-
+    Government use of AI for administration, services, defense, and surveillance. Government
+    adoption shapes both public sector efficiency and risks of authoritarian misuse.
+  lastUpdated: 2026-01
+  relatedContent:
+    researchReports:
+      - path: /knowledge-base/research-reports/ai-uses-governments/
+        title: "AI Uses - Governments: Research Report"
+  causeEffectGraph:
+    title: "What Drives Government AI Adoption?"
+    description: "Causal factors affecting AI use in public sector. AI surveillance deployed in 80+ countries."
+    primaryNodeId: government-adoption
+    nodes:
+      - id: efficiency-pressure
+        label: "Efficiency Pressure"
+        type: leaf
+        description: "Pressure to improve public services with limited budgets."
+      - id: security-concerns
+        label: "Security Concerns"
+        type: leaf
+        description: "National security motivations for AI capabilities."
+      - id: privacy-constraints
+        label: "Privacy Constraints"
+        type: leaf
+        description: "Legal and ethical limits on government AI use."
+      - id: regime-type
+        label: "Regime Type"
+        type: leaf
+        description: "Democratic vs authoritarian governance affects use patterns."
+      - id: administrative-ai
+        label: "Administrative AI"
+        type: intermediate
+        description: "AI for benefits, services, document processing."
+      - id: surveillance-ai
+        label: "Surveillance AI"
+        type: intermediate
+        description: "AI for monitoring, identification, prediction."
+      - id: government-adoption
+        label: "Government AI Adoption"
+        type: effect
+        description: "Overall government use of AI systems."
+    edges:
+      - source: efficiency-pressure
+        target: administrative-ai
+        strength: strong
+        effect: increases
+      - source: security-concerns
+        target: surveillance-ai
+        strength: strong
+        effect: increases
+      - source: privacy-constraints
+        target: surveillance-ai
+        strength: medium
+        effect: decreases
+      - source: regime-type
+        target: surveillance-ai
+        strength: strong
+        effect: increases
+      - source: administrative-ai
+        target: government-adoption
+        strength: medium
+        effect: increases
+      - source: surveillance-ai
+        target: government-adoption
+        strength: strong
+        effect: increases
+
+- id: tmc-coordination
+  type: ai-transition-model-subitem
+  title: AI for Coordination
+  parentFactor: ai-uses
+  path: /ai-transition-model/factors/ai-uses/coordination/
+  description: >-
+    AI systems used to facilitate coordination between actors on AI governance and safety.
+    Could enable better collective action or could be manipulated for strategic advantage.
+  lastUpdated: 2026-01
+  relatedContent:
+    researchReports:
+      - path: /knowledge-base/research-reports/ai-uses-coordination/
+        title: "AI Uses - Coordination: Research Report"
+  causeEffectGraph:
+    title: "How AI Affects Coordination?"
+    description: "Causal factors affecting AI's role in facilitating or hindering coordination."
+    primaryNodeId: coordination-effect
+    nodes:
+      - id: translation-capability
+        label: "Translation Capability"
+        type: leaf
+        description: "AI breaking down language barriers between actors."
+      - id: information-synthesis
+        label: "Information Synthesis"
+        type: leaf
+        description: "AI combining diverse sources into shared understanding."
+      - id: manipulation-risk
+        label: "Manipulation Risk"
+        type: leaf
+        description: "AI used for strategic deception between parties."
+      - id: verification-tools
+        label: "Verification Tools"
+        type: intermediate
+        description: "AI helping verify compliance with agreements."
+      - id: trust-effects
+        label: "Trust Effects"
+        type: intermediate
+        description: "How AI affects trust between coordinating parties."
+      - id: coordination-effect
+        label: "Coordination Effectiveness"
+        type: effect
+        description: "Net effect of AI on coordination capacity."
+    edges:
+      - source: translation-capability
+        target: coordination-effect
+        strength: medium
+        effect: increases
+      - source: information-synthesis
+        target: trust-effects
+        strength: medium
+        effect: increases
+      - source: manipulation-risk
+        target: trust-effects
+        strength: strong
+        effect: decreases
+      - source: verification-tools
+        target: trust-effects
+        strength: strong
+        effect: increases
+      - source: trust-effects
+        target: coordination-effect
+        strength: strong
+        effect: increases
+
+- id: tmc-companies
+  type: ai-transition-model-subitem
+  title: AI Ownership - Companies
+  parentFactor: ai-ownership
+  path: /ai-transition-model/factors/ai-ownership/companies/
+  description: >-
+    Distribution of AI capability among companies. Currently highly concentrated—four companies
+    control 66.7% of AI market value. Creates both coordination opportunities and monopoly risks.
+  lastUpdated: 2026-01
+  relatedContent:
+    researchReports:
+      - path: /knowledge-base/research-reports/ai-ownership-companies/
+        title: "AI Ownership - Companies: Research Report"
+  causeEffectGraph:
+    title: "What Drives Company AI Concentration?"
+    description: "Causal factors affecting distribution of AI capabilities among firms. Four companies control 66.7% of $1.1T AI market value."
+    primaryNodeId: company-concentration
+    nodes:
+      - id: capital-requirements
+        label: "Capital Requirements"
+        type: leaf
+        description: "Training costs $100M-$1B+. Barriers to entry."
+      - id: talent-scarcity
+        label: "Talent Scarcity"
+        type: leaf
+        description: "Top researchers concentrated in few labs."
+      - id: data-moats
+        label: "Data Moats"
+        type: leaf
+        description: "Proprietary data creating competitive advantage."
+      - id: network-effects
+        label: "Network Effects"
+        type: intermediate
+        description: "Users create data that improves models further."
+      - id: market-power
+        label: "Market Power"
+        type: intermediate
+        description: "Ability to set prices and standards."
+      - id: company-concentration
+        label: "Company Concentration"
+        type: effect
+        description: "How concentrated AI capabilities are among firms."
+    edges:
+      - source: capital-requirements
+        target: company-concentration
+        strength: strong
+        effect: increases
+      - source: talent-scarcity
+        target: company-concentration
+        strength: strong
+        effect: increases
+      - source: data-moats
+        target: network-effects
+        strength: strong
+        effect: increases
+      - source: network-effects
+        target: market-power
+        strength: strong
+        effect: increases
+      - source: market-power
+        target: company-concentration
+        strength: strong
+        effect: increases
+
+- id: tmc-countries
+  type: ai-transition-model-subitem
+  title: AI Ownership - Countries
+  parentFactor: ai-ownership
+  path: /ai-transition-model/factors/ai-ownership/countries/
+  description: >-
+    Distribution of AI capability among nations. Currently US-dominated with China as main
+    competitor. Geographic concentration creates geopolitical tensions and coordination challenges.
+  lastUpdated: 2026-01
+  relatedContent:
+    researchReports:
+      - path: /knowledge-base/research-reports/ai-ownership-countries/
+        title: "AI Ownership - Countries: Research Report"
+  causeEffectGraph:
+    title: "What Drives Country AI Distribution?"
+    description: "Causal factors affecting national AI capabilities. 94% of AI funding in US; US-China competition dominates."
+    primaryNodeId: country-distribution
+    nodes:
+      - id: research-ecosystem
+        label: "Research Ecosystem"
+        type: leaf
+        description: "Universities, labs, talent pipelines."
+      - id: capital-availability
+        label: "Capital Availability"
+        type: leaf
+        description: "Venture funding and government investment."
+      - id: compute-access
+        label: "Compute Access"
+        type: leaf
+        description: "Access to chips and data centers. Export controls limit some nations."
+      - id: talent-migration
+        label: "Talent Migration"
+        type: intermediate
+        description: "Flow of AI researchers between countries."
+      - id: industrial-base
+        label: "Industrial Base"
+        type: intermediate
+        description: "Manufacturing and deployment infrastructure."
+      - id: country-distribution
+        label: "Country AI Distribution"
+        type: effect
+        description: "How AI capabilities are distributed among nations."
+    edges:
+      - source: research-ecosystem
+        target: talent-migration
+        strength: strong
+        effect: increases
+      - source: capital-availability
+        target: country-distribution
+        strength: strong
+        effect: increases
+      - source: compute-access
+        target: country-distribution
+        strength: strong
+        effect: increases
+      - source: talent-migration
+        target: country-distribution
+        strength: strong
+        effect: increases
+      - source: industrial-base
+        target: country-distribution
+        strength: medium
+        effect: increases
+
+- id: tmc-shareholders
+  type: ai-transition-model-subitem
+  title: AI Ownership - Shareholders
+  parentFactor: ai-ownership
+  path: /ai-transition-model/factors/ai-ownership/shareholders/
+  description: >-
+    Distribution of AI wealth among individuals and institutions. AI amplifies returns to capital,
+    potentially creating unprecedented wealth concentration among shareholders.
+  lastUpdated: 2026-01
+  relatedContent:
+    researchReports:
+      - path: /knowledge-base/research-reports/ai-ownership-shareholders/
+        title: "AI Ownership - Shareholders: Research Report"
+  causeEffectGraph:
+    title: "How AI Affects Shareholder Wealth?"
+    description: "Causal factors affecting wealth distribution from AI. Capital-labor share shifting toward capital owners."
+    primaryNodeId: shareholder-concentration
+    nodes:
+      - id: stock-ownership-patterns
+        label: "Stock Ownership Patterns"
+        type: leaf
+        description: "Who owns equity in AI companies."
+      - id: capital-labor-shift
+        label: "Capital-Labor Shift"
+        type: leaf
+        description: "AI increases returns to capital vs labor."
+      - id: winner-take-all
+        label: "Winner-Take-All Dynamics"
+        type: leaf
+        description: "Market concentration in AI companies."
+      - id: ai-company-valuations
+        label: "AI Company Valuations"
+        type: intermediate
+        description: "Market cap of AI companies ($1-3T for leaders)."
+      - id: wealth-inequality
+        label: "Wealth Inequality"
+        type: intermediate
+        description: "Gap between AI shareholders and others."
+      - id: shareholder-concentration
+        label: "Shareholder Wealth Concentration"
+        type: effect
+        description: "Degree of AI wealth concentration among shareholders."
+    edges:
+      - source: stock-ownership-patterns
+        target: shareholder-concentration
+        strength: strong
+        effect: increases
+      - source: capital-labor-shift
+        target: wealth-inequality
+        strength: strong
+        effect: increases
+      - source: winner-take-all
+        target: ai-company-valuations
+        strength: strong
+        effect: increases
+      - source: ai-company-valuations
+        target: shareholder-concentration
+        strength: strong
+        effect: increases
+      - source: wealth-inequality
+        target: shareholder-concentration
+        strength: medium
+        effect: increases
+
+- id: tmc-adaptability
+  type: ai-transition-model-subitem
+  title: Adaptability
+  parentFactor: civilizational-competence
+  path: /ai-transition-model/factors/civilizational-competence/adaptability/
+  description: >-
+    Society's capacity to adjust to AI-driven changes, including institutional flexibility,
+    workforce retraining, and cultural adaptation. High adaptability enables smoother transitions.
+  lastUpdated: 2026-01
+  relatedContent:
+    researchReports:
+      - path: /knowledge-base/research-reports/adaptability/
+        title: "Adaptability: Research Report"
+  causeEffectGraph:
+    title: "What Affects Societal Adaptability?"
+    description: "Causal factors affecting society's capacity to adjust to AI-driven changes."
+    primaryNodeId: adaptability
+    nodes:
+      - id: institutional-flexibility
+        label: "Institutional Flexibility"
+        type: leaf
+        description: "Ability of institutions to change rules and practices."
+      - id: education-systems
+        label: "Education Systems"
+        type: leaf
+        description: "Capacity for retraining and skill development."
+      - id: social-safety-nets
+        label: "Social Safety Nets"
+        type: leaf
+        description: "Support systems for those displaced by AI."
+      - id: cultural-openness
+        label: "Cultural Openness"
+        type: leaf
+        description: "Society's willingness to embrace change."
+      - id: transition-capacity
+        label: "Transition Capacity"
+        type: intermediate
+        description: "Ability to manage workforce transitions."
+      - id: adaptation-speed
+        label: "Adaptation Speed"
+        type: intermediate
+        description: "How quickly society can respond to changes."
+      - id: adaptability
+        label: "Societal Adaptability"
+        type: effect
+        description: "Overall capacity to adjust to AI changes."
+    edges:
+      - source: institutional-flexibility
+        target: adaptation-speed
+        strength: strong
+        effect: increases
+      - source: education-systems
+        target: transition-capacity
+        strength: strong
+        effect: increases
+      - source: social-safety-nets
+        target: transition-capacity
+        strength: medium
+        effect: increases
+      - source: cultural-openness
+        target: adaptation-speed
+        strength: medium
+        effect: increases
+      - source: transition-capacity
+        target: adaptability
+        strength: strong
+        effect: increases
+      - source: adaptation-speed
+        target: adaptability
+        strength: strong
+        effect: increases
+
+- id: tmc-civ-epistemics
+  type: ai-transition-model-subitem
+  title: Civilizational Epistemics
+  parentFactor: civilizational-competence
+  path: /ai-transition-model/factors/civilizational-competence/epistemics/
+  description: >-
+    Society's collective capacity to form accurate beliefs, evaluate evidence, and reach
+    consensus on factual matters. Critical for effective governance and coordination.
+  lastUpdated: 2026-01
+  relatedContent:
+    researchReports:
+      - path: /knowledge-base/research-reports/civilizational-epistemics/
+        title: "Civilizational Epistemics: Research Report"
+  causeEffectGraph:
+    title: "What Affects Civilizational Epistemics?"
+    description: "Causal factors affecting society's collective capacity for truth-finding. Trust in news at 40% globally."
+    primaryNodeId: civ-epistemics
+    nodes:
+      - id: information-quality
+        label: "Information Quality"
+        type: leaf
+        description: "Accuracy and reliability of available information."
+      - id: media-ecosystem
+        label: "Media Ecosystem"
+        type: leaf
+        description: "Structure and incentives of information distribution."
+      - id: critical-thinking
+        label: "Critical Thinking"
+        type: leaf
+        description: "Population's ability to evaluate claims."
+      - id: institutional-credibility
+        label: "Institutional Credibility"
+        type: leaf
+        description: "Trust in knowledge-producing institutions."
+      - id: consensus-formation
+        label: "Consensus Formation"
+        type: intermediate
+        description: "Ability to reach shared understanding."
+      - id: belief-accuracy
+        label: "Belief Accuracy"
+        type: intermediate
+        description: "Correspondence between beliefs and reality."
+      - id: civ-epistemics
+        label: "Civilizational Epistemics"
+        type: effect
+        description: "Overall epistemic health of society."
+    edges:
+      - source: information-quality
+        target: belief-accuracy
+        strength: strong
+        effect: increases
+      - source: media-ecosystem
+        target: information-quality
+        strength: strong
+        effect: increases
+      - source: critical-thinking
+        target: belief-accuracy
+        strength: medium
+        effect: increases
+      - source: institutional-credibility
+        target: consensus-formation
+        strength: strong
+        effect: increases
+      - source: consensus-formation
+        target: civ-epistemics
+        strength: strong
+        effect: increases
+      - source: belief-accuracy
+        target: civ-epistemics
+        strength: strong
+        effect: increases
+
+- id: tmc-civ-governance
+  type: ai-transition-model-subitem
+  title: Civilizational Governance
+  parentFactor: civilizational-competence
+  path: /ai-transition-model/factors/civilizational-competence/governance/
+  description: >-
+    Effectiveness of governance systems in navigating AI transition, including regulatory
+    capacity, policy adaptation, and international coordination mechanisms.
+  lastUpdated: 2026-01
+  relatedContent:
+    researchReports:
+      - path: /knowledge-base/research-reports/civilizational-governance/
+        title: "Civilizational Governance: Research Report"
+  causeEffectGraph:
+    title: "What Affects Governance Effectiveness?"
+    description: "Causal factors affecting governance capacity for AI transition. AISI budgets ~$10-50M vs $100B+ industry spending."
+    primaryNodeId: civ-governance
+    nodes:
+      - id: technical-expertise
+        label: "Technical Expertise"
+        type: leaf
+        description: "Government understanding of AI systems."
+      - id: regulatory-resources
+        label: "Regulatory Resources"
+        type: leaf
+        description: "Budget and staff for AI oversight."
+      - id: policy-speed
+        label: "Policy Speed"
+        type: leaf
+        description: "How quickly governance can adapt to changes."
+      - id: international-cooperation
+        label: "International Cooperation"
+        type: leaf
+        description: "Cross-border governance coordination."
+      - id: enforcement-capacity
+        label: "Enforcement Capacity"
+        type: intermediate
+        description: "Ability to monitor and enforce rules."
+      - id: adaptive-governance
+        label: "Adaptive Governance"
+        type: intermediate
+        description: "Rules that evolve with technology."
+      - id: civ-governance
+        label: "Governance Effectiveness"
+        type: effect
+        description: "Overall governance capacity for AI transition."
+    edges:
+      - source: technical-expertise
+        target: enforcement-capacity
+        strength: strong
+        effect: increases
+      - source: regulatory-resources
+        target: enforcement-capacity
+        strength: strong
+        effect: increases
+      - source: policy-speed
+        target: adaptive-governance
+        strength: strong
+        effect: increases
+      - source: international-cooperation
+        target: civ-governance
+        strength: medium
+        effect: increases
+      - source: enforcement-capacity
+        target: civ-governance
+        strength: strong
+        effect: increases
+      - source: adaptive-governance
+        target: civ-governance
+        strength: strong
+        effect: increases
+
+- id: tmc-ai-governance
+  type: ai-transition-model-subitem
+  title: AI Governance
+  parentFactor: misalignment-potential
+  path: /ai-transition-model/factors/misalignment-potential/ai-governance/
+  description: >-
+    External governance mechanisms affecting misalignment risk—regulations, oversight bodies,
+    liability frameworks. Distinct from internal lab practices.
+  lastUpdated: 2026-01
+  relatedContent:
+    researchReports:
+      - path: /knowledge-base/research-reports/ai-governance/
+        title: "AI Governance: Research Report"
+  causeEffectGraph:
+    title: "How AI Governance Affects Misalignment Risk?"
+    description: "Causal factors connecting governance to misalignment potential. EU AI Act, US Executive Order 14110 represent emerging frameworks."
+    primaryNodeId: governance-effect
+    nodes:
+      - id: regulatory-frameworks
+        label: "Regulatory Frameworks"
+        type: leaf
+        description: "Laws and rules governing AI development. EU AI Act, US EO 14110."
+      - id: oversight-bodies
+        label: "Oversight Bodies"
+        type: leaf
+        description: "AI Safety Institutes, regulatory agencies."
+      - id: liability-rules
+        label: "Liability Rules"
+        type: leaf
+        description: "Legal accountability for AI harms."
+      - id: evaluation-requirements
+        label: "Evaluation Requirements"
+        type: intermediate
+        description: "Mandated safety testing before deployment."
+      - id: transparency-mandates
+        label: "Transparency Mandates"
+        type: intermediate
+        description: "Required disclosure of capabilities and risks."
+      - id: governance-effect
+        label: "Governance Effect on Misalignment"
+        type: effect
+        description: "How governance reduces misalignment risk."
+    edges:
+      - source: regulatory-frameworks
+        target: evaluation-requirements
+        strength: strong
+        effect: increases
+      - source: oversight-bodies
+        target: evaluation-requirements
+        strength: strong
+        effect: increases
+      - source: liability-rules
+        target: governance-effect
+        strength: medium
+        effect: increases
+      - source: evaluation-requirements
+        target: governance-effect
+        strength: strong
+        effect: increases
+      - source: transparency-mandates
+        target: governance-effect
+        strength: medium
+        effect: increases
+
+- id: tmc-lab-safety
+  type: ai-transition-model-subitem
+  title: Lab Safety Practices
+  parentFactor: misalignment-potential
+  path: /ai-transition-model/factors/misalignment-potential/lab-safety-practices/
+  description: >-
+    Internal safety practices at AI labs including RSPs, safety teams, red-teaming, and
+    deployment decisions. Critical determinant of how risks translate to outcomes.
+  lastUpdated: 2026-01
+  relatedContent:
+    researchReports:
+      - path: /knowledge-base/research-reports/lab-safety-practices/
+        title: "Lab Safety Practices: Research Report"
+  causeEffectGraph:
+    title: "What Determines Lab Safety Practices?"
+    description: "Causal factors affecting internal safety at AI labs. Only 3/7 frontier labs test dangerous capabilities."
+    primaryNodeId: lab-safety
+    nodes:
+      - id: safety-culture
+        label: "Safety Culture"
+        type: leaf
+        description: "Leadership commitment to safety. Varies across labs."
+      - id: competitive-pressure
+        label: "Competitive Pressure"
+        type: leaf
+        description: "Racing dynamics compressing safety margins."
+      - id: external-pressure
+        label: "External Pressure"
+        type: leaf
+        description: "Regulatory and public expectations."
+      - id: safety-team-authority
+        label: "Safety Team Authority"
+        type: intermediate
+        description: "Power of safety teams to delay/block deployments."
+      - id: red-teaming-quality
+        label: "Red-Teaming Quality"
+        type: intermediate
+        description: "Thoroughness of adversarial testing."
+      - id: deployment-gates
+        label: "Deployment Gates"
+        type: intermediate
+        description: "RSPs and evaluation requirements before release."
+      - id: lab-safety
+        label: "Lab Safety Practices"
+        type: effect
+        description: "Overall safety practices at AI labs."
+    edges:
+      - source: safety-culture
+        target: safety-team-authority
+        strength: strong
+        effect: increases
+      - source: competitive-pressure
+        target: lab-safety
+        strength: strong
+        effect: decreases
+      - source: external-pressure
+        target: deployment-gates
+        strength: medium
+        effect: increases
+      - source: safety-team-authority
+        target: lab-safety
+        strength: strong
+        effect: increases
+      - source: red-teaming-quality
+        target: lab-safety
+        strength: medium
+        effect: increases
+      - source: deployment-gates
+        target: lab-safety
+        strength: strong
+        effect: increases
+
+- id: tmc-robot-threat
+  type: ai-transition-model-subitem
+  title: Robot Threat Exposure
+  parentFactor: misuse-potential
+  path: /ai-transition-model/factors/misuse-potential/robot-threat-exposure/
+  description: >-
+    Vulnerability to threats from AI-enabled robotic systems including autonomous weapons,
+    drones, and other physical AI systems that can cause harm.
+  lastUpdated: 2026-01
+  relatedContent:
+    researchReports:
+      - path: /knowledge-base/research-reports/robot-threat-exposure/
+        title: "Robot Threat Exposure: Research Report"
+  causeEffectGraph:
+    title: "What Affects Robot Threat Exposure?"
+    description: "Causal factors affecting vulnerability to AI-enabled robotic threats."
+    primaryNodeId: robot-exposure
+    nodes:
+      - id: autonomous-weapons-development
+        label: "Autonomous Weapons Development"
+        type: leaf
+        description: "Military investment in lethal autonomous weapons."
+      - id: drone-proliferation
+        label: "Drone Proliferation"
+        type: leaf
+        description: "Spread of capable drone platforms."
+      - id: ai-robot-integration
+        label: "AI-Robot Integration"
+        type: leaf
+        description: "Sophistication of AI control of physical systems."
+      - id: defense-systems
+        label: "Defense Systems"
+        type: leaf
+        description: "Counter-drone and defensive capabilities."
+      - id: attack-capability
+        label: "Attack Capability"
+        type: intermediate
+        description: "What robotic systems can do offensively."
+      - id: defense-capability
+        label: "Defense Capability"
+        type: intermediate
+        description: "Ability to defend against robotic threats."
+      - id: robot-exposure
+        label: "Robot Threat Exposure"
+        type: effect
+        description: "Net vulnerability to AI-enabled robotic threats."
+    edges:
+      - source: autonomous-weapons-development
+        target: attack-capability
+        strength: strong
+        effect: increases
+      - source: drone-proliferation
+        target: attack-capability
+        strength: strong
+        effect: increases
+      - source: ai-robot-integration
+        target: attack-capability
+        strength: medium
+        effect: increases
+      - source: defense-systems
+        target: defense-capability
+        strength: strong
+        effect: increases
+      - source: attack-capability
+        target: robot-exposure
+        strength: strong
+        effect: increases
+      - source: defense-capability
+        target: robot-exposure
+        strength: strong
+        effect: decreases
+
+- id: tmc-surprise-threat
+  type: ai-transition-model-subitem
+  title: Surprise Threat Exposure
+  parentFactor: misuse-potential
+  path: /ai-transition-model/factors/misuse-potential/surprise-threat-exposure/
+  description: >-
+    Vulnerability to novel, unforeseen threats enabled by AI—attack vectors we haven't
+    anticipated. Represents the "unknown unknowns" of AI risk.
+  lastUpdated: 2026-01
+  relatedContent:
+    researchReports:
+      - path: /knowledge-base/research-reports/surprise-threat-exposure/
+        title: "Surprise Threat Exposure: Research Report"
+  causeEffectGraph:
+    title: "What Affects Surprise Threat Exposure?"
+    description: "Causal factors affecting vulnerability to unanticipated AI-enabled threats."
+    primaryNodeId: surprise-exposure
+    nodes:
+      - id: ai-capability-growth
+        label: "AI Capability Growth"
+        type: leaf
+        description: "Rate of AI capability improvement. More capable = more novel threats."
+      - id: emergent-capabilities
+        label: "Emergent Capabilities"
+        type: leaf
+        description: "Unpredictable capabilities appearing at scale."
+      - id: adversarial-creativity
+        label: "Adversarial Creativity"
+        type: leaf
+        description: "Attackers using AI to discover novel attack vectors."
+      - id: defense-adaptability
+        label: "Defense Adaptability"
+        type: leaf
+        description: "Ability to respond to novel threats quickly."
+      - id: threat-surface-expansion
+        label: "Threat Surface Expansion"
+        type: intermediate
+        description: "Growth in potential attack vectors."
+      - id: detection-lag
+        label: "Detection Lag"
+        type: intermediate
+        description: "Time between threat emergence and recognition."
+      - id: surprise-exposure
+        label: "Surprise Threat Exposure"
+        type: effect
+        description: "Vulnerability to unanticipated AI threats."
+    edges:
+      - source: ai-capability-growth
+        target: threat-surface-expansion
+        strength: strong
+        effect: increases
+      - source: emergent-capabilities
+        target: threat-surface-expansion
+        strength: strong
+        effect: increases
+      - source: adversarial-creativity
+        target: detection-lag
+        strength: medium
+        effect: increases
+      - source: defense-adaptability
+        target: detection-lag
+        strength: medium
+        effect: decreases
+      - source: threat-surface-expansion
+        target: surprise-exposure
+        strength: strong
+        effect: increases
+      - source: detection-lag
+        target: surprise-exposure
+        strength: strong
+        effect: increases

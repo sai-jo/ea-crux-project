@@ -39,49 +39,50 @@ export const DEFAULT_TYPE_LABELS: Record<string, string> = {
 };
 
 export const NODE_TYPE_CONFIG: Record<string, NodeTypeConfig> = {
+  // Root inputs - Light teal/cyan (exogenous factors we take as given)
   leaf: {
     label: DEFAULT_TYPE_LABELS.leaf,
-    groupBg: 'rgba(236, 253, 245, 0.4)',
+    groupBg: 'rgba(204, 251, 241, 0.3)',
     groupBorder: 'transparent',
-    nodeBg: '#ecfdf5',
-    nodeBorder: 'rgba(5, 150, 105, 0.3)',  // #059669 at 30% opacity
-    nodeText: '#047857',
-    nodeAccent: '#10b981',
-    showInLegend: false,
+    nodeBg: '#ccfbf1',
+    nodeBorder: 'rgba(20, 184, 166, 0.35)',  // teal-500
+    nodeText: '#0f766e',  // teal-700
+    nodeAccent: '#14b8a6',
+    showInLegend: true,
     legendOrder: 0,
   },
-  // Root Factors - Blue family (tier-based: all inputs are blue)
+  // Derived factors - Light slate/gray (first processing layer)
   cause: {
     label: DEFAULT_TYPE_LABELS.cause,
-    groupBg: 'rgba(219, 234, 254, 0.3)',
+    groupBg: 'rgba(226, 232, 240, 0.3)',
     groupBorder: 'transparent',
-    nodeBg: '#dbeafe',
-    nodeBorder: 'rgba(59, 130, 246, 0.3)',  // #3b82f6 at 30% opacity
-    nodeText: '#1d4ed8',
-    nodeAccent: '#60a5fa',
+    nodeBg: '#e2e8f0',  // slate-200
+    nodeBorder: 'rgba(100, 116, 139, 0.35)',  // slate-500
+    nodeText: '#334155',  // slate-700
+    nodeAccent: '#64748b',
     showInLegend: true,
     legendOrder: 1,
   },
-  // Scenarios - Purple (tier-based: mechanisms are purple)
+  // Direct factors - Light blue-gray (second processing layer)
   intermediate: {
     label: DEFAULT_TYPE_LABELS.intermediate,
-    groupBg: 'rgba(237, 233, 254, 0.3)',
+    groupBg: 'rgba(203, 213, 225, 0.3)',
     groupBorder: 'transparent',
-    nodeBg: '#ede9fe',
-    nodeBorder: 'rgba(124, 58, 237, 0.3)',  // #7c3aed at 30% opacity
-    nodeText: '#5b21b6',
-    nodeAccent: '#8b5cf6',
+    nodeBg: '#cbd5e1',  // slate-300
+    nodeBorder: 'rgba(71, 85, 105, 0.35)',  // slate-600
+    nodeText: '#1e293b',  // slate-800
+    nodeAccent: '#475569',
     showInLegend: true,
     legendOrder: 2,
   },
-  // Outcomes - Amber (default, individual nodes override via OUTCOME_COLORS)
+  // Target - Amber/yellow (the output we care about - stands out)
   effect: {
     label: DEFAULT_TYPE_LABELS.effect,
     groupBg: 'rgba(254, 243, 199, 0.3)',
     groupBorder: 'transparent',
-    nodeBg: '#fef3c7',
-    nodeBorder: 'rgba(217, 119, 6, 0.3)',  // #d97706 at 30% opacity
-    nodeText: '#92400e',
+    nodeBg: '#fef3c7',  // amber-100
+    nodeBorder: 'rgba(217, 119, 6, 0.4)',  // amber-600
+    nodeText: '#92400e',  // amber-800
     nodeAccent: '#f59e0b',
     showInLegend: true,
     legendOrder: 3,
@@ -127,16 +128,16 @@ export const DEFAULT_SUBGROUP_CONFIG: Record<string, { label: string; bgColor: s
 // Default subgroup order (empty - graphs provide their own)
 export const DEFAULT_SUBGROUP_ORDER: string[] = [];
 
-// ELK layout options
+// ELK layout options - compact spacing for cleaner graphs
 export const elkOptions = {
   'elk.algorithm': 'layered',
   'elk.direction': 'DOWN',
-  'elk.spacing.nodeNode': '40',
-  'elk.spacing.edgeEdge': '20',
-  'elk.spacing.edgeNode': '25',
-  'elk.layered.spacing.nodeNodeBetweenLayers': '80',
-  'elk.layered.spacing.edgeNodeBetweenLayers': '30',
-  'elk.layered.spacing.edgeEdgeBetweenLayers': '20',
+  'elk.spacing.nodeNode': '25',          // Reduced from 40
+  'elk.spacing.edgeEdge': '15',          // Reduced from 20
+  'elk.spacing.edgeNode': '20',          // Reduced from 25
+  'elk.layered.spacing.nodeNodeBetweenLayers': '50',  // Reduced from 80
+  'elk.layered.spacing.edgeNodeBetweenLayers': '20',  // Reduced from 30
+  'elk.layered.spacing.edgeEdgeBetweenLayers': '15',  // Reduced from 20
   'elk.edgeRouting': 'SPLINES',
   'elk.layered.mergeEdges': 'false',
   'elk.layered.nodePlacement.strategy': 'NETWORK_SIMPLEX',

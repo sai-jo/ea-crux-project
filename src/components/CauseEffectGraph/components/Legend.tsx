@@ -9,7 +9,7 @@ interface LegendProps {
 }
 
 export function Legend({ customItems, typeLabels }: LegendProps) {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);  // Start collapsed
 
   // If custom items provided, use those; otherwise derive from NODE_TYPE_CONFIG with optional label overrides
   const legendItems = customItems || Object.entries(NODE_TYPE_CONFIG)
@@ -49,8 +49,8 @@ export function Legend({ customItems, typeLabels }: LegendProps) {
           <div className="ceg-legend__section-title">Arrow Strength</div>
           <div className="ceg-legend__row">
             <div className="ceg-legend__line-container">
-              <svg width="24" height="4">
-                <line x1="0" y1="2" x2="24" y2="2" stroke="#94a3b8" strokeWidth="3.5" />
+              <svg width="24" height="6">
+                <line x1="0" y1="3" x2="24" y2="3" stroke="#64748b" strokeWidth="5" />
               </svg>
             </div>
             <span>Strong</span>
@@ -58,15 +58,15 @@ export function Legend({ customItems, typeLabels }: LegendProps) {
           <div className="ceg-legend__row">
             <div className="ceg-legend__line-container">
               <svg width="24" height="4">
-                <line x1="0" y1="2" x2="24" y2="2" stroke="#94a3b8" strokeWidth="2" />
+                <line x1="0" y1="2" x2="24" y2="2" stroke="#64748b" strokeWidth="2" />
               </svg>
             </div>
             <span>Medium</span>
           </div>
           <div className="ceg-legend__row">
             <div className="ceg-legend__line-container">
-              <svg width="24" height="4">
-                <line x1="0" y1="2" x2="24" y2="2" stroke="#94a3b8" strokeWidth="1.2" />
+              <svg width="24" height="2">
+                <line x1="0" y1="1" x2="24" y2="1" stroke="#64748b" strokeWidth="1" />
               </svg>
             </div>
             <span>Weak</span>

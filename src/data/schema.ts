@@ -303,6 +303,7 @@ export type CauseEffectEdge = z.infer<typeof CauseEffectEdge>;
 export const CauseEffectGraph = z.object({
   title: z.string().optional(),
   description: z.string().optional(),
+  primaryNodeId: z.string().optional(),           // ID of the node representing this entity (highlighted)
   nodes: z.array(CauseEffectNode),
   edges: z.array(CauseEffectEdge),
 });
@@ -632,3 +633,91 @@ export const Database = z.object({
   publications: z.array(Publication),
 });
 export type Database = z.infer<typeof Database>;
+
+// =============================================================================
+// MASTER GRAPH (Unified causal model with subgraph extraction)
+// =============================================================================
+
+/**
+ * Node in the master graph. Unlike entity-embedded graphs, these nodes
+ * can specify which entity "owns" them for page-specific highlighting.
+ */
+export const MasterGraphNode = z.object({
+  id: z.string(),
+  label: z.string(),
+  description: z.string().optional(),
+  type: z.enum(['leaf', 'cause', 'intermediate', 'effect']),
+  // Which entity page "owns" this node (for highlighting on that page)
+  ownerEntityId: z.string().optional(),
+  // Link to entity for navigation
+  entityRef: z.string().optional(),
+  // Grouping for visual organization
+  group: z.string().optional(),
+  // Metadata
+  confidence: z.number().min(0).max(1).optional(),
+  details: z.string().optional(),
+  sources: z.array(z.string()).optional(),
+  tags: z.array(z.string()).optional(),
+});
+export type MasterGraphNode = z.infer<typeof MasterGraphNode>;
+
+/**
+ * Edge in the master graph.
+ */
+export const MasterGraphEdge = z.object({
+  id: z.string().optional(),
+  source: z.string(),
+  target: z.string(),
+  strength: z.enum(['weak', 'medium', 'strong']).optional(),
+  effect: z.enum(['increases', 'decreases', 'mixed']).optional(),
+  confidence: z.enum(['low', 'medium', 'high']).optional(),
+  label: z.string().optional(),
+  // Optional: hide this edge in certain contexts
+  hideInSubgraphs: z.array(z.string()).optional(),
+});
+export type MasterGraphEdge = z.infer<typeof MasterGraphEdge>;
+
+/**
+ * Subgraph definition - specifies how to extract a subgraph for a specific page.
+ */
+export const SubgraphSpec = z.object({
+  // Which entity this subgraph is for
+  entityId: z.string(),
+  // Center node for the subgraph (typically the node this page is about)
+  centerNode: z.string(),
+  // How many hops from center to include (default: 2)
+  depth: z.number().min(1).max(5).optional(),
+  // Explicit list of nodes to include (overrides depth if provided)
+  includeNodes: z.array(z.string()).optional(),
+  // Nodes to exclude even if within depth
+  excludeNodes: z.array(z.string()).optional(),
+  // Custom title for this subgraph view
+  title: z.string().optional(),
+  // Custom description
+  description: z.string().optional(),
+});
+export type SubgraphSpec = z.infer<typeof SubgraphSpec>;
+
+/**
+ * A complete master graph that can be used to generate subgraphs for entity pages.
+ */
+export const MasterGraph = z.object({
+  id: z.string(),
+  title: z.string(),
+  description: z.string().optional(),
+  version: z.string().optional(),
+  lastUpdated: z.string().optional(),
+  // All nodes in the unified graph
+  nodes: z.array(MasterGraphNode),
+  // All edges in the unified graph
+  edges: z.array(MasterGraphEdge),
+  // Subgraph definitions for each entity page
+  subgraphs: z.array(SubgraphSpec).optional(),
+  // Node groups for visual organization
+  groups: z.array(z.object({
+    id: z.string(),
+    label: z.string(),
+    color: z.string().optional(),
+  })).optional(),
+});
+export type MasterGraph = z.infer<typeof MasterGraph>;
