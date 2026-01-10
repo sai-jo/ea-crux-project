@@ -183,10 +183,10 @@ test('structuralScoreNormalized is 0-50', () => {
 
 console.log('\n⭐ suggestQuality');
 
-test('suggestQuality returns 1-5', () => {
+test('suggestQuality returns 0-100', () => {
   for (let score = 0; score <= 15; score++) {
     const quality = suggestQuality(score);
-    assertInRange(quality, 1, 5, `Quality for score ${score} should be 1-5`);
+    assertInRange(quality, 0, 100, `Quality for score ${score} should be 0-100`);
   }
 });
 
@@ -198,11 +198,13 @@ test('suggestQuality increases with score', () => {
   assert(q6 >= q0, 'Higher scores should suggest higher quality');
 });
 
-test('suggestQuality with robustness', () => {
-  const withRobustness = suggestQuality(6, 4);
-  const withoutRobustness = suggestQuality(6);
-  assert(typeof withRobustness === 'number', 'Should return number');
-  assertInRange(withRobustness, 1, 5, 'Should be 1-5');
+test('suggestQuality maps scores linearly', () => {
+  // Score 0 → 0%, Score 15 → 100%
+  assertEqual(suggestQuality(0), 0);
+  assertEqual(suggestQuality(15), 100);
+  // Middle score maps proportionally
+  assertEqual(suggestQuality(7), Math.round((7 / 15) * 100)); // ~47
+  assertEqual(suggestQuality(10), Math.round((10 / 15) * 100)); // ~67
 });
 
 // =============================================================================
@@ -212,7 +214,7 @@ test('suggestQuality with robustness', () => {
 console.log('\n📉 getQualityDiscrepancy');
 
 test('getQualityDiscrepancy returns valid structure', () => {
-  const result = getQualityDiscrepancy(3, 6);
+  const result = getQualityDiscrepancy(40, 6); // current 40%, structural score 6 → suggested 40%
   assert('current' in result, 'Should have current');
   assert('suggested' in result, 'Should have suggested');
   assert('discrepancy' in result, 'Should have discrepancy');
@@ -220,14 +222,19 @@ test('getQualityDiscrepancy returns valid structure', () => {
 });
 
 test('getQualityDiscrepancy calculates correctly', () => {
-  const result = getQualityDiscrepancy(5, 3); // current 5, structural score 3 -> suggested ~2
-  assertEqual(result.current, 5);
+  // current 50%, structural score 3 → suggested 20% (3/15*100)
+  const result = getQualityDiscrepancy(50, 3);
+  assertEqual(result.current, 50);
+  assertEqual(result.suggested, 20);
+  assertEqual(result.discrepancy, 30); // 50 - 20 = 30 (overrated)
   assert(result.discrepancy > 0, 'Should have positive discrepancy (overrated)');
 });
 
 test('getQualityDiscrepancy flags large discrepancies', () => {
-  const large = getQualityDiscrepancy(5, 0); // current 5, score 0 -> suggested 1
-  const small = getQualityDiscrepancy(3, 6); // current 3, score 6 -> suggested 3
+  // current 80%, score 0 → suggested 0%, discrepancy 80 → large (>=20)
+  const large = getQualityDiscrepancy(80, 0);
+  // current 40%, score 6 → suggested 40%, discrepancy 0 → ok
+  const small = getQualityDiscrepancy(40, 6);
   assertEqual(large.flag, 'large', 'Large gap should be flagged');
   assertEqual(small.flag, 'ok', 'Small gap should be ok');
 });
