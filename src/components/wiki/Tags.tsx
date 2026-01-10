@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge } from '../ui/badge';
+import { Badge } from '@/components/ui/badge';
 
 interface TagsProps {
   tags: string[];
@@ -7,7 +7,7 @@ interface TagsProps {
 
 export function Tags({ tags }: TagsProps) {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-2 my-2">
       {tags.map((tag, index) => (
         <Badge key={index} variant="secondary">
           {tag}

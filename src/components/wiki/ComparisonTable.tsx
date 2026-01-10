@@ -1,7 +1,15 @@
 import React from 'react';
-import { Card } from '../ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
-import { cn } from '../../lib/utils';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
 interface ComparisonRow {
   name: string;
@@ -18,11 +26,11 @@ interface ComparisonTableProps {
   highlightColumn?: string;
 }
 
-const badgeStyles = {
-  high: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300',
-  medium: 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300',
-  low: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300',
-};
+const badgeVariantMap = {
+  high: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400 border-green-200 dark:border-green-800',
+  medium: 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400 border-amber-200 dark:border-amber-800',
+  low: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400 border-red-200 dark:border-red-800',
+} as const;
 
 export function ComparisonTable({ title, columns, rows, items, highlightColumn }: ComparisonTableProps) {
   // Use rows or items (backwards compatibility)
@@ -37,33 +45,35 @@ export function ComparisonTable({ title, columns, rows, items, highlightColumn }
 
   if (tableRows.length === 0) {
     return (
-      <Card className="my-6 overflow-hidden">
-        <div className="flex items-center gap-2 px-4 py-3 bg-muted border-b border-border font-semibold">
-          <span>📊</span>
-          <span>{title}</span>
-        </div>
-        <div className="p-4">
+      <Card className="my-6">
+        <CardHeader className="flex-row items-center gap-2 space-y-0 pb-4">
+          <span className="text-lg">📊</span>
+          <CardTitle className="text-base">{title}</CardTitle>
+        </CardHeader>
+        <CardContent>
           <p className="text-muted-foreground">No data available</p>
-        </div>
+        </CardContent>
       </Card>
     );
   }
 
   return (
-    <Card className="my-6 overflow-hidden">
-      <div className="flex items-center gap-2 px-4 py-3 bg-muted border-b border-border font-semibold">
-        <span>📊</span>
-        <span>{title}</span>
-      </div>
-      <div className="overflow-x-auto">
+    <Card className="my-6">
+      <CardHeader className="flex-row items-center gap-2 space-y-0 pb-4">
+        <span className="text-lg">📊</span>
+        <CardTitle className="text-base">{title}</CardTitle>
+      </CardHeader>
+      <CardContent className="px-0 pt-0">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Name</TableHead>
+              <TableHead className="pl-6">Name</TableHead>
               {tableColumns.map(col => (
                 <TableHead
                   key={col}
-                  className={cn(col === highlightColumn && 'bg-sky-500/10')}
+                  className={cn(
+                    col === highlightColumn && 'bg-sky-500/10'
+                  )}
                 >
                   {col}
                 </TableHead>
@@ -77,9 +87,9 @@ export function ComparisonTable({ title, columns, rows, items, highlightColumn }
 
               return (
                 <TableRow key={i}>
-                  <TableCell>
+                  <TableCell className="pl-6">
                     {row.link ? (
-                      <a href={row.link} className="text-accent-foreground hover:underline">
+                      <a href={row.link} className="text-primary hover:underline">
                         {row.name}
                       </a>
                     ) : (
@@ -91,20 +101,25 @@ export function ComparisonTable({ title, columns, rows, items, highlightColumn }
                     if (!cellValue) return <TableCell key={col}>—</TableCell>;
 
                     if (typeof cellValue === 'string') {
-                      return <TableCell key={col}>{cellValue}</TableCell>;
+                      return <TableCell key={col} className="whitespace-normal">{cellValue}</TableCell>;
                     }
 
                     return (
-                      <TableCell key={col}>
-                        {cellValue.value}
-                        {cellValue.badge && (
-                          <span className={cn(
-                            'inline-block ml-2 px-2 py-0.5 text-xs font-medium rounded',
-                            badgeStyles[cellValue.badge]
-                          )}>
-                            {cellValue.badge}
-                          </span>
-                        )}
+                      <TableCell key={col} className="whitespace-normal">
+                        <span className="flex items-center gap-2 flex-wrap">
+                          {cellValue.value}
+                          {cellValue.badge && (
+                            <Badge
+                              variant="outline"
+                              className={cn(
+                                'text-xs capitalize',
+                                badgeVariantMap[cellValue.badge]
+                              )}
+                            >
+                              {cellValue.badge}
+                            </Badge>
+                          )}
+                        </span>
                       </TableCell>
                     );
                   })}
@@ -113,7 +128,7 @@ export function ComparisonTable({ title, columns, rows, items, highlightColumn }
             })}
           </TableBody>
         </Table>
-      </div>
+      </CardContent>
     </Card>
   );
 }
