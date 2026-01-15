@@ -28,6 +28,7 @@ export function CauseEffectNode({ data, selected, id }: NodeProps<Node<CauseEffe
   const [tooltipPos, setTooltipPos] = useState<{ top: number; left: number } | null>(null);
   const [hoveredSubItemIndex, setHoveredSubItemIndex] = useState<number | null>(null);
   const nodeRef = useRef<HTMLDivElement>(null);
+  const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const nodeType = data.type || 'intermediate';
 
   const config = NODE_TYPE_CONFIG[nodeType] || NODE_TYPE_CONFIG.intermediate;
@@ -61,6 +62,61 @@ export function CauseEffectNode({ data, selected, id }: NodeProps<Node<CauseEffe
     };
   }
 
+  // Apply score-based highlighting (green intensity) when scoreIntensity is set
+  // scoreIntensity: 0-1 = valid score intensity, -1 = no score for this dimension
+  const hasScoreHighlight = data.scoreIntensity !== undefined;
+  let scoreOpacity = 1;
+  if (hasScoreHighlight) {
+    if (data.scoreIntensity === -1) {
+      // No score - extremely faded
+      colors = {
+        bg: 'rgba(30, 41, 59, 0.3)',
+        border: 'rgba(51, 65, 85, 0.3)',
+        text: 'rgba(100, 116, 139, 0.4)',
+        accent: 'rgba(71, 85, 105, 0.3)',
+      };
+      scoreOpacity = 0.25;
+    } else {
+      const intensity = data.scoreIntensity;
+      // Use a curve to make low scores much more faded
+      // intensity^2 makes 0.5 -> 0.25, so mid-range is still fairly faded
+      const adjustedIntensity = Math.pow(intensity, 1.5);
+
+      // Low scores: very faded gray with low opacity
+      // High scores: vibrant green with full opacity
+      if (intensity < 0.45) {
+        // Scores 1-4: Very faded, nearly invisible
+        const fade = intensity / 0.45; // 0 to 1 within this range
+        scoreOpacity = 0.25 + fade * 0.35; // 0.25 to 0.6 opacity
+        colors = {
+          bg: `rgba(30, 41, 59, ${0.4 + fade * 0.3})`,
+          border: `rgba(71, 85, 105, ${0.4 + fade * 0.3})`,
+          text: `rgba(148, 163, 184, ${0.5 + fade * 0.3})`,
+          accent: `rgba(71, 85, 105, ${0.4 + fade * 0.3})`,
+        };
+      } else {
+        // Scores 5-10: Transition to green
+        const greenIntensity = (intensity - 0.45) / 0.55; // 0 to 1 for scores 5-10
+        scoreOpacity = 0.6 + greenIntensity * 0.4; // 0.6 to 1.0 opacity
+
+        // Interpolate from muted to vibrant green
+        const r = Math.round(35 - greenIntensity * 15); // 35 -> 20
+        const g = Math.round(55 + greenIntensity * 145); // 55 -> 200
+        const b = Math.round(65 - greenIntensity * 5); // 65 -> 60
+        const borderR = Math.round(55 - greenIntensity * 33); // 55 -> 22
+        const borderG = Math.round(75 + greenIntensity * 90); // 75 -> 165
+        const borderB = Math.round(85 - greenIntensity * 11); // 85 -> 74
+
+        colors = {
+          bg: `rgb(${r}, ${g}, ${b})`,
+          border: `rgb(${borderR}, ${borderG}, ${borderB})`,
+          text: greenIntensity > 0.5 ? '#f0fdf4' : '#e2e8f0',
+          accent: `rgb(${borderR}, ${borderG}, ${borderB})`,
+        };
+      }
+    }
+  }
+
   // Get border radius based on node type (shapes encode function)
   const borderRadius = NODE_BORDER_RADIUS[nodeType] || '12px';
 
@@ -74,6 +130,11 @@ export function CauseEffectNode({ data, selected, id }: NodeProps<Node<CauseEffe
   };
 
   const handleMouseEnter = useCallback(() => {
+    // Cancel any pending hide
+    if (hideTimeoutRef.current) {
+      clearTimeout(hideTimeoutRef.current);
+      hideTimeoutRef.current = null;
+    }
     setShowTooltip(true);
     if (nodeRef.current && data.description) {
       const rect = nodeRef.current.getBoundingClientRect();
@@ -85,6 +146,23 @@ export function CauseEffectNode({ data, selected, id }: NodeProps<Node<CauseEffe
   }, [data.description]);
 
   const handleMouseLeave = useCallback(() => {
+    // Delay hiding to allow mouse to move to tooltip
+    hideTimeoutRef.current = setTimeout(() => {
+      setShowTooltip(false);
+      setTooltipPos(null);
+    }, 150);
+  }, []);
+
+  const handleTooltipMouseEnter = useCallback(() => {
+    // Cancel hide when entering tooltip
+    if (hideTimeoutRef.current) {
+      clearTimeout(hideTimeoutRef.current);
+      hideTimeoutRef.current = null;
+    }
+  }, []);
+
+  const handleTooltipMouseLeave = useCallback(() => {
+    // Hide when leaving tooltip
     setShowTooltip(false);
     setTooltipPos(null);
   }, []);
@@ -97,8 +175,10 @@ export function CauseEffectNode({ data, selected, id }: NodeProps<Node<CauseEffe
         backgroundColor: colors.bg,
         borderColor: selected ? colors.text : colors.border,
         borderRadius: borderRadius,
+        borderWidth: hasScoreHighlight ? '2.5px' : undefined,
         boxShadow: selected ? `0 8px 24px rgba(0,0,0,0.15), 0 0 0 2px ${colors.accent}` : undefined,
         cursor: isClickable ? 'pointer' : undefined,
+        opacity: hasScoreHighlight ? scoreOpacity : undefined,
       }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -185,11 +265,43 @@ export function CauseEffectNode({ data, selected, id }: NodeProps<Node<CauseEffe
               transform: 'translateX(-50%)',
               zIndex: 99999,
             }}
+            onMouseEnter={handleTooltipMouseEnter}
+            onMouseLeave={handleTooltipMouseLeave}
           >
             {/* Description */}
             {data.description && (
               <div className="ceg-tooltip__description">
                 {truncateDescription(data.description, 280)}
+              </div>
+            )}
+
+            {/* Scores - compact inline */}
+            {data.scores && (Object.values(data.scores).some(v => v !== undefined)) && (
+              <div className="ceg-tooltip__scores-compact">
+                {data.scores.novelty !== undefined && (
+                  <span className="ceg-tooltip__score-item" title="Novelty: How surprising to informed readers">
+                    <span className="ceg-tooltip__score-dot" style={{ backgroundColor: '#8b5cf6' }} />
+                    <span className="ceg-tooltip__score-num">{data.scores.novelty}</span>
+                  </span>
+                )}
+                {data.scores.sensitivity !== undefined && (
+                  <span className="ceg-tooltip__score-item" title="Sensitivity: Impact on downstream nodes">
+                    <span className="ceg-tooltip__score-dot" style={{ backgroundColor: '#ef4444' }} />
+                    <span className="ceg-tooltip__score-num">{data.scores.sensitivity}</span>
+                  </span>
+                )}
+                {data.scores.changeability !== undefined && (
+                  <span className="ceg-tooltip__score-item" title="Changeability: How tractable to influence">
+                    <span className="ceg-tooltip__score-dot" style={{ backgroundColor: '#22c55e' }} />
+                    <span className="ceg-tooltip__score-num">{data.scores.changeability}</span>
+                  </span>
+                )}
+                {data.scores.certainty !== undefined && (
+                  <span className="ceg-tooltip__score-item" title="Certainty: How well understood">
+                    <span className="ceg-tooltip__score-dot" style={{ backgroundColor: '#3b82f6' }} />
+                    <span className="ceg-tooltip__score-num">{data.scores.certainty}</span>
+                  </span>
+                )}
               </div>
             )}
 

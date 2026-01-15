@@ -91,18 +91,14 @@ export function estimateNodeDimensions(node: Node<CauseEffectNodeData>): { width
   };
 }
 
-// Style edges - variable weight based on strength, color based on effect direction
+// Style edges - variable weight based on strength
 export function getStyledEdges(edges: Edge<CauseEffectEdgeData>[]): Edge<CauseEffectEdgeData>[] {
-  const strengthMap = { strong: 3, medium: 2, weak: 1.2 };
-  const neutralGray = '#64748b';
-  const decreaseColor = '#ef4444';
+  const strengthMap = { strong: 2.5, medium: 1.5, weak: 1 };
+  const edgeColor = '#cbd5e1';  // Light gray for all edges
 
   return edges.map((edge) => {
     const data = edge.data;
-    const strokeWidth = data?.strength ? strengthMap[data.strength] : 2.5;
-    const isDecrease = data?.effect === 'decreases';
-    const strokeColor = isDecrease ? decreaseColor : neutralGray;
-    const strokeDasharray = data?.effect === 'mixed' ? '5,5' : undefined;
+    const strokeWidth = data?.strength ? strengthMap[data.strength] : 1.5;
 
     return {
       ...edge,
@@ -111,8 +107,8 @@ export function getStyledEdges(edges: Edge<CauseEffectEdgeData>[]): Edge<CauseEf
       labelBgStyle: data?.label ? { fill: '#f8fafc', fillOpacity: 0.9 } : undefined,
       labelBgPadding: data?.label ? [4, 6] as [number, number] : undefined,
       labelBgBorderRadius: data?.label ? 4 : undefined,
-      style: { ...edge.style, stroke: strokeColor, strokeWidth, opacity: 0.7, strokeDasharray },
-      markerEnd: { type: MarkerType.ArrowClosed, color: strokeColor, width: 16 + strokeWidth, height: 16 + strokeWidth },
+      style: { ...edge.style, stroke: edgeColor, strokeWidth },
+      markerEnd: { type: MarkerType.Arrow, color: edgeColor, width: 15, height: 15, strokeWidth: 2 },
     };
   });
 }

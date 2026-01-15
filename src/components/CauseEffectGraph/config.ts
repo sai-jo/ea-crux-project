@@ -39,50 +39,50 @@ export const DEFAULT_TYPE_LABELS: Record<string, string> = {
 };
 
 export const NODE_TYPE_CONFIG: Record<string, NodeTypeConfig> = {
-  // Root inputs - Light teal/cyan (exogenous factors we take as given)
+  // Root inputs - White bg with teal border
   leaf: {
     label: DEFAULT_TYPE_LABELS.leaf,
-    groupBg: 'rgba(204, 251, 241, 0.3)',
+    groupBg: 'transparent',
     groupBorder: 'transparent',
-    nodeBg: '#ccfbf1',
-    nodeBorder: 'rgba(20, 184, 166, 0.35)',  // teal-500
-    nodeText: '#0f766e',  // teal-700
+    nodeBg: '#ffffff',
+    nodeBorder: '#14b8a6',  // teal-500
+    nodeText: '#334155',  // slate-700 (darker)
     nodeAccent: '#14b8a6',
     showInLegend: true,
     legendOrder: 0,
   },
-  // Derived factors - Light slate/gray (first processing layer)
+  // Derived factors - White bg with blue border
   cause: {
     label: DEFAULT_TYPE_LABELS.cause,
-    groupBg: 'rgba(226, 232, 240, 0.3)',
+    groupBg: 'transparent',
     groupBorder: 'transparent',
-    nodeBg: '#e2e8f0',  // slate-200
-    nodeBorder: 'rgba(100, 116, 139, 0.35)',  // slate-500
-    nodeText: '#334155',  // slate-700
-    nodeAccent: '#64748b',
+    nodeBg: '#ffffff',
+    nodeBorder: '#3b82f6',  // blue-500
+    nodeText: '#334155',  // slate-700 (darker)
+    nodeAccent: '#3b82f6',
     showInLegend: true,
     legendOrder: 1,
   },
-  // Direct factors - Light blue-gray (second processing layer)
+  // Direct factors - White bg with slate border
   intermediate: {
     label: DEFAULT_TYPE_LABELS.intermediate,
-    groupBg: 'rgba(203, 213, 225, 0.3)',
+    groupBg: 'transparent',
     groupBorder: 'transparent',
-    nodeBg: '#cbd5e1',  // slate-300
-    nodeBorder: 'rgba(71, 85, 105, 0.35)',  // slate-600
-    nodeText: '#1e293b',  // slate-800
-    nodeAccent: '#475569',
+    nodeBg: '#ffffff',
+    nodeBorder: '#64748b',  // slate-500
+    nodeText: '#334155',  // slate-700 (darker)
+    nodeAccent: '#64748b',
     showInLegend: true,
     legendOrder: 2,
   },
-  // Target - Amber/yellow (the output we care about - stands out)
+  // Target - White bg with amber border
   effect: {
     label: DEFAULT_TYPE_LABELS.effect,
-    groupBg: 'rgba(254, 243, 199, 0.3)',
+    groupBg: 'transparent',
     groupBorder: 'transparent',
-    nodeBg: '#fef3c7',  // amber-100
-    nodeBorder: 'rgba(217, 119, 6, 0.4)',  // amber-600
-    nodeText: '#92400e',  // amber-800
+    nodeBg: '#ffffff',
+    nodeBorder: '#f59e0b',  // amber-500
+    nodeText: '#334155',  // slate-700 (darker)
     nodeAccent: '#f59e0b',
     showInLegend: true,
     legendOrder: 3,
@@ -92,15 +92,15 @@ export const NODE_TYPE_CONFIG: Record<string, NodeTypeConfig> = {
 // Special colors for individual outcome nodes (tier-based: differentiate by valence)
 export const OUTCOME_COLORS: Record<string, Partial<NodeTypeConfig>> = {
   'existential-catastrophe': {
-    nodeBg: '#fee2e2',
-    nodeBorder: 'rgba(220, 38, 38, 0.3)',  // #dc2626 at 30% opacity
-    nodeText: '#991b1b',
+    nodeBg: '#ffffff',
+    nodeBorder: '#ef4444',  // red-500
+    nodeText: '#334155',  // slate-700 (darker)
     nodeAccent: '#ef4444',
   },
   'long-term-trajectory': {
-    nodeBg: '#fef3c7',
-    nodeBorder: 'rgba(245, 158, 11, 0.3)',  // #f59e0b at 30% opacity
-    nodeText: '#92400e',
+    nodeBg: '#ffffff',
+    nodeBorder: '#f59e0b',  // amber-500
+    nodeText: '#334155',  // slate-700 (darker)
     nodeAccent: '#fbbf24',
   },
 };
@@ -132,12 +132,12 @@ export const DEFAULT_SUBGROUP_ORDER: string[] = [];
 export const elkOptions = {
   'elk.algorithm': 'layered',
   'elk.direction': 'DOWN',
-  'elk.spacing.nodeNode': '25',          // Reduced from 40
-  'elk.spacing.edgeEdge': '15',          // Reduced from 20
-  'elk.spacing.edgeNode': '20',          // Reduced from 25
-  'elk.layered.spacing.nodeNodeBetweenLayers': '50',  // Reduced from 80
-  'elk.layered.spacing.edgeNodeBetweenLayers': '20',  // Reduced from 30
-  'elk.layered.spacing.edgeEdgeBetweenLayers': '15',  // Reduced from 20
+  'elk.spacing.nodeNode': '5',
+  'elk.spacing.edgeEdge': '5',
+  'elk.spacing.edgeNode': '5',
+  'elk.layered.spacing.nodeNodeBetweenLayers': '20',
+  'elk.layered.spacing.edgeNodeBetweenLayers': '5',
+  'elk.layered.spacing.edgeEdgeBetweenLayers': '5',
   'elk.edgeRouting': 'SPLINES',
   'elk.layered.mergeEdges': 'false',
   'elk.layered.nodePlacement.strategy': 'NETWORK_SIMPLEX',

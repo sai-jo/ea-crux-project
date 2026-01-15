@@ -36,7 +36,13 @@
   position: relative;
   min-height: 0;
   height: 100%;
-  background-color: var(--sl-color-bg);
+  background-color: #f8fafc;  /* Tailwind slate-50 */
+}
+
+[data-theme="dark"] .cause-effect-graph__content,
+:root.dark .cause-effect-graph__content,
+.dark .cause-effect-graph__content {
+  background-color: #1e293b;  /* Tailwind slate-800 */
 }
 
 /* Ensure React Flow fills the container */
@@ -274,20 +280,21 @@
 
 /* Cause Effect Node */
 .ceg-node {
-  padding: 16px 20px;
-  border-radius: 12px;
-  border: 2px solid;
-  min-width: 160px;
-  max-width: 220px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1.5px solid;
+  min-width: var(--ceg-node-width, 180px);
+  max-width: var(--ceg-node-width, 180px);
   position: relative;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: none;
   transition: all 0.2s ease;
   cursor: pointer;
 }
 
 .ceg-node--with-subitems {
   padding: 12px 14px;
-  max-width: 220px;
+  min-width: var(--ceg-node-width, 180px);
+  max-width: calc(var(--ceg-node-width, 180px) + 40px);
 }
 
 .ceg-node--selected {
@@ -311,7 +318,7 @@
 
 .ceg-node__label {
   font-weight: 600;
-  font-size: 16px;
+  font-size: 13px;
   text-align: center;
   line-height: 1.3;
 }
@@ -321,11 +328,11 @@
 }
 
 .ceg-node__snippet {
-  font-size: 11px;
-  margin-top: 6px;
+  font-size: 10px;
+  margin-top: 4px;
   text-align: center;
-  line-height: 1.4;
-  opacity: 0.85;
+  line-height: 1.3;
+  opacity: 0.7;
 }
 
 .ceg-node__subitems {
@@ -1813,7 +1820,18 @@
 .ceg-node__tooltip--rich {
   max-width: 320px;
   padding: 0;
-  overflow: hidden;
+  overflow: visible;
+}
+
+/* Invisible bridge area above tooltip to allow mouse to travel from node to tooltip */
+.ceg-node__tooltip--rich::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: transparent;
 }
 
 .ceg-tooltip__description {
@@ -1889,4 +1907,49 @@
 /* Adjust arrow position for rich tooltip */
 .ceg-node__tooltip--rich .ceg-node__tooltip-arrow {
   bottom: -6px;
+}
+
+/* ========================================
+   Hide Descriptions Toggle
+   ======================================== */
+
+.cause-effect-graph--hide-descriptions .ceg-node__snippet {
+  display: none !important;
+}
+
+/* Also hide description in tooltips when descriptions are hidden */
+.cause-effect-graph--hide-descriptions .ceg-tooltip__description {
+  display: none !important;
+}
+
+/* ========================================
+   Node Scores Visualization (Compact)
+   ======================================== */
+
+.ceg-tooltip__scores-compact {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 12px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.ceg-tooltip__score-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: help;
+}
+
+.ceg-tooltip__score-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.ceg-tooltip__score-num {
+  font-size: 12px;
+  font-weight: 600;
+  color: #e2e8f0;
 }

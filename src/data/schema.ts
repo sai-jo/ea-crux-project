@@ -269,6 +269,17 @@ export type Graph = z.infer<typeof Graph>;
  * A node in a cause-effect graph, representing a factor that influences
  * or is influenced by other factors.
  */
+/**
+ * Scoring dimensions for cause-effect graph nodes (all 1-10 scale)
+ */
+export const NodeScores = z.object({
+  novelty: z.number().min(1).max(10).optional(),        // How novel/interesting to a recent reader (1=common knowledge, 10=very surprising)
+  sensitivity: z.number().min(1).max(10).optional(),    // How much downstream nodes change if this changes (1=minimal impact, 10=huge cascading effects)
+  changeability: z.number().min(1).max(10).optional(),  // How tractable/changeable is this factor (1=fixed, 10=highly malleable)
+  certainty: z.number().min(1).max(10).optional(),      // How well understood/certain are we (1=highly uncertain, 10=well established)
+});
+export type NodeScores = z.infer<typeof NodeScores>;
+
 export const CauseEffectNode = z.object({
   id: z.string(),
   label: z.string(),
@@ -279,6 +290,7 @@ export const CauseEffectNode = z.object({
   sources: z.array(z.string()).optional(),           // Source references
   relatedConcepts: z.array(z.string()).optional(),   // Related concept tags
   entityRef: z.string().optional(),                  // Link to entity ID
+  scores: NodeScores.optional(),                     // Scoring dimensions for node
 });
 export type CauseEffectNode = z.infer<typeof CauseEffectNode>;
 

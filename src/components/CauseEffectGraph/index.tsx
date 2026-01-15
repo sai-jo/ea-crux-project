@@ -41,6 +41,9 @@ const nodeTypes = {
   clusterContainer: ClusterContainerNode,
 };
 
+// Score dimension keys that can be used for highlighting
+export type ScoreHighlightMode = 'novelty' | 'sensitivity' | 'changeability' | 'certainty';
+
 interface CauseEffectGraphProps {
   initialNodes: Node<CauseEffectNodeData>[];
   initialEdges: Edge<CauseEffectEdgeData>[];
@@ -56,6 +59,9 @@ interface CauseEffectGraphProps {
   showMiniMap?: boolean;  // Show mini-map navigation (default false)
   enablePathHighlighting?: boolean;  // Click nodes to highlight causal paths (default false)
   entityId?: string;  // Entity ID for linking to expanded diagram page (/diagrams/xxx)
+  showDescriptions?: boolean;  // Show descriptions on nodes (default true)
+  renderHeaderRight?: () => React.ReactNode;  // Custom content for right side of header
+  scoreHighlight?: ScoreHighlightMode;  // Highlight nodes by score dimension (opacity based on score value)
 }
 
 // Unified graph traversal function for computing node/edge neighborhoods
@@ -141,6 +147,9 @@ function CauseEffectGraphInner({
   showMiniMap = false,
   enablePathHighlighting = false,
   entityId,
+  showDescriptions = true,
+  renderHeaderRight,
+  scoreHighlight,
 }: CauseEffectGraphProps) {
   const [nodes, setNodes, onNodesChange] = useNodesState<Node<CauseEffectNodeData>>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge<CauseEffectEdgeData>>([]);
@@ -310,7 +319,7 @@ function CauseEffectGraphInner({
     });
   }, [edges, hoveredNodeId, hoveredEdgeId, pathHighlight]);
 
-  // Style nodes based on hover state, selection, and path highlighting
+  // Style nodes based on hover state, selection, path highlighting, and score highlighting
   const styledNodes = useMemo(() => {
     return nodes.map((node) => {
       if (node.type === 'group' || node.type === 'subgroup' || node.type === 'clusterContainer') return node;
@@ -321,9 +330,24 @@ function CauseEffectGraphInner({
       const hasPathHighlight = pathHighlight.nodeIds.size > 0;
       const isConnected = hoveredNodeId ? connectedNodeIds.has(node.id) : true;
 
-      // Determine opacity
+      // Determine opacity and score-based styling
       let opacity = 1;
-      if (hasPathHighlight && !isInPath) {
+      let scoreIntensity: number | undefined;
+
+      // Score-based highlighting takes precedence when active
+      if (scoreHighlight && node.data.scores) {
+        const score = node.data.scores[scoreHighlight];
+        if (score !== undefined) {
+          // Normalize score to 0-1 range for color intensity
+          scoreIntensity = (score - 1) / 9; // 0 for score 1, 1 for score 10
+        } else {
+          // No score for this dimension = very dimmed
+          scoreIntensity = -1; // Signal "no score"
+        }
+      } else if (scoreHighlight) {
+        // Score highlight mode active but node has no scores at all
+        scoreIntensity = -1;
+      } else if (hasPathHighlight && !isInPath) {
         opacity = 0.3;
       } else if (hoveredNodeId && !isConnected) {
         opacity = 0.3;
@@ -332,6 +356,11 @@ function CauseEffectGraphInner({
       return {
         ...node,
         selected: isSelected || isPathRoot,
+        data: {
+          ...node.data,
+          // Pass score intensity to node for styling
+          scoreIntensity,
+        },
         style: {
           ...node.style,
           opacity,
@@ -340,7 +369,7 @@ function CauseEffectGraphInner({
         className: isInPath ? 'react-flow__node--path-highlighted' : undefined,
       };
     });
-  }, [nodes, hoveredNodeId, connectedNodeIds, selectedNodeId, pathHighlight, pathHighlightNodeId]);
+  }, [nodes, hoveredNodeId, connectedNodeIds, selectedNodeId, pathHighlight, pathHighlightNodeId, scoreHighlight]);
 
   // Keyboard handler for ESC
   useEffect(() => {
@@ -382,10 +411,17 @@ function CauseEffectGraphInner({
     };
   }, [isFullscreen]);
 
-  const containerClass = `cause-effect-graph ${isFullscreen ? 'cause-effect-graph--fullscreen' : ''} ${zoomLevelClass}`;
+  const containerClass = `cause-effect-graph ${isFullscreen ? 'cause-effect-graph--fullscreen' : ''} ${zoomLevelClass} ${!showDescriptions ? 'cause-effect-graph--hide-descriptions' : ''}`;
+
+  // Build container style with CSS variables for configurable values
+  const nodeWidth = graphConfig?.nodeWidth ?? 180;
+  const containerStyle: React.CSSProperties = {
+    ...(isFullscreen ? {} : { height }),
+    '--ceg-node-width': `${nodeWidth}px`,
+  } as React.CSSProperties;
 
   return (
-    <div className={containerClass} style={isFullscreen ? undefined : { height }}>
+    <div className={containerClass} style={containerStyle}>
       {/* Header */}
       <div className="ceg-header">
         <div className="ceg-segmented-control">
@@ -438,6 +474,7 @@ function CauseEffectGraphInner({
               {isFullscreen ? 'Exit' : 'Fullscreen'}
             </button>
           )}
+          {renderHeaderRight && renderHeaderRight()}
         </div>
       </div>
 
@@ -466,9 +503,9 @@ function CauseEffectGraphInner({
               defaultViewport={defaultZoom ? { x: 0, y: 0, zoom: defaultZoom } : undefined}
               onInit={(instance) => { reactFlowInstance.current = instance; }}
               defaultEdgeOptions={{
-                type: 'default',
-                style: { stroke: '#94a3b8', strokeWidth: 2 },
-                markerEnd: { type: MarkerType.ArrowClosed, color: '#94a3b8', width: 16, height: 16 },
+                type: graphConfig?.straightEdges ? 'straight' : 'default',
+                style: { stroke: '#cbd5e1', strokeWidth: 1.5 },
+                markerEnd: { type: MarkerType.Arrow, color: '#cbd5e1', width: 15, height: 15, strokeWidth: 2 },
               }}
             >
               <Controls />
@@ -480,11 +517,6 @@ function CauseEffectGraphInner({
                   style={{ width: 150, height: 100 }}
                 />
               )}
-              {/* Zoom level indicator */}
-              <div className="ceg-zoom-indicator">
-                <span className="ceg-zoom-indicator__value">{Math.round(currentZoom * 100)}%</span>
-                <span className="ceg-zoom-indicator__level">{zoomLevelClass.replace('ceg-zoom-', '')}</span>
-              </div>
             </ReactFlow>
             <Legend typeLabels={graphConfig?.typeLabels} customItems={graphConfig?.legendItems} />
           </div>

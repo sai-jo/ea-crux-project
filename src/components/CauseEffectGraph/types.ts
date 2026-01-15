@@ -8,6 +8,14 @@ export interface NodeColors {
   accent?: string;
 }
 
+// Scoring dimensions for cause-effect graph nodes (all 1-10 scale)
+export interface NodeScores {
+  novelty?: number;        // How novel/interesting to a recent reader (1=common knowledge, 10=very surprising)
+  sensitivity?: number;    // How much downstream nodes change if this changes (1=minimal impact, 10=huge cascading effects)
+  changeability?: number;  // How tractable/changeable is this factor (1=fixed, 10=highly malleable)
+  certainty?: number;      // How well understood/certain are we (1=highly uncertain, 10=well established)
+}
+
 export interface CauseEffectNodeData extends Record<string, unknown> {
   label: string;
   description?: string;
@@ -35,6 +43,8 @@ export interface CauseEffectNodeData extends Record<string, unknown> {
   sources?: string[];
   relatedConcepts?: string[];
   href?: string;  // URL to navigate to when node is clicked
+  scores?: NodeScores;  // Scoring dimensions for node
+  scoreIntensity?: number;  // Computed score intensity (0-1) for highlighting, -1 = no score
 }
 
 export interface CauseEffectEdgeData extends Record<string, unknown> {
@@ -98,6 +108,9 @@ export interface GraphConfig {
   // Visual options
   hideGroupBackgrounds?: boolean;  // Don't show section backgrounds (CAUSES, INTERMEDIATE, EFFECTS)
   hideGroupLabels?: boolean;       // Don't show section labels
+  compactMode?: boolean;           // Use tighter spacing in layouts (default true)
+  straightEdges?: boolean;         // Use straight edges instead of curved splines (default false)
+  nodeWidth?: number;              // Node width in pixels (default 180)
   // Layout algorithm
   useDagre?: boolean;              // Use Dagre instead of ELK for simpler, cleaner layouts (deprecated - use layoutAlgorithm)
   layoutAlgorithm?: LayoutAlgorithm; // Layout algorithm to use: 'dagre' (hierarchical), 'grouped' (category sections), 'elk' (layered)

@@ -71,7 +71,7 @@ export async function getLayoutedElements(
 
   // Use Dagre for simpler hierarchical layouts
   if (layoutAlgorithm === 'dagre') {
-    return getDagreLayout(nodes, edges);
+    return getDagreLayout(nodes, edges, graphConfig);
   }
 
   // ELK layout (default)
@@ -94,10 +94,36 @@ async function getElkLayout(
   };
   const layout = config.layout;
 
+  // Build ELK options based on config
+  const isCompact = graphConfig?.compactMode !== false; // Default to compact
+  const useStraightEdges = graphConfig?.straightEdges === true; // Default to curved
+
+  // Get config values, with fallbacks based on compact mode
+  const configNodeSpacing = config.layout.causeSpacing;
+  const configLayerGap = config.layout.layerGap;
+
+  // Calculate actual spacing values
+  const nodeNodeSpacing = configNodeSpacing ?? (isCompact ? 20 : 40);
+  const layerSpacing = configLayerGap ?? (isCompact ? 40 : 80);
+
+  const elkLayoutOptions = {
+    ...defaultElkOptions,
+    // Edge routing: SPLINES (curved) or POLYLINE (straight segments)
+    'elk.edgeRouting': useStraightEdges ? 'POLYLINE' : 'SPLINES',
+    // Node spacing (horizontal, within same layer)
+    'elk.spacing.nodeNode': String(nodeNodeSpacing),
+    'elk.spacing.edgeEdge': String(Math.max(2, nodeNodeSpacing * 0.3)),
+    'elk.spacing.edgeNode': String(Math.max(2, nodeNodeSpacing * 0.5)),
+    // Layer spacing (vertical, between layers)
+    'elk.layered.spacing.nodeNodeBetweenLayers': String(layerSpacing),
+    'elk.layered.spacing.edgeNodeBetweenLayers': String(Math.max(2, layerSpacing * 0.3)),
+    'elk.layered.spacing.edgeEdgeBetweenLayers': String(Math.max(2, layerSpacing * 0.2)),
+  };
+
   // Build ELK graph with layer constraints
   const graph = {
     id: 'root',
-    layoutOptions: defaultElkOptions,
+    layoutOptions: elkLayoutOptions,
     children: nodes.map((node) => {
       const layoutOptions: Record<string, string> = {};
       if (node.data.type === 'leaf' || node.data.type === 'cause') {
@@ -105,9 +131,11 @@ async function getElkLayout(
       } else if (node.data.type === 'effect') {
         layoutOptions['elk.layered.layerConstraint'] = 'LAST';
       }
+      // Use configurable node width from graphConfig, fallback to constant
+      const configuredWidth = graphConfig?.nodeWidth ?? NODE_WIDTH;
       return {
         id: node.id,
-        width: NODE_WIDTH,
+        width: configuredWidth,
         height: LAYOUT_NODE_HEIGHT,
         layoutOptions: Object.keys(layoutOptions).length > 0 ? layoutOptions : undefined,
       };
@@ -125,85 +153,98 @@ async function getElkLayout(
 
   const nodesByType = groupNodesByType(layoutedNodes);
   const globalCenterX = layout.centerX;
+  const hideGroups = graphConfig?.hideGroupBackgrounds === true;
 
-  // Calculate Y positions for each layer
-  const leafY = 0;
-  if (nodesByType['leaf']) {
-    for (const node of nodesByType['leaf']) node.position.y = leafY;
-  }
+  // Variables for group container positioning (only used when showing groups)
+  let causeRowY = 0;
+  let intermediateStartY = 0;
+  let maxIntermediateY = 0;
+  let effectRowY = 0;
+  const subgroupPositions: Record<string, { startX: number; minY: number; maxY: number; nodes: LayoutedNode[] }> = {};
 
-  const leafContainerBottom = leafY + LAYOUT_NODE_HEIGHT + 20; // GROUP_PADDING
-  const causeContainerTop = leafContainerBottom + layout.layerGap;
-  const causeRowY = causeContainerTop + 45 + 20; // GROUP_HEADER_HEIGHT + GROUP_PADDING
-
-  if (nodesByType['cause']) {
-    for (const node of nodesByType['cause']) node.position.y = causeRowY;
-  }
-
-  const causeContainerBottom = causeRowY + LAYOUT_NODE_HEIGHT + 20;
-  const intermediateContainerTop = causeContainerBottom + layout.layerGap;
-  const intermediateStartY = intermediateContainerTop + 45 + 20;
-
-  // Position intermediate nodes by subgroup
+  // Position intermediate nodes by subgroup (for X positioning)
   const intermediatesBySubgroup = groupNodesBySubgroup(nodesByType['intermediate']);
   const hasSubgroups = Object.keys(intermediatesBySubgroup).some(k => k !== 'default' && intermediatesBySubgroup[k]?.length > 0);
 
-  let maxIntermediateY = intermediateStartY;
-  const subgroupPositions: Record<string, { startX: number; minY: number; maxY: number; nodes: LayoutedNode[] }> = {};
+  // When hiding groups, keep ELK's Y positions (they respect layerSpacing)
+  // Only override Y positions when showing group containers
+  if (!hideGroups) {
+    const groupChrome = 65; // GROUP_HEADER_HEIGHT (45) + GROUP_PADDING (20)
+    const groupPadding = 20;
 
-  if (hasSubgroups) {
-    const subgroupStartY = intermediateStartY + SUBGROUP_HEADER_HEIGHT + SUBGROUP_PADDING;
-
-    const subgroupOrder = Object.keys(config.subgroups);
-    const activeSubgroups = subgroupOrder.filter(sg => intermediatesBySubgroup[sg]?.length > 0);
-    Object.keys(intermediatesBySubgroup).forEach(sg => {
-      if (sg !== 'default' && !activeSubgroups.includes(sg)) activeSubgroups.push(sg);
-    });
-    if (intermediatesBySubgroup['default']?.length > 0) activeSubgroups.push('default');
-
-    const columnWidth = NODE_WIDTH + SUBGROUP_PADDING * 2;
-    const totalColumnsWidth = activeSubgroups.length * (columnWidth + SUBGROUP_GAP) - SUBGROUP_GAP;
-    let currentX = globalCenterX - totalColumnsWidth / 2;
-
-    for (const subgroupKey of activeSubgroups) {
-      const subgroupNodes = intermediatesBySubgroup[subgroupKey] || [];
-      if (subgroupNodes.length === 0) continue;
-
-      let nodeY = subgroupStartY;
-      for (const node of subgroupNodes) {
-        node.position.x = currentX + SUBGROUP_PADDING;
-        node.position.y = nodeY;
-        nodeY += LAYOUT_NODE_HEIGHT + 15;
-      }
-
-      const subgroupMaxY = nodeY - 15 + LAYOUT_NODE_HEIGHT;
-      maxIntermediateY = Math.max(maxIntermediateY, subgroupMaxY);
-
-      subgroupPositions[subgroupKey] = {
-        startX: currentX,
-        minY: intermediateStartY,
-        maxY: subgroupMaxY,
-        nodes: subgroupNodes,
-      };
-
-      currentX += columnWidth + SUBGROUP_GAP;
+    // Calculate Y positions for each layer
+    const leafY = 0;
+    if (nodesByType['leaf']) {
+      for (const node of nodesByType['leaf']) node.position.y = leafY;
     }
-  } else {
-    if (nodesByType['intermediate']) {
-      for (const node of nodesByType['intermediate']) {
-        node.position.y = intermediateStartY;
-      }
-      maxIntermediateY = intermediateStartY;
+
+    const leafContainerBottom = leafY + LAYOUT_NODE_HEIGHT + groupPadding;
+    const causeContainerTop = leafContainerBottom + layout.layerGap;
+    causeRowY = causeContainerTop + groupChrome;
+
+    if (nodesByType['cause']) {
+      for (const node of nodesByType['cause']) node.position.y = causeRowY;
     }
-  }
 
-  // Position effect nodes
-  const intermediateContainerBottom = maxIntermediateY + LAYOUT_NODE_HEIGHT + 20;
-  const effectContainerTop = intermediateContainerBottom + layout.layerGap;
-  const effectRowY = effectContainerTop + 45 + 20;
+    const causeContainerBottom = causeRowY + LAYOUT_NODE_HEIGHT + groupPadding;
+    const intermediateContainerTop = causeContainerBottom + layout.layerGap;
+    intermediateStartY = intermediateContainerTop + groupChrome;
 
-  if (nodesByType['effect']) {
-    for (const node of nodesByType['effect']) node.position.y = effectRowY;
+    maxIntermediateY = intermediateStartY;
+
+    if (hasSubgroups) {
+      const subgroupStartY = intermediateStartY + SUBGROUP_HEADER_HEIGHT + SUBGROUP_PADDING;
+
+      const subgroupOrder = Object.keys(config.subgroups);
+      const activeSubgroups = subgroupOrder.filter(sg => intermediatesBySubgroup[sg]?.length > 0);
+      Object.keys(intermediatesBySubgroup).forEach(sg => {
+        if (sg !== 'default' && !activeSubgroups.includes(sg)) activeSubgroups.push(sg);
+      });
+      if (intermediatesBySubgroup['default']?.length > 0) activeSubgroups.push('default');
+
+      const columnWidth = NODE_WIDTH + SUBGROUP_PADDING * 2;
+      const totalColumnsWidth = activeSubgroups.length * (columnWidth + SUBGROUP_GAP) - SUBGROUP_GAP;
+      let currentX = globalCenterX - totalColumnsWidth / 2;
+
+      for (const subgroupKey of activeSubgroups) {
+        const subgroupNodes = intermediatesBySubgroup[subgroupKey] || [];
+        if (subgroupNodes.length === 0) continue;
+
+        let nodeY = subgroupStartY;
+        for (const node of subgroupNodes) {
+          node.position.x = currentX + SUBGROUP_PADDING;
+          node.position.y = nodeY;
+          nodeY += LAYOUT_NODE_HEIGHT + 15;
+        }
+
+        const subgroupMaxY = nodeY - 15 + LAYOUT_NODE_HEIGHT;
+        maxIntermediateY = Math.max(maxIntermediateY, subgroupMaxY);
+
+        subgroupPositions[subgroupKey] = {
+          startX: currentX,
+          minY: intermediateStartY,
+          maxY: subgroupMaxY,
+          nodes: subgroupNodes,
+        };
+
+        currentX += columnWidth + SUBGROUP_GAP;
+      }
+    } else {
+      if (nodesByType['intermediate']) {
+        for (const node of nodesByType['intermediate']) {
+          node.position.y = intermediateStartY;
+        }
+      }
+    }
+
+    // Position effect nodes
+    const intermediateContainerBottom = maxIntermediateY + LAYOUT_NODE_HEIGHT + groupPadding;
+    const effectContainerTop = intermediateContainerBottom + layout.layerGap;
+    effectRowY = effectContainerTop + groupChrome;
+
+    if (nodesByType['effect']) {
+      for (const node of nodesByType['effect']) node.position.y = effectRowY;
+    }
   }
 
   // Sort and position nodes
@@ -312,7 +353,6 @@ async function getElkLayout(
 
   // Create group containers
   const groupNodes: Node<CauseEffectNodeData>[] = [];
-  const hideGroups = graphConfig?.hideGroupBackgrounds === true;
 
   if (nodesByType['leaf'] && !hideGroups) {
     const container = createGroupContainer('leaf', nodesByType['leaf'], globalCenterX, layout.containerWidth, config.typeLabels);

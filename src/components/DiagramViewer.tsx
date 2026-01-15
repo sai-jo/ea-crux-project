@@ -8,7 +8,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { getEntityById, getEntityHref, entities, pathRegistry } from '../data';
 import { getNodeHrefFromMaster } from '../data/master-graph-data';
-import CauseEffectGraph from './CauseEffectGraph';
+import CauseEffectGraph, { type ScoreHighlightMode } from './CauseEffectGraph';
 
 /**
  * Hook to calculate available height from an element to the bottom of the viewport.
@@ -78,6 +78,12 @@ interface EntityWithGraph {
       sources?: string[];
       relatedConcepts?: string[];
       entityRef?: string;
+      scores?: {
+        novelty?: number;
+        sensitivity?: number;
+        changeability?: number;
+        certainty?: number;
+      };
     }>;
     edges: Array<{
       id?: string;
@@ -91,9 +97,32 @@ interface EntityWithGraph {
   };
 }
 
+// Layout settings type
+interface LayoutSettings {
+  algorithm: 'elk' | 'dagre';
+  showDescriptions: boolean;
+  straightEdges: boolean;
+  // Numeric layout values
+  layerGap: number;      // Vertical spacing between layers (2-150)
+  nodeSpacing: number;   // Horizontal spacing between nodes (2-80)
+  nodeWidth: number;     // Node width in pixels (60-250)
+}
+
+const DEFAULT_SETTINGS: LayoutSettings = {
+  algorithm: 'elk',
+  showDescriptions: true,
+  straightEdges: false,
+  layerGap: 25,
+  nodeSpacing: 20,
+  nodeWidth: 180,
+};
+
 export default function DiagramViewer({ entityId: propEntityId }: DiagramViewerProps) {
   // Read entity ID from URL client-side (Astro props may not have query params in dev)
   const [entityId, setEntityId] = useState(propEntityId || '');
+  const [settings, setSettings] = useState<LayoutSettings>(DEFAULT_SETTINGS);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [scoreHighlight, setScoreHighlight] = useState<ScoreHighlightMode | undefined>(undefined);
 
   useEffect(() => {
     // If no entity ID from props, read from URL path
@@ -282,35 +311,68 @@ export default function DiagramViewer({ entityId: propEntityId }: DiagramViewerP
   // Calculate available height dynamically
   const { containerRef, height: graphHeight } = useAvailableHeight(500, 20);
 
-  return (
-    <div className="diagram-viewer">
-      {/* Compact header with description and page link */}
-      <div className="diagram-header">
-        {graph.description && (
-          <p className="diagram-description">{graph.description}</p>
-        )}
-        <a href={entityPath} className="page-link">
-          View {entity.title} →
-        </a>
-      </div>
+  // Key for forcing re-render when settings change
+  const settingsKey = JSON.stringify(settings);
 
-      {/* Graph */}
-      <div className="diagram-graph-container" ref={containerRef}>
-        <CauseEffectGraph
-          height={graphHeight}
-          hideListView={true}
-          selectedNodeId={graph.primaryNodeId}
-          showFullscreenButton={false}
-          graphConfig={{
-            hideGroupBackgrounds: true,
-            useDagre: true,
-            typeLabels: {
-              leaf: 'Root Causes',
-              cause: 'Derived',
-              intermediate: 'Direct Factors',
-              effect: 'Target',
-            },
-          }}
+  return (
+    <div className="diagram-viewer-wrapper">
+      <div className="diagram-viewer">
+        {/* Compact header with back link, description and page link */}
+        <div className="diagram-header">
+          <a href="/diagrams/" className="back-link">
+            ← All Diagrams
+          </a>
+          <div className="diagram-header-center">
+            {graph.description && (
+              <p className="diagram-description">{graph.description}</p>
+            )}
+          </div>
+          <a href={entityPath} className="page-link">
+            View {entity.title} →
+          </a>
+        </div>
+
+        {/* Graph with settings button in tab bar */}
+        <div className="diagram-graph-container" ref={containerRef}>
+          <CauseEffectGraph
+            key={settingsKey}
+            height={graphHeight}
+            hideListView={true}
+            selectedNodeId={graph.primaryNodeId}
+            showFullscreenButton={false}
+            showDescriptions={settings.showDescriptions}
+            scoreHighlight={scoreHighlight}
+            graphConfig={{
+              hideGroupBackgrounds: true,
+              layoutAlgorithm: settings.algorithm,
+              straightEdges: settings.straightEdges,
+              nodeWidth: settings.nodeWidth,
+              layout: {
+                layerGap: settings.layerGap,
+                causeSpacing: settings.nodeSpacing,
+                intermediateSpacing: settings.nodeSpacing,
+                effectSpacing: settings.nodeSpacing,
+              },
+              typeLabels: {
+                leaf: 'Root Causes',
+                cause: 'Derived',
+                intermediate: 'Direct Factors',
+                effect: 'Target',
+              },
+            }}
+            renderHeaderRight={() => (
+              <button
+                className={`settings-toggle ${settingsOpen ? 'active' : ''}`}
+                onClick={() => setSettingsOpen(!settingsOpen)}
+                title="Layout Settings"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="3"/>
+                  <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+                </svg>
+                Settings
+              </button>
+            )}
           initialNodes={graph.nodes.map((node) => {
             // Compute href from entityRef if available, or try to match node ID to path registry
             let href: string | undefined;
@@ -348,6 +410,7 @@ export default function DiagramViewer({ entityId: propEntityId }: DiagramViewerP
                 sources: node.sources || [],
                 relatedConcepts: node.relatedConcepts || [],
                 ...(href && { href }),
+                ...(node.scores && { scores: node.scores }),
               },
             };
           })}
@@ -363,11 +426,152 @@ export default function DiagramViewer({ entityId: propEntityId }: DiagramViewerP
             label: edge.label,
           }))}
         />
+        </div>
       </div>
 
+      {/* Settings Sidebar */}
+      {settingsOpen && (
+        <div className="settings-sidebar">
+          <div className="settings-header">
+            <h3>Layout Settings</h3>
+            <button className="settings-close" onClick={() => setSettingsOpen(false)}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M18 6L6 18M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
+
+          <div className="settings-section">
+            <label className="settings-label">Layout Algorithm</label>
+            <div className="settings-radio-group">
+              <label className="settings-radio">
+                <input
+                  type="radio"
+                  name="algorithm"
+                  checked={settings.algorithm === 'dagre'}
+                  onChange={() => setSettings({ ...settings, algorithm: 'dagre' })}
+                />
+                <span className="radio-label">
+                  <strong>Dagre</strong>
+                  <span className="radio-desc">Simpler hierarchical layout, often cleaner</span>
+                </span>
+              </label>
+              <label className="settings-radio">
+                <input
+                  type="radio"
+                  name="algorithm"
+                  checked={settings.algorithm === 'elk'}
+                  onChange={() => setSettings({ ...settings, algorithm: 'elk' })}
+                />
+                <span className="radio-label">
+                  <strong>ELK</strong>
+                  <span className="radio-desc">More powerful, supports layer constraints</span>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div className="settings-section">
+            <label className="settings-label">Display Options</label>
+            <label className="settings-checkbox">
+              <input
+                type="checkbox"
+                checked={settings.showDescriptions}
+                onChange={(e) => setSettings({ ...settings, showDescriptions: e.target.checked })}
+              />
+              <span>Show node descriptions</span>
+            </label>
+            <label className="settings-checkbox">
+              <input
+                type="checkbox"
+                checked={settings.straightEdges}
+                onChange={(e) => setSettings({ ...settings, straightEdges: e.target.checked })}
+              />
+              <span>Straight edges (vs curved)</span>
+            </label>
+          </div>
+
+          <div className="settings-section">
+            <label className="settings-label">Score Highlighting</label>
+            <select
+              className="settings-select"
+              value={scoreHighlight || ''}
+              onChange={(e) => setScoreHighlight(e.target.value as ScoreHighlightMode || undefined)}
+            >
+              <option value="">None</option>
+              <option value="novelty">Novelty</option>
+              <option value="sensitivity">Sensitivity</option>
+              <option value="changeability">Changeability</option>
+              <option value="certainty">Certainty</option>
+            </select>
+            <p className="settings-hint">
+              {scoreHighlight === 'novelty' && 'How surprising to informed readers'}
+              {scoreHighlight === 'sensitivity' && 'Impact on downstream nodes'}
+              {scoreHighlight === 'changeability' && 'How tractable to influence'}
+              {scoreHighlight === 'certainty' && 'How well understood'}
+              {!scoreHighlight && 'Highlight nodes by score'}
+            </p>
+          </div>
+
+          <div className="settings-section">
+            <label className="settings-label">Spacing</label>
+            <div className="settings-slider-row">
+              <span className="settings-slider-label">Layer gap</span>
+              <input
+                type="range"
+                min="2"
+                max="150"
+                value={settings.layerGap}
+                onChange={(e) => setSettings({ ...settings, layerGap: Number(e.target.value) })}
+                className="settings-slider"
+              />
+              <span className="settings-slider-value">{settings.layerGap}</span>
+            </div>
+            <div className="settings-slider-row">
+              <span className="settings-slider-label">Node spacing</span>
+              <input
+                type="range"
+                min="2"
+                max="80"
+                value={settings.nodeSpacing}
+                onChange={(e) => setSettings({ ...settings, nodeSpacing: Number(e.target.value) })}
+                className="settings-slider"
+              />
+              <span className="settings-slider-value">{settings.nodeSpacing}</span>
+            </div>
+            <div className="settings-slider-row">
+              <span className="settings-slider-label">Node width</span>
+              <input
+                type="range"
+                min="60"
+                max="250"
+                value={settings.nodeWidth}
+                onChange={(e) => setSettings({ ...settings, nodeWidth: Number(e.target.value) })}
+                className="settings-slider"
+              />
+              <span className="settings-slider-value">{settings.nodeWidth}</span>
+            </div>
+          </div>
+
+          <div className="settings-section settings-reset">
+            <button
+              className="reset-button"
+              onClick={() => setSettings(DEFAULT_SETTINGS)}
+            >
+              Reset to Defaults
+            </button>
+          </div>
+        </div>
+      )}
+
       <style>{`
+        .diagram-viewer-wrapper {
+          display: flex;
+          gap: 1rem;
+        }
         .diagram-viewer {
-          margin-top: 0;
+          flex: 1;
+          min-width: 0;
         }
         .diagram-header {
           display: flex;
@@ -377,12 +581,61 @@ export default function DiagramViewer({ entityId: propEntityId }: DiagramViewerP
           margin-bottom: 1rem;
           flex-wrap: wrap;
         }
+        .back-link {
+          color: var(--sl-color-gray-3);
+          text-decoration: none;
+          font-size: 0.9rem;
+          padding: 0.4rem 0.8rem;
+          background: var(--sl-color-gray-6);
+          border: 1px solid var(--sl-color-hairline);
+          border-radius: 6px;
+          white-space: nowrap;
+          flex-shrink: 0;
+        }
+        .back-link:hover {
+          background: var(--sl-color-gray-5);
+          color: var(--sl-color-text);
+        }
+        .diagram-header-center {
+          flex: 1;
+          min-width: 0;
+        }
         .diagram-description {
           margin: 0;
           color: var(--sl-color-gray-2);
           font-size: 0.95rem;
-          flex: 1;
-          min-width: 200px;
+        }
+        .diagram-header-actions {
+          display: flex;
+          gap: 0.5rem;
+          align-items: center;
+        }
+        .settings-toggle {
+          all: unset;
+          box-sizing: border-box;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          height: 34px;
+          padding: 0 12px;
+          background: var(--sl-color-gray-6);
+          border: 1px solid var(--sl-color-hairline);
+          border-radius: 6px;
+          color: var(--sl-color-gray-2);
+          font-size: 13px;
+          font-family: system-ui, -apple-system, sans-serif;
+          font-weight: 500;
+          line-height: 1;
+          cursor: pointer;
+          transition: all 0.15s;
+        }
+        .settings-toggle:hover, .settings-toggle.active {
+          background: var(--sl-color-gray-5);
+          color: var(--sl-color-text);
+        }
+        .settings-toggle.active {
+          border-color: var(--sl-color-accent);
         }
         .page-link {
           color: var(--sl-color-text-accent);
@@ -402,6 +655,184 @@ export default function DiagramViewer({ entityId: propEntityId }: DiagramViewerP
           border-radius: 8px;
           overflow: hidden;
           min-height: 500px;
+        }
+
+        /* Settings Sidebar */
+        .settings-sidebar {
+          width: 220px;
+          flex-shrink: 0;
+          background: var(--sl-color-gray-6);
+          border: 1px solid var(--sl-color-hairline);
+          border-radius: 8px;
+          padding: 0.875rem;
+          height: fit-content;
+          max-height: calc(100vh - 200px);
+          overflow-y: auto;
+        }
+        .settings-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 0.75rem;
+          padding-bottom: 0.5rem;
+          border-bottom: 1px solid var(--sl-color-hairline);
+        }
+        .settings-header h3 {
+          margin: 0;
+          font-size: 0.9rem;
+          font-weight: 600;
+        }
+        .settings-close {
+          background: none;
+          border: none;
+          padding: 0.25rem;
+          cursor: pointer;
+          color: var(--sl-color-gray-3);
+          border-radius: 4px;
+        }
+        .settings-close:hover {
+          background: var(--sl-color-gray-5);
+          color: var(--sl-color-text);
+        }
+        .settings-section {
+          margin-bottom: 1rem;
+        }
+        .settings-label {
+          display: block;
+          font-size: 0.8rem;
+          font-weight: 500;
+          color: var(--sl-color-gray-2);
+          margin-bottom: 0.375rem;
+        }
+        .settings-radio-group {
+          display: flex;
+          flex-direction: column;
+          gap: 0.25rem;
+        }
+        .settings-radio {
+          display: flex;
+          align-items: flex-start;
+          gap: 0.375rem;
+          cursor: pointer;
+          padding: 0.375rem;
+          border-radius: 6px;
+          transition: background 0.15s;
+        }
+        .settings-radio:hover {
+          background: var(--sl-color-gray-5);
+        }
+        .settings-radio input {
+          margin-top: 0.15rem;
+        }
+        .radio-label {
+          display: flex;
+          flex-direction: column;
+        }
+        .radio-label strong {
+          font-size: 0.85rem;
+          color: var(--sl-color-text);
+        }
+        .radio-desc {
+          font-size: 0.7rem;
+          color: var(--sl-color-gray-3);
+          line-height: 1.3;
+        }
+        .settings-checkbox {
+          display: flex;
+          align-items: center;
+          gap: 0.375rem;
+          cursor: pointer;
+          font-size: 0.85rem;
+        }
+        .settings-select {
+          width: 100%;
+          padding: 0.5rem;
+          background: var(--sl-color-gray-5);
+          border: 1px solid var(--sl-color-hairline);
+          border-radius: 6px;
+          color: var(--sl-color-text);
+          font-size: 0.85rem;
+          cursor: pointer;
+        }
+        .settings-select:hover {
+          background: var(--sl-color-gray-4);
+        }
+        .settings-hint {
+          margin: 0.375rem 0 0 0;
+          font-size: 0.7rem;
+          color: var(--sl-color-gray-3);
+          line-height: 1.3;
+        }
+        .settings-slider-row {
+          display: flex;
+          align-items: center;
+          gap: 0.375rem;
+          margin-bottom: 0.5rem;
+        }
+        .settings-slider-row:last-child {
+          margin-bottom: 0;
+        }
+        .settings-slider-label {
+          font-size: 0.8rem;
+          color: var(--sl-color-gray-2);
+          flex-shrink: 0;
+          width: 55px;
+        }
+        .settings-slider {
+          flex: 1;
+          min-width: 60px;
+          cursor: pointer;
+          height: 4px;
+          -webkit-appearance: none;
+          appearance: none;
+          background: var(--sl-color-gray-5);
+          border-radius: 2px;
+        }
+        .settings-slider::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: var(--sl-color-accent);
+          cursor: pointer;
+        }
+        .settings-slider-value {
+          font-size: 0.75rem;
+          font-family: monospace;
+          color: var(--sl-color-gray-3);
+          width: 22px;
+          text-align: right;
+          flex-shrink: 0;
+        }
+        .settings-reset {
+          padding-top: 1rem;
+          border-top: 1px solid var(--sl-color-hairline);
+        }
+        .reset-button {
+          width: 100%;
+          padding: 0.5rem;
+          background: var(--sl-color-gray-5);
+          border: 1px solid var(--sl-color-hairline);
+          border-radius: 6px;
+          color: var(--sl-color-gray-2);
+          font-size: 0.85rem;
+          cursor: pointer;
+          transition: all 0.15s;
+        }
+        .reset-button:hover {
+          background: var(--sl-color-gray-4);
+          color: var(--sl-color-text);
+        }
+
+        @media (max-width: 900px) {
+          .diagram-viewer-wrapper {
+            flex-direction: column;
+          }
+          .settings-sidebar {
+            width: 100%;
+            max-height: none;
+          }
         }
       `}</style>
     </div>

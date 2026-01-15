@@ -194,60 +194,130 @@
         type: leaf
         description: LLM knowledge of virology, synthesis routes, and lab techniques. Growing with each
           generation.
+        scores:
+          novelty: 5        # AI bio knowledge is discussed but details less known
+          sensitivity: 8    # Key enabler for bio-threat path
+          changeability: 3  # Tied to model advancement, hard to roll back
+          certainty: 5      # Some benchmarks exist but real-world uplift uncertain
       - id: dna-synthesis-access
         label: DNA Synthesis Access
         type: leaf
         description: Ease of ordering genetic material. Screening exists but has gaps.
+        scores:
+          novelty: 4        # DNA synthesis is somewhat known in biosecurity circles
+          sensitivity: 7    # Critical chokepoint for bioweapons
+          changeability: 7  # Can be regulated with better screening
+          certainty: 7      # Well-understood technical landscape
       - id: biosecurity-defenses
         label: Biosecurity Defenses
         type: leaf
         description: Metagenomic surveillance, mRNA vaccine platforms, broad-spectrum countermeasures.
+        scores:
+          novelty: 5        # Known field but specifics less familiar
+          sensitivity: 6    # Moderates but doesn't eliminate threat
+          changeability: 6  # Can be improved with investment
+          certainty: 4      # Uncertain efficacy against novel threats
       - id: ai-hacking-capability
         label: AI Hacking Capability
         type: leaf
         description: AI vulnerability discovery, exploit generation, social engineering automation.
+        scores:
+          novelty: 6        # Emerging area, capabilities less documented
+          sensitivity: 8    # Key driver of cyber threat
+          changeability: 3  # Hard to stop capability growth
+          certainty: 4      # Few public benchmarks, uncertain effectiveness
       - id: attack-surface-growth
         label: Attack Surface Growth
         type: leaf
         description: More connected systems, IoT proliferation, critical infrastructure digitization.
+        scores:
+          novelty: 2        # Very well known trend
+          sensitivity: 5    # Moderate impact on cyber risk
+          changeability: 3  # IoT proliferation hard to stop
+          certainty: 9      # Well documented
       - id: cybersecurity-workforce
         label: Cybersecurity Workforce
         type: leaf
         description: Defender talent pool. Currently 3.5M unfilled positions globally.
+        scores:
+          novelty: 3        # Talent shortage well known
+          sensitivity: 4    # Important but not decisive
+          changeability: 5  # Training takes time but possible
+          certainty: 8      # Well documented shortage
       - id: model-access-controls
         label: Model Access Controls
         type: leaf
         description: API restrictions, KYC requirements, open-weight availability.
+        scores:
+          novelty: 6        # Emerging policy area
+          sensitivity: 6    # Important for limiting misuse
+          changeability: 7  # Policy can change this
+          certainty: 3      # Unclear if controls actually work
       - id: actor-intent
         label: Actor Intent
         type: leaf
         description: Presence of state, terrorist, criminal actors motivated to cause harm.
+        scores:
+          novelty: 2        # Obvious that bad actors exist
+          sensitivity: 9    # No intent = no misuse
+          changeability: 2  # Hard to change human motivation
+          certainty: 8      # We know malicious actors exist
       - id: bio-threat
         label: Biological Threat Exposure
         type: intermediate
         entityRef: biological-threat-exposure
         description: Risk from AI-enabled bioweapons development.
+        scores:
+          novelty: 5        # Discussed in policy circles but details murky
+          sensitivity: 9    # Major contributor to catastrophic outcomes
+          changeability: 5  # Depends on upstream factors
+          certainty: 3      # High uncertainty about magnitude
       - id: cyber-threat
         label: Cyber Threat Exposure
         type: intermediate
         entityRef: cyber-threat-exposure
         description: Risk from AI-enhanced cyberattacks.
+        scores:
+          novelty: 4        # AI-cyber discussed more commonly
+          sensitivity: 7    # Significant but less existential than bio
+          changeability: 5  # Depends on upstream factors
+          certainty: 5      # Some evidence but uncertain at scale
       - id: actor-capability
         label: Malicious Actor Capability
         type: intermediate
         description: What bad actors can actually do with AI access.
+        scores:
+          novelty: 5        # Discussed in security circles
+          sensitivity: 8    # Key mediating variable
+          changeability: 5  # Can be affected by access controls
+          certainty: 4      # Hard to assess real capabilities
       - id: offense-defense-balance
         label: Does offense or defense win?
         type: leaf
         description: "Core uncertainty: will AI-enhanced attacks outpace AI-enhanced defenses?"
+        scores:
+          novelty: 7        # Sophisticated strategic question
+          sensitivity: 9    # Determines which direction outcomes go
+          changeability: 4  # Hard to deliberately shift the balance
+          certainty: 2      # Core unresolved question
       - id: democratization-question
         label: Does AI democratize WMD?
         type: leaf
         description: Can small groups cause harm previously requiring state resources?
+        scores:
+          novelty: 7        # Novel framing of an important concern
+          sensitivity: 8    # Major implications if true
+          changeability: 3  # Knowledge spread is hard to stop
+          certainty: 3      # Highly uncertain
       - id: misuse-potential
         label: Misuse Potential
         type: effect
         description: Aggregate risk from deliberate harmful use of AI.
+        scores:
+          novelty: 4        # Well discussed in AI safety
+          sensitivity: 10   # Final outcome node
+          changeability: 5  # Depends on all input factors
+          certainty: 3      # High aggregate uncertainty
     edges:
       - source: ai-biology-knowledge
         target: bio-threat
