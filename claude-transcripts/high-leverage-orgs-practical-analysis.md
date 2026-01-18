@@ -216,6 +216,13 @@ Sources: [80,000 Hours funding analysis](https://80000hours.org/2025/01/it-looks
 
 ## Sources
 
+### Funding Gap Claims
+
+- **Apollo "$7-10M deployable"**: [Apollo Research Manifund Project](https://manifund.org/projects/apollo-research-scale-up-interpretability--behavioral-model-evals-research) - "They estimated that the maximal amount they could effectively use is $7-10M in addition to current funding levels."
+- **CAIS "could deploy more"**: [80,000 Hours: AI Safety Funding Opportunities (2025)](https://80000hours.org/2025/01/it-looks-like-there-are-some-good-funding-opportunities-in-ai-safety-right-now/) - "SFF gave $1.1m to CAIS and $1.6m to the action fund, but they could deploy more. They're not receiving money from OP."
+
+### General Sources
+
 - [80,000 Hours: AI Safety Funding Opportunities (2025)](https://80000hours.org/2025/01/it-looks-like-there-are-some-good-funding-opportunities-in-ai-safety-right-now/)
 - [SFF 2025 Recommendations](https://survivalandflourishing.fund/recommendations)
 - [Palisade Research](https://palisaderesearch.org/)
